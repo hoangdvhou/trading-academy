@@ -1,0 +1,2673 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masterclass Price Action Thực Chiến - Trọn Bộ 12 Module (Bài 1-32)</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===========================================
+           CSS CUSTOM PROPERTIES (THEME: CYBER PUNK / ELECTRIC STUDIO)
+           =========================================== */
+        :root {
+            --bg-primary: #0a0c14;
+            --bg-secondary: #121522;
+            --bg-card: rgba(22, 27, 46, 0.7);
+            --border-color: rgba(255, 255, 255, 0.08);
+            
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            
+            --accent-cyan: #00ffcc;
+            --accent-yellow: #d4ff00;
+            --accent-orange: #ff5722;
+            --accent-red: #ff3b30;
+            --accent-purple: #9b51e0;
+            
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-title: 'Archivo Black', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+            
+            --title-size: clamp(1.6rem, 3.8vw, 3rem);
+            --h2-size: clamp(1.2rem, 2.8vw, 1.8rem);
+            --h3-size: clamp(0.95rem, 1.8vw, 1.3rem);
+            --body-size: clamp(0.78rem, 1.1vw, 0.95rem);
+            --small-size: clamp(0.65rem, 0.8vw, 0.75rem);
+            
+            --slide-padding: clamp(0.8rem, 2.5vw, 2.2rem);
+            --content-gap: clamp(0.4rem, 1.2vw, 1rem);
+            --element-gap: clamp(0.25rem, 0.8vw, 0.6rem);
+            
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-neon: 0 0 15px rgba(0, 255, 204, 0.15);
+        }
+
+        /* ===========================================
+           BASE RESET & SCROLL SNAP
+           =========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-display);
+            line-height: 1.4;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        /* ===========================================
+           SLIDE FRAMEWORK
+           =========================================== */
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Ambient subtle grids */
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+            background-size: 35px 35px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Neon gradient shapes in corners for atmospheric depth */
+        .slide::after {
+            content: '';
+            position: absolute;
+            width: 35vw;
+            height: 35vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 204, 0.03) 0%, transparent 70%);
+            bottom: -8vw;
+            right: -8vw;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .slide:nth-child(even)::after {
+            background: radial-gradient(circle, rgba(212, 255, 0, 0.02) 0%, transparent 70%);
+            top: -8vw;
+            left: -8vw;
+            bottom: auto;
+            right: auto;
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-height: 100%;
+            overflow: hidden;
+            padding: var(--slide-padding);
+            z-index: 2;
+            gap: var(--content-gap);
+        }
+
+        /* Header structure */
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.4rem;
+            margin-bottom: 0.1rem;
+        }
+
+        .slide-module-tag {
+            font-size: var(--small-size);
+            color: var(--accent-cyan);
+            font-family: var(--font-mono);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .slide-number-tag {
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+        }
+
+        .slide-title {
+            font-family: var(--font-title);
+            font-size: var(--h2-size);
+            color: var(--text-primary);
+            line-height: 1.15;
+            letter-spacing: -0.5px;
+        }
+
+        .slide-title span {
+            color: var(--accent-cyan);
+        }
+
+        /* Layout styles */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--content-gap);
+            align-items: center;
+            max-height: min(72vh, 490px);
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--element-gap);
+        }
+
+        .grid-3-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--element-gap);
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: clamp(0.6rem, 1.3vw, 1.4rem);
+            transition: all 0.3s ease;
+            max-height: min(68vh, 450px);
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .card:hover {
+            border-color: rgba(0, 255, 204, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 255, 204, 0.05);
+        }
+
+        .card-title {
+            font-size: var(--h3-size);
+            font-weight: 700;
+            color: var(--accent-cyan);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.15rem;
+        }
+
+        .card-title.accent-yellow { color: var(--accent-yellow); }
+        .card-title.accent-orange { color: var(--accent-orange); }
+        .card-title.accent-purple { color: var(--accent-purple); }
+
+        .card p, .card li {
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+            line-height: 1.35;
+        }
+
+        .card ul {
+            padding-left: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        /* Typography Helpers */
+        .highlight-box {
+            border-left: 3px solid var(--accent-cyan);
+            padding: 0.5rem 0.8rem;
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+            background: rgba(0, 255, 204, 0.02);
+            border-radius: 0 6px 6px 0;
+        }
+
+        .highlight-box strong {
+            color: var(--text-primary);
+        }
+
+        /* Diagram Viewport fit */
+        .diagram-container {
+            width: 100%;
+            height: 100%;
+            max-height: min(50vh, 320px);
+            background-color: #0f1220;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0.5rem;
+        }
+
+        /* Interactive controls for slides */
+        .slide-nav {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 100;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            box-shadow: var(--shadow-neon);
+        }
+
+        .nav-dots {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-dot.active {
+            background-color: var(--accent-cyan);
+            box-shadow: var(--shadow-neon);
+            width: 16px;
+            border-radius: 4px;
+        }
+
+        /* Progress Bar */
+        .progress-bar-container {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background-color: rgba(255, 255, 255, 0.05);
+            z-index: 100;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-yellow));
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+            transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* ===========================================
+           CYBER SIDEBAR NAVIGATION
+           =========================================== */
+        .sidebar-toggle {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 101;
+            background-color: rgba(18, 21, 34, 0.85);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: var(--small-size);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .sidebar-toggle:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            box-shadow: var(--shadow-neon);
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0; left: -320px;
+            width: 300px;
+            height: 100%;
+            background-color: rgba(10, 12, 20, 0.96);
+            border-right: 1px solid var(--border-color);
+            z-index: 200;
+            backdrop-filter: blur(12px);
+            padding: 5rem 1.5rem 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            transition: left 0.4s var(--ease-out-expo);
+            overflow-y: auto;
+        }
+
+        .sidebar.open {
+            left: 0;
+            box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .sidebar-title {
+            font-family: var(--font-title);
+            font-size: 1.1rem;
+            color: var(--accent-cyan);
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .sidebar-item {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.35rem 0.5rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+
+        .sidebar-item:hover {
+            background-color: rgba(0, 255, 204, 0.05);
+            color: var(--accent-cyan);
+        }
+
+        .sidebar-item.active {
+            background: linear-gradient(90deg, rgba(0, 255, 204, 0.1) 0%, transparent 100%);
+            border-left: 2px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            font-weight: 500;
+        }
+
+        .sidebar-module-tag {
+            font-size: 0.6rem;
+            font-family: var(--font-mono);
+            color: var(--accent-yellow);
+            text-transform: uppercase;
+        }
+
+        .sidebar-backdrop {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 199;
+            backdrop-filter: blur(2px);
+            display: none;
+        }
+
+        .sidebar-backdrop.show {
+            display: block;
+        }
+
+        /* ===========================================
+           INLINE EDITING SYSTEM
+           =========================================== */
+        .edit-hotzone {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            width: 160px;
+            height: 40px;
+            z-index: 100;
+        }
+
+        .edit-toggle {
+            position: absolute;
+            left: 0; bottom: 0;
+            background-color: rgba(18, 21, 34, 0.85);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: var(--small-size);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            white-space: nowrap;
+        }
+
+        .edit-hotzone:hover .edit-toggle,
+        .edit-toggle.show,
+        .edit-toggle.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .edit-toggle.active {
+            background-color: var(--accent-cyan);
+            color: var(--bg-primary);
+            border-color: var(--accent-cyan);
+            box-shadow: var(--shadow-neon);
+        }
+
+        [contenteditable="true"] {
+            border: 1px dashed var(--accent-cyan) !important;
+            padding: 4px;
+            border-radius: 4px;
+            outline: none;
+            background-color: rgba(0, 255, 204, 0.03);
+        }
+
+        .save-indicator {
+            position: fixed;
+            bottom: 5rem;
+            left: 1.5rem;
+            background-color: #0b2e27;
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: var(--small-size);
+            font-family: var(--font-mono);
+            z-index: 100;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s var(--ease-out-expo);
+            pointer-events: none;
+        }
+
+        .save-indicator.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* SVG CANDLE & DRAWING STYLES */
+        .candle-body {
+            stroke-width: 1px;
+        }
+        .candle-body.bull {
+            fill: #00ffcc;
+            stroke: #00ffcc;
+        }
+        .candle-body.bear {
+            fill: #ff5722;
+            stroke: #ff5722;
+        }
+        .candle-body.doji {
+            fill: #94a3b8;
+            stroke: #94a3b8;
+        }
+        .wick {
+            stroke-width: 2px;
+        }
+        .wick.bull { stroke: #00ffcc; }
+        .wick.bear { stroke: #ff5722; }
+        .wick.doji { stroke: #94a3b8; }
+        
+        /* Grid backgrounds */
+        .grid-vertical {
+            stroke: rgba(255, 255, 255, 0.03);
+            stroke-width: 1;
+        }
+        .text-chart {
+            font-family: var(--font-mono);
+            fill: var(--text-secondary);
+            font-size: 9px;
+        }
+
+        /* Animations */
+        @keyframes pulseNeon {
+            0% { filter: drop-shadow(0 0 2px var(--accent-cyan)); }
+            50% { filter: drop-shadow(0 0 8px var(--accent-cyan)); }
+            100% { filter: drop-shadow(0 0 2px var(--accent-cyan)); }
+        }
+        @keyframes pulseYellow {
+            0% { filter: drop-shadow(0 0 2px var(--accent-yellow)); }
+            50% { filter: drop-shadow(0 0 8px var(--accent-yellow)); }
+            100% { filter: drop-shadow(0 0 2px var(--accent-yellow)); }
+        }
+        @keyframes dash {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        .pulse-effect {
+            animation: pulseNeon 2s infinite ease-in-out;
+        }
+        .pulse-yellow-effect {
+            animation: pulseYellow 2s infinite ease-in-out;
+        }
+        .draw-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 3s forwards ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Sidebar Trigger Button -->
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle Lesson Index">
+        <span>☰</span> BẢN ĐỒ KHÓA HỌC
+    </button>
+
+    <!-- Slide-out Sidebar Navigation -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-title">BÀI GIẢNG MASTERCLASS</div>
+        <ul class="sidebar-menu" id="sidebarMenu">
+            <!-- Dynamically populated via JS -->
+        </ul>
+    </div>
+
+    <!-- Floating Editor Button -->
+    <div class="edit-hotzone" id="editHotzone">
+        <button class="edit-toggle" id="editToggle">✏️ EDIT MODE (E)</button>
+    </div>
+    <div class="save-indicator" id="saveIndicator">💾 ĐÃ LƯU BÀI GIẢNG!</div>
+
+    <!-- =========================================================================
+         SLIDES LIST (CONSOLIDATED MASTERCLASS: SLIDE 1 - 38)
+         ========================================================================= -->
+    <main id="slideContainer">
+
+        <!-- ==================== SLIDE 1: HOME ==================== -->
+        <section class="slide">
+            <div class="slide-content" style="align-items: center; text-align: center; justify-content: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color: var(--accent-yellow);">GIÁO TRÌNH THỰC CHIẾN CAO CẤP TRỌN BỘ</div>
+                <h1 class="slide-title" id="editable-s1-title" style="font-size: var(--title-size); line-height: 1.1;">
+                    PRICE ACTION<br><span style="color: var(--accent-cyan);">MASTERCLASS (BÀI 1-32)</span>
+                </h1>
+                <p id="editable-s1-desc" style="font-size: 1.15rem; color: var(--text-secondary); max-width: 800px; font-family: var(--font-display);">
+                    Học viện giao dịch thực chiến: Hợp nhất tinh hoa đọc vị nến vi mô của <strong style="color:#fff">Al Brooks</strong>, độ nén nến của <strong style="color:#fff">Bob Volman</strong>, và hệ thống thống kê xác suất khoa học của <strong style="color:#fff">Thomas Bulkowski</strong>.
+                </p>
+                <div class="highlight-box" style="border: 1px solid var(--border-color); border-left: 3px solid var(--accent-yellow); max-width: 600px; text-align: left; margin-top: 1rem;">
+                    💡 <strong>Hướng dẫn:</strong> Dùng <strong>Space / Mũi tên xuống</strong> để sang trang tiếp theo. Click nút <strong>BẢN ĐỒ KHÓA HỌC</strong> ở góc trái để mở menu chọn nhanh bài giảng. Nhấn phím <strong>E</strong> để tự do chỉnh sửa nội dung slide.
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             MODULE 1: ĐỌC VỊ TỪNG THANH NẾN (BÀI 1, 2, 3)
+             ========================================================================= -->
+        
+        <!-- SLIDE 2: M1 - BẢN CHẤT -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 1: Trận Kéo Co Đấu Giá">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Đọc Vị Từng Thanh Nến</span>
+                    <span class="slide-number-tag">Trang 2/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-m1s2-title">Bài 1: Thị Trường Là Một <span>Trận Kéo Co Đấu Giá</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-m1s2-desc">
+                        <div class="card-title">⚖️ Cơ Chế Đấu Giá (Auction Theory)</div>
+                        <p>Thị trường không hoạt động ngẫu nhiên. Nó là quy trình đấu giá liên tục giữa **Phe Mua (Bulls)** và **Phe Bán (Bears)** nhằm tìm kiếm thanh khoản tốt nhất.</p>
+                        <p style="margin-top:0.3rem;">Giá tăng vì lực mua khẩn trương của Smart Money áp đảo hoàn toàn, giá giảm vì lực bán dứt khoát chiếm ưu thế. Công việc duy nhất của Price Action trader là **nương theo dòng tiền lớn**.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">⚙️ Sơ Đồ Quy Luật Dòng Tiền</div>
+                        <svg width="100%" height="150" viewBox="0 0 280 150">
+                            <line x1="20" y1="75" x2="260" y2="75" stroke="#94a3b8" stroke-width="3" stroke-dasharray="6,4" />
+                            <circle cx="140" cy="75" r="10" fill="none" stroke="#d4ff00" stroke-width="1.5" />
+                            <g transform="translate(30, 45)">
+                                <circle cx="15" cy="15" r="12" fill="#00ffcc" />
+                                <text x="15" y="19" fill="#0a0c14" font-weight="bold" font-size="10" text-anchor="middle">B</text>
+                                <text x="15" y="42" fill="#00ffcc" font-size="9" text-anchor="middle">BUYERS</text>
+                            </g>
+                            <g transform="translate(210, 45)">
+                                <circle cx="15" cy="15" r="12" fill="#ff5722" />
+                                <text x="15" y="19" fill="#ffffff" font-weight="bold" font-size="10" text-anchor="middle">S</text>
+                                <text x="15" y="42" fill="#ff5722" font-size="9" text-anchor="middle">SELLERS</text>
+                            </g>
+                            <text x="140" y="115" class="text-chart" text-anchor="middle">Close nến quyết định bên chiến thắng</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: M1 - PHÂN LOẠI NẾN -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 1: Trend Bar vs Range Bar">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Đọc Vị Từng Thanh Nến</span>
+                    <span class="slide-number-tag">Trang 3/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-m1s3-title">Bài 1: Cuộc Cách Mạng Tối Giản <span>Trend Bar vs Range Bar</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-m1s3-desc">
+                        <div class="card-title">🟢 1. Trend Bar (Nến Xu Hướng)</div>
+                        <p>Thân nến lớn chiếm **>50% toàn bộ chiều dài** nến. Giá đóng cửa nằm sát một đầu đỉnh hoặc đáy nến. Thể hiện một phe hoàn toàn kiểm soát cuộc chơi dứt khoát.</p>
+                        <div class="card-title accent-yellow" style="margin-top:0.4rem;">🟡 2. Range Bar (Doji - Giằng Co)</div>
+                        <p>Thân nến nhỏ nằm ở giữa, đuôi nến dài ra hai đầu. Thể hiện sự do dự, chiến trường cân bằng và phe mua phe bán giằng co ác liệt.</p>
+                    </div>
+                    <div class="card" style="justify-content: center; align-items: center;">
+                        <svg width="100%" height="180" viewBox="0 0 200 180">
+                            <!-- Trend Bar -->
+                            <line x1="50" y1="20" x2="50" y2="150" class="wick bull" />
+                            <rect x="42" y="35" width="16" height="95" class="candle-body bull" />
+                            <text x="50" y="165" class="text-chart" text-anchor="middle" fill="var(--accent-cyan)">Trend Bar</text>
+                            
+                            <!-- Range Bar -->
+                            <line x1="150" y1="20" x2="150" y2="150" class="wick doji" />
+                            <rect x="142" y="80" width="16" height="10" class="candle-body doji" />
+                            <text x="150" y="165" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)">Range Bar</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: M1 - OHLC -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 2: Đọc Vị OHLC Vi Mô">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Đọc Vị Từng Thanh Nến</span>
+                    <span class="slide-number-tag">Trang 4/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-m1s4-title">Bài 2: Giải Mã OHLC <span>& Manh Mối Chiến Sự Vi Mô</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-m1s4-desc">
+                        <div class="card-title accent-cyan">🎯 Ý Nghĩa Bốn Điểm Dữ Liệu OHLC</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem;">
+                            <li><strong>Open (Mở cửa):</strong> Nơi thỏa thuận bắt đầu. Nếu Open có khoảng trống Gap thể hiện sự thay đổi kỳ vọng cực kỳ đột ngột.</li>
+                            <li><strong>High/Low (Cao/Thấp):</strong> Biên giới cực đại mà phe mua/bán vươn tới được trước khi bị phe kia giật lại.</li>
+                            <li><strong>Close (Đóng cửa) - QUAN TRỌNG NHẤT:</strong> Phán quyết cuối cùng của hiệp đấu. Sự tịnh tiến của Close quyết định momentum.</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="justify-content: center; align-items: center;">
+                        <svg width="100%" height="180" viewBox="0 0 200 180">
+                            <line x1="100" y1="20" x2="100" y2="150" class="wick bear" />
+                            <rect x="88" y="45" width="24" height="80" class="candle-body bear" />
+                            <text x="100" y="15" class="text-chart" text-anchor="middle">High</text>
+                            <text x="120" y="50" class="text-chart" fill="var(--accent-orange)">Open</text>
+                            <text x="120" y="130" class="text-chart" fill="var(--accent-orange)" font-weight="bold">Close</text>
+                            <text x="100" y="165" class="text-chart" text-anchor="middle">Low</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: M1 - ĐUÔI NẾN -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 2: Ngôn Ngữ Đuôi Nến">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Đọc Vị Từng Thanh Nến</span>
+                    <span class="slide-number-tag">Trang 5/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-m1s5-title">Bài 2: Ngôn Ngữ Của Đuôi Nến <span>& Sự Từ Chối Giá</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-m1s5-desc">
+                        <div class="card-title">🙅‍♂️ Bản Chất Đuôi Nến (Wick/Tail)</div>
+                        <p>Đuôi nến đại diện cho **lãnh thổ đã từng bị chiếm giữ nhưng bị đánh bại hoàn toàn** trước khi kết thúc phiên đấu giá.</p>
+                        <div class="highlight-box" style="margin-top:0.3rem;">
+                            <strong>Đuôi dưới dài (Downside Rejection):</strong> Phe Gấu bán đè giá xuống sâu, nhưng lực cầu chờ sẵn của Smart Money nuốt gọn lực bán, kéo giật ngược giá đóng cửa lên cao.
+                        </div>
+                        <div class="highlight-box" style="border-color: var(--accent-orange); margin-top:0.3rem;">
+                            ⚠️ Đuôi nến chỉ có ý nghĩa khi **chọc vào EMA 20 hoặc cản cứng**. Xuất hiện ở khoảng không trống trải chỉ là nhiễu thị trường.
+                        </div>
+                    </div>
+                    <div class="card" style="justify-content: center; align-items: center; background-color: #0f1220; border-radius: 8px; padding: 0.5rem;">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Dividing dotted center line -->
+                            <line x1="150" y1="10" x2="150" y2="190" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" stroke-dasharray="3,3" />
+
+                            <!-- ================= LEFT: EFFECTIVE REJECTION ================= -->
+                            <text x="75" y="20" class="text-chart" text-anchor="middle" fill="var(--accent-cyan)" font-weight="bold" font-size="10">1. TÍN HIỆU THỰC (Có Cản/EMA)</text>
+                            
+                            <!-- EMA 20 Dynamic Support (curved line) -->
+                            <path d="M 15 135 Q 45 130, 75 125 T 135 120" fill="none" stroke="var(--accent-cyan)" stroke-width="2" style="filter: drop-shadow(0 0 2px rgba(0, 255, 204, 0.4));" />
+                            <text x="20" y="150" class="text-chart" fill="var(--accent-cyan)" font-size="8">EMA 20</text>
+
+                            <!-- Horizontal Support level -->
+                            <line x1="15" y1="125" x2="135" y2="125" stroke="var(--accent-yellow)" stroke-width="1.2" stroke-dasharray="4,2" />
+                            <text x="110" y="140" class="text-chart" fill="var(--accent-yellow)" font-size="8">Hỗ Trợ</text>
+
+                            <!-- Pinbar 1 (Pokes through EMA and Support, then bounces) -->
+                            <!-- Long Wick -->
+                            <line x1="75" y1="60" x2="75" y2="135" class="wick bull" style="stroke-width: 2.5px;" />
+                            <!-- Body -->
+                            <rect x="67" y="65" width="16" height="25" class="candle-body bull" />
+                            
+                            <!-- Green checkmark highlight -->
+                            <circle cx="75" cy="128" r="8" fill="none" stroke="var(--accent-cyan)" stroke-width="1.5" class="pulse-effect" />
+                            <text x="75" y="52" class="text-chart" text-anchor="middle" fill="var(--accent-cyan)" font-weight="bold">Từ Chối Thực</text>
+                            <text x="75" y="105" class="text-chart" text-anchor="middle" fill="var(--accent-cyan)" font-size="8">(Chọc cản rồi rút)</text>
+
+                            <!-- ================= RIGHT: INEFFECTIVE NOISE ================= -->
+                            <text x="225" y="20" class="text-chart" text-anchor="middle" fill="var(--accent-orange)" font-weight="bold" font-size="10">2. NHIỄU THỊ TRƯỜNG (Lơ Lửng)</text>
+
+                            <!-- Candles in mid air (No support lines nearby) -->
+                            <!-- Bullish candle preceding -->
+                            <line x1="185" y1="70" x2="185" y2="120" class="wick bull" stroke="rgba(0, 255, 204, 0.4)" />
+                            <rect x="179" y="80" width="12" height="30" class="candle-body bull" style="opacity: 0.5;" />
+
+                            <!-- Pinbar 2 (Floating in mid-air, no level) -->
+                            <!-- Wick -->
+                            <line x1="225" y1="50" x2="225" y2="125" class="wick bull" style="stroke: var(--accent-orange); stroke-width: 2px;" />
+                            <!-- Body -->
+                            <rect x="217" y="55" width="16" height="22" class="candle-body bull" style="fill: var(--accent-orange); stroke: var(--accent-orange);" />
+                            
+                            <!-- Red warning mark -->
+                            <circle cx="225" cy="125" r="8" fill="none" stroke="var(--accent-red)" stroke-width="1.5" />
+                            <line x1="221" y1="121" x2="229" y2="129" stroke="var(--accent-red)" stroke-width="1.5" />
+                            <line x1="229" y1="121" x2="221" y2="129" stroke="var(--accent-red)" stroke-width="1.5" />
+                            
+                            <text x="225" y="42" class="text-chart" text-anchor="middle" fill="var(--accent-orange)" font-weight="bold">Nhiễu / Trap</text>
+                            <text x="225" y="102" class="text-chart" text-anchor="middle" fill="var(--accent-orange)" font-size="8">(Không có EMA/Cản)</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: M1 - GHÉP NẾN -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 3: Ghép Nến (Bar Merging)">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Đọc Vị Từng Thanh Nến</span>
+                    <span class="slide-number-tag">Trang 6/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-m1s6-title">Bài 3: Kỹ Thuật Ghép Nến <span>(Bar Merging) Đơn Giản Hóa Biểu Đồ</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-m1s6-desc">
+                        <div class="card-title accent-yellow">⚙️ Quy Tắc Ghép Nến Độc Quyền</div>
+                        <p>Bất kỳ cụm nến M5 phức tạp nào thực chất chỉ là một cây nến đơn giản duy nhất ở khung thời gian lớn hơn như M10/M15:</p>
+                        <ul style="margin-top:0.3rem;">
+                            <li><strong>1. Open mới</strong> = Open cây nến đầu tiên trong cụm.</li>
+                            <li><strong>2. Close mới</strong> = Close cây nến cuối cùng trong cụm.</li>
+                            <li><strong>3. High/Low mới</strong> = Điểm đỉnh cao nhất & đáy thấp nhất của cả cụm nến.</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- SVG DIAGRAM: BAR MERGING -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 280 180" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Nến 1 Bear -->
+                            <g transform="translate(30, 20)">
+                                <line x1="15" y1="20" x2="15" y2="130" class="wick bear" />
+                                <rect x="7" y="35" width="16" height="70" class="candle-body bear" />
+                                <text x="15" y="145" class="text-chart" text-anchor="middle">M5 Đỏ (1)</text>
+                            </g>
+                            <!-- Plus sign -->
+                            <text x="75" y="80" fill="#fff" font-size="18" text-anchor="middle">+</text>
+                            <!-- Nến 2 Bull -->
+                            <g transform="translate(100, 20)">
+                                <line x1="15" y1="15" x2="15" y2="135" class="wick bull" />
+                                <rect x="7" y="25" width="16" height="85" class="candle-body bull" />
+                                <text x="15" y="145" class="text-chart" text-anchor="middle">M5 Xanh (2)</text>
+                            </g>
+                            <!-- Arrow sign -->
+                            <text x="150" y="80" fill="var(--accent-cyan)" font-size="18" text-anchor="middle">➔</text>
+                            <!-- Merged Candle -->
+                            <g transform="translate(190, 20)">
+                                <line x1="15" y1="15" x2="15" y2="135" class="wick bull" style="stroke-width:2.5px;" />
+                                <rect x="7" y="25" width="16" height="15" class="candle-body bull" />
+                                <text x="15" y="145" class="text-chart" text-anchor="middle" fill="var(--accent-cyan)" font-weight="bold">M10 Pin Bar</text>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 7: M1 - BỐI CẢNH & XÁC SUẤT -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 3: Bối Cảnh vs Xác Suất">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Đọc Vị Từng Thanh Nến</span>
+                    <span class="slide-number-tag">Trang 7/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-m1s7-title">Bài 3: Tư Duy Xác Suất <span>& Bối Cảnh Quyết Định (Context)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-m1s7-desc">
+                        <div class="card-title accent-orange">⚠️ Cảnh Báo Mentor</div>
+                        <p>Một cây nến rút chân tăng (Pin bar) rất đẹp có thể biến thành **Thảm Họa chết người** nếu xuất hiện sai bối cảnh.</p>
+                        <p style="margin-top:0.3rem;">Price Action không phải là học vẹt mô hình nến đơn lẻ, nó là **đọc bối cảnh dòng tiền**. Không có setup nào chiến thắng 100%. Mọi setup đẹp chỉ mang lại xác suất thắng (edge) tầm 55% - 60%.</p>
+                    </div>
+                    <div class="grid-cards">
+                        <div class="card" style="border-color: var(--accent-red); background: rgba(255,59,48,0.02);">
+                            <div class="card-title" style="color:var(--accent-red)">❌ Bối cảnh xấu</div>
+                            <p style="font-size:12px;">Mua nến rút chân tăng tuyệt đẹp ngay trong khi **xu hướng chính đang giảm dốc đứng** ➔ Bị đè bẹp (Trap).</p>
+                        </div>
+                        <div class="card" style="border-color: var(--accent-cyan); background: rgba(0,255,204,0.02);">
+                            <div class="card-title">🟢 Bối cảnh tốt</div>
+                            <p style="font-size:12px;">Mua nến tăng bình thường xuất hiện khi giá hồi về **EMA 20** trong một **xu hướng tăng mạnh mẽ** ➔ Xác suất thắng cực cao.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 8: M1 - SETUP HIGH 2 PULLBACK -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 3: Setup High 2 Kinh Điển">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Đọc Vị Từng Thanh Nến</span>
+                    <span class="slide-number-tag">Trang 8/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-m1s8-title">Bài 3: Setup Hồi Quy Kinh Điển <span>(Two-Legged Pullback - High 2)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-m1s8-desc">
+                        <div class="card-title accent-yellow">📈 Cơ Chế Vận Hành Setup</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; font-size:var(--body-size);">
+                            <li><strong>Leg 1 (Nhịp hồi 1):</strong> Giá giảm. Nến đầu tiên vượt đỉnh cây trước tạo **High 1**. Phe Short tiếp tục đè giá.</li>
+                            <li><strong>Leg 2 (Nhịp hồi 2):</strong> Giá tạo đáy thấp hơn. Phe Short kiệt sức tại hỗ trợ cứng (Buildup).</li>
+                            <li><strong>High 2 Trigger:</strong> Cây nến tiếp theo vượt đỉnh nến trước. Kích hoạt điểm mua chất lượng cao, phe Short bị kẹt cắt lỗ tạo lực đẩy kép.</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="justify-content: center; align-items: center; background-color: #0f1220;">
+                        <!-- Mini representation of High 2 chart -->
+                        <svg width="100%" height="150" viewBox="0 0 250 150">
+                            <!-- EMA Line -->
+                            <path d="M 10 130 Q 110 110 240 70" fill="none" stroke="var(--accent-cyan)" stroke-width="1.5" stroke-dasharray="3,3" />
+                            <!-- Price Wave -->
+                            <path d="M 20 120 L 70 50 L 110 90 L 135 68 L 160 105 L 210 35" fill="none" stroke="var(--accent-yellow)" stroke-width="2" />
+                            <circle cx="135" cy="68" r="4" fill="var(--accent-red)" />
+                            <text x="135" y="55" class="text-chart" text-anchor="middle" fill="var(--accent-red)">H1</text>
+                            
+                            <circle cx="210" cy="35" r="5" fill="var(--accent-cyan)" class="pulse-effect" />
+                            <text x="210" y="22" class="text-chart" text-anchor="middle" fill="var(--accent-cyan)">H2 Entry</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 9: M1 - QUÂN TRỊ SL/TP -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 3: Quản Trị Vị Thế">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Đọc Vị Từng Thanh Nến</span>
+                    <span class="slide-number-tag">Trang 9/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-m1s9-title">Bài 3: Quản Trị Vị Thế <span>Stop Loss & Take Profit</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-m1s9-desc">
+                        <div class="card-title accent-orange">🛡️ 1. Cắt Lỗ Logic (Stop Loss)</div>
+                        <p>Đặt Stop Loss ngay dưới đáy của nhịp điều chỉnh Leg 2 tầm 2-3 ticks. SL này chứng minh cấu trúc tăng chính thức bị vi phạm và ý tưởng phân tích của bạn đã sai.</p>
+                        <div class="card-title accent-cyan" style="margin-top:0.4rem;">🎯 2. Chốt Lời Khoa Học (Take Profit)</div>
+                        <p><strong>Mục tiêu 1:</strong> Đỉnh cũ gần nhất (Xác suất đạt >70%).</p>
+                        <p><strong>Mục tiêu 2:</strong> Measured Move (Đo chiều cao nhịp sóng Spike cũ rồi chiếu từ đáy Pullback lên).</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">⚙️ Chiến Lược Kích Hoạt Lệnh Chờ</div>
+                        <p>Không bao giờ mua Market trực tiếp khi nến tín hiệu đang chạy.</p>
+                        <div class="highlight-box" style="margin-top:0.3rem;">
+                            🔒 <strong>Hành động:</strong> Đặt lệnh chờ <strong>Buy Stop</strong> cách đỉnh nến tín hiệu (Signal bar) 1-2 ticks. Nếu giá giật ngược giảm tiếp, lệnh không khớp và bạn hoàn toàn an toàn!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 10: M1 - LỖI KINH ĐIỂN -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 3: Lỗi Thường Gặp">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Đọc Vị Từng Thanh Nến</span>
+                    <span class="slide-number-tag">Trang 10/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-m1s10-title">Bài 3: Bốn Lỗi Kinh Điển <span>Của Trader Người Mới</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-m1s10-desc">
+                        <div class="card-title accent-red">🚨 Những Cái Bẫy Chết Người</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem;">
+                            <li><strong>1. Bắt dao rơi ở nhịp hồi 1:</strong> Vội vàng mua ngay tại High 1 khi xu hướng giảm dốc mạnh mới bắt đầu.</li>
+                            <li><strong>2. FOMO mua đuổi đỉnh:</strong> Nhảy vào mua Market khi giá đã tăng dựng đứng quá xa đường EMA 20.</li>
+                            <li><strong>3. Siết Stop Loss quá chặt:</strong> Đặt SL quá sát thân nến khiến lệnh dễ bị quét râu oan uổng do nhiễu giá.</li>
+                            <li><strong>4. Giao dịch vô hướng:</strong> Vào lệnh tùy tiện ở giữa vùng đi ngang Trading Range nhiễu động.</li>
+                        </ul>
+                    </div>
+                    <div class="card active" style="border-color: var(--accent-yellow); background: rgba(212,255,0,0.02);">
+                        <div class="card-title accent-yellow">📋 CHECKLIST 5 BƯỚC BẮT BUỘC</div>
+                        <ul class="bullet-list accent-yellow" style="gap:0.3rem; margin-top:0.2rem;">
+                            <li>Có xu hướng chính đồng thuận rõ ràng không?</li>
+                            <li>Giá có điều chỉnh về Vùng Giá Trị (EMA 20/Cản cũ)?</li>
+                            <li>Có xuất hiện nến tín hiệu đảo chiều High 2 chưa?</li>
+                            <li>Tỷ lệ Lợi nhuận/Rủi ro (R:R) tối thiểu đạt 1:1.5?</li>
+                            <li>Tâm lý đã sẵn sàng chấp nhận thua lỗ lệnh này chưa?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 11: M1 - BÀI TẬP -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 3: Bài Tập Thực Hành">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Đọc Vị Từng Thanh Nến</span>
+                    <span class="slide-number-tag">Trang 11/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-m1s11-title">Bài 3: Bài Tập Thực Hành <span>& Câu Hỏi Kiểm Tra</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-m1s11-desc">
+                        <div class="card-title">📝 Bài Tập Tuần Này</div>
+                        <p>Mở biểu đồ BTCUSDT hoặc XAUUSD khung thời gian M15.</p>
+                        <p style="margin-top:0.3rem;">Tìm và chụp lại **5 ví dụ thực tế** về setup High 2 / Low 2 Pullback thành công. Đánh dấu rõ ràng các sóng Spike, Leg 1, nến High 1, Leg 2, và cây nến tín hiệu vào lệnh High 2.</p>
+                    </div>
+                    <div class="card active" style="border-color: var(--accent-cyan); background: rgba(0,255,204,0.02);">
+                        <div class="card-title">🧠 Câu Hỏi Ôn Tập</div>
+                        <ul class="bullet-list" style="gap:0.4rem; margin-top:0.2rem;">
+                            <li>Tại sao một mẫu nến Pin bar rút chân lại hoàn toàn vô giá trị nếu nó nằm sai bối cảnh?</li>
+                            <li>Tại sao setup High 2 lại có xác suất thắng cao vượt trội so với setup High 1?</li>
+                            <li>Giá đóng cửa (Close) của cây nến cung cấp manh mối quan trọng nhất nào cho trader?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             MODULE 2: BỐI CẢNH & TRẠNG THÁI THỊ TRƯỜNG (BÀI 4, 5, 6)
+             ========================================================================= -->
+        
+        <!-- SLIDE 12: M2 - SPIKE -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 4: Trạng Thái Spike">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Bối Cảnh & Trạng Thái Thị Trường</span>
+                    <span class="slide-number-tag">Trang 12/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-m2s12-title">Bài 4: SPIKE - <span>Giai Đoạn Đẩy Giá Khẩn Trương</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-m2s12-desc">
+                        <div class="card-title">🔥 Cơ Chế Cung Cầu Mất Cân Bằng</div>
+                        <p>Spike xảy ra khi cả hai phe Bulls và Bears đều đồng thuận giá hiện tại quá rẻ/quá đắt, buộc giá phải tăng tốc cực nhanh để tìm kiếm vùng cân bằng mới.</p>
+                        <p style="margin-top:0.3rem;"><strong>Hành vi tổ chức:</strong> Mua/bán khẩn trương (urgency) bằng lệnh Market liên tục, đẩy giá đi bất kể giá nào.</p>
+                        <p style="margin-top:0.3rem;"><strong>Đặc điểm trên chart:</strong> Chuỗi các Trend Bar thân lớn liên tiếp cùng màu, hầu như không có râu nến chọc ngược, EMA 20 bị kéo dốc đứng.</p>
+                    </div>
+                    <div class="card" style="justify-content: center; align-items: center; background-color: #0f1220;">
+                        <svg width="100%" height="150" viewBox="0 0 200 150">
+                            <!-- Strong bullish trend bars representation -->
+                            <rect x="20" y="110" width="14" height="30" class="candle-body bull" />
+                            <rect x="50" y="80" width="14" height="40" class="candle-body bull" />
+                            <rect x="80" y="45" width="14" height="50" class="candle-body bull" />
+                            <rect x="110" y="15" width="14" height="60" class="candle-body bull" style="fill:var(--accent-yellow); stroke:var(--accent-yellow);" />
+                            <text x="140" y="130" class="text-chart" fill="var(--accent-cyan)">Dốc đứng (Urgency)</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 13: M2 - CHANNEL -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 4: Trạng Thái Channel">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Bối Cảnh & Trạng Thái Thị Trường</span>
+                    <span class="slide-number-tag">Trang 13/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-m2s13-title">Bài 4: CHANNEL - <span>Giai Đoạn Kênh Giá Xu Hướng</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-m2s13-desc">
+                        <div class="card-title accent-yellow">📉 Xu Hướng Giảm Nhiệt</div>
+                        <p>Sau cú đẩy dốc đứng Spike, giá tăng đủ cao để phe đối diện bắt đầu chặn phản công và phe thắng tiến hành chốt lời từng phần.</p>
+                        <p style="margin-top:0.3rem;"><strong>Hành vi tổ chức:</strong> Chuyển sang mua/bán tích lũy bằng Limit Order tại các nhịp điều chỉnh sâu hơn. Không còn mua đuổi bất chấp.</p>
+                        <p style="margin-top:0.3rem;"><strong>Đặc điểm trên chart:</strong> Các nến chồng lấn chéo lên nhau, nến xanh nến đỏ xen kẽ liên tục, bắt đầu xuất hiện các cú pullback chạm vào EMA 20.</p>
+                    </div>
+                    <div class="card" style="justify-content: center; align-items: center; background-color:#0f1220;">
+                        <svg width="100%" height="150" viewBox="0 0 200 150">
+                            <!-- Diagonal channel lines -->
+                            <line x1="20" y1="110" x2="180" y2="40" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-dasharray="3,3" />
+                            <line x1="40" y1="130" x2="200" y2="60" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-dasharray="3,3" />
+                            <!-- Channels candles -->
+                            <rect x="50" y="90" width="12" height="25" class="candle-body bull" />
+                            <rect x="80" y="85" width="12" height="20" class="candle-body bear" />
+                            <rect x="110" y="70" width="12" height="30" class="candle-body bull" />
+                            <rect x="140" y="65" width="12" height="25" class="candle-body bear" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 14: M2 - TRADING RANGE -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 4: Trading Range">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Bối Cảnh & Trạng Thái Thị Trường</span>
+                    <span class="slide-number-tag">Trang 14/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-m2s14-title">Bài 4: TRADING RANGE - <span>Giai Đoạn Đi Ngang Cân Bằng</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-m2s14-desc">
+                        <div class="card-title accent-cyan">⚖️ Fair Value (Vùng Giá Trị Bằng Nhau)</div>
+                        <p>Thị trường tìm thấy vùng giá trị mà cả hai bên cùng đồng thuận mua bán. Bulls chủ động mua thấp ở biên dưới hỗ trợ, Bears bán cao ở biên trên kháng cự.</p>
+                        <p style="margin-top:0.3rem;"><strong>Hành vi tổ chức:</strong> Giao dịch hai chiều Limit Order dứt khoát tại biên. Cấm tuyệt đối việc mua breakout ở giữa range.</p>
+                        <p style="margin-top:0.3rem;"><strong>Đặc điểm trên chart:</strong> EMA 20 nằm phẳng hoàn toàn. Các nến xanh đỏ đan xen chằng chịt, thân nhỏ, đuôi dài hai đầu (Doji/Range Bar).</p>
+                    </div>
+                    <div class="card" style="justify-content: center; align-items: center; background-color:#0f1220;">
+                        <svg width="100%" height="150" viewBox="0 0 200 150">
+                            <line x1="20" y1="35" x2="180" y2="35" stroke="var(--accent-red)" stroke-dasharray="3,3" />
+                            <line x1="20" y1="115" x2="180" y2="115" stroke="var(--accent-cyan)" stroke-dasharray="3,3" />
+                            <line x1="20" y1="75" x2="180" y2="75" stroke="#94a3b8" stroke-dasharray="2,2" />
+                            
+                            <rect x="40" y="45" width="10" height="20" class="candle-body bear" />
+                            <rect x="70" y="80" width="10" height="30" class="candle-body bull" />
+                            <rect x="100" y="60" width="10" height="20" class="candle-body bear" />
+                            <rect x="130" y="70" width="10" height="30" class="candle-body bull" />
+                            
+                            <text x="100" y="130" class="text-chart" text-anchor="middle">Giao dịch 2 chiều tại biên</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 15: M2 - CHU KỲ LUÂN CHUYỂN -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 5: Chu Kỳ Luân Chuyển">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Bối Cảnh & Trạng Thái Thị Trường</span>
+                    <span class="slide-number-tag">Trang 15/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-m2s15-title">Bài 5: Chu Kỳ Luân Chuyển <span>Thị Trường Kinh Điển</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-m2s15-desc">
+                        <div class="card-title accent-yellow">⚙️ Vòng Lặp Vô Tận Của Thị Trường</div>
+                        <p>Biểu đồ di chuyển theo vòng lặp có tính quy luật tuyệt đối dưới tác động đấu giá dòng tiền:</p>
+                        <div class="highlight-box">
+                            <strong>Spike ➔ Kéo dốc đứng ➔ Hạ nhiệt thành Channel ➔ Cân bằng tạo ra Trading Range ➔ Phát sinh tích lũy ➔ Breakout tạo Spike mới.</strong>
+                        </div>
+                        <p style="margin-top:0.3rem;">Người mới liên tục cháy tài khoản vì mua breakout trong Trading Range (dính bẫy phá vỡ giả) và liên tục bắt đỉnh/đáy ngược xu hướng trong lúc Spike đang dốc mạnh.</p>
+                    </div>
+                    
+                    <!-- SVG DIAGRAM: MARKET CYCLE -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 280 180" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Block 1: Spike -->
+                            <rect x="10" y="30" width="70" height="35" rx="5" fill="var(--accent-orange)" opacity="0.8" />
+                            <text x="45" y="52" fill="#fff" font-weight="bold" font-size="9" text-anchor="middle">1. SPIKE</text>
+                            
+                            <!-- Arrow 1 -->
+                            <path d="M 80 47 L 105 47" fill="none" stroke="var(--accent-cyan)" stroke-width="1.5" />
+                            <polygon points="105,47 98,44 98,50" fill="var(--accent-cyan)" />
+                            
+                            <!-- Block 2: Channel -->
+                            <rect x="105" y="30" width="70" height="35" rx="5" fill="var(--accent-purple)" opacity="0.8" />
+                            <text x="140" y="52" fill="#fff" font-weight="bold" font-size="9" text-anchor="middle">2. CHANNEL</text>
+                            
+                            <!-- Arrow 2 -->
+                            <path d="M 175 47 L 200 47" fill="none" stroke="var(--accent-cyan)" stroke-width="1.5" />
+                            <polygon points="200,47 193,44 193,50" fill="var(--accent-cyan)" />
+                            
+                            <!-- Block 3: Trading Range -->
+                            <rect x="200" y="30" width="70" height="35" rx="5" fill="var(--accent-cyan)" opacity="0.8" />
+                            <text x="235" y="52" fill="#0a0c14" font-weight="bold" font-size="9" text-anchor="middle">3. RANGE</text>
+                            
+                            <!-- Return curved path -->
+                            <path d="M 235 65 C 235 125 45 125 45 65" fill="none" stroke="var(--accent-yellow)" stroke-width="2" stroke-dasharray="3,3" />
+                            <text x="140" y="130" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)">➔ 4. BREAKOUT MỚI (Spike mới)</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 16: M2 - CHUYỂN TRẠNG THÁI -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 5: Dự Báo Chuyển Trạng Thái">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Bối Cảnh & Trạng Thái Thị Trường</span>
+                    <span class="slide-number-tag">Trang 16/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-m2s16-title">Bài 5: Kỹ Thuật Dự Báo <span>Chuyển Dịch Trạng Thái</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-m2s16-desc">
+                        <div class="card-title accent-orange">🔄 Dấu Hiệu Channel Kiệt Sức</div>
+                        <p>Làm sao để biết một xu hướng Channel đã kiệt sức để chuyển sang giao dịch hai biên của Trading Range?</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.2rem;">
+                            <li><strong>Dấu hiệu 1:</strong> Đường xu hướng (Trendline) bị phá vỡ dứt khoát bởi một cây nến ngược hướng mạnh.</li>
+                            <li><strong>Dấu hiệu 2:</strong> Giá hồi quy quay lại test đỉnh cũ nhưng hoàn toàn thất bại, tạo mẫu hình Double Top hoặc Lower High cạn lực.</li>
+                        </ul>
+                    </div>
+
+                    <!-- SVG DIAGRAM: TRANSITION FORECAST -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 280 180" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Trendline -->
+                            <line x1="20" y1="140" x2="190" y2="70" stroke="var(--accent-purple)" stroke-width="1.5" />
+                            <!-- Price path showing breakout and test fail -->
+                            <path d="M 30 135 
+                                     L 70 95 
+                                     L 100 115 
+                                     L 140 80 
+                                     L 165 105 
+                                     L 180 75
+                                     L 205 118
+                                     L 245 78
+                                     L 260 120" 
+                                  fill="none" stroke="var(--accent-cyan)" stroke-width="2" />
+                            
+                            <!-- Highlight Breakout -->
+                            <circle cx="205" cy="118" r="6" fill="none" stroke="var(--accent-red)" stroke-width="1.5" class="pulse-effect" />
+                            <text x="215" y="135" class="text-chart" fill="var(--accent-red)">Gãy Trendline</text>
+
+                            <!-- Highlight Test fail -->
+                            <circle cx="245" cy="78" r="6" fill="none" stroke="var(--accent-yellow)" stroke-width="1.5" class="pulse-yellow-effect" />
+                            <text x="245" y="65" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)">Test Đỉnh Fail</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 17: M2 - THỊ TRƯỜNG DỄ TRADE -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 6: Thị Trường Dễ Giao Dịch">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Bối Cảnh & Trạng Thái Thị Trường</span>
+                    <span class="slide-number-tag">Trang 17/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-m2s17-title">Bài 6: Nhận Diện Thị Trường <span>Dễ Giao Dịch (High Edge)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-m2s17-desc">
+                        <div class="card-title">🟢 Tight Channel (Xu Hướng Mạnh)</div>
+                        <p>Là nơi dòng tiền tổ chức đang di chuyển đơn hướng cực kỳ dứt khoát. Xác suất thắng của các lệnh đi theo xu hướng ở đây đạt mức **60% - 70%**.</p>
+                        <p style="margin-top:0.3rem;"><strong>Đặc điểm nhận diện:</strong> Giá bám sát EMA 20 dốc đứng. Nhịp điều chỉnh pullback cực kỳ nông và ngắn (chỉ 1-3 cây nến nhỏ đi ngang).</p>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-cyan); background:rgba(0,255,204,0.02);">
+                        <div class="card-title">🚀 Chiến Lược Thực Chiến Tối Ưu</div>
+                        <p>"Khi xu hướng quá dốc, bạn sẽ có cảm giác sợ hãi khẩn trương vì giá chạy liên tục không hồi sâu."</p>
+                        <div class="highlight-box" style="margin-top:0.3rem;">
+                            💡 **Hành động:** Chấp nhận mua đuổi ở các nến đóng cửa đẹp hoặc đặt lệnh chờ Buy Stop trên đỉnh nến trước. Giao dịch thuận xu hướng có biên lợi nhuận khổng lồ.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 18: M2 - THỊ TRƯỜNG KHÓ TRADE -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 6: Thị Trường Khó Giao Dịch">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Bối Cảnh & Trạng Thái Thị Trường</span>
+                    <span class="slide-number-tag">Trang 18/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-m2s18-title">Bài 6: Nhận Diện Thị Trường <span>Khó Giao Dịch (Low Edge)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-m2s18-desc">
+                        <div class="card-title accent-red">🚨 Vùng Giằng Co Chặt Chẽ (Nhiễu)</div>
+                        <p>Vùng giằng co cực hẹp, nơi các máy tính thuật toán của tổ chức liên tục quét thanh khoản hai đầu. Xác suất thắng ở đây cực thấp **<40%**.</p>
+                        <p style="margin-top:0.3rem;"><strong>Đặc điểm nhận diện:</strong> Nến xanh đỏ chằng chịt, thân cực nhỏ xếp chồng lên nhau liên tục, đuôi dài hai đầu, đường EMA 20 phẳng lì nằm ngang.</p>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-orange); background:rgba(255,87,34,0.02); justify-content:center; gap:0.5rem;">
+                        <div class="card-title accent-orange">🔒 Quy Tắc Sinh Tồn Số 1</div>
+                        <p style="font-weight:bold; color:#fff;">ĐỨNG NGOÀI QUAN SÁT.</p>
+                        <p>Đừng bao giờ cố giao dịch khi thị trường không cho bạn bất kỳ lợi thế xác suất rõ ràng nào. Mua breakout lập tức dính trap, bán đáy lập tức dính spring giật ngược.</p>
+                        <p style="color:var(--accent-yellow); font-size:12px; font-weight:bold;">➔ Đóng máy bảo vệ vốn là một giao dịch chiến thắng!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 19: M2 - BÀI TẬP -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 6: Bài Tập Thực Hành">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Bối Cảnh & Trạng Thái Thị Trường</span>
+                    <span class="slide-number-tag">Trang 19/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-m2s19-title">Bài 6: Bài Tập Rèn Luyện <span>Nhận Diện Bối Cảnh</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-m2s19-desc">
+                        <div class="card-title">📝 Bài Tập Tuần Này</div>
+                        <p>Kỹ năng nhận diện bối cảnh nhanh chóng sẽ cứu bạn khỏi hàng trăm lệnh thua ngớ ngẩn.</p>
+                        <p style="margin-top:0.3rem;">Mở biểu đồ của **5 sản phẩm khác nhau** bất kỳ. Phân tích bối cảnh hiện tại của từng sản phẩm: Chỉ ra 3 dấu hiệu kỹ thuật trên chart để chứng minh bối cảnh đó thuộc trạng thái "Dễ giao dịch" hay "Khó giao dịch/Nhiễu".</p>
+                    </div>
+                    <div class="card active" style="border-color: var(--accent-yellow); background: rgba(212,255,0,0.02);">
+                        <div class="card-title accent-yellow">🧠 Câu Hỏi Thực Chiến Mentor</div>
+                        <ul class="bullet-list accent-yellow" style="gap:0.4rem; margin-top:0.2rem;">
+                            <li>Tại sao cấm tuyệt đối mua breakout khi giá đang nằm trong một Trading Range chặt chẽ?</li>
+                            <li>Sự luân chuyển chu kỳ thị trường Spike -> Channel -> Range bắt nguồn từ cơ chế đấu giá như thế nào?</li>
+                            <li>Dấu hiệu kỹ thuật rõ ràng nhất báo hiệu Channel kết thúc để chuyển sang Range là gì?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             MODULE 3: CẤU TRÚC XU HƯỚNG & CÚ HỒI (BÀI 7, 8, 9)
+             ========================================================================= -->
+
+        <!-- ==================== SLIDE 20: MODULE 3 - BAI 7 ==================== -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài 7: Xu hướng & Climax">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 3: Cấu Trúc Xu Hướng & Cú Hồi</span>
+                    <span class="slide-number-tag">Trang 20/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s2-title">Bài 7: <span>Cấu Trúc Xu Hướng Bền Vững & Dấu Hiệu Climax</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s2-desc">
+                        <div class="card-title">🔥 1. Cơ Chế Đấu Giá Trong Xu Hướng</div>
+                        <p>Xu hướng bền vững là khi hai phe Bulls và Bears liên tục đạt thỏa thuận di chuyển giá lên cao hơn (HH/HL) hoặc xuống thấp hơn (LH/LL) một cách trật tự. Động lượng (momentum) được duy trì đều đặn mà không có sự tăng tốc quá mức.</p>
+                        <div class="card-title accent-orange" style="margin-top:0.4rem;">⚠️ 2. Dấu Hiệu Climax (Kiệt Sức)</div>
+                        <p>Climax xảy ra khi giá tăng/giảm cực mạnh, cực nhanh bằng một chuỗi các Trend Bar khổng lồ. Bản chất thực chiến: Đây là <strong>Buying/Selling Climax (Mua/Bán kiệt quệ)</strong>. Sau Climax, thị trường bắt buộc phải chuyển sang giai đoạn đi ngang hoặc đảo chiều.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">📋 Checklist Nhận Diện Xu Hướng Yếu Dần</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.5rem; margin-top:0.4rem;">
+                            <li><strong>1. Thân nến nhỏ dần:</strong> Các nến có thân nhỏ lại kèm râu nến dài hơn khi tiến sát các đỉnh/đáy mới.</li>
+                            <li><strong>2. Sự chồng lấn (Overlap):</strong> Xuất hiện nhiều nến Doji/Range bar xếp chồng lên nhau liên tục, chứng tỏ không có sự đồng thuận đẩy giá dứt khoát.</li>
+                            <li><strong>3. Hồi quy sâu (Deep Pullback):</strong> Nhịp pullback ngày càng sâu và bắt đầu xâm phạm sâu vào vùng đỉnh/đáy cũ (HL cũ bị quét râu).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 21: MODULE 3 - BAI 8 ==================== -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài 8: Two-Legged Pullback">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 3: Cấu Trúc Xu Hướng & Cú Hồi</span>
+                    <span class="slide-number-tag">Trang 21/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s3-title">Bài 8: Nhịp Pullback Chất Lượng Cao <span>(Two-Legged Pullback)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s3-desc">
+                        <div class="card-title">🎯 Cơ Chế Hoạt Động High 2 / Low 2</div>
+                        <p>Trong một xu hướng tăng mạnh, cú hồi đầu tiên (Leg 1) tạo ra điểm kích hoạt <strong>High 1</strong>. Phe Short cố gắng đè giá xuống lần 2 (Leg 2) tạo đáy mới.</p>
+                        <p style="margin-top:0.3rem;">Tại Leg 2, khi lực bán hoàn toàn cạn kiệt, giá quay đầu vượt đỉnh nến trước tạo ra điểm kích hoạt <strong>High 2</strong>. Đây là điểm phe Short bị kẹt (trapped) và phải cắt lỗ gấp, đồng thời phe Mua lỡ tàu dồn dập vào lệnh tạo áp lực mua kép.</p>
+                        <div class="highlight-box" style="margin-top:0.3rem;">
+                            💡 <strong>Quy tắc dốc thoải:</strong> Một nhịp pullback chất lượng cao phải có độ dốc thoải và volume giảm dần so với nhịp tăng Spike trước đó.
+                        </div>
+                    </div>
+                    
+                    <!-- SVG DIAGRAM: HIGH 2 PULLBACK -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Background grids -->
+                            <line x1="20" y1="170" x2="260" y2="170" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+                            <line x1="20" y1="110" x2="260" y2="110" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+                            <line x1="20" y1="50" x2="260" y2="50" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+
+                            <!-- LEG 1 TREND BARS (BULL) -->
+                            <!-- Candle 1 -->
+                            <line x1="40" y1="130" x2="40" y2="170" class="wick bull" />
+                            <rect x="35" y="140" width="10" height="25" class="candle-body bull" />
+                            <!-- Candle 2 -->
+                            <line x1="60" y1="90" x2="60" y2="140" class="wick bull" />
+                            <rect x="55" y="100" width="10" height="35" class="candle-body bull" />
+                            <!-- Candle 3 (Spike High) -->
+                            <line x1="80" y1="60" x2="80" y2="110" class="wick bull" />
+                            <rect x="75" y="70" width="10" height="30" class="candle-body bull" />
+
+                            <!-- PULLBACK LEG 1 (BEAR) -->
+                            <!-- Candle 4 (Pullback 1) -->
+                            <line x1="100" y1="80" x2="100" y2="120" class="wick bear" />
+                            <rect x="95" y="85" width="10" height="25" class="candle-body bear" />
+                            <!-- Candle 5 (Attempt Up - High 1 Trigger) -->
+                            <line x1="120" y1="75" x2="120" y2="110" class="wick bull" />
+                            <rect x="115" y="80" width="10" height="20" class="candle-body bull" />
+                            <text x="120" y="70" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)">H1</text>
+
+                            <!-- PULLBACK LEG 2 (BEAR) -->
+                            <!-- Candle 6 (Pullback 2) -->
+                            <line x1="140" y1="90" x2="140" y2="135" class="wick bear" />
+                            <rect x="135" y="95" width="10" height="30" class="candle-body bear" />
+                            <!-- Candle 7 (Exhausted seller - small Doji) -->
+                            <line x1="160" y1="105" x2="160" y2="130" class="wick doji" />
+                            <rect x="155" y="112" width="10" height="10" class="candle-body doji" />
+
+                            <!-- HIGH 2 TRIGGER BAR (BULL) -->
+                            <!-- Candle 8 (High 2 Trigger) -->
+                            <line x1="180" y1="70" x2="180" y2="125" class="wick bull" />
+                            <rect x="175" y="85" width="10" height="30" class="candle-body bull" />
+                            <text x="180" y="65" class="text-chart" text-anchor="middle" fill="var(--accent-cyan)">H2 Entry</text>
+
+                            <!-- Trapped Shorts box -->
+                            <rect x="130" y="90" width="45" height="48" fill="none" stroke="var(--accent-orange)" stroke-width="1.5" stroke-dasharray="3,3" class="pulse-yellow-effect" />
+                            <text x="152" y="150" class="text-chart" text-anchor="middle" fill="var(--accent-orange)">Bẫy Shorts</text>
+
+                            <!-- Upward path projection -->
+                            <path d="M 185 85 L 210 50 L 235 30" fill="none" stroke="var(--accent-cyan)" stroke-width="2.5" stroke-dasharray="4,4" class="draw-line" />
+                            <polygon points="235,30 227,33 232,38" fill="var(--accent-cyan)" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 22: MODULE 3 - BAI 9 ==================== -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài 9: Buildup (Bob Volman)">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 3: Cấu Trúc Xu Hướng & Cú Hồi</span>
+                    <span class="slide-number-tag">Trang 22/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s4-title">Bài 9: Nghệ Thuật Nén Giá <span>(Buildup) Của Bob Volman</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s4-desc">
+                        <div class="card-title accent-yellow">⚙️ Khái Niệm Buildup (Độ Nén)</div>
+                        <p>Trước khi giá phá vỡ một cản quan trọng hoặc kết thúc pullback, nó cần một giai đoạn **nén giá chặt chẽ (Buildup)**. Các nến xếp sát nhau, thân nến nhỏ dần, biên độ dao động cực hẹp bám sát EMA 20 hoặc vùng kháng cự/hỗ trợ.</p>
+                        <div class="card-title accent-cyan" style="margin-top:0.4rem;">💡 Ý Nghĩa Thực Chiến</div>
+                        <p>Buildup thể hiện sự tích lũy áp lực (pressure accumulation). Nó giống như lò xo bị nén chặt. Khi giá breakout khỏi vùng Buildup này, nó sẽ bùng nổ cực kỳ nhanh và dứt khoát do phe thua cuộc buộc phải cắt lỗ ồ ạt.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-orange">🎯 Quy Tắc Vào Lệnh Tại Vùng Nén</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.5rem; margin-top:0.3rem;">
+                            <li><strong>Vị trí:</strong> Vùng nén phải nằm ngay sát cản ngang (Hỗ trợ/Kháng cự) hoặc đường EMA 20 động.</li>
+                            <li><strong>Kích hoạt lệnh:</strong> Đặt lệnh chờ Buy Stop (ở phía trên đỉnh vùng nén) hoặc Sell Stop (ở phía dưới đáy vùng nén).</li>
+                            <li><strong>Cắt lỗ (Stop Loss):</strong> Đặt ngay phía đối diện của vùng nén nhỏ (SL cực kỳ ngắn và an toàn).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             MODULE 4: KHÁNG CỰ, HỖ TRỢ & ĐƯỜNG XU HƯỚNG (BÀI 10, 11, 12)
+             ========================================================================= -->
+
+        <!-- ==================== SLIDE 23: MODULE 4 - BAI 10 ==================== -->
+        <section class="slide" data-module="Module 4" data-lesson="Bài 10: Dynamic Support EMA 20">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 4: Kháng Cự, Hỗ Trợ & Đường Xu Hướng</span>
+                    <span class="slide-number-tag">Trang 23/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s5-title">Bài 10: Hỗ Trợ / Kháng Cự Động <span>(Đường EMA 20)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s5-desc">
+                        <div class="card-title accent-cyan">📈 Vai Trò Của Dynamic Value Zone</div>
+                        <p>Đường trung bình động lũy thừa EMA 20 không phải là chỉ báo trễ thông thường. Trong Price Action, nó là **Vùng giá trị động (Dynamic Value Zone)**.</p>
+                        <p>Trong xu hướng mạnh, giá luôn hồi quy về EMA 20 để thu hút lực cầu/cung mới. Nếu giá bám sát EMA 20 và liên tục rút chân tại đó, xu hướng đang được bảo vệ cực tốt bởi Smart Money.</p>
+                        <div class="card-title accent-yellow" style="margin-top:0.4rem;">⚠️ EMA 20 Gap Bars (Nến Khoảng Trống)</div>
+                        <p>Khi giá nằm quá xa EMA 20 trong hơn 20 cây nến liên tiếp, thị trường đang ở trạng thái Climax cực đoan. Cú pullback hồi về EMA 20 đầu tiên sau đó luôn là cơ hội giao dịch có xác suất thắng cực cao.</p>
+                    </div>
+
+                    <!-- SVG DIAGRAM: EMA 20 BOUNCE & GAP BAR -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- EMA 20 Line -->
+                            <path d="M 10 160 Q 60 140, 110 120 T 210 80 T 270 40" fill="none" stroke="var(--accent-cyan)" stroke-width="2.5" class="draw-line" style="filter: drop-shadow(0 0 3px rgba(0, 255, 204, 0.4));" />
+                            <text x="240" y="30" class="text-chart" fill="var(--accent-cyan)">EMA 20</text>
+
+                            <!-- Bounce 1 -->
+                            <line x1="50" y1="120" x2="50" y2="150" class="wick bull" />
+                            <rect x="45" y="125" width="10" height="20" class="candle-body bull" />
+                            <!-- Touch & Bounce (rút chân râu dài chạm EMA) -->
+                            <line x1="90" y1="95" x2="90" y2="140" class="wick bull" />
+                            <rect x="85" y="100" width="10" height="25" class="candle-body bull" />
+                            <circle cx="90" cy="130" r="6" fill="none" stroke="var(--accent-yellow)" stroke-width="1.5" class="pulse-effect" />
+                            <text x="90" y="85" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)">Test EMA</text>
+
+                            <!-- Bounce 2 -->
+                            <line x1="130" y1="75" x2="130" y2="115" class="wick bull" />
+                            <rect x="125" y="80" width="10" height="25" class="candle-body bull" />
+
+                            <!-- CLIMAX ROCKET & GAP BAR (Nến nằm ngoài hoàn toàn) -->
+                            <line x1="180" y1="35" x2="180" y2="65" class="wick bull" />
+                            <rect x="175" y="40" width="10" height="22" class="candle-body bull" />
+                            
+                            <line x1="210" y1="15" x2="210" y2="45" class="wick bull" />
+                            <rect x="205" y="20" width="10" height="20" class="candle-body bull" style="fill: var(--accent-yellow); stroke: var(--accent-yellow);" />
+                            
+                            <!-- Bracket indicating Gap Bar -->
+                            <path d="M 203 10 L 198 10 L 198 50 L 203 50" fill="none" stroke="var(--accent-orange)" stroke-width="1" />
+                            <text x="170" y="12" class="text-chart" fill="var(--accent-orange)">Gap Bar</text>
+                            <text x="170" y="24" class="text-chart" fill="var(--accent-orange)">(Mua kiệt quệ)</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 24: MODULE 4 - BAI 11 ==================== -->
+        <section class="slide" data-module="Module 4" data-lesson="Bài 11: Swing High/Low">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 4: Kháng Cự, Hỗ Trợ & Đường Xu Hướng</span>
+                    <span class="slide-number-tag">Trang 24/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s6-title">Bài 11: Swing High / Low <span>& Kỹ Thuật Vẽ Cản Tối Giản</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s6-desc">
+                        <div class="card-title">📌 1. Swing High & Swing Low Là Gì?</div>
+                        <p><strong>Swing High (Đỉnh sóng):</strong> Cây nến có đỉnh cao hơn ít nhất 2 cây nến đứng trước và 2 cây nến đứng sau nó.</p>
+                        <p><strong>Swing Low (Đáy sóng):</strong> Cây nến có đáy thấp hơn ít nhất 2 cây nến đứng trước và 2 cây nến đứng sau nó.</p>
+                        <div class="highlight-box" style="margin-top:0.4rem;">
+                            ⚠️ <strong>Quy tắc vẽ cản tối giản:</strong> Chỉ vẽ các cản đi qua các đỉnh/đáy cực kỳ rõ ràng trên biểu đồ lớn. Tránh vẽ quá nhiều đường kẻ gây nhiễu và làm rối loạn tư duy.
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">🔄 2. Sự Chuyển Vai Trò (S/R Flip)</div>
+                        <p>Một đỉnh cũ (Kháng cự) khi bị phá vỡ dứt khoát bằng một lực mua lớn sẽ chuyển thành đáy mới (Hỗ trợ) cho nhịp pullback tiếp theo của giá.</p>
+                        <p style="margin-top:0.3rem;">Bản chất thực chiến: Tại vùng cản này, phe Short bị kẹt cũ sẽ tìm cách mua hòa vốn để thoát lệnh, đồng thời phe Mua mới nhảy vào mua để follow-through xu hướng, tạo ra **vùng hợp lưu vàng** có xác suất thắng cực cao.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 25: MODULE 4 - BAI 12 ==================== -->
+        <section class="slide" data-module="Module 4" data-lesson="Bài 12: Trendline & Overshoot">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 4: Kháng Cự, Hỗ Trợ & Đường Xu Hướng</span>
+                    <span class="slide-number-tag">Trang 25/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s7-title">Bài 12: Trendline, Trend Channel Line <span>& Điểm Overshoot</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s7-desc">
+                        <div class="card-title accent-orange">📐 Vẽ Trendline & Kênh Giá Đúng</div>
+                        <p><strong>Trendline:</strong> Nối các đáy HL (xu hướng tăng) hoặc đỉnh LH (xu hướng giảm). Sự phá vỡ trendline là dấu hiệu đầu tiên cảnh báo xu hướng chính bắt đầu suy yếu.</p>
+                        <p><strong>Trend Channel Line (Kênh giá):</strong> Đường song song vẽ từ đỉnh/đáy đối diện bao bọc bước đi của giá.</p>
+                        <div class="card-title accent-yellow" style="margin-top:0.4rem;">💥 Điểm Overshoot (Vượt Ngưỡng)</div>
+                        <p>Khi giá bỗng nhiên tăng tốc cực mạnh, chọc thủng đường kênh giá phía đối diện (overshoot) rồi ngay lập tức rút chân đóng cửa ngược lại vào trong kênh. Đây là dấu hiệu **Buy/Sell Climax cực độ**, báo hiệu cú đảo chiều cực mạnh sắp diễn ra.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">📋 Kỹ Thuật Giao Dịch Overshoot</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.5rem; margin-top:0.3rem;">
+                            <li><strong>1. Xác định:</strong> Giá phải tăng/giảm dốc đứng đâm thủng kênh giá.</li>
+                            <li><strong>2. Tín hiệu:</strong> Xuất hiện nến rút chân đảo chiều mạnh (Reversal Bar) đóng cửa phía trong kênh.</li>
+                            <li><strong>3. Kích hoạt:</strong> Vào lệnh ngược hướng Climax ngay tại điểm đóng cửa nến tín hiệu hoặc đặt lệnh chờ.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             MODULE 5: NẾN TÍN HIỆU & SETUP VÀO LỆNH (BÀI 13, 14, 15)
+             ========================================================================= -->
+
+        <!-- ==================== SLIDE 26: MODULE 5 - BAI 13 ==================== -->
+        <section class="slide" data-module="Module 5" data-lesson="Bài 13: Signal Bar vs Entry Bar">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 5: Nến Tín Hiệu & Setup Vào Lệnh</span>
+                    <span class="slide-number-tag">Trang 26/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s8-title">Bài 13: Sự Khác Biệt Chí Mạng <span>Giữa Signal Bar & Entry Bar</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s8-desc">
+                        <div class="card-title accent-yellow">⚠️ 1. Signal Bar (Nến Tín Hiệu)</div>
+                        <p>Là cây nến cho bạn tín hiệu rằng setup giao dịch đã hoàn tất (ví dụ: một nến Pin bar rút chân tuyệt đẹp chạm EMA 20). <strong>Lỗi chí mạng:</strong> Rất nhiều trader mua ngay lập tức khi nến này vừa đóng cửa.</p>
+                        <div class="card-title accent-cyan" style="margin-top:0.4rem;">🎯 2. Entry Bar (Nến Kích Hoạt)</div>
+                        <p>Là cây nến tiếp theo phá vỡ đỉnh (đối với lệnh mua) hoặc đáy (đối với lệnh bán) của nến tín hiệu trước đó. Lệnh của bạn sẽ tự động được khớp thông qua lệnh chờ <strong>Buy Stop / Sell Stop</strong> đặt cách đỉnh/đáy 1-2 ticks.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-orange">🛡️ Quy Tắc Bảo Vệ Vốn Bắt Buộc</div>
+                        <p>Nếu cây nến tiếp theo sau nến tín hiệu <strong>không phá vỡ</strong> được đỉnh/đáy của nến tín hiệu, điều đó có nghĩa là không có lực đẩy xác nhận (no follow-through).</p>
+                        <div class="highlight-box" style="margin-top:0.3rem; border-color: var(--accent-red); background: rgba(255, 59, 48, 0.02);">
+                            ❌ <strong>HÀNH ĐỘNG:</strong> Hủy ngay lập tức lệnh chờ mua/bán đang đặt. Không được duy trì lệnh chờ khi bối cảnh đã thay đổi. Đây là bộ lọc tuyệt vời giúp tránh hàng loạt cú bẫy giá đi ngang giằng co.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 27: MODULE 5 - BAI 14 ==================== -->
+        <section class="slide" data-module="Module 5" data-lesson="Bài 14: Inside & Outside Bars">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 5: Nến Tín Hiệu & Setup Vào Lệnh</span>
+                    <span class="slide-number-tag">Trang 27/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s9-title">Bài 14: Đọc Vị <span>Inside Bar, Outside Bar & Reversal Bar</span></h2>
+                <div class="grid-3-cards">
+                    <div class="card" id="editable-s9-card1">
+                        <div class="card-title accent-cyan">🔄 Reversal Bar</div>
+                        <p>Nến đảo chiều dứt khoát. Trong xu hướng tăng, nó là nến gấu có râu trên dài, đóng cửa sát đáy.</p>
+                        <p style="margin-top:0.3rem;">Thể hiện sự từ chối giá (Rejection) cực kỳ mạnh mẽ của dòng tiền lớn tại các vùng cản.</p>
+                    </div>
+                    <div class="card" id="editable-s9-card2">
+                        <div class="card-title accent-yellow">📦 Inside Bar</div>
+                        <p>Cây nến nằm hoàn toàn trong biên độ High-Low của nến đứng trước.</p>
+                        <p style="margin-top:0.3rem;">Thể hiện trạng thái **tích lũy tạm thời, nén lực chờ bùng nổ**. Giao dịch breakout Inside Bar trong xu hướng mạnh có xác suất thắng rất cao.</p>
+                    </div>
+                    <div class="card" id="editable-s9-card3">
+                        <div class="card-title accent-orange">🚨 Outside Bar</div>
+                        <p>Cây nến bao phủ hoàn toàn (quét đỉnh và đáy) của nến đứng trước.</p>
+                        <p style="margin-top:0.3rem;">Thể hiện sự **quét thanh khoản hai đầu** cực kỳ dữ dội. Tránh giao dịch breakout Outside Bar nếu bối cảnh xu hướng không thực sự dốc và rõ ràng.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 28: MODULE 5 - BAI 15 ==================== -->
+        <section class="slide" data-module="Module 5" data-lesson="Bài 15: Kỹ thuật lỡ tàu">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 5: Nến Tín Hiệu & Setup Vào Lệnh</span>
+                    <span class="slide-number-tag">Trang 28/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s10-title">Bài 15: Kỹ Thuật Vào Lệnh <span>Khi Lỡ Tàu (Late & Missed Entry)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s10-desc">
+                        <div class="card-title accent-orange">❌ Sai Lầm Phổ Biến Của Trader</div>
+                        <p>Khi thị trường bùng nổ bằng một cây nến Spike cực dài mà không có lệnh. Rát nhiều người mắc lỗi **FOMO mua đuổi ngay tại đỉnh nến**. Đây là vị trí tồi tệ nhất vì Stop Loss của bạn quá xa và tỷ lệ Risk:Reward cực kỳ tệ hại.</p>
+                        <div class="card-title accent-cyan" style="margin-top:0.4rem;">🛡️ Giải Pháp Hợp Lý: Chờ First Pullback</div>
+                        <p>Tuyệt đối kiên nhẫn. Sau một cú breakout mạnh mẽ, thị trường luôn có xu hướng điều chỉnh nhịp đầu tiên (First Pullback after Breakout) hồi về đường EMA 20 hoặc vùng kháng cự cũ vừa bị phá vỡ.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">📋 Quy Trình Tìm Điểm Vào Lệnh Lỡ Tàu</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.5rem; margin-top:0.3rem;">
+                            <li><strong>Bước 1:</strong> Xác định cú breakout mạnh (Spike) đã xảy ra.</li>
+                            <li><strong>Bước 2:</strong> Chờ giá điều chỉnh từ từ với các nến thân nhỏ và volume giảm dần về vùng giá trị (EMA 20/Cản cũ).</li>
+                            <li><strong>Bước 3:</strong> Tìm một nến tín hiệu nhỏ, đặt lệnh chờ mua/bán khi giá phá vỡ đỉnh/đáy nến này. Stop Loss cực ngắn dưới đáy nến điều chỉnh.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             MODULE 6: BREAKOUT & FAILED BREAKOUT (BÀI 16, 17, 18)
+             ========================================================================= -->
+
+        <!-- ==================== SLIDE 29: MODULE 6 - BAI 16 ==================== -->
+        <section class="slide" data-module="Module 6" data-lesson="Bài 16: Breakout thành công">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 6: Breakout & Failed Breakout</span>
+                    <span class="slide-number-tag">Trang 29/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s11-title">Bài 16: Đặc Điểm Của Một Cú <span>Breakout Thành Công & Nền Giá</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s11-desc">
+                        <div class="card-title accent-cyan">🏗️ 1. Tầm Quan Trọng Của Nền Giá (Base)</div>
+                        <p>Một cú breakout bền vững và chất lượng cao bắt buộc phải có một vùng tích lũy, đi ngang nén chặt (Base) trước đó. Nền giá này càng chặt chẽ và kéo dài, áp lực nén càng lớn, lực bùng nổ khi phá vỡ càng đi xa.</p>
+                        <div class="card-title accent-yellow" style="margin-top:0.4rem;">🔥 2. Đặc Điểm Nến Breakout Hoàn Hảo</div>
+                        <p>Nến phá vỡ phải là một cây <strong>Trend Bar cực lớn</strong>. Thân nến dài, dứt khoát, đóng cửa sát biên phá vỡ với volume tăng vọt so với trung bình.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-orange">📈 3. Nến Xác Nhận (Follow-through)</div>
+                        <p>Yếu tố quan trọng nhất để phân biệt phá vỡ thật với phá vỡ giả là sự xuất hiện của <strong>nến xác nhận (Follow-through bar)</strong> ngay sau nến breakout.</p>
+                        <div class="highlight-box" style="margin-top:0.3rem;">
+                            💡 Nến tiếp theo tiếp tục đóng cửa dứt khoát theo hướng phá vỡ, xác nhận dòng tiền lớn hoàn toàn làm chủ cuộc chơi và phe đối diện đã đầu hàng.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 30: MODULE 6 - BAI 17 ==================== -->
+        <section class="slide" data-module="Module 6" data-lesson="Bài 17: Bẫy giá Spring/Upthrust">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 6: Breakout & Failed Breakout</span>
+                    <span class="slide-number-tag">Trang 30/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s12-title">Bài 17: Bẫy Giá (Trap) - <span>Tinh Hoa Spring & Upthrust</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s12-desc">
+                        <div class="card-title accent-yellow">🪤 Cơ Chế Hoạt Động Của Bẫy Thanh Khoản</div>
+                        <p><strong>Spring (Bẫy bán):</strong> Giá giả vờ phá vỡ xuống dưới biên hỗ trợ cũ để dụ dỗ phe Short bán đuổi và quét Stop Loss của phe Mua cũ. Ngay sau đó, dòng tiền lớn hấp thụ toàn bộ lực bán và đẩy ngược giá đóng cửa lên trên hỗ trợ.</p>
+                        <p style="margin-top:0.3rem;"><strong>Upthrust (Bẫy mua):</strong> Giá giả vờ breakout lên trên kháng cự rồi giật ngược đóng cửa phía dưới cản.</p>
+                        <div class="highlight-box" style="margin-top:0.3rem;">
+                            🎯 <strong>Cách giao dịch:</strong> Đặt Buy Stop trên đỉnh nến rút chân Spring, hoặc Sell Stop dưới đáy nến rút chân Upthrust. SL cực ngắn.
+                        </div>
+                    </div>
+
+                    <!-- SVG DIAGRAM: SPRING TRAP -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Support Level Horizontal Line -->
+                            <line x1="20" y1="120" x2="260" y2="120" stroke="var(--accent-yellow)" stroke-width="1.5" stroke-dasharray="4,4" />
+                            <text x="230" y="135" class="text-chart" fill="var(--accent-yellow)">Hỗ Trợ</text>
+
+                            <!-- Pre-trap consolidation candles -->
+                            <line x1="40" y1="90" x2="40" y2="115" class="wick bear" />
+                            <rect x="35" y="93" width="10" height="18" class="candle-body bear" />
+                            
+                            <line x1="70" y1="95" x2="70" y2="125" class="wick bull" />
+                            <rect x="65" y="102" width="10" height="15" class="candle-body bull" />
+
+                            <line x1="100" y1="100" x2="100" y2="122" class="wick bear" />
+                            <rect x="95" y="104" width="10" height="14" class="candle-body bear" />
+
+                            <!-- THE TRAP BAR (Dips below support, long wick) -->
+                            <line x1="130" y1="105" x2="130" y2="165" class="wick bear" style="stroke: var(--accent-orange); stroke-width: 2.5px;" />
+                            <rect x="125" y="112" width="10" height="12" class="candle-body bear" style="fill: var(--accent-orange); stroke: var(--accent-orange);" />
+                            
+                            <!-- Box indicating liquidity swept -->
+                            <rect x="120" y="125" width="20" height="42" fill="none" stroke="var(--accent-red)" stroke-width="1.2" stroke-dasharray="2,2" class="pulse-effect" />
+                            <text x="130" y="178" class="text-chart" text-anchor="middle" fill="var(--accent-red)">Quét SL & Bẫy Shorts</text>
+
+                            <!-- THE REVERSAL CONFIRMATION BAR (Aggressive Bull) -->
+                            <line x1="160" y1="90" x2="160" y2="125" class="wick bull" />
+                            <rect x="155" y="92" width="10" height="28" class="candle-body bull" />
+                            <text x="160" y="80" class="text-chart" text-anchor="middle" fill="var(--accent-cyan)">Spring Entry</text>
+
+                            <!-- Fast recovery projection line -->
+                            <path d="M 165 92 L 195 55 L 225 35" fill="none" stroke="var(--accent-cyan)" stroke-width="2.5" stroke-dasharray="4,4" class="draw-line" />
+                            <polygon points="225,35 217,38 222,43" fill="var(--accent-cyan)" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 31: MODULE 6 - BAI 18 ==================== -->
+        <section class="slide" data-module="Module 6" data-lesson="Bài 18: Failed Failure">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 6: Breakout & Failed Breakout</span>
+                    <span class="slide-number-tag">Trang 31/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s13-title">Bài 18: Giao Dịch Failed Failure <span>(Sự Thất Bại Của Cú Phá Vỡ Giả)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s13-desc">
+                        <div class="card-title accent-orange">🧠 Logic Failed Failure (Al Brooks)</div>
+                        <p>Khi một cú breakout giả (Trap) xuất hiện, phe đối diện cố gắng nhảy vào để đảo chiều hoàn toàn xu hướng nhưng <strong>thất bại thảm hại (Failed Reversal)</strong>.</p>
+                        <p style="margin-top:0.3rem;">Giá nhanh chóng quay đầu ngược lại và tiếp tục phá vỡ cực kỳ dứt khoát theo hướng breakout ban đầu.</p>
+                        <div class="highlight-box" style="margin-top:0.3rem;">
+                            💡 <strong>Ý nghĩa:</strong> Cú đảo chiều giả thất bại xác nhận phe đảo chiều đã hoàn toàn kiệt sức và bị kẹt. Lượng lệnh dừng lỗ của họ bị kích hoạt sẽ tạo động lượng đẩy giá đi cực kỳ nhanh và mạnh mẽ.
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">📋 Quy Trình Giao Dịch Thực Chiến</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.5rem; margin-top:0.3rem;">
+                            <li><strong>Bước 1:</strong> Phát hiện giá breakout biên ngang rồi giật ngược tạo bẫy giá giả (Trap).</li>
+                            <li><strong>Bước 2:</strong> Phe đảo chiều cố đẩy giá ngược lại nhưng xuất hiện nến từ chối, giá không thể đi xa.</li>
+                            <li><strong>Bước 3:</strong> Đặt lệnh Buy/Sell Stop ngay khi giá quay lại phá vỡ đỉnh/đáy nến breakout ban đầu. Kỳ vọng một sóng đẩy cực lớn.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             MODULE 7: CÁC SETUP THỰC CHIẾN NÂN CAO (BÀI 19, 20)
+             ========================================================================= -->
+
+        <!-- ==================== SLIDE 32: MODULE 7 - BAI 19 ==================== -->
+        <section class="slide" data-module="Module 7" data-lesson="Bài 19: Block Break (Bob Volman)">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 7: Các Setup Thực Chiến Nâng Cao</span>
+                    <span class="slide-number-tag">Trang 32/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s14-title">Bài 19: Setup Block Break <span>& Pattern Break (Bob Volman)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s14-desc">
+                        <div class="card-title accent-cyan">📦 1. Block Break (BB) là gì?</div>
+                        <p>Là điểm phá vỡ một khối nến tích lũy chặt chẽ (Buildup) ngay sát đường EMA 20 động.</p>
+                        <p>Đây là setup scalping có xác suất thắng cực cao của Bob Volman. Sự nén chặt của khối nến thể hiện phe bán điều chỉnh hoàn toàn kiệt sức và đường EMA 20 nâng đỡ giá cực tốt.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">📐 2. Pattern Break (PB)</div>
+                        <p>Là điểm phá vỡ một mô hình nén chặt nhỏ (như tam giác nhỏ, cờ đuôi nheo) đang bám sát EMA 20 trong một xu hướng tăng/giảm mạnh mẽ.</p>
+                        <div class="highlight-box" style="margin-top:0.3rem;">
+                            💡 <strong>Lưu ý:</strong> Cả hai setup này đều yêu cầu Stop Loss cực kỳ ngắn đặt ngay phía bên kia của vùng nén nhỏ (chỉ vài ticks), mang lại tỷ lệ Risk:Reward tuyệt vời.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 33: MODULE 7 - BAI 20 ==================== -->
+        <section class="slide" data-module="Module 7" data-lesson="Bài 20: Double Pressure">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 7: Các Setup Thực Chiến Nâng Cao</span>
+                    <span class="slide-number-tag">Trang 33/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s15-title">Bài 20: Áp Lực Kép <span>& First Pullback After Breakout</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s15-desc">
+                        <div class="card-title accent-orange">🔥 1. Logic Áp Lực Kép (Double Pressure)</div>
+                        <p>Setup xuất hiện khi có hai luồng lực đẩy giá xảy ra đồng thời tại một thời điểm:</p>
+                        <p style="margin-top:0.2rem;"><strong>Lực đẩy 1:</strong> Phe Mua mới nhảy vào mua dồn dập tại vùng hợp lưu giá trị.</p>
+                        <p style="margin-top:0.2rem;"><strong>Lực đẩy 2:</strong> Phe Short bị bẫy giá buộc phải mua cắt lỗ hàng loạt để bảo vệ tài khoản (lệnh Stop Loss của phe Short thực chất là lệnh Mua chủ động).</p>
+                        <p style="margin-top:0.2rem;">Sự kết hợp này tạo ra một lực đẩy giá tăng vọt khổng lồ (Spike).</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">🛡️ 2. First Pullback After Breakout</div>
+                        <p>Là nhịp điều chỉnh đầu tiên sau một cú breakout mạnh mẽ ra khỏi vùng Trading Range tích lũy rộng lớn.</p>
+                        <div class="highlight-box" style="margin-top:0.3rem;">
+                            💡 <strong>Thực chiến:</strong> Đây được mệnh danh là điểm vào lệnh an toàn nhất cho xu hướng mới vì bối cảnh breakout đã được xác nhận hoàn toàn khỏe mạnh.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             MODULE 8: GIẢI MÃ MÔ HÌNH BIỂU ĐỒ (BÀI 21, 22, 23)
+             ========================================================================= -->
+
+        <!-- ==================== SLIDE 34: MODULE 8 - BAI 21 ==================== -->
+        <section class="slide" data-module="Module 8" data-lesson="Bài 21: Double Top/Bottom">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 8: Giải Mã Mô Hình Biểu Đồ</span>
+                    <span class="slide-number-tag">Trang 34/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s16-title">Bài 21: Hai Đỉnh / Hai Đáy <span>(Double Top / Bottom)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s16-desc">
+                        <div class="card-title accent-yellow">📊 Thống Kê Thần Kỳ (Thomas Bulkowski)</div>
+                        <p>Theo nghiên cứu thống kê thực tế trên hàng chục nghìn biểu đồ của Bulkowski:</p>
+                        <ul style="margin-top:0.3rem; display:flex; flex-direction:column; gap:0.3rem;">
+                            <li><strong>Tỷ lệ thất bại (Failure Rate):</strong> Cực kỳ thấp, chỉ khoảng <strong>9% - 15%</strong> nếu giao dịch đúng bối cảnh.</li>
+                            <li><strong>Measured Move trung bình:</strong> Khoảng tăng trung bình sau phá vỡ viền cổ đạt tới <strong>35% - 40%</strong> chiều cao mô hình.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">🧠 Giải Mã Dưới Lăng Kính Price Action</div>
+                        <p>Al Brooks giải thích: Double Bottom thực chất là **cú test lại đáy cũ thất bại**.</p>
+                        <p style="margin-top:0.3rem;">Nhịp đẩy thứ nhất tạo đáy 1. Giá hồi phục nhẹ. Nhịp đẩy thứ hai (đáy 2) cố gắng phá vỡ đáy 1 để tiếp diễn xu hướng giảm nhưng hoàn toàn bị chặn đứng bởi dòng tiền lớn hấp thụ (tạo bẫy giá Spring hoặc nến tín hiệu High 2 đảo chiều).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 35: MODULE 8 - BAI 22 ==================== -->
+        <section class="slide" data-module="Module 8" data-lesson="Bài 22: Vai Đầu Vai (H&S)">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 8: Giải Mã Mô Mô Hình Biểu Đồ</span>
+                    <span class="slide-number-tag">Trang 35/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s17-title">Bài 22: Vai Đầu Vai <span>(Head & Shoulders)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s17-desc">
+                        <div class="card-title accent-cyan">📈 Quy Trình Dịch Chuyển Cấu Trúc</div>
+                        <p>Vai Đầu Vai thực chất là **quy trình dịch chuyển cấu trúc xu hướng vi mô** từ tăng sang giảm:</p>
+                        <p style="margin-top:0.2rem;"><strong>Đầu (Head):</strong> Tạo đỉnh cao nhất (HH).</p>
+                        <p style="margin-top:0.2rem;"><strong>Vai phải (Right Shoulder):</strong> Không thể vượt qua đỉnh Head, tạo đỉnh thấp hơn (Lower High - LH). Sự xuất hiện của LH xác nhận phe Mua đã kiệt sức và cấu trúc xu hướng tăng chính thức bị tổn hại nghiêm trọng.</p>
+                        <div class="highlight-box" style="margin-top:0.2rem;">
+                            📊 <strong>Thống kê Bulkowski:</strong> Tần suất giá pullback test lại viền cổ sau breakout lên tới <strong>60% - 65%</strong>. Do đó, hãy kiên nhẫn chờ nhịp test viền cổ để vào lệnh thay vì bán đuổi.
+                        </div>
+                    </div>
+
+                    <!-- SVG DIAGRAM: HEAD & SHOULDERS -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Neckline -->
+                            <line x1="20" y1="130" x2="260" y2="130" stroke="var(--accent-orange)" stroke-width="1.5" stroke-dasharray="3,3" />
+                            <text x="220" y="145" class="text-chart" fill="var(--accent-orange)">Viền Cổ (Neckline)</text>
+
+                            <!-- H&S Price Path -->
+                            <path d="M 30 160 
+                                     L 60 100 
+                                     L 90 130 
+                                     L 130 60 
+                                     L 170 125 
+                                     L 200 95 
+                                     L 225 130 
+                                     L 245 165" 
+                                  fill="none" stroke="var(--accent-cyan)" stroke-width="2.5" class="draw-line" style="filter: drop-shadow(0 0 2px rgba(0, 255, 204, 0.3));" />
+
+                            <!-- Head & Shoulders Labels -->
+                            <circle cx="60" cy="100" r="5" fill="var(--accent-yellow)" class="pulse-yellow-effect" />
+                            <text x="60" y="85" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)">Vai Trái</text>
+
+                            <circle cx="130" cy="60" r="5" fill="var(--accent-red)" class="pulse-effect" />
+                            <text x="130" y="45" class="text-chart" text-anchor="middle" fill="var(--accent-red)">Đầu (HH)</text>
+
+                            <circle cx="200" cy="95" r="5" fill="var(--accent-yellow)" class="pulse-yellow-effect" />
+                            <text x="200" y="80" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)">Vai Phải (LH)</text>
+
+                            <!-- Breakout label -->
+                            <circle cx="225" cy="130" r="6" fill="none" stroke="var(--accent-orange)" stroke-width="1.5" />
+                            <text x="245" y="125" class="text-chart" fill="var(--accent-orange)">Breakout!</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 36: MODULE 8 - BAI 23 ==================== -->
+        <section class="slide" data-module="Module 8" data-lesson="Bài 23: Wedge & Flag">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 8: Giải Mã Mô Mô Hình Biểu Đồ</span>
+                    <span class="slide-number-tag">Trang 36/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s18-title">Bài 23: Tam Giác, Wedge <span>& Flag (Cờ Hiệu)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s18-desc">
+                        <div class="card-title accent-yellow">📐 Cái Nêm (Wedge) - 3 Nhịp Đẩy</div>
+                        <p>Thống kê của Bulkowski xác nhận Wedge là mô hình đảo chiều có độ tin cậy cực cao.</p>
+                        <p style="margin-top:0.3rem;">Price Action giải mã: Wedge thực chất là <strong>3 nhịp đẩy (Three Pushes)</strong> cố gắng di chuyển giá nhưng kiệt sức dần. Sau nhịp đẩy thứ 3, xu hướng hầu như sẽ quay đầu hoặc chuyển sang đi ngang Trading Range.</p>
+                    </div>
+
+                    <!-- SVG DIAGRAM: WEDGE REVERSAL -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Wedge converging lines -->
+                            <line x1="20" y1="140" x2="220" y2="70" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+                            <line x1="20" y1="80" x2="220" y2="60" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+
+                            <!-- Price line showing three pushes -->
+                            <path d="M 30 130 
+                                     L 60 78 
+                                     L 100 112
+                                     L 130 70 
+                                     L 165 92
+                                     L 195 64 
+                                     L 220 110
+                                     L 245 140" 
+                                  fill="none" stroke="var(--accent-cyan)" stroke-width="2.5" class="draw-line" />
+
+                            <!-- Highlight Push 1, 2, 3 -->
+                            <circle cx="60" cy="78" r="4" fill="var(--accent-yellow)" />
+                            <text x="60" y="65" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)">Nhịp 1</text>
+
+                            <circle cx="130" cy="70" r="4" fill="var(--accent-yellow)" />
+                            <text x="130" y="58" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)">Nhịp 2</text>
+
+                            <circle cx="195" cy="64" r="5" fill="var(--accent-red)" class="pulse-effect" />
+                            <text x="195" y="50" class="text-chart" text-anchor="middle" fill="var(--accent-red)">Nhịp 3 (Climax)</text>
+
+                            <text x="235" y="95" class="text-chart" fill="var(--accent-orange)">Đảo Chiều!</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             MODULE 9: VOLUME & MỐI QUAN HỆ NỖ LỰC - KẾT QUẢ (BÀI 24, 25)
+             ========================================================================= -->
+
+        <!-- ==================== SLIDE 37: MODULE 9 - BAI 24 ==================== -->
+        <section class="slide" data-module="Module 9" data-lesson="Bài 24: Effort vs Result">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 9: Volume & Quan Hệ Nỗ Lực - Kết Quả</span>
+                    <span class="slide-number-tag">Trang 37/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s19-title">Bài 24: Effort vs Result <span>(Nỗ Lực & Kết Quả VPA)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s19-desc">
+                        <div class="card-title accent-yellow">📊 Nguyên Lý Cốt Lõi VPA / VSA</div>
+                        <p><strong>Nỗ lực (Effort):</strong> Đại diện bởi thanh Volume (khối lượng giao dịch của dòng tiền lớn).</p>
+                        <p><strong>Kết quả (Result):</strong> Đại diện bởi biên độ thân nến (Spread).</p>
+                        <p style="margin-top:0.3rem;"><strong>Sự đồng thuận:</strong> Volume lớn đi kèm thân nến lớn ➔ Nỗ lực lớn đem lại kết quả xứng đáng. Xu hướng khỏe mạnh.</p>
+                        <p style="margin-top:0.3rem;"><strong>Sự bất đồng (Divergence):</strong> Volume cực lớn nhưng thân nến cực nhỏ, rút chân dài ➔ Nỗ lực khổng lồ nhưng không có kết quả. Báo hiệu dòng tiền lớn đang âm thầm hấp thụ ngược lại. Đảo chiều sắp diễn ra.</p>
+                    </div>
+
+                    <!-- SVG DIAGRAM: EFFORT VS RESULT -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Left: Consensus -->
+                            <text x="70" y="25" class="text-chart" text-anchor="middle" fill="var(--accent-cyan)">Đồng Thuận (Breakout Thật)</text>
+                            
+                            <line x1="70" y1="40" x2="70" y2="100" class="wick bull" />
+                            <rect x="62" y="45" width="16" height="50" class="candle-body bull" />
+                            
+                            <!-- Volume bar left -->
+                            <rect x="60" y="140" width="20" height="40" fill="var(--accent-cyan)" opacity="0.8" />
+                            <text x="70" y="195" class="text-chart" text-anchor="middle" fill="var(--accent-cyan)">Volume Lớn</text>
+
+                            <!-- Separator line -->
+                            <line x1="140" y1="20" x2="140" y2="190" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+
+                            <!-- Right: Divergence -->
+                            <text x="210" y="25" class="text-chart" text-anchor="middle" fill="var(--accent-orange)">Bất Đồng (Bẫy Mua)</text>
+                            
+                            <line x1="210" y1="40" x2="210" y2="90" class="wick bull" style="stroke: var(--accent-orange);" />
+                            <!-- Small body, very long wick -->
+                            <rect x="202" y="40" width="16" height="8" class="candle-body bull" style="fill: var(--accent-orange); stroke: var(--accent-orange);" />
+                            
+                            <!-- Volume bar right -->
+                            <rect x="200" y="125" width="20" height="55" fill="var(--accent-red)" opacity="0.8" class="pulse-effect" />
+                            <text x="210" y="195" class="text-chart" text-anchor="middle" fill="var(--accent-red)">Volume Cực Đại</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 38: MODULE 9 - BAI 25 ==================== -->
+        <section class="slide" data-module="Module 9" data-lesson="Bài 25: Absorption & Rejection">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 9: Volume & Quan Hệ Nỗ Lực - Kết Quả</span>
+                    <span class="slide-number-tag">Trang 38/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s20-title">Bài 25: Hấp Thụ Chủ Động <span>(Absorption) & Từ Chối Giá</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s20-desc">
+                        <div class="card-title accent-yellow">📥 1. Hấp Thụ Chủ Động (Active Absorption)</div>
+                        <p>Xảy ra khi giá tiến sát vùng kháng cự cũ với các nến thân nhỏ dần nhưng volume tăng đều, và giá <strong>không hề bị đẩy lùi</strong>.</p>
+                        <p style="margin-top:0.3rem;">Bản chất thực chiến: Smart Money đang âm thầm mua gom toàn bộ lực cung bán ra tại kháng cự để dọn đường cho một cú breakout khổng lồ sắp diễn ra.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-orange">🙅‍♂️ 2. Sự Từ Chối Giá (Rejection)</div>
+                        <p>Giá chạm cản và ngay lập tức phản ứng bằng các cây nến Pin Bar có đuôi cực dài kèm volume tăng vọt đột biến.</p>
+                        <div class="highlight-box" style="margin-top:0.3rem;">
+                            💡 Đây là dấu hiệu cản được bảo vệ vững chắc bởi lệnh giới hạn (Limit orders) thụ động khổng lồ của Smart Money, báo hiệu cơ hội đảo chiều cực đẹp.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             MODULE 10: TOÁN HỌC TRONG TRADING & ĐIỂM VÀO/RA LỆNH (BÀI 26, 27, 28)
+             ========================================================================= -->
+
+        <!-- ==================== SLIDE 39: MODULE 10 - BAI 26 ==================== -->
+        <section class="slide" data-module="Module 10" data-lesson="Bài 26: Stop vs Limit Orders">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 10: Toán Học Trong Giao Dịch</span>
+                    <span class="slide-number-tag">Trang 39/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s21-title">Bài 26: Lựa Chọn Lệnh Kích Hoạt <span>Stop Order vs Limit Order</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s21-desc">
+                        <div class="card-title accent-cyan">📈 Stop Order (Lệnh Chờ Phá Vỡ)</div>
+                        <p>Buy Stop / Sell Stop: Khớp khi giá vượt đỉnh/đáy nến tín hiệu.</p>
+                        <ul style="margin-top:0.3rem; display:flex; flex-direction:column; gap:0.25rem;">
+                            <li><strong>Ưu điểm:</strong> Xác nhận lực đẩy đi đúng hướng mới khớp lệnh (Xác suất thắng cao).</li>
+                            <li><strong>Nhược điểm:</strong> Vị thế vào lệnh kém tối ưu (Stop Loss xa hơn).</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">📉 Limit Order (Lệnh Giới Hạn)</div>
+                        <p>Buy Limit / Sell Limit: Khớp tại vùng giá trị/vùng pullback mong đợi.</p>
+                        <ul style="margin-top:0.3rem; display:flex; flex-direction:column; gap:0.25rem;">
+                            <li><strong>Ưu điểm:</strong> Vị thế cực kỳ đẹp, Stop Loss cực kỳ ngắn, R:R tối ưu.</li>
+                            <li><strong>Nhược điểm:</strong> Dễ dính SL nếu sai bối cảnh (bắt dao rơi).</li>
+                        </ul>
+                        <div class="highlight-box" style="margin-top:0.3rem;">
+                            💡 <strong>Quy tắc Al Brooks:</strong> Dùng Limit Order trong Trading Range rộng. Dùng Stop Order trong Tight Channel (xu hướng dốc mạnh).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 40: MODULE 10 - BAI 27 ==================== -->
+        <section class="slide" data-module="Module 10" data-lesson="Bài 27: Protective Stop Loss">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 10: Toán Học Trong Giao Dịch</span>
+                    <span class="slide-number-tag">Trang 40/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s22-title">Bài 27: Thiết Lập Cắt Lỗ <span>Protective Stop Loss Logic</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s22-desc">
+                        <div class="card-title accent-orange">🛡️ 1. Nguyên Tắc Cắt Lỗ Dựa Trên Cấu Trúc</div>
+                        <p>Stop Loss bắt buộc phải đặt tại vùng kỹ thuật logic (ví dụ: ngay dưới đáy nhịp điều chỉnh Leg 2 hoặc dưới vùng cản cứng hợp lưu gần nhất).</p>
+                        <p style="margin-top:0.3rem;"><strong>Logic tối thượng:</strong> Điểm Stop Loss phải là nơi mà nếu giá chạm tới, ý tưởng phân tích ban đầu của bạn **chính thức bị chứng minh là hoàn toàn sai**.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-red">❌ 2. Những Cách Đặt Stop Loss Tùy Tiện Cần Tránh</div>
+                        <p>Học viên tuyệt đối không được mắc các lỗi sau:</p>
+                        <ul style="margin-top:0.3rem; display:flex; flex-direction:column; gap:0.4rem;">
+                            <li><strong>SL cố định số pips:</strong> Đặt cắt lỗ 10-15 pips bất chấp biến động thị trường (ATR) và cấu trúc nến hiện tại.</li>
+                            <li><strong>SL theo số tiền muốn mất:</strong> Đưa ra điểm cắt lỗ dựa trên số tiền mong muốn thay vị thực tế chart hiển thị.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 41: MODULE 10 - BAI 28 ==================== -->
+        <section class="slide" data-module="Module 10" data-lesson="Bài 28: Measured Move Target">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 10: Toán Học Trong Giao Dịch</span>
+                    <span class="slide-number-tag">Trang 41/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s23-title">Bài 28: Toán Học Chốt Lời <span>Target Measured Move</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s23-desc">
+                        <div class="card-title accent-yellow">📐 Công Thức Measured Move (Sóng Tương Đương)</div>
+                        <p>Measured Move là mục tiêu toán học mà các thuật toán máy tính (Algorithms) của các tổ chức tài chính lớn thường dùng để tự động chốt lời hàng loạt.</p>
+                        <p style="margin-top:0.3rem;"><strong>Cách đo sóng:</strong> Đo khoảng cách chiều cao của nhịp sóng đẩy Spike đầu tiên (Leg 1). Sau đó, tịnh tiến khoảng cách đó bắt đầu chiếu từ đáy sóng điều chỉnh Pullback (Leg 2) lên để tìm điểm mục tiêu chốt lời 1:1 hoặc 1:2.</p>
+                    </div>
+
+                    <!-- SVG DIAGRAM: MEASURED MOVE -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Price Wave Path -->
+                            <path d="M 30 160 
+                                     L 90 70 
+                                     L 130 120 
+                                     L 190 30" 
+                                  fill="none" stroke="var(--accent-cyan)" stroke-width="2.5" class="draw-line" />
+
+                            <!-- Points labels -->
+                            <circle cx="30" cy="160" r="4" fill="var(--text-primary)" />
+                            <text x="25" y="175" class="text-chart">A (Đáy)</text>
+
+                            <circle cx="90" cy="70" r="4" fill="var(--text-primary)" />
+                            <text x="90" y="60" class="text-chart">B (Đỉnh)</text>
+
+                            <circle cx="130" cy="120" r="4" fill="var(--text-primary)" />
+                            <text x="130" y="135" class="text-chart">C (Đáy chỉnh)</text>
+
+                            <circle cx="190" cy="30" r="5" fill="var(--accent-yellow)" class="pulse-yellow-effect" />
+                            <text x="200" y="25" class="text-chart" fill="var(--accent-yellow)">D (Target 1:1)</text>
+
+                            <!-- Bracket Leg 1 -->
+                            <path d="M 22 160 L 12 160 L 12 70 L 22 70" fill="none" stroke="var(--accent-orange)" stroke-width="1.2" />
+                            <text x="2" y="120" class="text-chart" fill="var(--accent-orange)" transform="rotate(-90 2 120)" text-anchor="middle">Leg 1</text>
+
+                            <!-- Projecting arrow or bracket for Target -->
+                            <path d="M 122 120 L 112 120 L 112 30 L 122 30" fill="none" stroke="var(--accent-orange)" stroke-width="1.2" stroke-dasharray="3,3" />
+                            <text x="105" y="75" class="text-chart" fill="var(--accent-orange)" transform="rotate(-90 105 75)" text-anchor="middle">Leg 2 Target</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             MODULE 11: QUẢN TRỊ RỦI RO & BẢNG KIỂM (BÀI 29, 30)
+             ========================================================================= -->
+
+        <!-- ==================== SLIDE 42: MODULE 11 - BAI 29 ==================== -->
+        <section class="slide" data-module="Module 11" data-lesson="Bài 29: Quản trị rủi ro">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 11: Quản Trị Rủi Ro & Kế Hoạch Giao Dịch</span>
+                    <span class="slide-number-tag">Trang 42/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s24-title">Bài 29: Quản Trị Rủi Ro <span>& Công Thức Position Sizing</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s24-desc">
+                        <div class="card-title accent-yellow">⚙️ Quy Tắc Rủi Ro Tối Đa 2%</div>
+                        <p>Tuyệt đối không bao giờ mạo hiểm quá 1% - 2% tài khoản cho một lệnh giao dịch đơn lẻ.</p>
+                        <p style="margin-top:0.3rem;">Quy tắc này đảm bảo dù bạn gặp chuỗi thua lỗ liên tiếp 10 lệnh (điều hoàn toàn có thể xảy ra trong phân phối xác suất), tài khoản của bạn cũng chỉ sụt giảm tối đa 10% - 20% - hoàn toàn nằm trong tầm kiểm soát để phục hồi vị thế.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">🧮 Công Thức Tính Lot Size Chuẩn</div>
+                        <div class="highlight-box" style="margin-top:0.3rem; font-family: var(--font-mono); font-size: var(--small-size);">
+                            Khối lượng (Lot size) = <br>
+                            Số tiền rủi ro tối đa (1% - 2% Account)<br>
+                            ─────────────────────────────<br>
+                            Khoảng cách SL (Pips) × Giá trị 1 Pip
+                        </div>
+                        <p style="margin-top:0.5rem; font-size: var(--small-size);">Luôn tính toán khối lượng lệnh dựa trên khoảng cách Stop Loss thực tế của cấu trúc nến, không bao giờ điều chỉnh điểm Stop Loss để vừa với khối lượng muốn đánh.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 43: MODULE 11 - BAI 30 ==================== -->
+        <section class="slide" data-module="Module 11" data-lesson="Bài 30: Checklist vào lệnh">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 11: Quản Trị Rủi Ro & Kế Hoạch Giao Dịch</span>
+                    <span class="slide-number-tag">Trang 43/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s25-title">Bài 30: Checklist 10 Bước <span>Trước Khi Bấm Nút Vào Lệnh</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s25-desc" style="max-height: min(72vh, 470px); overflow-y: auto;">
+                        <div class="card-title accent-cyan">📋 Bảng Kiểm Tra Kỷ Luật (Tương Tác)</div>
+                        <div style="display:flex; flex-direction:column; gap:0.4rem; font-size: var(--body-size);">
+                            <label><input type="checkbox"> 1. Khung lớn đang có cấu trúc xu hướng nào?</label>
+                            <label><input type="checkbox"> 2. Giá ở trạng thái nào (Spike, Channel, hay Range)?</label>
+                            <label><input type="checkbox"> 3. Đã có sự phá vỡ trendline hay test đỉnh/đáy cũ chưa?</label>
+                            <label><input type="checkbox"> 4. Điểm vào có tại vùng giá trị hợp lưu (EMA 20/Cản cũ)?</label>
+                            <label><input type="checkbox"> 5. Nến tín hiệu (Signal Bar) có đóng cửa dứt khoát không?</label>
+                            <label><input type="checkbox"> 6. Đã đặt lệnh chờ Stop Order để xác nhận lực đẩy chưa?</label>
+                            <label><input type="checkbox"> 7. Stop Loss đã đặt dưới đáy/đỉnh cấu trúc logic chưa?</label>
+                            <label><input type="checkbox"> 8. Mục tiêu Take Profit đã được tính theo Measured Move?</label>
+                            <label><input type="checkbox"> 9. Tỷ lệ Risk:Reward có đạt tối thiểu 1:1.5 không?</label>
+                            <label><input type="checkbox"> 10. Đã chấp nhận hoàn toàn rủi ro mất tiền lệnh này chưa?</label>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">💡 Sức Mạnh Của Sự Kỷ Luật</div>
+                        <p>Kinh nghiệm thực chiến của Mentor: <strong>90% các lệnh thua ngớ ngẩn</strong> của trader đều do bỏ qua một trong các bước kiểm tra trên (FOMO mua đuổi, bắt dao rơi không cản, đặt SL tùy tiện).</p>
+                        <div class="highlight-box" style="margin-top:0.3rem;">
+                            🔒 Hãy in checklist này ra và dán ngay trước bàn làm việc. Chỉ bấm chuột vào lệnh khi đã tích đủ 10 ô trống!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             MODULE 12: NHẬT KÝ & LỘ TRÌNH 90 NGÀY (BÀI 31, 32)
+             ========================================================================= -->
+
+        <!-- ==================== SLIDE 44: MODULE 12 - BAI 31 ==================== -->
+        <section class="slide" data-module="Module 12" data-lesson="Bài 31: Nhật ký thực chiến">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 12: Nhật Ký Giao Dịch & Lộ Trình 90 Ngày</span>
+                    <span class="slide-number-tag">Trang 44/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s26-title">Bài 31: Phương Pháp Ghi <span>Nhật Ký Giao Dịch Chuyên Nghiệp</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s26-desc">
+                        <div class="card-title accent-yellow">📓 4 Nội Dung Bắt Buộc Trong Nhật Ký</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.2rem;">
+                            <li><strong>1. Ảnh chart TRƯỚC khi vào lệnh:</strong> Ghi rõ bối cảnh thị trường, EMA 20, các cản và mô tả setup nến tín hiệu.</li>
+                            <li><strong>2. Ảnh chart SAU KHI lệnh đóng:</strong> Đánh dấu điểm vào lệnh, điểm cắt lỗ và chốt lời thực tế diễn ra.</li>
+                            <li><strong>3. Trạng thái tâm lý:</strong> Ghi chép trung thực cảm xúc của bạn khi lệnh đang chạy (lo lắng, FOMO hay tuân thủ hoàn toàn?).</li>
+                            <li><strong>4. Bài học rút ra:</strong> Phân tích lệnh thắng có đúng kế hoạch, lệnh thua do sai bối cảnh hay do xác suất phân phối.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">📈 Tác Dụng Vàng Của Nhật Ký</div>
+                        <p>Nhật ký giao dịch là **người thầy tốt nhất** của bạn. Việc đọc lại nhật ký hàng tuần giúp bạn nhận ra những sai lầm hệ thống lặp đi lặp lại để sửa đổi, biến kỹ năng trading từ bản năng thành phản xạ kỷ luật khoa học.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 45: MODULE 12 - BAI 32 ==================== -->
+        <section class="slide" data-module="Module 12" data-lesson="Bài 32: Lộ trình 90 ngày">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 12: Nhật Ký Giao Dịch & Lộ Trình 90 Ngày</span>
+                    <span class="slide-number-tag">Trang 45/38</span>
+                </div>
+                <h2 class="slide-title" id="editable-s27-title">Bài 32: Lộ Trình Rèn Luyện <span>Đọc Chart 90 Ngày</span></h2>
+                <div class="grid-3-cards">
+                    <div class="card" id="editable-s27-c1">
+                        <div class="card-title accent-yellow">📅 1. Ngày 1 - 30</div>
+                        <div style="font-size: var(--small-size); text-transform:uppercase; color: var(--accent-yellow); font-family: var(--font-mono); margin-bottom: 0.2rem;">Đọc Vị Vi Mô</div>
+                        <p>Chỉ mở 1 cặp sản phẩm duy nhất. Hàng ngày ghi chép đọc vị từng thanh nến (bar-by-bar) cho 20 cây nến liên tiếp khung M15. Đánh dấu Trend Bar vs Range Bar.</p>
+                    </div>
+                    <div class="card" id="editable-s27-c2">
+                        <div class="card-title accent-cyan">📅 2. Ngày 31 - 60</div>
+                        <div style="font-size: var(--small-size); text-transform:uppercase; color: var(--accent-cyan); font-family: var(--font-mono); margin-bottom: 0.2rem;">Nhận Diện Bối Cảnh</div>
+                        <p>Hàng ngày vẽ trendline, cản ngang tối giản. Xác định các giai đoạn cấu trúc thị trường: Spike, Channel và Trading Range rõ rệt trên biểu đồ.</p>
+                    </div>
+                    <div class="card" id="editable-s27-c3">
+                        <div class="card-title accent-orange">📅 3. Ngày 61 - 90</div>
+                        <div style="font-size: var(--small-size); text-transform:uppercase; color: var(--accent-orange); font-family: var(--font-mono); margin-bottom: 0.2rem;">Săn Tìm High 2/Low 2</div>
+                        <p>Chỉ tập trung săn lùng setup High 2/Low 2 và bẫy giá Spring/Upthrust xuất hiện tại các vùng hợp lưu giá trị EMA 20. Ghi chép và lưu trữ kết quả thực tế.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 46: TỔNG KẾT & THỰC HÀNH ==================== -->
+        <section class="slide">
+            <div class="slide-content" style="align-items: center; justify-content: center; text-align: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem;">HOÀN THÀNH KHOÁ HỌC MASTERCLASS</div>
+                <h2 class="slide-title" id="editable-s28-title" style="font-size: var(--title-size); line-height: 1.15;">
+                    XIN CHÚC MỪNG CHÚNG TA ĐÃ<br><span style="color: var(--accent-yellow);">CHINH PHỤC THÀNH CÔNG!</span>
+                </h2>
+                <p id="editable-s28-desc" style="max-width: 650px; color: var(--text-secondary); font-size: 1.1rem;">
+                    Bạn đã nắm trong tay trọn bộ kiến thức cốt lõi nhất của nghệ thuật giao dịch Price Action thực chiến trọn bộ 12 Module (Bài 1-32). Con đường phía trước phụ thuộc hoàn toàn vào sự rèn luyện kỷ luật bền bỉ của bạn!
+                </p>
+                <div class="highlight-box" style="border-left: 3px solid var(--accent-cyan); max-width: 600px; text-align: left;">
+                    📝 <strong>Bài tập thực hành cuối khoá:</strong> Mở ngay tradingview, vẽ các cản lớn, EMA 20 và tìm kiếm ít nhất 3 setup High 2 / Low 2 hoặc Spring thành công trong tuần qua!
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Floating arrows for navigation (fallback) -->
+    <div class="slide-nav">
+        <button class="nav-btn" id="prevBtn" aria-label="Previous Slide">▲</button>
+        <button class="nav-btn" id="nextBtn" aria-label="Next Slide">▼</button>
+        <div class="nav-dots" id="navDots"></div>
+    </div>
+
+    <!-- =========================================================================
+         SCRIPTS: CONTROLLERS & INTERACTION
+         ========================================================================= -->
+    <script>
+        // --- 1. SLIDE PRESENTATION CONTROLLER ---
+        class SlidePresentation {
+            constructor() {
+                this.container = document.getElementById('slideContainer');
+                this.slides = Array.from(document.querySelectorAll('.slide'));
+                this.currentSlide = 0;
+                
+                this.init();
+            }
+
+            init() {
+                this.setupKeyboardNav();
+                this.setupTouchNav();
+                this.setupNavDots();
+                this.setupIntersectionObserver();
+                
+                // Track mouse wheel scroll
+                let scrollTimeout;
+                window.addEventListener('wheel', (e) => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(() => {
+                        if (e.deltaY > 30) {
+                            this.setActiveSlide(this.currentSlide + 1);
+                        } else if (e.deltaY < -30) {
+                            this.setActiveSlide(this.currentSlide - 1);
+                        }
+                    }, 50);
+                }, { passive: true });
+            }
+
+            setupIntersectionObserver() {
+                const observerOptions = {
+                    root: null,
+                    threshold: 0.5
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const index = this.slides.indexOf(entry.target);
+                            this.currentSlide = index;
+                            this.updateActiveState();
+                        }
+                    });
+                }, observerOptions);
+
+                this.slides.forEach(slide => observer.observe(slide));
+            }
+
+            setActiveSlide(index) {
+                if (index < 0 || index >= this.slides.length) return;
+                this.currentSlide = index;
+                this.slides[index].scrollIntoView({ behavior: 'smooth' });
+                this.updateActiveState();
+            }
+
+            updateActiveState() {
+                this.slides.forEach((slide, idx) => {
+                    if (idx === this.currentSlide) {
+                        slide.classList.add('visible');
+                    } else {
+                        slide.classList.remove('visible');
+                    }
+                });
+
+                // Update progress bar
+                const percent = (this.currentSlide / (this.slides.length - 1)) * 100;
+                document.getElementById('progressBar').style.width = `${percent}%`;
+
+                // Update dots
+                const dots = document.querySelectorAll('.nav-dot');
+                dots.forEach((dot, idx) => {
+                    if (idx === this.currentSlide) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+
+                // Update sidebar active items
+                const sidebarItems = document.querySelectorAll('.sidebar-item');
+                sidebarItems.forEach(item => item.classList.remove('active'));
+                
+                // Find matching sidebar item based on data attributes of current slide
+                const currentSlideEl = this.slides[this.currentSlide];
+                const moduleName = currentSlideEl.getAttribute('data-module');
+                const lessonName = currentSlideEl.getAttribute('data-lesson');
+                
+                if (moduleName && lessonName) {
+                    sidebarItems.forEach(item => {
+                        if (item.getAttribute('data-slide-index') == this.currentSlide) {
+                            item.classList.add('active');
+                        }
+                    });
+                }
+            }
+
+            setupKeyboardNav() {
+                document.addEventListener('keydown', (e) => {
+                    // Do not navigate if user is currently editing text
+                    if (e.target.getAttribute('contenteditable') === 'true') return;
+
+                    if (e.key === 'ArrowDown' || e.key === 'Space') {
+                        e.preventDefault();
+                        this.setActiveSlide(this.currentSlide + 1);
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        this.setActiveSlide(this.currentSlide - 1);
+                    }
+                });
+            }
+
+            setupTouchNav() {
+                let startY = 0;
+                document.addEventListener('touchstart', (e) => {
+                    startY = e.touches[0].clientY;
+                }, { passive: true });
+
+                document.addEventListener('touchend', (e) => {
+                    const endY = e.changedTouches[0].clientY;
+                    const diff = startY - endY;
+
+                    if (Math.abs(diff) > 50) { // minimum threshold for swipe
+                        if (diff > 0) {
+                            this.setActiveSlide(this.currentSlide + 1);
+                        } else {
+                            this.setActiveSlide(this.currentSlide - 1);
+                        }
+                    }
+                }, { passive: true });
+            }
+
+            setupNavDots() {
+                const navDotsContainer = document.getElementById('navDots');
+                navDotsContainer.innerHTML = '';
+                
+                this.slides.forEach((slide, idx) => {
+                    const dot = document.createElement('button');
+                    dot.className = `nav-dot ${idx === 0 ? 'active' : ''}`;
+                    dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
+                    dot.addEventListener('click', () => {
+                        this.setActiveSlide(idx);
+                    });
+                    navDotsContainer.appendChild(dot);
+                });
+            }
+        }
+
+        // --- 2. CYBER SIDEBAR CONTROLLER ---
+        class SidebarController {
+            constructor(presentation) {
+                this.presentation = presentation;
+                this.toggleBtn = document.getElementById('sidebarToggle');
+                this.sidebar = document.getElementById('sidebar');
+                this.backdrop = document.getElementById('sidebarBackdrop');
+                this.menu = document.getElementById('sidebarMenu');
+                
+                this.init();
+            }
+
+            init() {
+                this.buildMenu();
+                
+                this.toggleBtn.addEventListener('click', () => this.toggleSidebar());
+                this.backdrop.addEventListener('click', () => this.closeSidebar());
+                
+                // Close sidebar on ESC key
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') this.closeSidebar();
+                });
+            }
+
+            toggleSidebar() {
+                this.sidebar.classList.toggle('open');
+                this.backdrop.classList.toggle('show');
+            }
+
+            closeSidebar() {
+                this.sidebar.classList.remove('open');
+                this.backdrop.classList.remove('show');
+            }
+
+            buildMenu() {
+                this.menu.innerHTML = '';
+                
+                // Add Intro Slide first
+                const homeLi = document.createElement('li');
+                homeLi.className = 'sidebar-item active';
+                homeLi.setAttribute('data-slide-index', '0');
+                homeLi.innerHTML = `
+                    <span class="sidebar-module-tag">MASTERCLASS</span>
+                    <span>Màn Hình Chào & Hướng Dẫn</span>
+                `;
+                homeLi.addEventListener('click', () => {
+                    this.presentation.setActiveSlide(0);
+                    this.closeSidebar();
+                });
+                this.menu.appendChild(homeLi);
+
+                // Group and add items
+                this.presentation.slides.forEach((slide, idx) => {
+                    if (idx === 0) return;
+                    
+                    const moduleName = slide.getAttribute('data-module');
+                    const lessonName = slide.getAttribute('data-lesson');
+                    
+                    if (moduleName && lessonName) {
+                        const li = document.createElement('li');
+                        li.className = 'sidebar-item';
+                        li.setAttribute('data-slide-index', idx);
+                        li.innerHTML = `
+                            <span class="sidebar-module-tag">${moduleName}</span>
+                            <span>${lessonName}</span>
+                        `;
+                        li.addEventListener('click', () => {
+                            this.presentation.setActiveSlide(idx);
+                            this.closeSidebar();
+                        });
+                        this.menu.appendChild(li);
+                    }
+                });
+            }
+        }
+
+        // --- 3. INLINE EDITING CONTROLLER WITH LOCALSTORAGE PERSISTENCE ---
+        class LessonEditor {
+            constructor() {
+                this.isActive = false;
+                this.editToggle = document.getElementById('editToggle');
+                this.hotzone = document.getElementById('editHotzone');
+                this.saveIndicator = document.getElementById('saveIndicator');
+                this.hideTimeout = null;
+                
+                this.setupEditingTrigger();
+                this.loadSavedContent();
+            }
+
+            setupEditingTrigger() {
+                // Hotzone hover with 400ms grace period to show Edit Button
+                this.hotzone.addEventListener('mouseenter', () => {
+                    clearTimeout(this.hideTimeout);
+                    this.editToggle.classList.add('show');
+                });
+                
+                this.hotzone.addEventListener('mouseleave', () => {
+                    this.hideTimeout = setTimeout(() => {
+                        if (!this.isActive) this.editToggle.classList.remove('show');
+                    }, 400);
+                });
+
+                this.editToggle.addEventListener('mouseenter', () => {
+                    clearTimeout(this.hideTimeout);
+                });
+
+                this.editToggle.addEventListener('mouseleave', () => {
+                    this.hideTimeout = setTimeout(() => {
+                        if (!this.isActive) this.editToggle.classList.remove('show');
+                    }, 400);
+                });
+
+                // Clicking hotzone or button toggles Edit Mode
+                this.editToggle.addEventListener('click', () => this.toggleEditMode());
+
+                // Keyboard E shortcut
+                document.addEventListener('keydown', (e) => {
+                    if ((e.key === 'e' || e.key === 'E') && e.target.getAttribute('contenteditable') !== 'true') {
+                        e.preventDefault();
+                        this.toggleEditMode();
+                    }
+                });
+            }
+
+            getEditableIds() {
+                const ids = [
+                    'editable-s1-title', 'editable-s1-desc',
+                    'editable-m1s2-title', 'editable-m1s2-desc',
+                    'editable-m1s3-title', 'editable-m1s3-desc',
+                    'editable-m1s4-title', 'editable-m1s4-desc',
+                    'editable-m1s5-title', 'editable-m1s5-desc',
+                    'editable-m1s6-title', 'editable-m1s6-desc',
+                    'editable-m1s7-title', 'editable-m1s7-desc',
+                    'editable-m1s8-title', 'editable-m1s8-desc',
+                    'editable-m1s9-title', 'editable-m1s9-desc',
+                    'editable-m1s10-title', 'editable-m1s10-desc',
+                    'editable-m1s11-title', 'editable-m1s11-desc',
+                    'editable-m2s12-title', 'editable-m2s12-desc',
+                    'editable-m2s13-title', 'editable-m2s13-desc',
+                    'editable-m2s14-title', 'editable-m2s14-desc',
+                    'editable-m2s15-title', 'editable-m2s15-desc',
+                    'editable-m2s16-title', 'editable-m2s16-desc',
+                    'editable-m2s17-title', 'editable-m2s17-desc',
+                    'editable-m2s18-title', 'editable-m2s18-desc',
+                    'editable-m2s19-title', 'editable-m2s19-desc',
+                    'editable-s2-title', 'editable-s2-desc',
+                    'editable-s3-title', 'editable-s3-desc',
+                    'editable-s4-title', 'editable-s4-desc',
+                    'editable-s5-title', 'editable-s5-desc',
+                    'editable-s6-title', 'editable-s6-desc',
+                    'editable-s7-title', 'editable-s7-desc',
+                    'editable-s8-title', 'editable-s8-desc',
+                    'editable-s9-card1', 'editable-s9-card2', 'editable-s9-card3',
+                    'editable-s10-title', 'editable-s10-desc',
+                    'editable-s11-title', 'editable-s11-desc',
+                    'editable-s12-title', 'editable-s12-desc',
+                    'editable-s13-title', 'editable-s13-desc',
+                    'editable-s14-title', 'editable-s14-desc',
+                    'editable-s15-title', 'editable-s15-desc',
+                    'editable-s16-title', 'editable-s16-desc',
+                    'editable-s17-title', 'editable-s17-desc',
+                    'editable-s18-title', 'editable-s18-desc',
+                    'editable-s19-title', 'editable-s19-desc',
+                    'editable-s20-title', 'editable-s20-desc',
+                    'editable-s21-title', 'editable-s21-desc',
+                    'editable-s22-title', 'editable-s22-desc',
+                    'editable-s23-title', 'editable-s23-desc',
+                    'editable-s24-title', 'editable-s24-desc',
+                    'editable-s25-title', 'editable-s25-desc',
+                    'editable-s26-title', 'editable-s26-desc',
+                    'editable-s27-title', 'editable-s27-c1', 'editable-s27-c2', 'editable-s27-c3',
+                    'editable-s28-title', 'editable-s28-desc'
+                ];
+                return ids;
+            }
+
+            toggleEditMode() {
+                this.isActive = !this.isActive;
+                
+                if (this.isActive) {
+                    this.editToggle.classList.add('active');
+                    this.editToggle.textContent = '💾 LƯU BÀI GIẢNG';
+                    this.enableEditableElements();
+                } else {
+                    this.editToggle.classList.remove('active');
+                    this.editToggle.textContent = '✏️ EDIT MODE (E)';
+                    this.disableEditableElements();
+                    this.saveContent();
+                }
+            }
+
+            enableEditableElements() {
+                this.getEditableIds().forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.setAttribute('contenteditable', 'true');
+                    }
+                });
+            }
+
+            disableEditableElements() {
+                this.getEditableIds().forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.removeAttribute('contenteditable');
+                    }
+                });
+            }
+
+            saveContent() {
+                const contentData = {};
+                this.getEditableIds().forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        contentData[id] = el.innerHTML;
+                    }
+                });
+
+                localStorage.setItem('price_action_masterclass_data', JSON.stringify(contentData));
+                
+                // Show notification toast
+                this.saveIndicator.classList.add('show');
+                setTimeout(() => {
+                    this.saveIndicator.classList.remove('show');
+                }, 2000);
+            }
+
+            loadSavedContent() {
+                const saved = localStorage.getItem('price_action_masterclass_data');
+                if (saved) {
+                    try {
+                        const contentData = JSON.parse(saved);
+                        Object.keys(contentData).forEach(id => {
+                            const el = document.getElementById(id);
+                            if (el) {
+                                el.innerHTML = contentData[id];
+                            }
+                        });
+                    } catch (e) {
+                        console.error("Lỗi khi tải dữ liệu bài giảng cũ:", e);
+                    }
+                }
+            }
+        }
+
+        // Initialize all controllers
+        window.addEventListener('DOMContentLoaded', () => {
+            const presentation = new SlidePresentation();
+            window.presentation = presentation;
+            window.sidebar = new SidebarController(presentation);
+            window.editor = new LessonEditor();
+
+            // Arrows fallback click handlers
+            document.getElementById('prevBtn').addEventListener('click', () => {
+                presentation.setActiveSlide(presentation.currentSlide - 1);
+            });
+            document.getElementById('nextBtn').addEventListener('click', () => {
+                presentation.setActiveSlide(presentation.currentSlide + 1);
+            });
+        });
+    </script>
+</body>
+</html>
