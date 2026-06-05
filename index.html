@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Học Viện Giao Dịch Thực Chiến - Portal</title>
+  <link rel="stylesheet" href="course-theme.css">
+  <style>
+    .deck { display: block; min-height: 100vh; padding: 42px; }
+    .portal-container { width: min(1200px, 100%); margin: 0 auto; display: grid; gap: 32px; }
+    
+    /* Giao diện chọn Khóa Học */
+    .portal-header { text-align: center; margin-bottom: 12px; }
+    .courses-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+    
+    /* Giao diện danh sách Module khóa 1 */
+    .course-detail { display: none; width: min(1180px, 100%); margin: 0 auto; display: grid; gap: 24px; }
+    .modules { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    
+    /* Card chung */
+    .card { color: inherit; text-decoration: none; min-height: 200px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: all .2s ease; }
+    .card:hover { border-color: var(--blue); transform: translateY(-3px); box-shadow: 0 16px 38px rgba(24,33,38,.08); }
+    .card-body { display: grid; gap: 8px; }
+    .card-footer { margin-top: 14px; display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--line); padding-top: 10px; font-weight: 800; font-size: 14px; }
+    
+    .course-card { min-height: 280px; }
+    .course-card .card-footer { color: var(--blue); }
+    
+    .meta { color: var(--muted); font-size: 14px; font-weight: 800; }
+    
+    /* Header & Back Button */
+    .back-nav { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .btn-back-main { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border: 1px solid var(--line); border-radius: 8px; background: #fff; color: var(--ink); font-size: 14px; font-weight: 800; cursor: pointer; transition: all 0.15s ease; }
+    .btn-back-main:hover { border-color: var(--blue); color: var(--blue); }
+
+    /* Styles for Module Viewer (SPA Mode) */
+    #moduleViewer {
+      display: none;
+      width: 100%;
+      min-height: 100vh;
+      flex-direction: column;
+      background: var(--bg);
+    }
+    .viewer-header {
+      display: flex;
+      align-items: center;
+      padding: 14px 28px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,253,248,.95);
+      backdrop-filter: blur(8px);
+    }
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+    .btn-back:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+      box-shadow: 0 4px 12px rgba(36,95,168,.08);
+    }
+    .viewer-title {
+      font-size: clamp(16px, 2.2vw, 22px);
+      font-weight: 950;
+      color: var(--ink);
+      margin-left: 20px;
+    }
+    #moduleFrame {
+      flex: 1;
+      border: none;
+      width: 100%;
+      height: calc(100vh - 75px);
+      background: var(--bg);
+    }
+
+    @media (max-width: 980px) { 
+      .deck { padding: 20px; } 
+      .courses-grid, .modules { grid-template-columns: 1fr; } 
+      .viewer-header { padding: 10px 16px; }
+      .viewer-title { margin-left: 10px; font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Giao diện trang chủ Portal (Chọn Khóa học) -->
+  <main class="deck" id="portalHomeView">
+    <div class="portal-container">
+      <div class="portal-header">
+        <div class="eyebrow">Trading Academy Portal</div>
+        <h1>Học Viện Giao Dịch Thực Chiến</h1>
+        <p class="lead">Hệ thống bài giảng Price Action chuyên nghiệp, Toán học rủi ro & Kế hoạch tâm lý thép.</p>
+      </div>
+      
+      <section class="courses-grid">
+        <!-- Khóa 1 -->
+        <div class="panel card course-card" onclick="window.location.hash = 'course-1'">
+          <div class="card-body">
+            <span class="meta">Khóa Học 01</span>
+            <h3>Price Action Foundation</h3>
+            <p>12 Module bài giảng nền tảng đọc bối cảnh, nến tín hiệu vi mô, cấu trúc sóng hồi và thiết lập điểm vào lệnh có lợi thế.</p>
+          </div>
+          <div class="card-footer">
+            <span>📚 12 Modules</span>
+            <span>Bắt đầu học →</span>
+          </div>
+        </div>
+
+        <!-- Khóa 2 -->
+        <div class="panel card course-card" onclick="window.location.hash = 'mental_game_risk_math.html'">
+          <div class="card-body">
+            <span class="meta">Khóa Học 02</span>
+            <h3>The Mental Game & Risk Math</h3>
+            <p>Khóa học làm chủ tâm lý giao dịch qua phương pháp Mental Hand History và toán học quản trị rủi ro, định cỡ vị thế co giãn.</p>
+          </div>
+          <div class="card-footer">
+            <span>🛡️ 6 Modules (45 Slides)</span>
+            <span>Bắt đầu học →</span>
+          </div>
+        </div>
+
+        <!-- Khóa 3 -->
+        <div class="panel card course-card" onclick="window.location.hash = 'wyckoff_volume_masterclass.html'">
+          <div class="card-body">
+            <span class="meta">Khóa Học 03</span>
+            <h3>Wyckoff & Volume Masterclass</h3>
+            <p>Lý thuyết hộp Wyckoff, tích lũy/phân phối, phân tích khối lượng chênh lệch VSA và chu kỳ cung cầu chuyên sâu.</p>
+          </div>
+          <div class="card-footer">
+            <span>📊 Wyckoff & VSA</span>
+            <span>Bắt đầu học →</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- 2. Giao diện Danh sách Module của Khóa 1 -->
+  <main class="deck" id="course1View" style="display: none;">
+    <div class="course-detail">
+      <div class="back-nav">
+        <button class="btn-back-main" onclick="window.location.hash = ''">← Quay lại Portal</button>
+      </div>
+      <div>
+        <div class="eyebrow">Course 01 · Price Action Foundation</div>
+        <h2>Danh sách bài học</h2>
+        <p class="lead">Vui lòng chọn từng module dưới đây để xem slide bài giảng tương tác chi tiết.</p>
+      </div>
+      <section class="modules">
+        <a class="card" href="module-01-price-action-v3.html"><span class="meta">Module 1</span><h3>Nền tảng Price Action</h3><p>Đọc nến theo bối cảnh, signal, setup và risk.</p></a>
+        <a class="card" href="module-02-market-context-v1.html"><span class="meta">Module 2</span><h3>Bối cảnh thị trường</h3><p>Trend, range, breakout mode, climax và chuyển trạng thái.</p></a>
+        <a class="card" href="module-03-trend-structure-v1.html"><span class="meta">Module 3</span><h3>Cấu trúc xu hướng</h3><p>HH/HL, LH/LL, pullback, two legs, second entry.</p></a>
+        <a class="card" href="module-04-key-levels-v1.html"><span class="meta">Module 4</span><h3>Vùng giá quan trọng</h3><p>Support/resistance, retest, trendline, channel, round number.</p></a>
+        <a class="card" href="module-05-signal-bars-v1.html"><span class="meta">Module 5</span><h3>Nến tín hiệu</h3><p>Signal bar, entry bar, pin bar, engulfing, inside/outside bar.</p></a>
+        <a class="card" href="module-06-breakout-traps-v1.html"><span class="meta">Module 6</span><h3>Breakout và Trap</h3><p>Breakout thật/giả, bull trap, bear trap, spring, upthrust.</p></a>
+        <a class="card" href="module-07-practical-setups-v1.html"><span class="meta">Module 7</span><h3>Setup thực chiến</h3><p>Pullback, failure test, breakout pullback, range fade.</p></a>
+        <a class="card" href="module-08-chart-patterns-v1.html"><span class="meta">Module 8</span><h3>Mô hình biểu đồ</h3><p>Double top/bottom, H&S, triangle, wedge, flag, failure.</p></a>
+        <a class="card" href="module-09-volume-vpa-profile-v1.html"><span class="meta">Module 9</span><h3>Volume và Profile</h3><p>Effort vs result, absorption, rejection, POC, value area.</p></a>
+        <a class="card" href="module-10-entry-sl-tp-v1.html"><span class="meta">Module 10</span><h3>Entry, SL, TP</h3><p>Trigger, invalidation, target, R:R và expectancy.</p></a>
+        <a class="card" href="module-11-risk-trading-plan-v1.html"><span class="meta">Module 11</span><h3>Quản trị rủi ro</h3><p>Risk/lệnh, position sizing, drawdown, daily stop, journal.</p></a>
+        <a class="card" href="module-12-psychology-practice-v1.html"><span class="meta">Module 12</span><h3>Tâm lý và luyện tập</h3><p>Fear, greed, process, routine, review và lộ trình 30-60-90.</p></a>
+      </section>
+    </div>
+  </main>
+
+  <!-- 3. Giao diện xem Slide (SPA Module Viewer) -->
+  <div id="moduleViewer">
+    <div class="viewer-header">
+      <button id="backBtn" class="btn-back">
+        ← Quay lại
+      </button>
+      <span id="moduleTitle" class="viewer-title">Đang tải bài học...</span>
+    </div>
+    <iframe id="moduleFrame" src="about:blank"></iframe>
+  </div>
+
+  <script>
+    // Định tuyến Hash SPA
+    function handleRoute() {
+      const hash = window.location.hash;
+      const portalHomeView = document.getElementById('portalHomeView');
+      const course1View = document.getElementById('course1View');
+      const moduleViewer = document.getElementById('moduleViewer');
+      const moduleFrame = document.getElementById('moduleFrame');
+      const moduleTitle = document.getElementById('moduleTitle');
+      
+      // Ẩn tất cả các view trước
+      portalHomeView.style.display = 'none';
+      course1View.style.display = 'none';
+      moduleViewer.style.display = 'none';
+
+      if (!hash || hash === '#') {
+        // Trang chủ Portal
+        portalHomeView.style.display = 'block';
+        moduleFrame.src = 'about:blank';
+      } else if (hash === '#course-1') {
+        // Danh sách bài học Khóa 1
+        course1View.style.display = 'block';
+        moduleFrame.src = 'about:blank';
+      } else if (hash.startsWith('#module-')) {
+        // Xem slide bài học Khóa 1
+        const url = hash.slice(1);
+        moduleViewer.style.display = 'flex';
+        moduleFrame.src = url;
+        
+        // Tìm tiêu đề
+        const card = document.querySelector(`.modules a[href="${url}"]`);
+        if (card) {
+          const title = card.querySelector('h3').textContent;
+          const meta = card.querySelector('.meta').textContent;
+          moduleTitle.textContent = `Khóa 1 · ${meta}: ${title}`;
+        } else {
+          moduleTitle.textContent = "Khóa 1: Price Action Foundation";
+        }
+      } else if (hash === '#mental_game_risk_math.html') {
+        // Xem slide Khóa 2
+        moduleViewer.style.display = 'flex';
+        moduleFrame.src = 'mental_game_risk_math.html';
+        moduleTitle.textContent = "Khóa 2: The Mental Game & Risk Math";
+      } else if (hash === '#wyckoff_volume_masterclass.html') {
+        // Xem slide Khóa 3
+        moduleViewer.style.display = 'flex';
+        moduleFrame.src = 'wyckoff_volume_masterclass.html';
+        moduleTitle.textContent = "Khóa 3: Wyckoff & Volume Masterclass";
+      }
+    }
+
+    // Xử lý click cho bài học Khóa 1
+    document.querySelectorAll('.modules a.card').forEach(card => {
+      card.addEventListener('click', function(e) {
+        e.preventDefault();
+        const url = this.getAttribute('href');
+        window.location.hash = url;
+      });
+    });
+
+    // Nút back thông minh trên Iframe Viewer
+    document.getElementById('backBtn').addEventListener('click', function() {
+      const hash = window.location.hash;
+      if (hash.startsWith('#module-')) {
+        // Nếu đang xem bài học Khóa 1, quay lại danh sách bài học Khóa 1
+        window.location.hash = 'course-1';
+      } else {
+        // Nếu là Khóa 2 hoặc Khóa 3, quay lại trang chủ Portal chính
+        window.location.hash = '';
+      }
+    });
+
+    // Theo dõi hash
+    window.addEventListener('hashchange', handleRoute);
+    window.addEventListener('DOMContentLoaded', handleRoute);
+  </script>
+</body>
+</html>

@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Module 1 - Nền tảng Price Action</title>
+  <style>
+    :root {
+      --paper: #fbfaf6;
+      --ink: #1c2327;
+      --muted: #687373;
+      --line: #ddd8ce;
+      --panel: #ffffff;
+      --green: #16845c;
+      --green-2: #dff3e8;
+      --red: #c94040;
+      --red-2: #f8dfdc;
+      --blue: #245fa8;
+      --blue-2: #dce9f8;
+      --amber: #b77918;
+      --amber-2: #fff0c7;
+      --violet: #6f5bd8;
+      --shadow: 0 20px 50px rgba(28, 35, 39, .12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    .deck {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: 1fr 72px;
+      background:
+        linear-gradient(90deg, rgba(36, 95, 168, .08) 0 1px, transparent 1px 100%),
+        linear-gradient(180deg, rgba(36, 95, 168, .06) 0 1px, transparent 1px 100%);
+      background-size: 56px 56px;
+    }
+
+    .slide {
+      display: none;
+      min-height: calc(100vh - 72px);
+      padding: 42px 56px;
+    }
+
+    .slide.active {
+      display: grid;
+      align-items: center;
+      animation: appear .18s ease-out;
+    }
+
+    @keyframes appear {
+      from { opacity: .2; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .wrap {
+      width: min(1220px, 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 26px;
+    }
+
+    .split {
+      grid-template-columns: .9fr 1.1fr;
+      align-items: center;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: stretch;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: stretch;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1 {
+      max-width: 820px;
+      font-size: clamp(48px, 7vw, 84px);
+      line-height: .96;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      max-width: 900px;
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      font-size: 24px;
+      line-height: 1.15;
+      font-weight: 850;
+      letter-spacing: 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 16px;
+      padding: 8px 12px;
+      border: 1px solid rgba(36, 95, 168, .24);
+      border-radius: 999px;
+      background: rgba(255,255,255,.72);
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .lead {
+      max-width: 760px;
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: clamp(19px, 2.2vw, 28px);
+      line-height: 1.35;
+      font-weight: 550;
+    }
+
+    .panel, .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,255,255,.92);
+      box-shadow: var(--shadow);
+    }
+
+    .panel { padding: 26px; }
+    .card { padding: 22px; }
+
+    .card p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.42;
+      font-weight: 550;
+    }
+
+    .stat {
+      display: grid;
+      gap: 8px;
+      min-height: 154px;
+      align-content: center;
+    }
+
+    .stat b {
+      font-size: 46px;
+      line-height: 1;
+      color: var(--blue);
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .tag {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: var(--blue-2);
+      color: var(--blue);
+      font-size: 15px;
+      font-weight: 850;
+    }
+
+    .tag.green { background: var(--green-2); color: var(--green); }
+    .tag.red { background: var(--red-2); color: var(--red); }
+    .tag.amber { background: var(--amber-2); color: var(--amber); }
+    .tag.violet { background: #e8e4fb; color: var(--violet); }
+
+    .chart {
+      width: 100%;
+      display: block;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .chart text {
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.42;
+      font-weight: 600;
+    }
+
+    .rule {
+      padding: 22px 24px;
+      border-left: 6px solid var(--amber);
+      background: rgba(255, 240, 199, .62);
+      border-radius: 8px;
+      color: #4c3510;
+      font-size: 28px;
+      line-height: 1.28;
+      font-weight: 850;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .check {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 13px;
+      align-items: start;
+      font-size: 21px;
+      line-height: 1.28;
+      font-weight: 750;
+    }
+
+    .check i {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--green-2);
+      color: var(--green);
+      font-style: normal;
+      font-weight: 950;
+    }
+
+    .check.red i {
+      background: var(--red-2);
+      color: var(--red);
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .step {
+      position: relative;
+      min-height: 150px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 12px 28px rgba(28, 35, 39, .08);
+    }
+
+    .step b {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--blue);
+      font-size: 15px;
+      text-transform: uppercase;
+    }
+
+    .step span {
+      display: block;
+      font-size: 22px;
+      font-weight: 850;
+      line-height: 1.12;
+    }
+
+    .step p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.35;
+      font-weight: 600;
+    }
+
+    footer {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 18px;
+      padding: 12px 28px;
+      border-top: 1px solid var(--line);
+      background: rgba(255,255,255,.9);
+      backdrop-filter: blur(8px);
+    }
+
+    .progress {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 850;
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      width: 46px;
+      height: 46px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 25px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    button:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .dots {
+      display: flex;
+      justify-content: flex-end;
+      gap: 7px;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #c8c2b6;
+    }
+
+    .dot.active {
+      width: 30px;
+      border-radius: 999px;
+      background: var(--blue);
+    }
+
+    .grid { stroke: #ece8df; stroke-width: 1; }
+    .axis { stroke: #cfc8bb; stroke-width: 1.3; }
+    .wick { stroke: #182126; stroke-width: 3; stroke-linecap: round; }
+    .bull { fill: var(--green); }
+    .bear { fill: var(--red); }
+    .doji { fill: #f1eee7; stroke: #877f72; stroke-width: 2; }
+    .support { fill: rgba(22, 132, 92, .14); stroke: rgba(22, 132, 92, .72); stroke-width: 2; }
+    .resistance { fill: rgba(201, 64, 64, .12); stroke: rgba(201, 64, 64, .66); stroke-width: 2; }
+    .blue-line { stroke: var(--blue); stroke-width: 4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .trend { stroke: var(--blue); stroke-width: 5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .entry { stroke: var(--blue); stroke-width: 4; }
+    .stop { stroke: var(--red); stroke-width: 4; }
+    .target { stroke: var(--green); stroke-width: 4; }
+
+    @media (max-width: 920px) {
+      .deck { grid-template-rows: 1fr auto; }
+      .slide { padding: 24px 16px; }
+      .split, .grid-2, .grid-3, .timeline { grid-template-columns: 1fr; }
+      footer { grid-template-columns: 1fr; justify-items: center; }
+      .dots { display: none; }
+      .chart { min-height: 280px; }
+    }
+
+    @media print {
+      .deck { display: block; background: #fff; }
+      .slide { display: grid; min-height: 100vh; page-break-after: always; }
+      footer { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck">
+    <section class="slide active">
+      <div class="wrap split">
+        <div>
+          <div class="eyebrow">Module 1 · Nền tảng Price Action</div>
+          <h1>Đọc chart như một trader thực chiến</h1>
+          <p class="lead">Không học nến như từ điển. Ta đọc bối cảnh, áp lực mua bán, vị trí, tín hiệu và rủi ro.</p>
+          <div class="tag-row">
+            <span class="tag green">Xu hướng</span>
+            <span class="tag amber">Pullback</span>
+            <span class="tag red">False break</span>
+            <span class="tag">Entry · SL · TP</span>
+          </div>
+        </div>
+
+        <svg class="chart" viewBox="0 0 760 520" role="img" aria-label="Biểu đồ nến xu hướng tăng">
+          <rect width="760" height="520" fill="#fff"/>
+          <g>
+            <line class="grid" x1="64" y1="90" x2="708" y2="90"/>
+            <line class="grid" x1="64" y1="170" x2="708" y2="170"/>
+            <line class="grid" x1="64" y1="250" x2="708" y2="250"/>
+            <line class="grid" x1="64" y1="330" x2="708" y2="330"/>
+            <line class="grid" x1="64" y1="410" x2="708" y2="410"/>
+            <line class="axis" x1="64" y1="430" x2="708" y2="430"/>
+          </g>
+          <rect class="support" x="78" y="334" width="602" height="52" rx="7"/>
+          <text x="92" y="367" font-size="19" fill="#16845c">Vùng hỗ trợ</text>
+
+          <path class="trend" d="M92 388 C150 342, 196 310, 252 286 S352 244, 410 190 S536 146, 654 90"/>
+          <text x="482" y="72" font-size="22" fill="#245fa8">Bối cảnh dẫn dắt tín hiệu</text>
+
+          <g transform="translate(94,0)">
+            <line class="wick" x1="0" y1="356" x2="0" y2="416"/><rect class="bull" x="-13" y="370" width="26" height="32" rx="3"/>
+            <line class="wick" x1="48" y1="322" x2="48" y2="386"/><rect class="bull" x="35" y="336" width="26" height="38" rx="3"/>
+            <line class="wick" x1="96" y1="296" x2="96" y2="360"/><rect class="bear" x="83" y="316" width="26" height="28" rx="3"/>
+            <line class="wick" x1="144" y1="268" x2="144" y2="334"/><rect class="bull" x="131" y="282" width="26" height="40" rx="3"/>
+            <line class="wick" x1="192" y1="248" x2="192" y2="310"/><rect class="bull" x="179" y="260" width="26" height="36" rx="3"/>
+            <line class="wick" x1="240" y1="232" x2="240" y2="294"/><rect class="bear" x="227" y="248" width="26" height="26" rx="3"/>
+            <line class="wick" x1="288" y1="190" x2="288" y2="258"/><rect class="bull" x="275" y="204" width="26" height="40" rx="3"/>
+            <line class="wick" x1="336" y1="174" x2="336" y2="234"/><rect class="bull" x="323" y="188" width="26" height="34" rx="3"/>
+            <line class="wick" x1="384" y1="148" x2="384" y2="212"/><rect class="bear" x="371" y="166" width="26" height="28" rx="3"/>
+            <line class="wick" x1="432" y1="126" x2="432" y2="188"/><rect class="bull" x="419" y="140" width="26" height="36" rx="3"/>
+            <line class="wick" x1="480" y1="106" x2="480" y2="168"/><rect class="bull" x="467" y="118" width="26" height="38" rx="3"/>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="wrap">
+        <div>
+          <div class="eyebrow">Tư duy cốt lõi</div>
+          <h2>Một mẫu nến không có ý nghĩa nếu tách khỏi bối cảnh</h2>
+          <p class="lead">Pin bar, engulfing, inside bar hay doji chỉ là dấu vết. Trader giỏi đọc dấu vết đó trong đúng câu chuyện thị trường.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card stat">
+            <b>01</b>
+            <h3>Nó xuất hiện ở đâu?</h3>
+            <p>Gần hỗ trợ, kháng cự, trendline, đỉnh cũ, đáy cũ hay ở giữa vùng nhiễu?</p>
+          </div>
+          <div class="card stat">
+            <b>02</b>
+            <h3>Nó xuất hiện sau điều gì?</h3>
+            <p>Sau trend mạnh, pullback yếu, breakout, false break hay climax?</p>
+          </div>
+          <div class="card stat">
+            <b>03</b>
+            <h3>Sau đó có tiếp diễn không?</h3>
+            <p>Nến sau có follow-through hay giá dừng lại và đảo chiều?</p>
+          </div>
+        </div>
+        <div class="rule">Câu hỏi đúng không phải là “nến này tên gì?”, mà là “ai đang kiểm soát và ai đang bị kẹt?”.</div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="wrap split">
+        <div>
+          <div class="eyebrow">Giải phẫu cây nến</div>
+          <h2>OHLC cho ta thấy phe nào giữ được lợi thế</h2>
+          <div class="checklist">
+            <div class="check"><i>1</i><span>Thân nến lớn: một phe kiểm soát rõ.</span></div>
+            <div class="check"><i>2</i><span>Đuôi nến dài: có lực từ chối giá.</span></div>
+            <div class="check"><i>3</i><span>Đóng cửa gần đỉnh hoặc đáy: phe thắng giữ được lợi thế.</span></div>
+            <div class="check"><i>4</i><span>Doji: giằng co, cần bối cảnh để diễn giải.</span></div>
+          </div>
+        </div>
+
+        <svg class="chart" viewBox="0 0 760 520" role="img" aria-label="Giải phẫu nến OHLC">
+          <rect width="760" height="520" fill="#fff"/>
+          <line class="grid" x1="76" y1="100" x2="692" y2="100"/>
+          <line class="grid" x1="76" y1="210" x2="692" y2="210"/>
+          <line class="grid" x1="76" y1="320" x2="692" y2="320"/>
+          <line class="axis" x1="76" y1="430" x2="692" y2="430"/>
+
+          <g transform="translate(290,46)">
+            <line class="wick" x1="96" y1="52" x2="96" y2="380"/>
+            <rect class="bull" x="48" y="136" width="96" height="170" rx="6"/>
+            <line x1="144" y1="136" x2="344" y2="106" stroke="#245fa8" stroke-width="3" stroke-dasharray="8 7"/>
+            <line x1="144" y1="306" x2="344" y2="322" stroke="#245fa8" stroke-width="3" stroke-dasharray="8 7"/>
+            <line x1="96" y1="52" x2="322" y2="58" stroke="#245fa8" stroke-width="3" stroke-dasharray="8 7"/>
+            <line x1="96" y1="380" x2="322" y2="390" stroke="#245fa8" stroke-width="3" stroke-dasharray="8 7"/>
+            <text x="360" y="112" font-size="22" fill="#245fa8">Close</text>
+            <text x="360" y="328" font-size="22" fill="#245fa8">Open</text>
+            <text x="338" y="64" font-size="22" fill="#245fa8">High</text>
+            <text x="338" y="396" font-size="22" fill="#245fa8">Low</text>
+          </g>
+
+          <text x="78" y="74" font-size="25" fill="#1c2327">Nến tăng mạnh</text>
+          <text x="78" y="108" font-size="17" fill="#687373">Bên mua đẩy giá lên và giữ lợi thế tới cuối nến.</text>
+        </svg>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="wrap">
+        <div>
+          <div class="eyebrow">Bản đồ bối cảnh</div>
+          <h2>Nhận diện trạng thái thị trường trước khi tìm setup</h2>
+        </div>
+        <div class="timeline">
+          <div class="step"><b>Trạng thái 1</b><span>Trend tăng</span><p>Higher high, higher low. Ưu tiên mua pullback.</p></div>
+          <div class="step"><b>Trạng thái 2</b><span>Trend giảm</span><p>Lower high, lower low. Ưu tiên bán hồi.</p></div>
+          <div class="step"><b>Trạng thái 3</b><span>Trading range</span><p>Giá đi ngang. Tránh trade ở giữa range.</p></div>
+          <div class="step"><b>Trạng thái 4</b><span>Breakout mode</span><p>Giá nén lại, có thể phá hai hướng.</p></div>
+          <div class="step"><b>Trạng thái 5</b><span>Climax</span><p>Giá đi quá nhanh, dễ hồi hoặc chuyển sang range.</p></div>
+        </div>
+
+        <svg class="chart" viewBox="0 0 1220 280" role="img" aria-label="Năm trạng thái thị trường">
+          <rect width="1220" height="280" fill="#fff"/>
+          <g transform="translate(40,34)">
+            <text x="0" y="18" font-size="17" fill="#16845c">Trend tăng</text>
+            <path d="M0 178 L38 148 L74 162 L116 114 L154 132 L202 74" fill="none" stroke="#16845c" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <g transform="translate(278,34)">
+            <text x="0" y="18" font-size="17" fill="#c94040">Trend giảm</text>
+            <path d="M0 76 L40 112 L78 98 L120 146 L160 132 L204 184" fill="none" stroke="#c94040" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <g transform="translate(516,34)">
+            <text x="0" y="18" font-size="17" fill="#b77918">Trading range</text>
+            <rect x="0" y="68" width="204" height="118" rx="7" fill="rgba(183,121,24,.14)" stroke="#b77918" stroke-width="2"/>
+            <path d="M8 150 C36 92, 72 170, 108 112 S172 174, 198 102" fill="none" stroke="#b77918" stroke-width="6" stroke-linecap="round"/>
+          </g>
+          <g transform="translate(754,34)">
+            <text x="0" y="18" font-size="17" fill="#245fa8">Breakout mode</text>
+            <path d="M0 88 L190 132 L0 176 Z" fill="rgba(36,95,168,.12)" stroke="#245fa8" stroke-width="3"/>
+            <path d="M14 132 L196 132" fill="none" stroke="#245fa8" stroke-width="6" stroke-linecap="round"/>
+          </g>
+          <g transform="translate(992,34)">
+            <text x="0" y="18" font-size="17" fill="#6f5bd8">Climax</text>
+            <path d="M0 184 C34 172, 68 134, 98 92 S146 36, 204 18" fill="none" stroke="#6f5bd8" stroke-width="6" stroke-linecap="round"/>
+            <path d="M136 72 L196 18" stroke="#6f5bd8" stroke-width="4" stroke-linecap="round"/>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="wrap split">
+        <div>
+          <div class="eyebrow">Cùng một cây nến, hai câu chuyện</div>
+          <h2>Pin bar ở đúng vị trí khác pin bar ở giữa vùng nhiễu</h2>
+          <p class="lead">Đừng học “đuôi dưới dài là mua”. Hãy hỏi đuôi đó xuất hiện ở đâu, sau nhịp nào, và thị trường có xác nhận không.</p>
+        </div>
+
+        <svg class="chart" viewBox="0 0 760 520" role="img" aria-label="Pin bar trong hai bối cảnh khác nhau">
+          <rect width="760" height="520" fill="#fff"/>
+          <line x1="380" y1="58" x2="380" y2="464" stroke="#ddd8ce" stroke-width="2"/>
+
+          <text x="60" y="64" font-size="24" fill="#16845c">Đúng bối cảnh</text>
+          <rect class="support" x="58" y="344" width="278" height="50" rx="7"/>
+          <text x="74" y="376" font-size="17" fill="#16845c">Hỗ trợ</text>
+          <path d="M70 316 L112 264 L158 292 L206 224 L254 270 L296 354" fill="none" stroke="#245fa8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <line class="wick" x1="292" y1="276" x2="292" y2="412"/>
+          <rect class="bull" x="276" y="316" width="32" height="42" rx="4"/>
+          <path d="M305 310 L340 260" stroke="#16845c" stroke-width="5" marker-end="url(#arrowUp)"/>
+          <text x="64" y="446" font-size="16" fill="#687373">Từ chối giảm ngay tại vùng có người mua.</text>
+
+          <text x="430" y="64" font-size="24" fill="#c94040">Sai bối cảnh</text>
+          <rect class="resistance" x="420" y="120" width="270" height="48" rx="7"/>
+          <rect class="support" x="420" y="352" width="270" height="48" rx="7"/>
+          <path d="M428 260 C464 190, 506 302, 548 232 S626 306, 680 244" fill="none" stroke="#928a7d" stroke-width="5" stroke-linecap="round"/>
+          <line class="wick" x1="560" y1="172" x2="560" y2="320"/>
+          <rect class="bull" x="544" y="224" width="32" height="40" rx="4"/>
+          <text x="428" y="446" font-size="16" fill="#687373">Giữa range: thiếu lợi thế vị trí, dễ bị quét hai đầu.</text>
+
+          <defs>
+            <marker id="arrowUp" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#16845c"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="wrap split">
+        <div>
+          <div class="eyebrow">Setup nền tảng</div>
+          <h2>Pullback theo xu hướng</h2>
+          <p class="lead">Không đoán đỉnh đáy. Chờ giá hồi về vùng hợp lý trong một xu hướng còn khỏe, rồi chỉ vào khi có tín hiệu xác nhận.</p>
+          <div class="checklist">
+            <div class="check"><i>✓</i><span>Xu hướng tăng rõ: đỉnh cao hơn, đáy cao hơn.</span></div>
+            <div class="check"><i>✓</i><span>Pullback yếu: nến nhỏ, chồng lấn, thiếu lực bán.</span></div>
+            <div class="check"><i>✓</i><span>Tín hiệu tại hỗ trợ: từ chối giảm hoặc phá đường pullback.</span></div>
+          </div>
+        </div>
+
+        <svg class="chart" viewBox="0 0 760 520" role="img" aria-label="Setup mua pullback theo xu hướng">
+          <rect width="760" height="520" fill="#fff"/>
+          <line class="grid" x1="64" y1="94" x2="704" y2="94"/>
+          <line class="grid" x1="64" y1="174" x2="704" y2="174"/>
+          <line class="grid" x1="64" y1="254" x2="704" y2="254"/>
+          <line class="grid" x1="64" y1="334" x2="704" y2="334"/>
+          <line class="axis" x1="64" y1="430" x2="704" y2="430"/>
+          <rect class="support" x="84" y="320" width="566" height="52" rx="7"/>
+          <text x="100" y="353" font-size="18" fill="#16845c">Vùng hồi về hợp lý</text>
+
+          <path class="trend" d="M92 372 L150 326 L202 342 L260 266 L316 286 L376 202 L430 238 L482 326 L536 292 L602 204 L672 146"/>
+          <line class="entry" x1="510" y1="276" x2="666" y2="276"/>
+          <line class="stop" x1="484" y1="392" x2="666" y2="392"/>
+          <line class="target" x1="516" y1="146" x2="666" y2="146"/>
+          <text x="674" y="282" font-size="18" fill="#245fa8">Entry</text>
+          <text x="674" y="398" font-size="18" fill="#c94040">SL</text>
+          <text x="674" y="152" font-size="18" fill="#16845c">TP</text>
+
+          <line class="wick" x1="508" y1="270" x2="508" y2="360"/><rect class="bull" x="493" y="302" width="30" height="36" rx="4"/>
+          <line class="wick" x1="558" y1="244" x2="558" y2="318"/><rect class="bull" x="543" y="264" width="30" height="38" rx="4"/>
+        </svg>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="wrap">
+        <div>
+          <div class="eyebrow">Quy trình đọc lệnh</div>
+          <h2>Một setup tốt phải đi qua 5 lớp lọc</h2>
+        </div>
+        <div class="timeline">
+          <div class="step"><b>Bước 1</b><span>Bối cảnh</span><p>Trend, range, breakout mode hay climax?</p></div>
+          <div class="step"><b>Bước 2</b><span>Vị trí</span><p>Giá có đang ở vùng đáng quan sát không?</p></div>
+          <div class="step"><b>Bước 3</b><span>Tín hiệu</span><p>Nến đóng cửa có đủ thuyết phục không?</p></div>
+          <div class="step"><b>Bước 4</b><span>Kích hoạt</span><p>Giá phá qua điểm nào thì vào lệnh?</p></div>
+          <div class="step"><b>Bước 5</b><span>Rủi ro</span><p>Ý tưởng sai ở đâu, thoát ở đâu?</p></div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Nếu bối cảnh sai, setup đẹp cũng bỏ</h3>
+            <p>Lỗi lớn nhất của người mới là vào lệnh vì mẫu nến đẹp, trong khi thị trường đang ở giữa range hoặc đã chạy quá xa.</p>
+          </div>
+          <div class="card">
+            <h3>Nếu không biết sai ở đâu, không có lệnh</h3>
+            <p>Stop loss phải nằm tại điểm làm ý tưởng giao dịch mất hiệu lực, không phải tại điểm bạn muốn lỗ ít.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="wrap split">
+        <div>
+          <div class="eyebrow">Từ chart thành kế hoạch</div>
+          <h2>Ví dụ lệnh mua pullback</h2>
+          <div class="checklist">
+            <div class="check"><i>1</i><span>Bối cảnh: trend tăng, giá hồi về hỗ trợ.</span></div>
+            <div class="check"><i>2</i><span>Entry: phá lên trên nến tín hiệu.</span></div>
+            <div class="check"><i>3</i><span>SL: dưới đáy pullback.</span></div>
+            <div class="check"><i>4</i><span>TP: đỉnh cũ hoặc vùng kháng cự kế tiếp.</span></div>
+          </div>
+        </div>
+
+        <svg class="chart" viewBox="0 0 760 520" role="img" aria-label="Kế hoạch giao dịch với entry stop target">
+          <rect width="760" height="520" fill="#fff"/>
+          <rect class="resistance" x="86" y="112" width="560" height="52" rx="7"/>
+          <rect class="support" x="86" y="342" width="560" height="52" rx="7"/>
+          <text x="102" y="145" font-size="18" fill="#c94040">Kháng cự / mục tiêu đầu tiên</text>
+          <text x="102" y="375" font-size="18" fill="#16845c">Hỗ trợ / vùng chấp nhận rủi ro</text>
+          <path class="trend" d="M102 384 L156 338 L212 354 L270 282 L328 302 L388 210 L444 254 L496 354 L548 312 L612 222 L678 160"/>
+          <line class="entry" x1="526" y1="292" x2="682" y2="292"/>
+          <line class="stop" x1="490" y1="408" x2="682" y2="408"/>
+          <line class="target" x1="526" y1="116" x2="682" y2="116"/>
+          <text x="690" y="298" font-size="18" fill="#245fa8">Entry</text>
+          <text x="690" y="414" font-size="18" fill="#c94040">Stop</text>
+          <text x="690" y="122" font-size="18" fill="#16845c">Target</text>
+          <text x="102" y="446" font-size="16" fill="#687373">Ý tưởng sai khi giá phá đáy pullback và không còn giữ cấu trúc higher low.</text>
+        </svg>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="wrap">
+        <div>
+          <div class="eyebrow">Lỗi cần tránh</div>
+          <h2>5 cách người mới tự phá setup tốt</h2>
+        </div>
+        <div class="grid-3">
+          <div class="card"><h3>Mua đuổi ở đỉnh</h3><p>Thấy nến xanh lớn sau một nhịp đã chạy quá xa.</p></div>
+          <div class="card"><h3>Trade giữa range</h3><p>Không có lợi thế vị trí, dễ bị quét cả hai đầu.</p></div>
+          <div class="card"><h3>SL quá sát</h3><p>Đặt stop trong vùng nhiễu thay vì sau cấu trúc.</p></div>
+          <div class="card"><h3>Bỏ qua giá đóng cửa</h3><p>Chỉ nhìn bóng nến mà không xem phe nào giữ được lợi thế.</p></div>
+          <div class="card"><h3>Chống trend quá sớm</h3><p>Short trend tăng mạnh chỉ vì nghĩ “giá cao rồi”.</p></div>
+          <div class="card"><h3>Không có điểm kích hoạt</h3><p>Ý tưởng có thể đúng nhưng vào trước khi thị trường xác nhận.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="wrap split">
+        <div>
+          <div class="eyebrow">Checklist trước lệnh</div>
+          <h2>Đọc nhanh trong 30 giây</h2>
+          <div class="checklist">
+            <div class="check"><i>✓</i><span>Thị trường đang trend hay range?</span></div>
+            <div class="check"><i>✓</i><span>Giá đang ở vùng nào?</span></div>
+            <div class="check"><i>✓</i><span>Tín hiệu có đóng cửa tốt không?</span></div>
+            <div class="check red"><i>!</i><span>Entry có quá muộn không?</span></div>
+            <div class="check"><i>✓</i><span>SL và TP có theo cấu trúc không?</span></div>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Quy tắc của Module 1</h3>
+          <p class="lead" style="color: var(--ink); font-size: 32px;">Không có bối cảnh, không có setup. Không có điểm sai rõ ràng, không có lệnh.</p>
+          <div class="tag-row">
+            <span class="tag green">Context first</span>
+            <span class="tag amber">Signal second</span>
+            <span class="tag red">Risk always</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="wrap">
+        <div>
+          <div class="eyebrow">Bài tập trên chart thật</div>
+          <h2>Biến kiến thức thành mắt nhìn</h2>
+          <p class="lead">Mở chart bất kỳ và đánh dấu trực tiếp. Mục tiêu chưa phải tìm lệnh, mà là học cách thấy bối cảnh.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card"><h3>Bài tập 1</h3><p>Đánh dấu 5 đoạn: trend tăng, trend giảm, range, breakout, pullback.</p></div>
+          <div class="card"><h3>Bài tập 2</h3><p>Chọn 10 cây nến nổi bật: nó xuất hiện ở đâu, sau điều gì, có follow-through không?</p></div>
+          <div class="card"><h3>Bài tập 3</h3><p>Tìm 3 pullback theo xu hướng: ghi entry giả định, SL, TP và lý do.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="progress" id="progress">Slide 1 / 11</div>
+      <div class="nav">
+        <button id="prev" aria-label="Slide trước">‹</button>
+        <button id="next" aria-label="Slide sau">›</button>
+      </div>
+      <div class="dots" id="dots"></div>
+    </footer>
+  </main>
+
+  <script>
+    const slides = [...document.querySelectorAll('.slide')];
+    const progress = document.querySelector('#progress');
+    const dots = document.querySelector('#dots');
+    let current = 0;
+
+    slides.forEach((_, index) => {
+      const dot = document.createElement('span');
+      dot.className = `dot${index === 0 ? ' active' : ''}`;
+      dot.addEventListener('click', () => show(index));
+      dots.appendChild(dot);
+    });
+
+    const dotEls = [...document.querySelectorAll('.dot')];
+
+    function show(index) {
+      current = (index + slides.length) % slides.length;
+      slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+      dotEls.forEach((dot, i) => dot.classList.toggle('active', i === current));
+      progress.textContent = `Slide ${current + 1} / ${slides.length}`;
+    }
+
+    document.querySelector('#prev').addEventListener('click', () => show(current - 1));
+    document.querySelector('#next').addEventListener('click', () => show(current + 1));
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight' || event.key === ' ') show(current + 1);
+      if (event.key === 'ArrowLeft') show(current - 1);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,753 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Module 1 - Nen tang Price Action</title>
+  <style>
+    :root {
+      --bg: #f6f4ef;
+      --ink: #1e2528;
+      --muted: #65706f;
+      --panel: #ffffff;
+      --line: #d8d5cb;
+      --green: #1f9d68;
+      --green-soft: #dff3ea;
+      --red: #d94b4b;
+      --red-soft: #fae3e0;
+      --blue: #2e6fbe;
+      --blue-soft: #deebfb;
+      --gold: #c58a1d;
+      --gold-soft: #fff0ca;
+      --dark: #172026;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.68), rgba(255,255,255,.2)),
+        var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    .deck {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: 1fr auto;
+    }
+
+    .slide {
+      display: none;
+      min-height: calc(100vh - 76px);
+      padding: 42px 54px 28px;
+    }
+
+    .slide.active {
+      display: grid;
+      animation: fade .18s ease-out;
+    }
+
+    @keyframes fade {
+      from { opacity: .3; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .layout {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 26px;
+      align-content: center;
+    }
+
+    .two {
+      grid-template-columns: minmax(0, .92fr) minmax(380px, 1.08fr);
+      align-items: center;
+    }
+
+    .three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1 {
+      font-size: clamp(42px, 6vw, 78px);
+      line-height: .98;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      font-size: clamp(32px, 4.6vw, 58px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      font-size: 22px;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+
+    .kicker {
+      color: var(--blue);
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 13px;
+      letter-spacing: .08em;
+      margin-bottom: 16px;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: clamp(18px, 2.1vw, 26px);
+      line-height: 1.35;
+      margin-top: 22px;
+      max-width: 760px;
+    }
+
+    .quote {
+      border-left: 5px solid var(--gold);
+      padding: 18px 0 18px 22px;
+      color: var(--dark);
+      font-size: 25px;
+      line-height: 1.32;
+      font-weight: 700;
+    }
+
+    .panel {
+      background: rgba(255,255,255,.84);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: 0 18px 44px rgba(23,32,38,.08);
+    }
+
+    .mini-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      min-height: 150px;
+    }
+
+    .mini-card strong {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .mini-card span, .mini-card p {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.34;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .tag {
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 15px;
+      font-weight: 800;
+      background: var(--blue-soft);
+      color: #194e8f;
+    }
+
+    .tag.green { background: var(--green-soft); color: #116843; }
+    .tag.red { background: var(--red-soft); color: #9e2c2c; }
+    .tag.gold { background: var(--gold-soft); color: #81580f; }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .flow div {
+      min-height: 94px;
+      display: grid;
+      align-content: center;
+      gap: 8px;
+      padding: 16px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid var(--line);
+      font-weight: 800;
+      font-size: 17px;
+    }
+
+    .flow small {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .chart {
+      width: 100%;
+      display: block;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 44px rgba(23,32,38,.08);
+    }
+
+    .chart text {
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-weight: 800;
+      fill: var(--ink);
+    }
+
+    .caption {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.35;
+      margin-top: 12px;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .check {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 12px;
+      align-items: start;
+      font-size: 20px;
+      line-height: 1.25;
+      font-weight: 750;
+    }
+
+    .check i {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--green-soft);
+      color: var(--green);
+      font-style: normal;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .warn i { background: var(--red-soft); color: var(--red); }
+
+    .lesson-grid {
+      display: grid;
+      grid-template-columns: .95fr 1.05fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .big-number {
+      font-size: 72px;
+      font-weight: 900;
+      line-height: .9;
+      color: var(--blue);
+    }
+
+    .footer {
+      min-height: 76px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 18px;
+      align-items: center;
+      padding: 14px 30px;
+      border-top: 1px solid var(--line);
+      background: rgba(255,255,255,.78);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    button {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      border-radius: 8px;
+      min-width: 44px;
+      height: 44px;
+      font-size: 22px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    button:hover { border-color: var(--blue); color: var(--blue); }
+
+    .progress {
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .dots {
+      display: flex;
+      gap: 7px;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #c6c2b7;
+    }
+
+    .dot.active { width: 28px; border-radius: 999px; background: var(--blue); }
+
+    .axis { stroke: #cfcac0; stroke-width: 1; }
+    .grid { stroke: #ebe7dd; stroke-width: 1; }
+    .wick { stroke: #1d272a; stroke-width: 3; stroke-linecap: round; }
+    .bull { fill: var(--green); }
+    .bear { fill: var(--red); }
+    .neutral { fill: #ece7da; stroke: #9b9385; }
+    .support { fill: rgba(31,157,104,.14); stroke: rgba(31,157,104,.58); stroke-width: 2; }
+    .resist { fill: rgba(217,75,75,.12); stroke: rgba(217,75,75,.52); stroke-width: 2; }
+    .note-line { stroke: var(--blue); stroke-width: 3; stroke-dasharray: 8 7; }
+    .sl { stroke: var(--red); stroke-width: 4; }
+    .tp { stroke: var(--green); stroke-width: 4; }
+    .entry { stroke: var(--blue); stroke-width: 4; }
+
+    @media (max-width: 900px) {
+      .slide { padding: 26px 18px 18px; }
+      .two, .lesson-grid, .three { grid-template-columns: 1fr; }
+      .flow { grid-template-columns: 1fr; }
+      .footer { grid-template-columns: 1fr; justify-items: center; }
+      .dots { display: none; }
+      .slide { min-height: auto; }
+      .chart { min-height: 260px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck">
+    <section class="slide active">
+      <div class="layout two">
+        <div>
+          <div class="kicker">Module 1 - Nen tang Price Action</div>
+          <h1>Doc chart nhu mot trader, khong hoc nen nhu tu dien</h1>
+          <p class="lead">Bai giang truc quan: boi canh -> ap luc mua ban -> tin hieu -> setup -> entry/SL/TP.</p>
+          <div class="tag-row">
+            <span class="tag green">Xu huong</span>
+            <span class="tag gold">Pullback</span>
+            <span class="tag red">Trap</span>
+            <span class="tag">Quan tri rui ro</span>
+          </div>
+        </div>
+        <svg class="chart" viewBox="0 0 720 460" role="img" aria-label="Price action title chart">
+          <rect x="0" y="0" width="720" height="460" fill="#fff"/>
+          <g>
+            <line class="grid" x1="50" y1="92" x2="680" y2="92"/>
+            <line class="grid" x1="50" y1="172" x2="680" y2="172"/>
+            <line class="grid" x1="50" y1="252" x2="680" y2="252"/>
+            <line class="grid" x1="50" y1="332" x2="680" y2="332"/>
+            <rect class="support" x="70" y="304" width="590" height="48" rx="5"/>
+            <text x="84" y="337" font-size="20">vung ho tro</text>
+          </g>
+          <path d="M96 336 C160 312, 198 262, 252 240 S348 208, 402 170 S520 132, 630 86" fill="none" stroke="#2e6fbe" stroke-width="5"/>
+          <g transform="translate(88,0)">
+            <line class="wick" x1="0" y1="324" x2="0" y2="382"/><rect class="bull" x="-12" y="338" width="24" height="32" rx="2"/>
+            <line class="wick" x1="52" y1="290" x2="52" y2="356"/><rect class="bull" x="40" y="302" width="24" height="40" rx="2"/>
+            <line class="wick" x1="104" y1="254" x2="104" y2="324"/><rect class="bull" x="92" y="268" width="24" height="44" rx="2"/>
+            <line class="wick" x1="156" y1="248" x2="156" y2="306"/><rect class="bear" x="144" y="266" width="24" height="24" rx="2"/>
+            <line class="wick" x1="208" y1="216" x2="208" y2="278"/><rect class="bull" x="196" y="228" width="24" height="36" rx="2"/>
+            <line class="wick" x1="260" y1="200" x2="260" y2="260"/><rect class="bear" x="248" y="214" width="24" height="28" rx="2"/>
+            <line class="wick" x1="312" y1="172" x2="312" y2="230"/><rect class="bull" x="300" y="184" width="24" height="34" rx="2"/>
+            <line class="wick" x1="364" y1="158" x2="364" y2="220"/><rect class="bull" x="352" y="170" width="24" height="38" rx="2"/>
+            <line class="wick" x1="416" y1="128" x2="416" y2="190"/><rect class="bull" x="404" y="140" width="24" height="36" rx="2"/>
+            <line class="wick" x1="468" y1="118" x2="468" y2="176"/><rect class="bear" x="456" y="132" width="24" height="24" rx="2"/>
+            <line class="wick" x1="520" y1="82" x2="520" y2="150"/><rect class="bull" x="508" y="94" width="24" height="42" rx="2"/>
+          </g>
+          <text x="430" y="64" font-size="24">gia ke cau chuyen</text>
+        </svg>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="layout">
+        <div>
+          <div class="kicker">Tu duy cot loi</div>
+          <h2>Mot mau nen khong co y nghia neu tach khoi boi canh</h2>
+          <p class="lead">Pin bar, engulfing, inside bar hay doji deu chi la dau vet. Viec cua trader la doc dau vet do trong dung cau chuyen thi truong.</p>
+        </div>
+        <div class="three">
+          <div class="mini-card">
+            <strong>O dau?</strong>
+            <span>Gan ho tro, khang cu, trendline, dinh cu, day cu hay o giua vung nhieu?</span>
+          </div>
+          <div class="mini-card">
+            <strong>Sau dieu gi?</strong>
+            <span>Sau trend manh, pullback yeu, breakout, false break hay climax?</span>
+          </div>
+          <div class="mini-card">
+            <strong>Co tiep dien khong?</strong>
+            <span>Nen sau co follow-through hay gia dung lai va dao chieu?</span>
+          </div>
+        </div>
+        <div class="quote">Cau hoi dung khong phai la "nen nay ten gi?" ma la "ai dang bi ket va ai dang kiem soat?"</div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="layout two">
+        <div>
+          <div class="kicker">Giai phau cay nen</div>
+          <h2>Doc OHLC de nhin ap luc mua ban</h2>
+          <div class="checklist">
+            <div class="check"><i>1</i><span>Than nen lon: mot phe kiem soat ro.</span></div>
+            <div class="check"><i>2</i><span>Duoi nen dai: co luc tu choi gia.</span></div>
+            <div class="check"><i>3</i><span>Dong cua gan dinh/day: phe thang giu duoc loi the.</span></div>
+            <div class="check"><i>4</i><span>Doji: giang co, can boi canh de dien giai.</span></div>
+          </div>
+        </div>
+        <svg class="chart" viewBox="0 0 720 460" role="img" aria-label="Candlestick anatomy">
+          <rect width="720" height="460" fill="#fff"/>
+          <line class="grid" x1="70" y1="88" x2="650" y2="88"/>
+          <line class="grid" x1="70" y1="196" x2="650" y2="196"/>
+          <line class="grid" x1="70" y1="304" x2="650" y2="304"/>
+          <g transform="translate(250,40)">
+            <line class="wick" x1="90" y1="50" x2="90" y2="350"/>
+            <rect class="bull" x="48" y="138" width="84" height="150" rx="5"/>
+            <line class="note-line" x1="132" y1="138" x2="320" y2="116"/>
+            <line class="note-line" x1="132" y1="288" x2="320" y2="300"/>
+            <line class="note-line" x1="90" y1="50" x2="300" y2="58"/>
+            <line class="note-line" x1="90" y1="350" x2="300" y2="370"/>
+            <text x="336" y="122" font-size="22">Close gan dinh</text>
+            <text x="336" y="306" font-size="22">Open</text>
+            <text x="318" y="64" font-size="22">High</text>
+            <text x="318" y="376" font-size="22">Low</text>
+          </g>
+          <text x="76" y="64" font-size="24">Nen tang manh</text>
+          <text x="76" y="96" font-size="16" fill="#65706f">Ben mua day gia len va giu loi the toi cuoi nen.</text>
+        </svg>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="layout">
+        <div>
+          <div class="kicker">Ban do boi canh</div>
+          <h2>5 trang thai thi truong can nhan dien truoc khi tim setup</h2>
+        </div>
+        <div class="flow">
+          <div style="border-top: 5px solid var(--green)">Trend tang<small>Higher high, higher low</small></div>
+          <div style="border-top: 5px solid var(--red)">Trend giam<small>Lower high, lower low</small></div>
+          <div style="border-top: 5px solid var(--gold)">Trading range<small>Mua thap, ban cao, tranh giua range</small></div>
+          <div style="border-top: 5px solid var(--blue)">Breakout mode<small>Gia nen, sap chon huong</small></div>
+          <div style="border-top: 5px solid #7b61ff">Climax<small>Di qua nhanh, de hoi hoac vao range</small></div>
+        </div>
+        <svg class="chart" viewBox="0 0 1120 270" role="img" aria-label="Five market states">
+          <rect width="1120" height="270" fill="#fff"/>
+          <g transform="translate(36,26)">
+            <text x="0" y="20" font-size="17">Trend tang</text>
+            <path d="M0 178 L35 150 L70 162 L108 118 L145 132 L190 78" fill="none" stroke="#1f9d68" stroke-width="5"/>
+          </g>
+          <g transform="translate(258,26)">
+            <text x="0" y="20" font-size="17">Trend giam</text>
+            <path d="M0 78 L38 112 L72 100 L112 146 L150 132 L190 184" fill="none" stroke="#d94b4b" stroke-width="5"/>
+          </g>
+          <g transform="translate(480,26)">
+            <text x="0" y="20" font-size="17">Range</text>
+            <rect x="0" y="72" width="190" height="110" fill="#fff0ca" stroke="#c58a1d" stroke-width="2"/>
+            <path d="M0 150 C30 88, 62 170, 96 112 S160 174, 190 102" fill="none" stroke="#c58a1d" stroke-width="5"/>
+          </g>
+          <g transform="translate(702,26)">
+            <text x="0" y="20" font-size="17">Breakout mode</text>
+            <path d="M0 86 L160 132 L0 178 Z" fill="rgba(46,111,190,.12)" stroke="#2e6fbe" stroke-width="3"/>
+            <path d="M8 132 L160 132" stroke="#2e6fbe" stroke-width="5"/>
+          </g>
+          <g transform="translate(924,26)">
+            <text x="0" y="20" font-size="17">Climax</text>
+            <path d="M0 180 C35 168, 70 132, 95 92 S136 32, 190 18" fill="none" stroke="#7b61ff" stroke-width="6"/>
+            <path d="M132 70 L182 20" stroke="#7b61ff" stroke-width="4"/>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="layout two">
+        <div>
+          <div class="kicker">Cung mot cay nen, hai cau chuyen</div>
+          <h2>Pin bar o dung vi tri khac pin bar o giua nhieu</h2>
+          <p class="lead">Dung hoc "thay duoi dai la mua". Hay hoi: duoi dai do xuat hien tai vung nao, sau mot nhip nao, va co follow-through khong?</p>
+        </div>
+        <svg class="chart" viewBox="0 0 720 460" role="img" aria-label="Same candle different context">
+          <rect width="720" height="460" fill="#fff"/>
+          <line x1="360" y1="42" x2="360" y2="420" stroke="#d8d5cb" stroke-width="2"/>
+          <text x="60" y="60" font-size="23">Dung boi canh</text>
+          <text x="420" y="60" font-size="23">Sai boi canh</text>
+          <rect class="support" x="48" y="316" width="260" height="42" rx="5"/>
+          <text x="62" y="345" font-size="17">ho tro</text>
+          <path d="M62 284 L104 238 L146 266 L188 210 L230 250 L272 326" fill="none" stroke="#2e6fbe" stroke-width="4"/>
+          <g transform="translate(250,0)">
+            <line class="wick" x1="0" y1="248" x2="0" y2="366"/><rect class="bull" x="-15" y="280" width="30" height="34" rx="3"/>
+          </g>
+          <path d="M270 276 L300 236" stroke="#1f9d68" stroke-width="4" marker-end="url(#arrowGreen)"/>
+          <rect class="resist" x="410" y="108" width="250" height="42" rx="5"/>
+          <rect class="support" x="410" y="312" width="250" height="42" rx="5"/>
+          <path d="M420 202 C460 154, 495 250, 530 190 S600 258, 650 204" fill="none" stroke="#9b9385" stroke-width="4"/>
+          <g transform="translate(540,0)">
+            <line class="wick" x1="0" y1="146" x2="0" y2="258"/><rect class="bull" x="-15" y="180" width="30" height="34" rx="3"/>
+          </g>
+          <text x="428" y="392" font-size="16" fill="#65706f">Giua range: tin hieu yeu, de bi quet hai dau.</text>
+          <defs>
+            <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#1f9d68"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="layout two">
+        <div>
+          <div class="kicker">Setup nen tang</div>
+          <h2>Pullback theo xu huong</h2>
+          <p class="lead">Setup de hoc nhat: khong doan dinh/day, chi cho gia hoi ve vung hop ly trong mot xu huong dang con khoe.</p>
+          <div class="checklist">
+            <div class="check"><i>✓</i><span>Trend tang ro: dinh cao hon, day cao hon.</span></div>
+            <div class="check"><i>✓</i><span>Pullback yeu: nen nho, chong lan, thieu luc ban.</span></div>
+            <div class="check"><i>✓</i><span>Tin hieu tai ho tro: tu choi giam hoac pha duong pullback.</span></div>
+          </div>
+        </div>
+        <svg class="chart" viewBox="0 0 720 460" role="img" aria-label="Bullish pullback setup">
+          <rect width="720" height="460" fill="#fff"/>
+          <line class="grid" x1="56" y1="90" x2="672" y2="90"/>
+          <line class="grid" x1="56" y1="170" x2="672" y2="170"/>
+          <line class="grid" x1="56" y1="250" x2="672" y2="250"/>
+          <line class="grid" x1="56" y1="330" x2="672" y2="330"/>
+          <rect class="support" x="64" y="286" width="590" height="54" rx="6"/>
+          <text x="76" y="320" font-size="18">vung hoi ve hop ly</text>
+          <path d="M82 338 L136 298 L184 318 L240 244 L292 262 L350 188 L404 220 L456 280 L510 258 L568 190 L640 132" fill="none" stroke="#2e6fbe" stroke-width="5"/>
+          <line class="entry" x1="474" y1="246" x2="630" y2="246"/>
+          <line class="sl" x1="456" y1="350" x2="620" y2="350"/>
+          <line class="tp" x1="488" y1="132" x2="660" y2="132"/>
+          <text x="636" y="252" font-size="18" fill="#2e6fbe">Entry</text>
+          <text x="628" y="356" font-size="18" fill="#d94b4b">SL</text>
+          <text x="664" y="138" font-size="18" fill="#1f9d68">TP</text>
+          <g transform="translate(476,0)">
+            <line class="wick" x1="0" y1="238" x2="0" y2="326"/><rect class="bull" x="-13" y="260" width="26" height="36" rx="2"/>
+            <line class="wick" x1="44" y1="218" x2="44" y2="292"/><rect class="bull" x="31" y="236" width="26" height="38" rx="2"/>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="layout">
+        <div>
+          <div class="kicker">Quy trinh doc lenh</div>
+          <h2>Mot setup tot phai di qua 5 lop loc</h2>
+        </div>
+        <div class="flow">
+          <div>Boi canh<small>Trend, range, breakout hay climax?</small></div>
+          <div>Vi tri<small>Gia dang o vung co y nghia?</small></div>
+          <div>Tin hieu<small>Nen dong cua co thuyet phuc?</small></div>
+          <div>Kich hoat<small>Gia pha qua diem nao de vao?</small></div>
+          <div>Rui ro<small>Sai o dau, thoat o dau?</small></div>
+        </div>
+        <div class="lesson-grid">
+          <div class="panel">
+            <div class="big-number">01</div>
+            <h3>Neu boi canh sai, setup dep cung bo</h3>
+            <p class="caption">Day la loi lon nhat cua nguoi moi: vao lenh vi thay mau nen dep, trong khi thi truong dang o giua range hoac sau mot nhip qua xa.</p>
+          </div>
+          <div class="panel">
+            <div class="big-number" style="color: var(--red)">02</div>
+            <h3>Neu khong biet sai o dau, khong co lenh</h3>
+            <p class="caption">Stop loss phai nam tai diem lam y tuong giao dich mat hieu luc, khong phai tai diem ban "muon lo it".</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="layout two">
+        <div>
+          <div class="kicker">Vi du lenh mua pullback</div>
+          <h2>Tu chart thanh ke hoach</h2>
+          <div class="checklist">
+            <div class="check"><i>1</i><span>Boi canh: trend tang, pullback ve ho tro.</span></div>
+            <div class="check"><i>2</i><span>Entry: pha len tren nen tin hieu.</span></div>
+            <div class="check"><i>3</i><span>SL: duoi day pullback.</span></div>
+            <div class="check"><i>4</i><span>TP: dinh cu hoac vung khang cu ke tiep.</span></div>
+          </div>
+        </div>
+        <svg class="chart" viewBox="0 0 720 460" role="img" aria-label="Entry stop loss take profit">
+          <rect width="720" height="460" fill="#fff"/>
+          <rect class="support" x="80" y="292" width="548" height="48" rx="6"/>
+          <rect class="resist" x="80" y="112" width="548" height="48" rx="6"/>
+          <text x="94" y="144" font-size="18">khang cu / target dau tien</text>
+          <text x="94" y="324" font-size="18">ho tro / vung chap nhan rui ro</text>
+          <path d="M92 338 L144 300 L196 312 L254 248 L306 262 L364 186 L420 224 L468 306 L520 268 L580 190 L638 146" fill="none" stroke="#2e6fbe" stroke-width="5"/>
+          <line class="entry" x1="500" y1="250" x2="650" y2="250"/>
+          <line class="sl" x1="468" y1="356" x2="650" y2="356"/>
+          <line class="tp" x1="500" y1="114" x2="650" y2="114"/>
+          <text x="95" y="392" font-size="17" fill="#65706f">Y tuong sai khi gia pha day pullback va khong con giu cau truc higher low.</text>
+          <text x="654" y="256" font-size="18" fill="#2e6fbe">Entry</text>
+          <text x="654" y="362" font-size="18" fill="#d94b4b">Stop</text>
+          <text x="654" y="120" font-size="18" fill="#1f9d68">Target</text>
+        </svg>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="layout">
+        <div>
+          <div class="kicker">Loi can tranh</div>
+          <h2>5 cach nguoi moi tu pha setup tot</h2>
+        </div>
+        <div class="three">
+          <div class="mini-card"><strong>Mua duoi o dinh</strong><span>Thay nen xanh lon sau mot nhip da chay qua xa.</span></div>
+          <div class="mini-card"><strong>Trade giua range</strong><span>Khong co loi the ve vi tri, de bi quet ca hai dau.</span></div>
+          <div class="mini-card"><strong>SL qua sat</strong><span>Dat stop trong vung nhieu thay vi sau cau truc.</span></div>
+          <div class="mini-card"><strong>Bo qua close</strong><span>Chi nhin bong nen ma khong xem phe nao giu duoc loi the.</span></div>
+          <div class="mini-card"><strong>Chong trend som</strong><span>Short trend tang manh chi vi "gia cao roi".</span></div>
+          <div class="mini-card"><strong>Khong co kich hoat</strong><span>Dung y tuong dung nhung vao truoc khi thi truong xac nhan.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="layout two">
+        <div>
+          <div class="kicker">Checklist truoc lenh</div>
+          <h2>Doc nhanh trong 30 giay</h2>
+          <div class="checklist">
+            <div class="check"><i>✓</i><span>Trend hay range?</span></div>
+            <div class="check"><i>✓</i><span>Gia dang o vung nao?</span></div>
+            <div class="check"><i>✓</i><span>Tin hieu co dong cua tot?</span></div>
+            <div class="check"><i>✓</i><span>Entry co qua muon?</span></div>
+            <div class="check"><i>✓</i><span>SL/TP co theo cau truc?</span></div>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Quy tac cua Module 1</h3>
+          <p class="lead" style="font-size: 28px; color: var(--ink); margin-top: 20px;">Khong co boi canh, khong co setup. Khong co diem sai ro rang, khong co lenh.</p>
+          <div class="tag-row">
+            <span class="tag green">Context first</span>
+            <span class="tag gold">Signal second</span>
+            <span class="tag red">Risk always</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="layout">
+        <div>
+          <div class="kicker">Bai tap tren chart that</div>
+          <h2>Bien kien thuc thanh mat nhin</h2>
+          <p class="lead">Mo chart bat ky va danh dau truc tiep. Muc tieu khong phai tim lenh, ma hoc cach thay boi canh.</p>
+        </div>
+        <div class="three">
+          <div class="mini-card">
+            <strong>Bai tap 1</strong>
+            <span>Danh dau 5 doan: trend tang, trend giam, range, breakout, pullback.</span>
+          </div>
+          <div class="mini-card">
+            <strong>Bai tap 2</strong>
+            <span>Chon 10 cay nen noi bat: no xuat hien o dau, sau dieu gi, co follow-through khong?</span>
+          </div>
+          <div class="mini-card">
+            <strong>Bai tap 3</strong>
+            <span>Tim 3 pullback theo xu huong: ghi entry gia dinh, SL, TP va ly do.</span>
+          </div>
+        </div>
+        <svg class="chart" viewBox="0 0 1120 250" role="img" aria-label="Exercise worksheet chart">
+          <rect width="1120" height="250" fill="#fff"/>
+          <path d="M50 188 L102 150 L154 166 L214 108 L270 128 L330 76 L390 98 L448 154 L514 138 L578 184 L640 146 L700 170 L762 104 L824 126 L884 76 L950 92 L1036 44" fill="none" stroke="#2e6fbe" stroke-width="5"/>
+          <rect x="438" y="130" width="158" height="76" fill="rgba(197,138,29,.15)" stroke="#c58a1d" stroke-width="2" rx="6"/>
+          <rect x="728" y="94" width="160" height="58" fill="rgba(31,157,104,.13)" stroke="#1f9d68" stroke-width="2" rx="6"/>
+          <text x="454" y="222" font-size="17">range ngan</text>
+          <text x="742" y="170" font-size="17">pullback</text>
+          <text x="62" y="50" font-size="20">Hay tu ve label len chart cua ban</text>
+        </svg>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="layout two">
+        <div>
+          <div class="kicker">Ket bai</div>
+          <h2>Module 1 dat nen cho toan bo khoa hoc</h2>
+          <p class="lead">Tu bai sau, ta se zoom vao tung cay nen: than nen, bong nen, close, outside bar, inside bar, doji va cach chung thay doi y nghia theo boi canh.</p>
+        </div>
+        <div class="panel">
+          <h3>Bai tiep theo</h3>
+          <p class="lead" style="font-size: 30px; color: var(--ink); margin-top: 18px;">Bai 2: Doc tung cay nen theo OHLC va gia dong cua</p>
+          <div class="tag-row">
+            <span class="tag">OHLC</span>
+            <span class="tag green">Buying pressure</span>
+            <span class="tag red">Selling pressure</span>
+            <span class="tag gold">Close matters</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="progress" id="progress">Slide 1 / 12</div>
+      <div class="nav">
+        <button id="prev" aria-label="Previous slide">‹</button>
+        <button id="next" aria-label="Next slide">›</button>
+      </div>
+      <div class="dots" id="dots"></div>
+    </footer>
+  </main>
+
+  <script>
+    const slides = [...document.querySelectorAll('.slide')];
+    const progress = document.querySelector('#progress');
+    const dots = document.querySelector('#dots');
+    let current = 0;
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', () => show(i));
+      dots.appendChild(dot);
+    });
+
+    const dotEls = [...document.querySelectorAll('.dot')];
+
+    function show(index) {
+      current = (index + slides.length) % slides.length;
+      slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+      dotEls.forEach((dot, i) => dot.classList.toggle('active', i === current));
+      progress.textContent = `Slide ${current + 1} / ${slides.length}`;
+    }
+
+    document.querySelector('#prev').addEventListener('click', () => show(current - 1));
+    document.querySelector('#next').addEventListener('click', () => show(current + 1));
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight' || event.key === ' ') show(current + 1);
+      if (event.key === 'ArrowLeft') show(current - 1);
+    });
+  </script>
+</body>
+</html>

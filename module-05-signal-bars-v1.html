@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Module 5 - Nến tín hiệu và Entry Bar</title>
+  <link rel="stylesheet" href="course-theme.css">
+</head>
+<body>
+<main class="deck">
+  <section class="slide active">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Module 5 · Nến tín hiệu</div>
+        <h1>Signal Bar, Entry Bar và cách đọc nến trong bối cảnh</h1>
+        <p class="lead">Nến tín hiệu không phải nút bấm mua/bán. Nó là bằng chứng cuối cùng sau khi bối cảnh, vị trí và cấu trúc đã ủng hộ ý tưởng giao dịch.</p>
+        <div class="tagrow">
+          <span class="tag green">Signal bar</span>
+          <span class="tag">Entry bar</span>
+          <span class="tag amber">Close matters</span>
+          <span class="tag red">Trap</span>
+          <span class="tag violet">Context first</span>
+        </div>
+      </div>
+      <div class="chartbox">
+        <div class="chart-title"><b>Signal bar map</b><span>Context → Signal → Trigger</span></div>
+        <svg class="chart" id="chart-cover" viewBox="0 0 760 480"></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Mục tiêu học tập</div>
+        <h2>Sau module này, bạn phải đọc được nến tín hiệu mà không bị “ám ảnh mẫu nến”</h2>
+      </div>
+      <div class="grid-4">
+        <div class="card"><div class="num">1</div><h3>Phân biệt Signal Bar và Entry Bar</h3><p>Signal bar tạo ý tưởng. Entry bar là nơi thị trường kích hoạt ý tưởng đó.</p></div>
+        <div class="card"><div class="num">2</div><h3>Đọc close</h3><p>Giá đóng cửa cho biết phe nào giữ được lợi thế tới cuối nến.</p></div>
+        <div class="card"><div class="num">3</div><h3>Đọc mẫu nến theo vị trí</h3><p>Pin bar, engulfing, inside bar, outside bar chỉ có ý nghĩa khi đúng vùng.</p></div>
+        <div class="card"><div class="num">4</div><h3>Biết khi nào bỏ qua</h3><p>Nến đẹp ở giữa range, sau climax hoặc ngược trend mạnh thường là bẫy.</p></div>
+      </div>
+      <div class="note">Quy tắc của module: nến tín hiệu là “bằng chứng”, không phải “lý do duy nhất” để vào lệnh.</div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox">
+        <div class="chart-title"><b>Signal Bar vs Entry Bar</b><span>Setup needs trigger</span></div>
+        <svg class="chart" id="chart-signal-entry" viewBox="0 0 760 480"></svg>
+      </div>
+      <div>
+        <div class="eyebrow">Bài 5A · Khái niệm cốt lõi</div>
+        <h2>Signal Bar nói “có khả năng”, Entry Bar nói “thị trường đã kích hoạt”</h2>
+        <div class="checklist">
+          <div class="check"><i>1</i><span><b>Signal Bar:</b> cây nến tạo tín hiệu tại vùng có ý nghĩa.</span></div>
+          <div class="check"><i>2</i><span><b>Entry Bar:</b> cây nến hoặc cú phá qua mức kích hoạt để bạn vào lệnh.</span></div>
+          <div class="check"><i>3</i><span><b>Stop:</b> thường nằm sau đuôi nến tín hiệu hoặc sau cấu trúc gần nhất.</span></div>
+          <div class="check bad"><i>!</i><span>Thấy signal bar nhưng chưa có trigger thì chưa có lệnh.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Bài 5B · Giá đóng cửa</div>
+        <h2>Close mạnh quan trọng hơn tên gọi mẫu nến</h2>
+        <p class="lead">Hai cây nến có đuôi giống nhau nhưng close khác nhau sẽ kể hai câu chuyện khác nhau. Close tốt nghĩa là phe thắng giữ được lợi thế tới cuối cây nến.</p>
+        <div class="mentor"><i>M</i><div><b>Lời giảng mentor</b><p>Một pin bar có đuôi dưới dài nhưng đóng cửa yếu chỉ cho thấy có mua đỡ, chưa cho thấy phe mua kiểm soát. Hãy yêu cầu close tốt hơn hoặc chờ entry bar xác nhận.</p></div></div>
+      </div>
+      <div class="chartbox">
+        <div class="chart-title"><b>Close quality</b><span>Strong close vs weak close</span></div>
+        <svg class="chart" id="chart-close-quality" viewBox="0 0 760 480"></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox">
+        <div class="chart-title"><b>Pin bar in context</b><span>Rejection at key level</span></div>
+        <svg class="chart" id="chart-pinbar" viewBox="0 0 760 480"></svg>
+      </div>
+      <div>
+        <div class="eyebrow">Bài 5C · Pin Bar</div>
+        <h2>Pin bar tốt là sự từ chối giá tại vùng quan trọng</h2>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Đuôi dài xuyên vào vùng hỗ trợ/kháng cự rồi bị kéo ngược lại.</span></div>
+          <div class="check"><i>✓</i><span>Close nằm về phía có lợi cho ý tưởng giao dịch.</span></div>
+          <div class="check"><i>✓</i><span>Entry khi giá phá qua đầu nến tín hiệu theo hướng kỳ vọng.</span></div>
+          <div class="check bad"><i>!</i><span>Pin bar ở giữa range hoặc sau trend quá xa thường có xác suất kém.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Bài 5D · Engulfing</div>
+        <h2>Engulfing tốt thể hiện một phe giành lại quyền kiểm soát</h2>
+        <p class="lead">Engulfing không chỉ là “nến sau nuốt nến trước”. Điều quan trọng là nó xuất hiện ở đâu và có phá được cấu trúc nhỏ trước đó không.</p>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Tốt hơn khi xuất hiện ở vùng hỗ trợ/kháng cự hoặc sau pullback.</span></div>
+          <div class="check"><i>✓</i><span>Thân nến đóng mạnh, phá qua high/low của nến trước.</span></div>
+          <div class="check bad"><i>!</i><span>Engulfing quá lớn có thể làm entry muộn và stop quá xa.</span></div>
+        </div>
+      </div>
+      <div class="chartbox">
+        <div class="chart-title"><b>Engulfing reversal</b><span>Control shifts</span></div>
+        <svg class="chart" id="chart-engulfing" viewBox="0 0 760 480"></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox">
+        <div class="chart-title"><b>Inside Bar</b><span>Compression before breakout</span></div>
+        <svg class="chart" id="chart-inside" viewBox="0 0 760 480"></svg>
+      </div>
+      <div>
+        <div class="eyebrow">Bài 5E · Inside Bar</div>
+        <h2>Inside bar là trạng thái nén, không phải tín hiệu hướng cố định</h2>
+        <p class="lead">Inside bar cho thấy biên độ thu hẹp. Nó có thể là tiếp diễn trong trend, hoặc breakout mode trong range. Đừng đoán hướng nếu bối cảnh chưa rõ.</p>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Trong trend mạnh: inside bar thường là tạm nghỉ trước tiếp diễn.</span></div>
+          <div class="check"><i>✓</i><span>Trong range: có thể phá hai hướng, cần chờ breakout rõ.</span></div>
+          <div class="check bad"><i>!</i><span>Inside bar nhỏ ở giữa vùng nhiễu không có nhiều giá trị.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Bài 5F · Outside Bar</div>
+        <h2>Outside bar là cú quét hai phía, thường chứa thông tin về trap</h2>
+        <p class="lead">Outside bar phá cả high và low của nến trước. Nó có thể là dấu hiệu sức mạnh, nhưng cũng có thể là vùng hỗn loạn nếu xuất hiện trong range chặt.</p>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Close gần cực trị giúp đọc phe thắng dễ hơn.</span></div>
+          <div class="check"><i>✓</i><span>Outside bar tại biên range có thể là trap tốt.</span></div>
+          <div class="check bad"><i>!</i><span>Outside bar thân lớn ở giữa range thường làm stop rộng và entry xấu.</span></div>
+        </div>
+      </div>
+      <div class="chartbox">
+        <div class="chart-title"><b>Outside Bar</b><span>Two-sided sweep</span></div>
+        <svg class="chart" id="chart-outside" viewBox="0 0 760 480"></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox">
+        <div class="chart-title"><b>Doji meaning</b><span>Indecision needs context</span></div>
+        <svg class="chart" id="chart-doji" viewBox="0 0 760 480"></svg>
+      </div>
+      <div>
+        <div class="eyebrow">Bài 5G · Doji</div>
+        <h2>Doji không phải tín hiệu đảo chiều, nó là dấu hiệu giằng co</h2>
+        <p class="lead">Doji sau một trend mạnh có thể là tạm nghỉ. Doji tại hỗ trợ sau sell climax có thể là dấu hiệu bán chững lại. Doji ở giữa range thường chỉ là nhiễu.</p>
+        <div class="mentor"><i>M</i><div><b>Lời giảng mentor</b><p>Đừng hỏi “doji là mua hay bán?”. Hãy hỏi: “doji này xuất hiện sau điều gì, ở vùng nào, và cây tiếp theo xác nhận hướng nào?”.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">So sánh chất lượng tín hiệu</div>
+        <h2>Cùng mẫu nến, chất lượng khác nhau vì vị trí khác nhau</h2>
+      </div>
+      <div class="grid-3">
+        <div class="chartbox"><div class="chart-title"><b>Tốt</b><span>At key level</span></div><svg class="chart" id="chart-good-signal" viewBox="0 0 390 300"></svg></div>
+        <div class="chartbox"><div class="chart-title"><b>Trung bình</b><span>Late entry</span></div><svg class="chart" id="chart-late-signal" viewBox="0 0 390 300"></svg></div>
+        <div class="chartbox"><div class="chart-title"><b>Xấu</b><span>Middle of range</span></div><svg class="chart" id="chart-bad-signal" viewBox="0 0 390 300"></svg></div>
+      </div>
+      <div class="note">Một nến tín hiệu tốt phải có ba thứ: đúng bối cảnh, đúng vị trí, đúng kích hoạt.</div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Từ tín hiệu thành lệnh</div>
+        <h2>Quy trình entry/SL/TP với signal bar</h2>
+        <div class="checklist">
+          <div class="check"><i>1</i><span>Xác định bối cảnh: trend, range hay breakout mode.</span></div>
+          <div class="check"><i>2</i><span>Kiểm tra vị trí: hỗ trợ, kháng cự, retest, trendline, biên range.</span></div>
+          <div class="check"><i>3</i><span>Đọc signal bar: đuôi, thân, close và quan hệ với nến trước.</span></div>
+          <div class="check"><i>4</i><span>Entry khi có trigger. SL sau signal bar hoặc sau cấu trúc. TP tại vùng cản kế tiếp.</span></div>
+        </div>
+      </div>
+      <div class="chartbox">
+        <div class="chart-title"><b>Signal to trade plan</b><span>Entry · SL · TP</span></div>
+        <svg class="chart" id="chart-trade-plan" viewBox="0 0 760 480"></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div><div class="eyebrow">Lỗi phổ biến</div><h2>5 lỗi khi học nến tín hiệu</h2></div>
+      <div class="grid-3">
+        <div class="card"><h3>Học thuộc tên nến</h3><p>Biết tên pin bar/engulfing nhưng không biết nó đang nằm ở đâu trong cấu trúc.</p></div>
+        <div class="card"><h3>Vào trước trigger</h3><p>Thấy signal bar là vào ngay, không chờ entry bar xác nhận.</p></div>
+        <div class="card"><h3>Bỏ qua close</h3><p>Chỉ nhìn đuôi nến mà không xem phe nào giữ được lợi thế cuối nến.</p></div>
+        <div class="card"><h3>Entry quá muộn</h3><p>Nến tín hiệu quá lớn khiến stop xa, R:R kém, dễ mua đỉnh/bán đáy nhịp ngắn.</p></div>
+        <div class="card"><h3>Trade giữa range</h3><p>Nến nào ở giữa vùng nhiễu cũng có vẻ hợp lý, nhưng lợi thế vị trí rất kém.</p></div>
+        <div class="card"><h3>Không biết điểm sai</h3><p>Nếu không biết đặt stop ở đâu để chứng minh ý tưởng sai, setup chưa đủ rõ.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox">
+        <div class="chart-title"><b>Worksheet</b><span>Classify signal bars</span></div>
+        <svg class="chart" id="chart-exercise" viewBox="0 0 760 480"></svg>
+      </div>
+      <div>
+        <div class="eyebrow">Bài tập thực hành</div>
+        <h2>Phân loại 30 nến tín hiệu trên chart thật</h2>
+        <div class="checklist">
+          <div class="check"><i>1</i><span>Chọn 30 nến nổi bật trên chart.</span></div>
+          <div class="check"><i>2</i><span>Ghi loại nến: pin bar, engulfing, inside, outside, doji, trend bar.</span></div>
+          <div class="check"><i>3</i><span>Chấm điểm vị trí: A ở vùng quan trọng, B hơi muộn, C ở giữa nhiễu.</span></div>
+          <div class="check"><i>4</i><span>Ghi trigger, SL, TP giả định. Nếu không có trigger rõ, ghi “bỏ qua”.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div><div class="eyebrow">Quiz cuối Module 5</div><h2>Kiểm tra tư duy nến tín hiệu</h2></div>
+      <div class="quiz">
+        <div class="q">1. Signal bar khác entry bar ở điểm nào?</div>
+        <div class="q">2. Vì sao close của nến quan trọng hơn tên mẫu nến?</div>
+        <div class="q">3. Pin bar ở giữa range có vấn đề gì?</div>
+        <div class="q">4. Engulfing quá lớn có thể gây bất lợi gì cho entry?</div>
+        <div class="q">5. Inside bar trong trend mạnh khác inside bar trong range như thế nào?</div>
+        <div class="q">6. Nếu có signal bar đẹp nhưng không biết đặt stop ở đâu, bạn nên làm gì?</div>
+      </div>
+      <div class="note">Module tiếp theo: Breakout, false breakout, trap, spring/upthrust và cách đọc cú phá vỡ có follow-through.</div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="progress" id="progress">Slide 1 / 14</div>
+    <div class="nav"><button id="prev" aria-label="Slide trước">‹</button><button id="next" aria-label="Slide sau">›</button></div>
+    <div class="dots" id="dots"></div>
+  </footer>
+</main>
+
+<script src="course-charts.js"></script>
+<script>
+const trend = [
+  {o:100,h:108,l:98,c:106},{o:106,h:116,l:104,c:114},{o:114,h:118,l:108,c:110},
+  {o:110,h:124,l:109,c:122},{o:122,h:130,l:120,c:128},{o:128,h:132,l:122,c:124},
+  {o:124,h:128,l:114,c:120},{o:120,h:126,l:112,c:124},{o:124,h:136,l:122,c:134},
+  {o:134,h:142,l:132,c:140},{o:140,h:146,l:136,c:138}
+];
+
+function drawCover(id = 'chart-cover') {
+  const c = drawCandles(id, trend);
+  const { svg, scale: s, x } = c;
+  el('rect', { class: 'support', x: 78, y: s(118), width: 590, height: 44, rx: 7 }, svg);
+  label(svg, 'Vùng hỗ trợ', 92, s(118) + 29, '#13845a', 16);
+  el('line', { class: 'entry', x1: x(7), y1: s(126), x2: 670, y2: s(126) }, svg);
+  el('line', { class: 'stop', x1: x(7), y1: s(112), x2: 670, y2: s(112) }, svg);
+  label(svg, 'Signal bar', x(7) - 36, s(112) - 16, '#245fa8', 16);
+  label(svg, 'Entry bar', x(8) - 28, s(136) - 18, '#13845a', 16);
+}
+
+function drawSignalEntry() {
+  const c = drawCandles('chart-signal-entry', trend);
+  const { svg, scale: s, x } = c;
+  el('rect', { class: 'support', x: 78, y: s(118), width: 590, height: 44, rx: 7 }, svg);
+  el('line', { class: 'entry', x1: x(7), y1: s(126), x2: 670, y2: s(126) }, svg);
+  el('line', { class: 'stop', x1: x(7), y1: s(112), x2: 670, y2: s(112) }, svg);
+  label(svg, '1. Signal bar: có ý tưởng', x(7) - 84, s(112) - 18, '#245fa8', 16);
+  label(svg, '2. Entry bar: kích hoạt', x(8) - 54, s(136) - 18, '#13845a', 16);
+  label(svg, '3. Stop sau cấu trúc', x(7) + 80, s(112) + 28, '#c83f3f', 15);
+}
+
+function drawCloseQuality() {
+  const svg = document.getElementById('chart-close-quality');
+  grid(svg);
+  const s = scaleFactory(80, 160, 70, 410);
+  el('rect', { class: 'support', x: 78, y: s(104), width: 260, height: 46, rx: 7 }, svg);
+  candle(svg, 210, 108, 128, 86, 124, s, 'bull');
+  label(svg, 'Close tốt', 160, 82, '#13845a', 20);
+  label(svg, 'Phe mua giành lại quyền kiểm soát', 104, 438, '#13845a', 15);
+  el('rect', { class: 'support', x: 422, y: s(104), width: 260, height: 46, rx: 7 }, svg);
+  candle(svg, 556, 120, 130, 86, 106, s, 'bear');
+  label(svg, 'Close yếu', 512, 82, '#c83f3f', 20);
+  label(svg, 'Có mua đỡ nhưng chưa kiểm soát', 456, 438, '#c83f3f', 15);
+}
+
+function drawPinbar() {
+  const c = drawCandles('chart-pinbar', trend);
+  const { svg, scale: s, x } = c;
+  el('rect', { class: 'support', x: 78, y: s(118), width: 590, height: 44, rx: 7 }, svg);
+  label(svg, 'Đuôi xuyên vùng rồi đóng cửa mạnh', x(7) - 130, s(112) - 18, '#245fa8', 16);
+  el('line', { class: 'entry', x1: x(7), y1: s(126), x2: 670, y2: s(126) }, svg);
+  label(svg, 'Trigger', 674, s(126) + 6, '#245fa8', 16);
+}
+
+function drawEngulfing() {
+  const data = [
+    {o:130,h:134,l:122,c:124},{o:124,h:128,l:116,c:118},{o:118,h:122,l:112,c:116},
+    {o:116,h:126,l:108,c:124},{o:124,h:136,l:122,c:134},{o:134,h:142,l:132,c:140}
+  ];
+  const c = drawCandles('chart-engulfing', data);
+  const { svg, scale: s, x } = c;
+  el('rect', { class: 'support', x: 78, y: s(116), width: 590, height: 42, rx: 7 }, svg);
+  label(svg, 'Nến tăng nuốt thân nến giảm trước đó', x(3) - 112, s(126) - 18, '#13845a', 16);
+  el('line', { class: 'entry', x1: x(3), y1: s(126), x2: 670, y2: s(126) }, svg);
+}
+
+function drawInside() {
+  const svg = document.getElementById('chart-inside');
+  grid(svg);
+  const s = scaleFactory(80, 160, 70, 410);
+  candle(svg, 260, 112, 148, 100, 140, s, 'bull');
+  candle(svg, 320, 128, 138, 116, 132, s, 'bear');
+  el('rect', { x: 240, y: s(148), width: 100, height: s(100) - s(148), rx: 7, fill: 'rgba(36,95,168,.08)', stroke: '#245fa8', 'stroke-width': 2 }, svg);
+  el('line', { class: 'entry dash', x1: 210, y1: s(148), x2: 560, y2: s(148) }, svg);
+  el('line', { class: 'stop dash', x1: 210, y1: s(100), x2: 560, y2: s(100) }, svg);
+  label(svg, 'Mother bar', 212, 92, '#245fa8', 18);
+  label(svg, 'Inside bar = nén biên độ', 390, 238, '#245fa8', 18);
+}
+
+function drawOutside() {
+  const svg = document.getElementById('chart-outside');
+  grid(svg);
+  const s = scaleFactory(80, 160, 70, 410);
+  candle(svg, 300, 124, 136, 112, 128, s, 'bull');
+  candle(svg, 360, 130, 148, 102, 108, s, 'bear');
+  label(svg, 'Phá high và low của nến trước', 212, 92, '#c83f3f', 18);
+  label(svg, 'Close gần đáy → phe bán thắng', 390, s(108) + 18, '#c83f3f', 16);
+}
+
+function drawDoji() {
+  const svg = document.getElementById('chart-doji');
+  grid(svg);
+  const s = scaleFactory(80, 160, 70, 410);
+  candle(svg, 180, 142, 148, 118, 122, s, 'bear');
+  candle(svg, 240, 122, 130, 100, 104, s, 'bear');
+  candle(svg, 300, 106, 118, 92, 108, s, 'doji');
+  el('rect', { class: 'support', x: 140, y: s(106), width: 250, height: 42, rx: 7 }, svg);
+  label(svg, 'Doji tại hỗ trợ sau selloff: bán chững lại', 110, 82, '#245fa8', 17);
+  label(svg, 'Cần nến sau xác nhận', 388, s(108) + 10, '#66706f', 16);
+}
+
+function mini(id, type) {
+  const svg = document.getElementById(id);
+  grid(svg, 390, 300, 30);
+  if (type === 'good') {
+    el('rect', { class: 'support', x: 46, y: 204, width: 292, height: 36, rx: 7 }, svg);
+    el('path', { class: 'path-green', d: 'M48 230 L96 190 L144 210 L194 146 L246 182 L292 222 L338 160' }, svg);
+    label(svg, 'Đúng vùng + trigger', 92, 58, '#13845a', 16);
+  }
+  if (type === 'late') {
+    el('path', { class: 'path-green', d: 'M48 238 L92 196 L136 150 L184 106 L236 70 L314 42' }, svg);
+    el('line', { class: 'entry', x1: 250, y1: 76, x2: 348, y2: 76 }, svg);
+    label(svg, 'Entry muộn, stop xa', 96, 58, '#b77918', 16);
+  }
+  if (type === 'bad') {
+    el('rect', { class: 'range', x: 48, y: 82, width: 292, height: 150, rx: 7 }, svg);
+    el('path', { class: 'path-amber', d: 'M50 166 C90 96, 132 226, 180 150 S278 228, 340 142' }, svg);
+    label(svg, 'Giữa range', 138, 164, '#c83f3f', 16);
+  }
+}
+
+function drawTradePlan() {
+  const c = drawCandles('chart-trade-plan', trend);
+  const { svg, scale: s, x } = c;
+  el('rect', { class: 'support', x: 78, y: s(118), width: 590, height: 44, rx: 7 }, svg);
+  el('rect', { class: 'resist', x: 78, y: s(142), width: 590, height: 38, rx: 7 }, svg);
+  el('line', { class: 'entry', x1: x(7), y1: s(126), x2: 670, y2: s(126) }, svg);
+  el('line', { class: 'stop', x1: x(7), y1: s(112), x2: 670, y2: s(112) }, svg);
+  el('line', { class: 'target', x1: x(7), y1: s(142), x2: 670, y2: s(142) }, svg);
+  label(svg, 'Entry', 674, s(126) + 6, '#245fa8', 16);
+  label(svg, 'SL', 674, s(112) + 6, '#c83f3f', 16);
+  label(svg, 'TP', 674, s(142) + 6, '#13845a', 16);
+}
+
+drawCover();
+drawSignalEntry();
+drawCloseQuality();
+drawPinbar();
+drawEngulfing();
+drawInside();
+drawOutside();
+drawDoji();
+mini('chart-good-signal', 'good');
+mini('chart-late-signal', 'late');
+mini('chart-bad-signal', 'bad');
+drawTradePlan();
+drawCover('chart-exercise');
+initDeck();
+</script>
+</body>
+</html>

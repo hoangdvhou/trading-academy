@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Module 2 - Bối cảnh thị trường Price Action</title>
+  <style>
+    :root {
+      --bg: #f7f4ed;
+      --paper: #fffdf8;
+      --ink: #182126;
+      --muted: #66706f;
+      --line: #ddd6c9;
+      --green: #13845a;
+      --green-soft: #dff3e8;
+      --red: #c83f3f;
+      --red-soft: #f8dfdc;
+      --blue: #245fa8;
+      --blue-soft: #dce9f8;
+      --amber: #b77918;
+      --amber-soft: #fff0c7;
+      --violet: #6d59d4;
+      --shadow: 0 22px 56px rgba(24, 33, 38, .12);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    .deck {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: 1fr 72px;
+      background:
+        radial-gradient(circle at 12% 12%, rgba(36,95,168,.12), transparent 27%),
+        radial-gradient(circle at 88% 20%, rgba(183,121,24,.13), transparent 24%),
+        linear-gradient(90deg, rgba(36,95,168,.05) 0 1px, transparent 1px 100%),
+        linear-gradient(180deg, rgba(36,95,168,.04) 0 1px, transparent 1px 100%);
+      background-size: auto, auto, 58px 58px, 58px 58px;
+    }
+
+    .slide {
+      display: none;
+      min-height: calc(100vh - 72px);
+      padding: 34px 48px;
+    }
+
+    .slide.active {
+      display: grid;
+      align-items: center;
+      animation: enter .18s ease-out;
+    }
+
+    @keyframes enter {
+      from { opacity: .2; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .wrap {
+      width: min(1280px, 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 22px;
+    }
+
+    .split { grid-template-columns: .88fr 1.12fr; align-items: center; }
+    .split.reverse { grid-template-columns: 1.12fr .88fr; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+
+    h1, h2, h3, p { margin: 0; }
+    h1 {
+      max-width: 900px;
+      font-size: clamp(48px, 7vw, 86px);
+      line-height: .95;
+      font-weight: 950;
+      letter-spacing: 0;
+    }
+    h2 {
+      max-width: 960px;
+      font-size: clamp(34px, 4.7vw, 62px);
+      line-height: 1;
+      font-weight: 950;
+      letter-spacing: 0;
+    }
+    h3 {
+      font-size: 23px;
+      line-height: 1.16;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      gap: 9px;
+      align-items: center;
+      margin-bottom: 14px;
+      padding: 8px 12px;
+      border: 1px solid rgba(36,95,168,.23);
+      border-radius: 999px;
+      background: rgba(255,255,255,.78);
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .lead {
+      max-width: 830px;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: clamp(18px, 2vw, 26px);
+      line-height: 1.34;
+      font-weight: 600;
+    }
+
+    .panel, .card, .chartbox {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,253,248,.96);
+      box-shadow: var(--shadow);
+    }
+    .panel, .card { padding: 22px; }
+    .card {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+      min-height: 150px;
+    }
+    .card p, .small {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.42;
+      font-weight: 600;
+    }
+    .num {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 16px;
+      font-weight: 950;
+    }
+
+    .note {
+      padding: 18px 20px;
+      border-left: 6px solid var(--amber);
+      border-radius: 8px;
+      background: rgba(255,240,199,.72);
+      color: #4e350f;
+      font-size: 23px;
+      line-height: 1.28;
+      font-weight: 850;
+    }
+
+    .tagrow { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+    .tag {
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .tag.green { background: var(--green-soft); color: var(--green); }
+    .tag.red { background: var(--red-soft); color: var(--red); }
+    .tag.amber { background: var(--amber-soft); color: var(--amber); }
+    .tag.violet { background: #e7e3fb; color: var(--violet); }
+
+    .chartbox { overflow: hidden; background: #fff; }
+    .chart-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,253,248,.95);
+    }
+    .chart-title b { font-size: 17px; font-weight: 950; }
+    .chart-title span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    svg.chart { width: 100%; display: block; background: #fff; }
+    svg text {
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-weight: 850;
+      letter-spacing: 0;
+    }
+
+    .mentor {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 18px;
+      border-radius: 8px;
+      border: 1px solid rgba(36,95,168,.2);
+      background: rgba(220,233,248,.62);
+    }
+    .mentor i {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--blue);
+      color: #fff;
+      font-style: normal;
+      font-size: 20px;
+      font-weight: 950;
+    }
+    .mentor b { display: block; margin-bottom: 5px; font-size: 18px; }
+    .mentor p { color: #33414a; font-size: 17px; line-height: 1.42; font-weight: 650; }
+
+    .checklist { display: grid; gap: 11px; margin-top: 18px; }
+    .check {
+      display: grid;
+      grid-template-columns: 31px 1fr;
+      gap: 12px;
+      align-items: start;
+      font-size: 19px;
+      line-height: 1.3;
+      font-weight: 780;
+    }
+    .check i {
+      width: 29px;
+      height: 29px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--green-soft);
+      color: var(--green);
+      font-style: normal;
+      font-weight: 950;
+    }
+    .check.bad i { background: var(--red-soft); color: var(--red); }
+
+    .playbook {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+    .playbook > div { padding: 18px; min-height: 144px; border-bottom: 1px solid var(--line); }
+    .playbook > div:nth-child(odd) { border-right: 1px solid var(--line); }
+    .playbook > div:nth-last-child(-n+2) { border-bottom: 0; }
+    .playbook b { display: block; margin-bottom: 8px; font-size: 21px; }
+    .playbook p { color: var(--muted); font-size: 15px; line-height: 1.42; font-weight: 600; }
+
+    .quiz { display: grid; gap: 12px; }
+    .quiz .q {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      font-size: 19px;
+      font-weight: 800;
+      line-height: 1.32;
+    }
+
+    footer {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 18px;
+      padding: 12px 28px;
+      border-top: 1px solid var(--line);
+      background: rgba(255,253,248,.92);
+      backdrop-filter: blur(8px);
+    }
+    .progress { color: var(--muted); font-size: 14px; font-weight: 900; }
+    .nav { display: flex; gap: 10px; }
+    button {
+      width: 46px;
+      height: 46px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 25px;
+      font-weight: 950;
+      cursor: pointer;
+    }
+    button:hover { border-color: var(--blue); color: var(--blue); }
+    .dots { display: flex; justify-content: flex-end; gap: 7px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #c9c1b5; }
+    .dot.active { width: 28px; border-radius: 999px; background: var(--blue); }
+
+    .gridline { stroke: #eee9df; stroke-width: 1; }
+    .axis { stroke: #cfc8bb; stroke-width: 1.4; }
+    .wick { stroke: #172026; stroke-width: 2.5; stroke-linecap: round; }
+    .bull { fill: var(--green); }
+    .bear { fill: var(--red); }
+    .doji { fill: #f3eee6; stroke: #8e8678; stroke-width: 1.8; }
+    .support { fill: rgba(19,132,90,.13); stroke: rgba(19,132,90,.72); stroke-width: 2; }
+    .resist { fill: rgba(200,63,63,.11); stroke: rgba(200,63,63,.65); stroke-width: 2; }
+    .range { fill: rgba(183,121,24,.12); stroke: rgba(183,121,24,.72); stroke-width: 2; }
+    .path-blue { fill: none; stroke: var(--blue); stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; }
+    .path-green { fill: none; stroke: var(--green); stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; }
+    .path-red { fill: none; stroke: var(--red); stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; }
+    .path-amber { fill: none; stroke: var(--amber); stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; }
+    .path-violet { fill: none; stroke: var(--violet); stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; }
+    .entry { stroke: var(--blue); stroke-width: 4; }
+    .stop { stroke: var(--red); stroke-width: 4; }
+    .target { stroke: var(--green); stroke-width: 4; }
+    .dash { stroke-dasharray: 8 7; }
+
+    @media (max-width: 980px) {
+      .deck { grid-template-rows: 1fr auto; }
+      .slide { padding: 24px 16px; }
+      .split, .split.reverse, .grid-2, .grid-3, .grid-5 { grid-template-columns: 1fr; }
+      footer { grid-template-columns: 1fr; justify-items: center; }
+      .dots { display: none; }
+      .playbook { grid-template-columns: 1fr; }
+      .playbook > div { border-right: 0 !important; border-bottom: 1px solid var(--line) !important; }
+      .playbook > div:last-child { border-bottom: 0 !important; }
+    }
+
+    @media print {
+      .deck { display: block; background: #fff; }
+      .slide { display: grid; min-height: 100vh; page-break-after: always; }
+      footer { display: none; }
+    }
+  </style>
+</head>
+<body>
+<main class="deck">
+  <section class="slide active">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Module 2 · Bối cảnh thị trường</div>
+        <h1>Đọc trạng thái thị trường trước khi tìm setup</h1>
+        <p class="lead">Một setup chỉ có xác suất tốt khi nó khớp với trạng thái thị trường. Module này dạy bạn phân loại chart trước khi quyết định mua, bán hay đứng ngoài.</p>
+        <div class="tagrow">
+          <span class="tag green">Trend</span>
+          <span class="tag amber">Range</span>
+          <span class="tag">Breakout mode</span>
+          <span class="tag red">Climax</span>
+          <span class="tag violet">Transition</span>
+        </div>
+      </div>
+      <div class="chartbox">
+        <div class="chart-title"><b>Market context map</b><span>Trend · Range · Breakout · Climax</span></div>
+        <svg class="chart" id="chart-cover" viewBox="0 0 760 480"></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Vì sao phải học bối cảnh?</div>
+        <h2>Cùng một tín hiệu, nhưng bối cảnh khác thì ý nghĩa khác</h2>
+        <p class="lead">Một nến tăng mạnh trong đầu xu hướng là sức mạnh. Cũng nến đó sau một chuỗi tăng quá dài có thể là climax. Một pin bar tại hỗ trợ là tín hiệu đáng xem. Pin bar ở giữa range chỉ là nhiễu.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card"><div class="num">1</div><h3>Bối cảnh quyết định chiến thuật</h3><p>Trend thì ưu tiên pullback. Range thì ưu tiên mua thấp bán cao. Breakout mode thì chờ phá vỡ rõ.</p></div>
+        <div class="card"><div class="num">2</div><h3>Bối cảnh lọc tín hiệu xấu</h3><p>Nhiều mẫu nến đẹp chỉ là bẫy nếu xuất hiện sai vị trí hoặc sau một nhịp đã quá xa.</p></div>
+        <div class="card"><div class="num">3</div><h3>Bối cảnh giúp quản trị rủi ro</h3><p>Stop loss và target phải dựa trên cấu trúc trạng thái hiện tại, không đặt tùy cảm giác.</p></div>
+      </div>
+      <div class="note">Nếu chưa gọi tên được trạng thái thị trường, hành động chuyên nghiệp nhất là chưa trade.</div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Bản đồ tổng quan</div>
+        <h2>5 trạng thái chính của thị trường</h2>
+      </div>
+      <div class="chartbox">
+        <div class="chart-title"><b>Five-state market map</b><span>Mỗi trạng thái có chiến thuật riêng</span></div>
+        <svg class="chart" id="chart-states" viewBox="0 0 1220 400"></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox">
+        <div class="chart-title"><b>Uptrend anatomy</b><span>Higher high · Higher low</span></div>
+        <svg class="chart" id="chart-uptrend" viewBox="0 0 760 480"></svg>
+      </div>
+      <div>
+        <div class="eyebrow">Trạng thái 1 · Xu hướng tăng</div>
+        <h2>Trong trend tăng, ưu tiên mua pullback thay vì đoán đỉnh</h2>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Đỉnh sau cao hơn đỉnh trước, đáy sau cao hơn đáy trước.</span></div>
+          <div class="check"><i>✓</i><span>Nến tăng thường lớn hơn nến giảm trong nhịp hồi.</span></div>
+          <div class="check"><i>✓</i><span>Pullback yếu và giữ được đáy cao hơn là vùng tìm mua.</span></div>
+          <div class="check bad"><i>!</i><span>Không short chỉ vì “giá đã cao”. Chờ cấu trúc gãy trước.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Trạng thái 2 · Xu hướng giảm</div>
+        <h2>Trong trend giảm, ưu tiên bán hồi thay vì bắt đáy</h2>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Đỉnh sau thấp hơn đỉnh trước, đáy sau thấp hơn đáy trước.</span></div>
+          <div class="check"><i>✓</i><span>Nhịp hồi lên yếu, nến xanh nhỏ, nhiều chồng lấn.</span></div>
+          <div class="check"><i>✓</i><span>Vùng bán tốt thường là kháng cự, trendline hoặc breakdown cũ.</span></div>
+          <div class="check bad"><i>!</i><span>Bắt đáy trong trend giảm thường cần xác nhận mạnh hơn nhiều.</span></div>
+        </div>
+      </div>
+      <div class="chartbox">
+        <div class="chart-title"><b>Downtrend anatomy</b><span>Lower high · Lower low</span></div>
+        <svg class="chart" id="chart-downtrend" viewBox="0 0 760 480"></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox">
+        <div class="chart-title"><b>Trading range anatomy</b><span>Buy low · Sell high · Avoid middle</span></div>
+        <svg class="chart" id="chart-range" viewBox="0 0 760 480"></svg>
+      </div>
+      <div>
+        <div class="eyebrow">Trạng thái 3 · Trading range</div>
+        <h2>Trong range, điểm tệ nhất thường là giữa range</h2>
+        <p class="lead">Range là vùng hai phe giằng co. Mua ở giữa range nghĩa là bạn không rẻ cũng không gần điểm sai. Bán ở giữa range cũng vậy.</p>
+        <div class="mentor"><i>M</i><div><b>Lời giảng mentor</b><p>Trong range, trader mới thường bị cuốn theo mỗi cú phá nhỏ. Trader có kinh nghiệm hỏi: “giá đã tới biên chưa, hay mình đang trade ở vùng nhiễu?”.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Trạng thái 4 · Breakout mode</div>
+        <h2>Khi giá bị nén, nhiệm vụ là chờ phe thắng lộ diện</h2>
+        <p class="lead">Breakout mode thường xuất hiện khi biên độ hẹp dần: tam giác, coiling, inside bars, range chặt. Không cần đoán hướng. Cần chuẩn bị kịch bản hai chiều.</p>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Biên độ thu hẹp, nến chồng lấn, lực hai phe cân bằng.</span></div>
+          <div class="check"><i>✓</i><span>Breakout tốt cần nến phá rõ và có follow-through.</span></div>
+          <div class="check bad"><i>!</i><span>Breakout không có follow-through dễ thành false breakout.</span></div>
+        </div>
+      </div>
+      <div class="chartbox">
+        <div class="chart-title"><b>Breakout mode</b><span>Compression before expansion</span></div>
+        <svg class="chart" id="chart-breakoutmode" viewBox="0 0 760 480"></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox">
+        <div class="chart-title"><b>Climax anatomy</b><span>Too far · Too fast</span></div>
+        <svg class="chart" id="chart-climax" viewBox="0 0 760 480"></svg>
+      </div>
+      <div>
+        <div class="eyebrow">Trạng thái 5 · Climax</div>
+        <h2>Climax là lúc giá đi quá nhanh, không phải lúc để đuổi theo</h2>
+        <p class="lead">Một nhịp tăng/giam quá dốc có thể tiếp tục thêm một đoạn, nhưng entry đuổi theo thường có stop xa, target kém và dễ bị pullback mạnh.</p>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Nhiều nến cùng màu liên tiếp, thân lớn, ít pullback.</span></div>
+          <div class="check"><i>✓</i><span>Khoảng cách xa khỏi hỗ trợ/kháng cự hoặc đường trung bình.</span></div>
+          <div class="check bad"><i>!</i><span>Không fade sớm nếu chưa có dấu hiệu gãy momentum.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Pha chuyển trạng thái 1</div>
+        <h2>Trend mạnh thường không đảo chiều ngay, nó hay chuyển sang range trước</h2>
+        <p class="lead">Sau một trend mạnh, thị trường thường cần thời gian hấp thụ: người mua chốt lời, người bán thử lực, bên ngoài nhảy vào muộn. Kết quả hay là range.</p>
+        <div class="mentor"><i>M</i><div><b>Lời giảng mentor</b><p>Thấy trend tăng mạnh rồi xuất hiện một nến đỏ chưa đủ để short đảo chiều. Hãy hỏi: “cấu trúc đã gãy chưa, hay đây chỉ là pullback/range sau trend?”.</p></div></div>
+      </div>
+      <div class="chartbox">
+        <div class="chart-title"><b>Trend to range</b><span>Momentum slows before reversal</span></div>
+        <svg class="chart" id="chart-trend-range" viewBox="0 0 760 480"></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox">
+        <div class="chart-title"><b>Range to trend</b><span>Breakout + pullback confirmation</span></div>
+        <svg class="chart" id="chart-range-trend" viewBox="0 0 760 480"></svg>
+      </div>
+      <div>
+        <div class="eyebrow">Pha chuyển trạng thái 2</div>
+        <h2>Range thành trend khi breakout có follow-through</h2>
+        <div class="checklist">
+          <div class="check"><i>1</i><span>Giá phá khỏi biên range bằng nến rõ ràng.</span></div>
+          <div class="check"><i>2</i><span>Nến sau không quay lại range ngay, có follow-through.</span></div>
+          <div class="check"><i>3</i><span>Pullback đầu tiên giữ được vùng breakout.</span></div>
+          <div class="check"><i>4</i><span>Khi đó chiến thuật đổi từ fade biên range sang trade theo trend mới.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Pha chuyển trạng thái 3</div>
+        <h2>Đảo chiều đáng tin hơn khi có: phá trendline → test cực trị → thất bại</h2>
+        <p class="lead">Đây là logic thường gặp trong Al Brooks: một trend mạnh hiếm khi đảo chiều chỉ bằng một nến. Cần thấy momentum ngược chiều, sau đó test lại đỉnh/đáy cũ thất bại.</p>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Trendline bị phá bằng lực đủ rõ.</span></div>
+          <div class="check"><i>✓</i><span>Giá quay lại test đỉnh/đáy cũ nhưng không vượt thuyết phục.</span></div>
+          <div class="check"><i>✓</i><span>Sau test thất bại, có tín hiệu đảo chiều theo hướng mới.</span></div>
+        </div>
+      </div>
+      <div class="chartbox">
+        <div class="chart-title"><b>Major reversal logic</b><span>Break · Test · Fail</span></div>
+        <svg class="chart" id="chart-reversal" viewBox="0 0 760 480"></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Playbook thực chiến</div>
+        <h2>Mỗi trạng thái có một chiến thuật mặc định</h2>
+      </div>
+      <div class="playbook">
+        <div><b class="green">Trend tăng</b><p>Ưu tiên mua pullback về hỗ trợ, breakout cũ, trendline. Tránh short sớm khi chưa gãy cấu trúc.</p></div>
+        <div><b class="red">Trend giảm</b><p>Ưu tiên bán hồi về kháng cự, breakdown cũ, trendline. Tránh bắt đáy chỉ vì giá giảm sâu.</p></div>
+        <div><b class="amber">Trading range</b><p>Ưu tiên hành động tại biên trên/biên dưới. Ở giữa range: giảm size hoặc đứng ngoài.</p></div>
+        <div><b class="blue">Breakout mode</b><p>Chuẩn bị hai kịch bản. Chỉ theo breakout khi có phá vỡ rõ, follow-through hoặc pullback xác nhận.</p></div>
+        <div><b class="violet">Climax</b><p>Không đuổi theo nến cuối nhịp. Chờ pullback, range hóa, hoặc setup đảo chiều có xác nhận.</p></div>
+        <div><b>Không rõ trạng thái</b><p>Không có lợi thế. Nhiệm vụ là quan sát thêm, không ép chart phải có lệnh.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Bài tập thực hành</div>
+        <h2>Đánh dấu 100 cây nến theo trạng thái</h2>
+        <div class="checklist">
+          <div class="check"><i>1</i><span>Chọn một chart 5m, 15m hoặc 1h, lấy 100 cây nến liên tiếp.</span></div>
+          <div class="check"><i>2</i><span>Chia chart thành từng đoạn: trend tăng, trend giảm, range, breakout mode, climax.</span></div>
+          <div class="check"><i>3</i><span>Với mỗi đoạn, ghi chiến thuật phù hợp: mua pullback, bán hồi, fade range, chờ breakout, đứng ngoài.</span></div>
+          <div class="check"><i>4</i><span>Đánh dấu 3 chỗ bạn từng muốn vào lệnh nhưng bối cảnh không ủng hộ.</span></div>
+        </div>
+      </div>
+      <div class="chartbox">
+        <div class="chart-title"><b>Worksheet chart</b><span>Tự annotate trạng thái</span></div>
+        <svg class="chart" id="chart-exercise" viewBox="0 0 760 480"></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Quiz cuối Module 2</div>
+        <h2>Kiểm tra tư duy bối cảnh</h2>
+      </div>
+      <div class="quiz">
+        <div class="q">1. Vì sao trong trend tăng, short chỉ vì “giá cao rồi” là một lỗi tư duy?</div>
+        <div class="q">2. Tại sao giữa trading range thường là vùng có lợi thế kém nhất?</div>
+        <div class="q">3. Breakout mode khác trading range bình thường ở điểm nào?</div>
+        <div class="q">4. Một breakout cần điều gì để đáng tin hơn?</div>
+        <div class="q">5. Vì sao sau trend mạnh, thị trường thường chuyển sang range trước khi đảo chiều rõ?</div>
+        <div class="q">6. Nếu bạn không phân loại được chart hiện tại, quyết định chuyên nghiệp nhất là gì?</div>
+      </div>
+      <div class="note">Module tiếp theo: Cấu trúc xu hướng, pullback, two legs, second entry và cách đọc sức mạnh/yếu của trend.</div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="progress" id="progress">Slide 1 / 14</div>
+    <div class="nav">
+      <button id="prev" aria-label="Slide trước">‹</button>
+      <button id="next" aria-label="Slide sau">›</button>
+    </div>
+    <div class="dots" id="dots"></div>
+  </footer>
+</main>
+
+<script>
+  const NS = 'http://www.w3.org/2000/svg';
+
+  function el(name, attrs = {}, parent) {
+    const node = document.createElementNS(NS, name);
+    Object.entries(attrs).forEach(([key, value]) => {
+      if (key === 'text') node.textContent = value;
+      else node.setAttribute(key, value);
+    });
+    if (parent) parent.appendChild(node);
+    return node;
+  }
+
+  function label(svg, text, x, y, fill = '#182126', size = 16) {
+    el('text', { x, y, fill, 'font-size': size, text }, svg);
+  }
+
+  function grid(svg, w, h, pad = 52) {
+    svg.innerHTML = '';
+    el('rect', { x: 0, y: 0, width: w, height: h, fill: '#fff' }, svg);
+    for (let y = pad; y <= h - pad; y += 70) el('line', { class: 'gridline', x1: pad, y1: y, x2: w - pad, y2: y }, svg);
+    for (let x = pad; x <= w - pad; x += 90) el('line', { class: 'gridline', x1: x, y1: pad, x2: x, y2: h - pad }, svg);
+    el('line', { class: 'axis', x1: pad, y1: h - pad, x2: w - pad, y2: h - pad }, svg);
+  }
+
+  function scaleFactory(min, max, top, bottom) {
+    return value => bottom - ((value - min) / (max - min)) * (bottom - top);
+  }
+
+  function candle(svg, x, o, h, l, c, scale, cls) {
+    const yO = scale(o), yH = scale(h), yL = scale(l), yC = scale(c);
+    const top = Math.min(yO, yC);
+    const height = Math.max(5, Math.abs(yC - yO));
+    el('line', { class: 'wick', x1: x, y1: yH, x2: x, y2: yL }, svg);
+    el('rect', { class: cls || (c >= o ? 'bull' : 'bear'), x: x - 9, y: top, width: 18, height, rx: 3 }, svg);
+  }
+
+  function drawCandles(id, data, opts = {}) {
+    const svg = document.getElementById(id);
+    const w = opts.w || 760, h = opts.h || 480, pad = opts.pad || 54;
+    grid(svg, w, h, pad);
+    const min = Math.min(...data.map(d => d.l)) - 2;
+    const max = Math.max(...data.map(d => d.h)) + 2;
+    const scale = scaleFactory(min, max, pad, h - pad);
+    const step = (w - pad * 2) / (data.length - 1);
+    data.forEach((d, i) => candle(svg, pad + i * step, d.o, d.h, d.l, d.c, scale));
+    return { svg, scale, x: i => pad + i * step, w, h, pad };
+  }
+
+  const up = [
+    {o:100,h:107,l:98,c:105},{o:105,h:114,l:103,c:112},{o:112,h:116,l:108,c:110},
+    {o:110,h:124,l:109,c:122},{o:122,h:128,l:118,c:126},{o:126,h:130,l:120,c:123},
+    {o:123,h:135,l:121,c:133},{o:133,h:140,l:130,c:138},{o:138,h:142,l:134,c:136},
+    {o:136,h:149,l:135,c:147},{o:147,h:154,l:144,c:152}
+  ];
+  const down = [
+    {o:152,h:155,l:144,c:146},{o:146,h:150,l:136,c:138},{o:138,h:144,l:134,c:142},
+    {o:142,h:145,l:128,c:130},{o:130,h:136,l:124,c:126},{o:126,h:132,l:122,c:130},
+    {o:130,h:133,l:116,c:118},{o:118,h:124,l:112,c:114},{o:114,h:120,l:110,c:118},
+    {o:118,h:121,l:104,c:106},{o:106,h:110,l:98,c:100}
+  ];
+  const rangeData = [
+    {o:120,h:128,l:116,c:126},{o:126,h:130,l:114,c:116},{o:116,h:124,l:112,c:122},
+    {o:122,h:132,l:118,c:130},{o:130,h:134,l:120,c:122},{o:122,h:126,l:112,c:114},
+    {o:114,h:122,l:110,c:120},{o:120,h:130,l:118,c:128},{o:128,h:132,l:118,c:120},
+    {o:120,h:124,l:112,c:116},{o:116,h:128,l:114,c:126}
+  ];
+
+  function drawCover() {
+    const svg = document.getElementById('chart-cover');
+    grid(svg, 760, 480);
+    el('path', { class: 'path-green', d: 'M70 360 L118 310 L168 328 L220 250 L270 282 L330 190' }, svg);
+    el('rect', { class: 'range', x: 336, y: 156, width: 158, height: 118, rx: 7 }, svg);
+    el('path', { class: 'path-amber', d: 'M342 232 C370 170, 398 256, 426 190 S472 252, 492 174' }, svg);
+    el('path', { d: 'M516 132 L680 190 L516 248 Z', fill: 'rgba(36,95,168,.12)', stroke: '#245fa8', 'stroke-width': 3 }, svg);
+    el('path', { class: 'path-blue', d: 'M528 190 L692 190' }, svg);
+    label(svg, 'Trend', 94, 92, '#13845a', 20);
+    label(svg, 'Range', 382, 92, '#b77918', 20);
+    label(svg, 'Breakout mode', 520, 92, '#245fa8', 20);
+  }
+
+  function drawStates() {
+    const svg = document.getElementById('chart-states');
+    svg.innerHTML = '';
+    el('rect', { width: 1220, height: 400, fill: '#fff' }, svg);
+    const blocks = [
+      ['Trend tăng', '#13845a', 'Mua pullback', 'M0 252 L44 210 L82 226 L132 166 L176 190 L230 110'],
+      ['Trend giảm', '#c83f3f', 'Bán hồi', 'M0 110 L48 158 L88 140 L140 206 L186 188 L238 260'],
+      ['Trading range', '#b77918', 'Mua thấp · bán cao', 'M0 204 C44 122, 84 250, 128 160 S214 246, 252 142'],
+      ['Breakout mode', '#245fa8', 'Chờ phe thắng', 'M0 126 L248 188 L0 250 Z'],
+      ['Climax', '#6d59d4', 'Không đuổi giá', 'M0 266 C46 246, 86 184, 124 124 S196 46, 264 34']
+    ];
+    blocks.forEach((b, i) => {
+      const x = 34 + i * 236;
+      const g = el('g', { transform: `translate(${x},44)` }, svg);
+      el('rect', { x: 0, y: 0, width: 204, height: 292, rx: 8, fill: '#fffdf8', stroke: '#ddd6c9' }, g);
+      label(g, b[0], 18, 34, b[1], 18);
+      label(g, b[2], 18, 264, '#66706f', 14);
+      if (b[0] === 'Trading range') el('rect', { class: 'range', x: 18, y: 102, width: 166, height: 130, rx: 6 }, g);
+      if (b[0] === 'Breakout mode') el('path', { d: b[3], transform: 'translate(18,24) scale(.62)', fill: 'rgba(36,95,168,.12)', stroke: b[1], 'stroke-width': 5 }, g);
+      else el('path', { d: b[3], transform: 'translate(18,24) scale(.62)', fill: 'none', stroke: b[1], 'stroke-width': 8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, g);
+    });
+  }
+
+  function drawUptrend() {
+    const ctx = drawCandles('chart-uptrend', up);
+    const { svg, scale, x } = ctx;
+    el('path', { class: 'path-green dash', d: `M${x(0)} ${scale(99)} L${x(10)} ${scale(144)}` }, svg);
+    label(svg, 'HH', x(4)-12, scale(128)-12, '#13845a', 16);
+    label(svg, 'HL', x(5)-12, scale(120)+26, '#13845a', 16);
+    label(svg, 'HH', x(7)-12, scale(140)-12, '#13845a', 16);
+    label(svg, 'HL', x(8)-12, scale(134)+26, '#13845a', 16);
+    el('rect', { class: 'support', x: 80, y: scale(121), width: 590, height: 42, rx: 7 }, svg);
+    label(svg, 'Vùng ưu tiên mua pullback', 94, scale(121)+27, '#13845a', 16);
+  }
+
+  function drawDowntrend() {
+    const ctx = drawCandles('chart-downtrend', down);
+    const { svg, scale, x } = ctx;
+    el('path', { class: 'path-red dash', d: `M${x(0)} ${scale(153)} L${x(10)} ${scale(110)}` }, svg);
+    label(svg, 'LH', x(2)-12, scale(144)-12, '#c83f3f', 16);
+    label(svg, 'LL', x(4)-12, scale(124)+26, '#c83f3f', 16);
+    label(svg, 'LH', x(6)-12, scale(133)-12, '#c83f3f', 16);
+    label(svg, 'LL', x(10)-12, scale(98)+26, '#c83f3f', 16);
+    el('rect', { class: 'resist', x: 80, y: scale(133), width: 590, height: 42, rx: 7 }, svg);
+    label(svg, 'Vùng ưu tiên bán hồi', 94, scale(133)+27, '#c83f3f', 16);
+  }
+
+  function drawRange() {
+    const ctx = drawCandles('chart-range', rangeData);
+    const { svg, scale } = ctx;
+    el('rect', { class: 'resist', x: 74, y: scale(132), width: 612, height: 36, rx: 7 }, svg);
+    el('rect', { class: 'support', x: 74, y: scale(114), width: 612, height: 36, rx: 7 }, svg);
+    el('rect', { fill: 'rgba(183,121,24,.12)', stroke: 'rgba(183,121,24,.45)', 'stroke-width': 2, x: 74, y: scale(124), width: 612, height: scale(118)-scale(124), rx: 7 }, svg);
+    label(svg, 'Biên trên: vùng bán/chốt lời', 94, scale(132)-8, '#c83f3f', 16);
+    label(svg, 'Giữa range: vùng nhiễu', 284, scale(121)+6, '#b77918', 17);
+    label(svg, 'Biên dưới: vùng mua/chốt lời short', 94, scale(114)+48, '#13845a', 16);
+  }
+
+  function drawBreakoutMode() {
+    const svg = document.getElementById('chart-breakoutmode');
+    grid(svg, 760, 480);
+    el('path', { d: 'M98 160 L620 238 L98 318 Z', fill: 'rgba(36,95,168,.10)', stroke: '#245fa8', 'stroke-width': 3 }, svg);
+    el('path', { class: 'path-blue', d: 'M110 238 C160 214, 204 258, 250 232 S340 260, 388 232 S482 250, 536 236' }, svg);
+    el('line', { class: 'entry dash', x1: 620, y1: 238, x2: 690, y2: 196 }, svg);
+    el('line', { class: 'stop dash', x1: 620, y1: 238, x2: 690, y2: 284 }, svg);
+    label(svg, 'Không đoán hướng', 106, 100, '#245fa8', 20);
+    label(svg, 'Chuẩn bị 2 kịch bản', 490, 100, '#245fa8', 20);
+  }
+
+  function drawClimax() {
+    const data = [
+      {o:100,h:106,l:98,c:105},{o:105,h:114,l:104,c:112},{o:112,h:124,l:110,c:122},
+      {o:122,h:136,l:121,c:134},{o:134,h:149,l:132,c:146},{o:146,h:160,l:145,c:158},
+      {o:158,h:169,l:154,c:164},{o:164,h:172,l:152,c:156},{o:156,h:162,l:146,c:150}
+    ];
+    const ctx = drawCandles('chart-climax', data);
+    const { svg, scale, x } = ctx;
+    el('path', { class: 'path-violet', d: `M${x(0)} ${scale(100)} C${x(2)} ${scale(116)}, ${x(4)} ${scale(140)}, ${x(6)} ${scale(166)}` }, svg);
+    el('rect', { class: 'resist', x: x(5)-24, y: scale(168), width: 140, height: 38, rx: 7 }, svg);
+    label(svg, 'Quá xa, quá nhanh', x(4)-20, 76, '#6d59d4', 21);
+    label(svg, 'Chờ hồi/range hóa', x(6)-18, scale(150)+54, '#66706f', 16);
+  }
+
+  function drawTrendRange() {
+    const svg = document.getElementById('chart-trend-range');
+    grid(svg, 760, 480);
+    el('path', { class: 'path-green', d: 'M78 370 L130 322 L180 338 L236 260 L288 284 L350 196 L406 222' }, svg);
+    el('rect', { class: 'range', x: 420, y: 144, width: 244, height: 126, rx: 7 }, svg);
+    el('path', { class: 'path-amber', d: 'M430 218 C462 152, 498 260, 534 178 S620 252, 654 174' }, svg);
+    label(svg, 'Trend mạnh', 112, 96, '#13845a', 20);
+    label(svg, 'Range hóa sau trend', 454, 96, '#b77918', 20);
+  }
+
+  function drawRangeTrend() {
+    const svg = document.getElementById('chart-range-trend');
+    grid(svg, 760, 480);
+    el('rect', { class: 'range', x: 72, y: 218, width: 326, height: 102, rx: 7 }, svg);
+    el('path', { class: 'path-amber', d: 'M82 284 C124 226, 170 318, 214 250 S314 316, 386 236' }, svg);
+    el('path', { class: 'path-green', d: 'M398 238 L460 184 L520 204 L586 140 L662 106' }, svg);
+    el('line', { class: 'entry dash', x1: 398, y1: 218, x2: 680, y2: 218 }, svg);
+    label(svg, 'Breakout', 406, 196, '#13845a', 18);
+    label(svg, 'Pullback giữ biên range cũ', 462, 244, '#245fa8', 16);
+  }
+
+  function drawReversal() {
+    const svg = document.getElementById('chart-reversal');
+    grid(svg, 760, 480);
+    el('path', { class: 'path-green', d: 'M76 370 L128 318 L180 338 L238 250 L292 280 L350 190 L404 212' }, svg);
+    el('line', { class: 'entry dash', x1: 112, y1: 348, x2: 438, y2: 188 }, svg);
+    el('path', { class: 'path-red', d: 'M408 212 L466 292 L526 218 L586 304 L664 358' }, svg);
+    el('circle', { cx: 466, cy: 292, r: 8, fill: '#245fa8' }, svg);
+    el('circle', { cx: 526, cy: 218, r: 8, fill: '#b77918' }, svg);
+    label(svg, '1. Phá trendline', 410, 326, '#245fa8', 16);
+    label(svg, '2. Test đỉnh thất bại', 512, 196, '#b77918', 16);
+    label(svg, '3. Xu hướng mới', 582, 390, '#c83f3f', 16);
+  }
+
+  function drawExercise() {
+    const data = [...up.slice(0,6), ...rangeData.slice(2,8), ...down.slice(5,11)];
+    const ctx = drawCandles('chart-exercise', data);
+    const { svg, scale, x } = ctx;
+    el('rect', { class: 'support', x: 70, y: scale(116), width: 250, height: 38, rx: 7 }, svg);
+    el('rect', { class: 'range', x: x(6)-18, y: scale(130), width: 242, height: scale(114)-scale(130), rx: 7 }, svg);
+    el('rect', { class: 'resist', x: x(11)-18, y: scale(132), width: 250, height: 38, rx: 7 }, svg);
+    label(svg, 'Bạn tự chia đoạn trạng thái', 84, 74, '#245fa8', 20);
+  }
+
+  drawCover();
+  drawStates();
+  drawUptrend();
+  drawDowntrend();
+  drawRange();
+  drawBreakoutMode();
+  drawClimax();
+  drawTrendRange();
+  drawRangeTrend();
+  drawReversal();
+  drawExercise();
+
+  const slides = [...document.querySelectorAll('.slide')];
+  const progress = document.querySelector('#progress');
+  const dots = document.querySelector('#dots');
+  let current = 0;
+
+  slides.forEach((_, index) => {
+    const dot = document.createElement('span');
+    dot.className = `dot${index === 0 ? ' active' : ''}`;
+    dot.addEventListener('click', () => show(index));
+    dots.appendChild(dot);
+  });
+  const dotEls = [...document.querySelectorAll('.dot')];
+
+  function show(index) {
+    current = (index + slides.length) % slides.length;
+    slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+    dotEls.forEach((dot, i) => dot.classList.toggle('active', i === current));
+    progress.textContent = `Slide ${current + 1} / ${slides.length}`;
+  }
+
+  document.querySelector('#prev').addEventListener('click', () => show(current - 1));
+  document.querySelector('#next').addEventListener('click', () => show(current + 1));
+  window.addEventListener('keydown', event => {
+    if (event.key === 'ArrowRight' || event.key === ' ') show(current + 1);
+    if (event.key === 'ArrowLeft') show(current - 1);
+  });
+</script>
+</body>
+</html>

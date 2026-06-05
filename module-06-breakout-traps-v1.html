@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Module 6 - Breakout, False Breakout và Trap</title>
+  <link rel="stylesheet" href="course-theme.css">
+</head>
+<body>
+<main class="deck">
+  <section class="slide active">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Module 6 · Breakout và Trap</div>
+        <h1>Đọc phá vỡ thật, phá vỡ giả và trader bị kẹt</h1>
+        <p class="lead">Breakout không chỉ là giá vượt qua một line. Ta cần đọc lực phá, follow-through, retest và phản ứng của những người vào sai phía.</p>
+        <div class="tagrow"><span class="tag">Breakout</span><span class="tag green">Follow-through</span><span class="tag amber">Retest</span><span class="tag red">False break</span><span class="tag violet">Spring · Upthrust</span></div>
+      </div>
+      <div class="chartbox"><div class="chart-title"><b>Breakout logic</b><span>Break · Follow-through · Retest</span></div><svg class="chart" id="chart-cover" viewBox="0 0 760 480"></svg></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div><div class="eyebrow">Mục tiêu học tập</div><h2>Sau module này, bạn phải phân biệt được breakout đáng theo và breakout nên tránh</h2></div>
+      <div class="grid-4">
+        <div class="card"><div class="num">1</div><h3>Đọc lực phá</h3><p>Breakout tốt thường có thân nến rõ, đóng ngoài vùng và ít bị kéo ngược.</p></div>
+        <div class="card"><div class="num">2</div><h3>Đọc follow-through</h3><p>Nến sau breakout xác nhận phe thắng có tiếp tục kiểm soát hay không.</p></div>
+        <div class="card"><div class="num">3</div><h3>Đọc false break</h3><p>Breakout thất bại tạo áp lực thoát lệnh từ những người bị kẹt.</p></div>
+        <div class="card"><div class="num">4</div><h3>Dùng retest</h3><p>Breakout pullback giúp entry bớt đuổi giá và stop hợp lý hơn.</p></div>
+      </div>
+      <div class="note">Breakout tốt không chỉ phá vùng. Nó phải khiến phe chống lại breakout rơi vào thế khó.</div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox"><div class="chart-title"><b>Proper breakout</b><span>Close outside + follow-through</span></div><svg class="chart" id="chart-proper" viewBox="0 0 760 480"></svg></div>
+      <div>
+        <div class="eyebrow">Bài 6A · Breakout thật</div>
+        <h2>Breakout đáng theo cần đóng ngoài vùng và có follow-through</h2>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Nến phá có thân rõ và đóng ngoài kháng cự/hỗ trợ.</span></div>
+          <div class="check"><i>✓</i><span>Nến sau tiếp tục đi theo hướng phá vỡ hoặc ít nhất không quay lại vùng cũ.</span></div>
+          <div class="check"><i>✓</i><span>Pullback đầu tiên giữ được vùng breakout.</span></div>
+          <div class="check bad"><i>!</i><span>Chỉ xuyên qua line bằng đuôi nến chưa đủ gọi là breakout tốt.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Bài 6B · False Breakout</div>
+        <h2>False breakout là cú phá vỡ không được thị trường chấp nhận</h2>
+        <p class="lead">Giá phá qua vùng, kích hoạt lệnh breakout, rồi quay ngược vào range. Khi đó người mua breakout bị kẹt và phải bán thoát, tạo lực đi ngược.</p>
+        <div class="mentor"><i>M</i><div><b>Lời giảng mentor</b><p>False breakout mạnh không chỉ vì có người bán. Nó mạnh vì những người mua sai buộc phải bán để thoát lệnh.</p></div></div>
+      </div>
+      <div class="chartbox"><div class="chart-title"><b>False breakout</b><span>Break fails, trapped traders exit</span></div><svg class="chart" id="chart-false" viewBox="0 0 760 480"></svg></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox"><div class="chart-title"><b>Breakout pullback</b><span>Retest old level</span></div><svg class="chart" id="chart-bopb" viewBox="0 0 760 480"></svg></div>
+      <div>
+        <div class="eyebrow">Bài 6C · Breakout Pullback</div>
+        <h2>Breakout pullback là cách vào lệnh bớt đuổi giá</h2>
+        <div class="checklist">
+          <div class="check"><i>1</i><span>Giá phá vùng bằng lực rõ.</span></div>
+          <div class="check"><i>2</i><span>Giá hồi lại kiểm tra vùng vừa phá.</span></div>
+          <div class="check"><i>3</i><span>Vùng cũ giữ được vai trò mới: kháng cự thành hỗ trợ hoặc ngược lại.</span></div>
+          <div class="check"><i>4</i><span>Entry khi có signal bar hoặc phá đường pullback nhỏ.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Bài 6D · Bull Trap và Bear Trap</div>
+        <h2>Trap xuất hiện khi một nhóm trader bị buộc phải thoát sai hướng</h2>
+        <div class="checklist">
+          <div class="check bad"><i>!</i><span><b>Bull trap:</b> giá phá lên, người mua nhảy vào, rồi giá rơi lại dưới vùng phá.</span></div>
+          <div class="check bad"><i>!</i><span><b>Bear trap:</b> giá phá xuống, người bán nhảy vào, rồi giá bật lại trên vùng phá.</span></div>
+          <div class="check"><i>✓</i><span>Trap tốt thường nằm ở biên range, swing high/low hoặc vùng thanh khoản rõ.</span></div>
+        </div>
+      </div>
+      <div class="chartbox"><div class="chart-title"><b>Bull trap / Bear trap</b><span>Trapped breakout traders</span></div><svg class="chart" id="chart-traps" viewBox="0 0 760 480"></svg></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox"><div class="chart-title"><b>Spring</b><span>Wyckoff false break below support</span></div><svg class="chart" id="chart-spring" viewBox="0 0 760 480"></svg></div>
+      <div>
+        <div class="eyebrow">Bài 6E · Spring</div>
+        <h2>Spring là cú phá xuống hỗ trợ thất bại rồi bật mạnh lên</h2>
+        <p class="lead">Theo logic Wyckoff/Weis, spring thường là cú kiểm tra cung dưới vùng hỗ trợ. Nếu phá xuống không có follow-through và giá bật lại mạnh, người bán muộn bị kẹt.</p>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Xuất hiện tại biên dưới range hoặc hỗ trợ rõ.</span></div>
+          <div class="check"><i>✓</i><span>Phá xuống bằng đuôi hoặc nến thất bại, rồi đóng lại trong range.</span></div>
+          <div class="check"><i>✓</i><span>Entry tốt hơn sau khi giá reclaim vùng hỗ trợ.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Bài 6F · Upthrust</div>
+        <h2>Upthrust là cú phá lên kháng cự thất bại rồi rơi mạnh xuống</h2>
+        <p class="lead">Upthrust là mặt ngược của spring: giá phá lên biên range, kích hoạt breakout buyer, rồi quay đầu làm họ mắc kẹt.</p>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Xuất hiện tại biên trên range hoặc kháng cự rõ.</span></div>
+          <div class="check"><i>✓</i><span>Đóng cửa yếu trở lại dưới vùng phá.</span></div>
+          <div class="check"><i>✓</i><span>Entry tốt hơn khi giá phá xuống low của nến upthrust hoặc retest thất bại.</span></div>
+        </div>
+      </div>
+      <div class="chartbox"><div class="chart-title"><b>Upthrust</b><span>Wyckoff false break above resistance</span></div><svg class="chart" id="chart-upthrust" viewBox="0 0 760 480"></svg></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox"><div class="chart-title"><b>Failed failure</b><span>False breakout fails too</span></div><svg class="chart" id="chart-failed-failure" viewBox="0 0 760 480"></svg></div>
+      <div>
+        <div class="eyebrow">Bài 6G · Failed Failure</div>
+        <h2>Khi false breakout cũng thất bại, breakout ban đầu có thể tiếp tục</h2>
+        <p class="lead">Al Brooks gọi đây là failed failure: breakout có vẻ thất bại, nhưng phe ngược hướng không tạo được follow-through. Khi giá quay lại theo hướng breakout, nhóm fade breakout bị kẹt.</p>
+        <div class="mentor"><i>M</i><div><b>Lời giảng mentor</b><p>Đừng tự động fade mọi breakout. Nếu fade không đi tiếp, hãy cảnh giác: thị trường có thể đang chuẩn bị tiếp diễn theo hướng phá vỡ ban đầu.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div><div class="eyebrow">So sánh nhanh</div><h2>Breakout thật vs Breakout giả</h2></div>
+      <div class="grid-3">
+        <div class="chartbox"><div class="chart-title"><b>Breakout thật</b><span>Accepted price</span></div><svg class="chart" id="chart-mini-proper" viewBox="0 0 390 300"></svg></div>
+        <div class="chartbox"><div class="chart-title"><b>False breakout</b><span>Rejected price</span></div><svg class="chart" id="chart-mini-false" viewBox="0 0 390 300"></svg></div>
+        <div class="chartbox"><div class="chart-title"><b>Breakout pullback</b><span>Retest entry</span></div><svg class="chart" id="chart-mini-bopb" viewBox="0 0 390 300"></svg></div>
+      </div>
+      <div class="note">Câu hỏi cốt lõi: sau khi phá vùng, giá có được thị trường chấp nhận ở ngoài vùng đó không?</div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div><div class="eyebrow">Playbook Module 6</div><h2>Quy trình đọc breakout trước khi vào lệnh</h2></div>
+      <div class="grid-4">
+        <div class="card"><div class="num">1</div><h3>Xác định vùng bị phá</h3><p>Biên range, swing high/low, trendline, hỗ trợ/kháng cự quan trọng.</p></div>
+        <div class="card"><div class="num">2</div><h3>Đọc nến phá</h3><p>Thân nến, close, đuôi nến và khoảng cách khỏi vùng.</p></div>
+        <div class="card"><div class="num">3</div><h3>Đọc nến sau</h3><p>Có follow-through hay quay ngược vào vùng cũ?</p></div>
+        <div class="card"><div class="num">4</div><h3>Chọn chiến thuật</h3><p>Theo breakout, chờ pullback, fade false break hoặc đứng ngoài.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Bài tập thực hành</div>
+        <h2>Tìm 20 cú phá vỡ trên chart thật</h2>
+        <div class="checklist">
+          <div class="check"><i>1</i><span>Đánh dấu 10 breakout thành công và 10 false breakout.</span></div>
+          <div class="check"><i>2</i><span>Ghi lại close của nến phá và nến follow-through.</span></div>
+          <div class="check"><i>3</i><span>Phân loại: breakout thật, false break, spring, upthrust, failed failure.</span></div>
+          <div class="check"><i>4</i><span>Vẽ entry/SL/TP giả định cho 5 setup đẹp nhất.</span></div>
+        </div>
+      </div>
+      <div class="chartbox"><div class="chart-title"><b>Worksheet</b><span>Classify breakouts</span></div><svg class="chart" id="chart-exercise" viewBox="0 0 760 480"></svg></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div><div class="eyebrow">Quiz cuối Module 6</div><h2>Kiểm tra tư duy breakout</h2></div>
+      <div class="quiz">
+        <div class="q">1. Breakout thật cần gì ngoài việc giá vượt qua một line?</div>
+        <div class="q">2. Vì sao false breakout có thể tạo lực đi ngược rất mạnh?</div>
+        <div class="q">3. Breakout pullback giúp giảm rủi ro gì so với mua/bán ngay nến phá?</div>
+        <div class="q">4. Spring khác breakdown thật ở điểm nào?</div>
+        <div class="q">5. Failed failure là gì và tại sao nó nguy hiểm với người fade breakout?</div>
+      </div>
+      <div class="note">Module tiếp theo: Các setup thực chiến - pullback, failure test, range break, first pullback và double pressure.</div>
+    </div>
+  </section>
+
+  <footer><div class="progress" id="progress">Slide 1 / 13</div><div class="nav"><button id="prev" aria-label="Slide trước">‹</button><button id="next" aria-label="Slide sau">›</button></div><div class="dots" id="dots"></div></footer>
+</main>
+<script src="course-charts.js"></script>
+<script>
+function drawRangeBase(id, mode='proper', small=false) {
+  const w = small ? 390 : 760, h = small ? 300 : 480, p = small ? 30 : 54;
+  const svg = document.getElementById(id); grid(svg, w, h, p);
+  const top = small ? 92 : 148, bot = small ? 202 : 318, left = small ? 48 : 78, width = small ? 210 : 360;
+  el('rect', { class: 'range', x: left, y: top, width, height: bot-top, rx: 7 }, svg);
+  el('path', { class: 'path-amber', d: small ? `M${left+8} ${bot-42} C${left+44} ${top+18}, ${left+84} ${bot-16}, ${left+126} ${top+58} S${left+178} ${bot-28}, ${left+width-8} ${top+42}` : `M90 270 C140 168, 188 330, 240 218 S330 330, 428 202` }, svg);
+  if (mode === 'proper') {
+    el('path', { class: 'path-green', d: small ? `M${left+width} ${top+42} L${left+width+58} ${top-22} L${left+width+118} ${top-44}` : 'M438 202 L506 126 L578 146 L660 92' }, svg);
+    label(svg, 'Follow-through', small?245:520, small?58:88, '#13845a', small?14:17);
+  }
+  if (mode === 'false') {
+    el('path', { class: 'path-red', d: small ? `M${left+width} ${top+42} L${left+width+44} ${top-22} L${left+width+86} ${top+74} L${left+width+128} ${bot-18}` : 'M438 202 L500 112 L552 228 L650 310' }, svg);
+    label(svg, 'Quay lại range', small?235:510, small?70:92, '#c83f3f', small?14:17);
+  }
+  if (mode === 'bopb') {
+    el('path', { class: 'path-green', d: small ? `M${left+width} ${top+42} L${left+width+54} ${top-24} L${left+width+94} ${top+30} L${left+width+138} ${top-50}` : 'M438 202 L500 124 L550 184 L626 92' }, svg);
+    label(svg, 'Retest giữ vùng', small?235:500, small?174:230, '#245fa8', small?14:17);
+  }
+}
+function spring(id, up=false) {
+  const svg=document.getElementById(id); grid(svg);
+  el('rect',{class:'range',x:86,y:142,width:520,height:190,rx:7},svg);
+  if(!up){el('path',{class:'path-green',d:'M96 240 C150 160, 210 320, 276 226 S392 318, 450 336 L498 382 L552 256 L638 178'},svg);label(svg,'Spring: phá xuống thất bại',260,402,'#13845a',17)}
+  else{el('path',{class:'path-red',d:'M96 246 C150 330, 210 168, 276 252 S392 168, 450 140 L502 90 L552 220 L638 310'},svg);label(svg,'Upthrust: phá lên thất bại',260,82,'#c83f3f',17)}
+}
+function traps(){const svg=document.getElementById('chart-traps');grid(svg);el('line',{x1:380,y1:54,x2:380,y2:426,stroke:'#ddd6c9','stroke-width':2},svg);el('rect',{class:'range',x:58,y:130,width:278,height:180,rx:7},svg);el('path',{class:'path-red',d:'M70 236 C114 148, 178 300, 238 150 L282 96 L320 252'},svg);label(svg,'Bull trap',140,82,'#c83f3f',18);el('rect',{class:'range',x:422,y:130,width:278,height:180,rx:7},svg);el('path',{class:'path-green',d:'M432 236 C476 300, 540 150, 596 300 L634 364 L682 214'},svg);label(svg,'Bear trap',502,82,'#13845a',18)}
+function failedFailure(){const svg=document.getElementById('chart-failed-failure');grid(svg);el('rect',{class:'range',x:86,y:180,width:360,height:130,rx:7},svg);el('path',{class:'path-green',d:'M96 250 C150 188, 220 308, 304 210 L390 152 L456 210 L522 146 L640 96'},svg);label(svg,'Breakout',386,136,'#13845a',16);label(svg,'False break thất bại',454,234,'#c83f3f',16);label(svg,'Tiếp diễn breakout',540,82,'#13845a',16)}
+drawRangeBase('chart-cover','proper');drawRangeBase('chart-proper','proper');drawRangeBase('chart-false','false');drawRangeBase('chart-bopb','bopb');traps();spring('chart-spring');spring('chart-upthrust',true);failedFailure();drawRangeBase('chart-mini-proper','proper',true);drawRangeBase('chart-mini-false','false',true);drawRangeBase('chart-mini-bopb','bopb',true);drawRangeBase('chart-exercise','false');initDeck();
+</script>
+</body>
+</html>

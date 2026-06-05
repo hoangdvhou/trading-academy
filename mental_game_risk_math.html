@@ -1,0 +1,2472 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Mental Game & Risk Math Masterclass</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===========================================
+           CSS CUSTOM PROPERTIES (THEME: NEON ORANGE & CYBER CHARCOAL)
+           =========================================== */
+        :root {
+            --bg-primary: #0a0b0d;
+            --bg-secondary: #12141a;
+            --bg-card: rgba(20, 22, 28, 0.75);
+            --border-color: rgba(255, 107, 0, 0.15);
+            
+            --text-primary: #ffffff;
+            --text-secondary: #7e859b;
+            
+            --accent-orange: #ff6b00;
+            --accent-cyan: #00e5ff;
+            --accent-green: #00ff66;
+            --accent-red: #ff3860;
+            --accent-yellow: #d4ff00;
+            
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-title: 'Archivo Black', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+            
+            --title-size: clamp(1.8rem, 4.2vw, 3.4rem);
+            --h2-size: clamp(1.3rem, 3vw, 2.1rem);
+            --h3-size: clamp(1rem, 2.2vw, 1.4rem);
+            --body-size: clamp(0.8rem, 1.2vw, 1.02rem);
+            --small-size: clamp(0.68rem, 0.9vw, 0.82rem);
+            
+            --slide-padding: clamp(1rem, 3.5vw, 3rem);
+            --content-gap: clamp(0.5rem, 1.8vw, 1.4rem);
+            --element-gap: clamp(0.3rem, 1.1vw, 0.8rem);
+            
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-neon: 0 0 20px rgba(255, 107, 0, 0.25);
+            --shadow-green: 0 0 20px rgba(0, 255, 102, 0.2);
+            --shadow-red: 0 0 20px rgba(255, 56, 96, 0.2);
+        }
+
+        /* ===========================================
+           BASE RESET & SCROLL SNAP
+           =========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-display);
+            line-height: 1.45;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        /* ===========================================
+           SLIDE FRAMEWORK
+           =========================================== */
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Cyber grid background */
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255, 107, 0, 0.012) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 107, 0, 0.012) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Orange ambient glow shapes */
+        .slide::after {
+            content: '';
+            position: absolute;
+            width: 40vw;
+            height: 40vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 107, 0, 0.04) 0%, transparent 70%);
+            bottom: -10vw;
+            right: -10vw;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .slide:nth-child(even)::after {
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.03) 0%, transparent 70%);
+            top: -10vw;
+            left: -10vw;
+            bottom: auto;
+            right: auto;
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-height: 100%;
+            overflow: hidden;
+            padding: var(--slide-padding);
+            z-index: 2;
+            gap: var(--content-gap);
+        }
+
+        /* Header structure */
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 107, 0, 0.1);
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.1rem;
+        }
+
+        .slide-module-tag {
+            font-size: var(--small-size);
+            color: var(--accent-orange);
+            font-family: var(--font-mono);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .slide-number-tag {
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+        }
+
+        .slide-title {
+            font-family: var(--font-title);
+            font-size: var(--h2-size);
+            color: var(--text-primary);
+            line-height: 1.15;
+            letter-spacing: -0.5px;
+        }
+
+        .slide-title span {
+            color: var(--accent-orange);
+        }
+
+        /* Layout styles */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--content-gap);
+            align-items: center;
+            max-height: min(72vh, 490px);
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--element-gap);
+        }
+
+        .grid-3-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--element-gap);
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: clamp(0.7rem, 1.6vw, 1.6rem);
+            transition: all 0.3s ease;
+            max-height: min(68vh, 450px);
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .card:hover {
+            border-color: rgba(255, 107, 0, 0.4);
+            box-shadow: 0 4px 20px rgba(255, 107, 0, 0.08);
+        }
+
+        .card-title {
+            font-size: var(--h3-size);
+            font-weight: 700;
+            color: var(--accent-orange);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .card-title.accent-green { color: var(--accent-green); }
+        .card-title.accent-red { color: var(--accent-red); }
+        .card-title.accent-cyan { color: var(--accent-cyan); }
+        .card-title.accent-yellow { color: var(--accent-yellow); }
+
+        .card p, .card li {
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .card ul {
+            padding-left: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        /* Typography Helpers */
+        .highlight-box {
+            border-left: 3px solid var(--accent-orange);
+            padding: 0.5rem 0.8rem;
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+            background: rgba(255, 107, 0, 0.02);
+            border-radius: 0 6px 6px 0;
+        }
+
+        .highlight-box strong {
+            color: var(--text-primary);
+        }
+
+        /* Diagram Viewport fit */
+        .diagram-container {
+            width: 100%;
+            height: 100%;
+            max-height: min(50vh, 320px);
+            background-color: #0d0e12;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0.5rem;
+        }
+
+        /* Interactive controls for slides */
+        .slide-nav {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 100;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--accent-orange);
+            color: var(--accent-orange);
+            box-shadow: var(--shadow-neon);
+        }
+
+        .nav-dots {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-dot.active {
+            background-color: var(--accent-orange);
+            box-shadow: var(--shadow-neon);
+            width: 16px;
+            border-radius: 4px;
+        }
+
+        /* Progress Bar */
+        .progress-bar-container {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background-color: rgba(255, 255, 255, 0.05);
+            z-index: 100;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-orange), var(--accent-cyan));
+            box-shadow: 0 0 10px rgba(255, 107, 0, 0.5);
+            transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* ===========================================
+           CYBER SIDEBAR NAVIGATION
+           =========================================== */
+        .sidebar-toggle {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 101;
+            background-color: rgba(18, 20, 26, 0.85);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: var(--small-size);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .sidebar-toggle:hover {
+            border-color: var(--accent-orange);
+            color: var(--accent-orange);
+            box-shadow: var(--shadow-neon);
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0; left: -320px;
+            width: 300px;
+            height: 100%;
+            background-color: rgba(10, 11, 13, 0.97);
+            border-right: 1px solid var(--border-color);
+            z-index: 200;
+            backdrop-filter: blur(12px);
+            padding: 5rem 1.5rem 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            transition: left 0.4s var(--ease-out-expo);
+            overflow-y: auto;
+        }
+
+        .sidebar.open {
+            left: 0;
+            box-shadow: 10px 0 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .sidebar-title {
+            font-family: var(--font-title);
+            font-size: 1rem;
+            color: var(--accent-orange);
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .sidebar-item {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.35rem 0.5rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+
+        .sidebar-item:hover {
+            background-color: rgba(255, 107, 0, 0.05);
+            color: var(--accent-orange);
+        }
+
+        .sidebar-item.active {
+            background: linear-gradient(90deg, rgba(255, 107, 0, 0.1) 0%, transparent 100%);
+            border-left: 2px solid var(--accent-orange);
+            color: var(--accent-orange);
+            font-weight: 500;
+        }
+
+        .sidebar-module-tag {
+            font-size: 0.6rem;
+            font-family: var(--font-mono);
+            color: var(--accent-yellow);
+            text-transform: uppercase;
+        }
+
+        .sidebar-backdrop {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 199;
+            backdrop-filter: blur(2px);
+            display: none;
+        }
+
+        .sidebar-backdrop.show {
+            display: block;
+        }
+
+        /* ===========================================
+           INLINE EDITING SYSTEM
+           =========================================== */
+        .edit-hotzone {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            width: 160px;
+            height: 40px;
+            z-index: 100;
+        }
+
+        .edit-toggle {
+            position: absolute;
+            left: 0; bottom: 0;
+            background-color: rgba(18, 20, 26, 0.85);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: var(--small-size);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            white-space: nowrap;
+        }
+
+        .edit-hotzone:hover .edit-toggle,
+        .edit-toggle.show,
+        .edit-toggle.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .edit-toggle.active {
+            background-color: var(--accent-orange);
+            color: var(--bg-primary);
+            border-color: var(--accent-orange);
+            box-shadow: var(--shadow-neon);
+        }
+
+        [contenteditable="true"] {
+            border: 1px dashed var(--accent-orange) !important;
+            padding: 4px;
+            border-radius: 4px;
+            outline: none;
+            background-color: rgba(255, 107, 0, 0.03);
+        }
+
+        .save-indicator {
+            position: fixed;
+            bottom: 5rem;
+            left: 1.5rem;
+            background-color: #210e05;
+            border: 1px solid var(--accent-orange);
+            color: var(--accent-orange);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: var(--small-size);
+            font-family: var(--font-mono);
+            z-index: 100;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s var(--ease-out-expo);
+            pointer-events: none;
+        }
+
+        .save-indicator.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* SVG DRAWING CLASSES */
+        .text-chart {
+            font-family: var(--font-mono);
+            fill: var(--text-secondary);
+            font-size: 9px;
+        }
+
+        /* Animations */
+        @keyframes pulseOrange {
+            0% { filter: drop-shadow(0 0 2px var(--accent-orange)); }
+            50% { filter: drop-shadow(0 0 8px var(--accent-orange)); }
+            100% { filter: drop-shadow(0 0 2px var(--accent-orange)); }
+        }
+        @keyframes pulseCyan {
+            0% { filter: drop-shadow(0 0 2px var(--accent-cyan)); }
+            50% { filter: drop-shadow(0 0 8px var(--accent-cyan)); }
+            100% { filter: drop-shadow(0 0 2px var(--accent-cyan)); }
+        }
+        @keyframes dash {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        .pulse-orange-effect {
+            animation: pulseOrange 2s infinite ease-in-out;
+        }
+        .pulse-cyan-effect {
+            animation: pulseCyan 2s infinite ease-in-out;
+        }
+        .draw-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 3s forwards ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Sidebar Trigger Button -->
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle Lesson Index">
+        <span>☰</span> BẢN ĐỒ KHÓA HỌC
+    </button>
+
+    <!-- Slide-out Sidebar Navigation -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-title">THE MENTAL GAME</div>
+        <ul class="sidebar-menu" id="sidebarMenu">
+            <!-- Dynamically populated via JS -->
+        </ul>
+    </div>
+
+    <!-- Floating Editor Button -->
+    <div class="edit-hotzone" id="editHotzone">
+        <button class="edit-toggle" id="editToggle">✏️ EDIT MODE (E)</button>
+    </div>
+    <div class="save-indicator" id="saveIndicator">💾 ĐÃ LƯU BÀI GIẢNG!</div>
+
+    <!-- =========================================================================
+         SLIDES LIST (THE MENTAL GAME & RISK MATH: MODULE 1)
+         ========================================================================= -->
+    <main id="slideContainer">
+
+        <!-- ==================== SLIDE 1: HOME ==================== -->
+        <section class="slide">
+            <div class="slide-content" style="align-items: center; text-align: center; justify-content: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color: var(--accent-yellow);">MASTERCLASS ĐỘC QUYỀN</div>
+                <h1 class="slide-title" id="editable-s1-title" style="font-size: var(--title-size); line-height: 1.1;">
+                    THE MENTAL GAME &<br><span style="color: var(--accent-orange);">RISK MATH MASTERCLASS</span>
+                </h1>
+                <p id="editable-s1-desc" style="font-size: 1.15rem; color: var(--text-secondary); max-width: 800px; font-family: var(--font-display);">
+                    Làm chủ tâm lý giao dịch theo Tendler, Douglas & Hougaard, kết hợp hoàn hảo hệ thống định cỡ toán học quản lý vị thế nâng cao của Van Tharp.
+                </p>
+                <div class="highlight-box" style="border: 1px solid var(--border-color); border-left: 3px solid var(--accent-orange); max-width: 600px; text-align: left; margin-top: 1rem;">
+                    💡 <strong>Hướng dẫn học viên:</strong> Sử dụng phím <strong>Space / Mũi tên xuống</strong> để chuyển slide. Nhấp nút <strong>BẢN ĐỒ KHÓA HỌC</strong> ở góc trái để chọn nhanh bài giảng. Nhấn phím <strong>E</strong> để tự do chỉnh sửa nội dung bài học.
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 2: MODULE 1 INTRO ==================== -->
+        <section class="slide" data-module="Module 1" data-lesson="Giới Thiệu Module 1">
+            <div class="slide-content" style="align-items: center; justify-content: center; text-align: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color: var(--accent-yellow);">MODULE 1</div>
+                <h2 class="slide-title" id="editable-s2-title" style="font-size: var(--title-size); line-height: 1.15;">
+                    GIẢI MÃ BẢN CHẤT<br><span style="color: var(--accent-orange);">TÂM LÝ HỌC GIAO DỊCH</span>
+                </h2>
+                <p id="editable-s2-desc" style="max-width: 700px; color: var(--text-secondary); font-size: 1.1rem;">
+                    Khám phá cấu trúc tâm lý học thực chiến của các huyền thoại. Định vị và triệt tiêu các lỗi hành vi do lập trình sinh học gây ra.
+                </p>
+                <div class="grid-3-cards" style="width: 100%; max-width: 900px; margin-top: 1rem; text-align: left;">
+                    <div class="card">
+                        <div class="card-title">Bài 1</div>
+                        <p><strong>Cơ Chế Bộ Não</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Lý do sinh học lập trình con người chốt non lệnh lời và ôm gồng lệnh lỗ hoảng loạn.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-purple" style="color: var(--accent-cyan);">Bài 2</div>
+                        <p><strong>Inchworm Concept</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Khái niệm con sâu đo giúp nâng tầm phong độ bằng cách tiêu diệt điểm yếu tồi tệ nhất.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-green">Bài 3</div>
+                        <p><strong>Tư Duy Xác Suất</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Nâng cấp tư duy xác suất theo Mark Douglas và 5 chân lý tối thượng của Trading.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 3: MODULE 1 - BAI 1 (BRAIN BIOLOGY) ==================== -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 1: Bẫy Sinh Học Bộ Não">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Bản Chất Tâm Lý</span>
+                    <span class="slide-number-tag">Trang 3</span>
+                </div>
+                <h2 class="slide-title" id="editable-s3-title">Bài 1: Tại Sao Bộ Não <span>Được Lập Trình Để Thua Cuộc?</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s3-desc">
+                        <div class="card-title">🐒 Cơ Chế Sinh Tồn Nguyên Thủy</div>
+                        <p style="font-size: 13px;">Bộ não con người tiến hóa để **Tìm kiếm niềm vui (Pleasure)** và **Tránh né nỗi đau (Pain)**. Trong trading, hai cơ chế này biến thành kẻ thù:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem; font-size:12px;">
+                            <li><strong>Khi có lệnh LỜI:</strong> Sợ rủi ro (Risk-Averse) ➔ Cắt lời non để lấy cảm giác an toàn và phấn khích tức thì (Pleasure).</li>
+                            <li><strong>Khi có lệnh LỖ:</strong> Thích rủi ro (Risk-Seeking) ➔ Gồng lỗ, nhồi lệnh để trốn tránh nỗi đau cắt lỗ (Pain).</li>
+                        </ul>
+                        <div class="highlight-box" style="margin-top:0.3rem; font-size:11.5px;">
+                            Dòng tiền thông minh (Smart Money) kiếm tiền từ chính các phản ứng sinh học sai lệch này của số đông nhỏ lẻ.
+                        </div>
+                    </div>
+                    <div class="card active" style="border-color: var(--accent-red); background: rgba(255, 56, 96, 0.01); justify-content: center; gap: 0.8rem;">
+                        <div class="card-title accent-red">🔴 Vòng Lặp Phá Hủy Của Nhỏ Lẻ:</div>
+                        <p style="font-size: 13px; font-weight: bold; color: #fff;">Lỗ 1R ➔ Không cắt ➔ Lỗ 3R ➔ Gồng tiếp mong về bờ ➔ Lỗ 10R ➔ Cháy tài khoản ➔ Tức giận / Tilt trả thù thị trường.</p>
+                        <p style="font-size: 12px; color: var(--text-secondary);">Để chiến thắng, bạn phải học cách "Chạy về phía nỗi đau" - cắt lỗ ngay lập tức không do dự.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 4: MODULE 1 - BAI 1 (BEST LOSER WINS) ==================== -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 1: Best Loser Wins">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Bản Chất Tâm Lý</span>
+                    <span class="slide-number-tag">Trang 4</span>
+                </div>
+                <h2 class="slide-title" id="editable-s4-title">Bài 1: Hãy Trở Thành <span>"Nhà Thua Cuộc Vĩ Đại Nhất"</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s4-desc">
+                        <div class="card-title accent-orange">🏆 Định Nghĩa "Best Loser Wins" (Tom Hougaard)</div>
+                        <p>Thành công không phải là không bao giờ thua. Thành công là cách bạn xử lý khi thua cuộc:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem; font-size:12.5px;">
+                            <li><strong>Lệnh thua là chi phí kinh doanh:</strong> Pro Trader chấp nhận lệnh thua nhanh chóng và coi đó là điều hiển nhiên để duy trì hoạt động giao dịch.</li>
+                            <li><strong>Giữ lệnh lời và gia tăng vị thế:</strong> Khi đúng xu hướng, họ giữ chặt lệnh và thậm chí nhồi lệnh gia tăng lợi nhuận.</li>
+                        </ul>
+                    </div>
+
+                    <!-- SVG DIAGRAM: TRADER VS PRO TRADER PATH -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Left Side: Amatuer Trader -->
+                            <text x="75" y="20" class="text-chart" text-anchor="middle" fill="var(--accent-red)" font-weight="bold">AMATEUR TRADER</text>
+                            <!-- Price line dropping, no stop loss, panic averaging -->
+                            <path d="M 20 60 L 50 85 L 40 100 L 70 140 L 90 170" fill="none" stroke="var(--accent-red)" stroke-width="1.8" />
+                            <circle cx="50" cy="85" r="3" fill="var(--accent-red)" />
+                            <text x="50" y="80" class="text-chart" font-size="7" fill="var(--accent-red)">Gồng lỗ</text>
+                            
+                            <circle cx="70" cy="140" r="3" fill="var(--accent-red)" />
+                            <text x="75" y="148" class="text-chart" font-size="7" fill="var(--accent-red)">Nhồi lệnh thêm</text>
+                            <text x="75" y="185" class="text-chart" text-anchor="middle" fill="var(--accent-red)" font-size="8">Thua lỗ khổng lồ</text>
+
+                            <!-- Vertical divider -->
+                            <line x1="150" y1="10" x2="150" y2="190" stroke="rgba(255,255,255,0.06)" stroke-width="1.2" stroke-dasharray="3,3" />
+
+                            <!-- Right Side: Pro Trader -->
+                            <text x="225" y="20" class="text-chart" text-anchor="middle" fill="var(--accent-green)" font-weight="bold">PRO TRADER</text>
+                            <!-- Drop to stop loss, clean cut, then reverse or take another trade -->
+                            <path d="M 170 60 L 195 75 L 195 80" fill="none" stroke="var(--accent-green)" stroke-width="1.8" />
+                            <!-- Stop Loss hit -->
+                            <circle cx="195" cy="75" r="4.5" fill="none" stroke="var(--accent-orange)" stroke-width="1" class="pulse-orange-effect" />
+                            <text x="205" y="72" class="text-chart" font-size="7" fill="var(--accent-orange)">SL Hit (Cắt tức thì)</text>
+
+                            <!-- New trade runs to profit -->
+                            <path d="M 205 110 L 225 90 L 255 45 L 280 30" fill="none" stroke="var(--accent-green)" stroke-width="1.8" class="draw-line" />
+                            <text x="260" y="40" class="text-chart" font-size="7" fill="var(--accent-green)">Nhồi lệnh lời ↗</text>
+                            <text x="225" y="185" class="text-chart" text-anchor="middle" fill="var(--accent-green)" font-size="8">Lợi nhuận lớn bền vững</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 5: MODULE 1 - BAI 2 (INCHWORM CONCEPT) ==================== -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 2: Inchworm Concept">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Bản Chất Tâm Lý</span>
+                    <span class="slide-number-tag">Trang 5</span>
+                </div>
+                <h2 class="slide-title" id="editable-s5-title">Bài 2: Inchworm Concept <span>- Mô Hình Con Sâu Đo</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s5-desc">
+                        <div class="card-title accent-cyan">🐛 Khái Niệm Học Tập & Phong Độ</div>
+                        <p style="font-size:13px;">Hiệu suất giao dịch của bạn không bao giờ đứng yên một chỗ, nó di chuyển theo hình dáng kéo - đẩy của một con sâu đo (Jared Tendler):</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.2rem; font-size:12.5px;">
+                            <li><strong>A-Game (Đầu sâu):</strong> Trạng thái kỷ luật nhất. Bạn tập trung cao độ, giao dịch đúng quy tắc, chấp nhận rủi ro.</li>
+                            <li><strong>B-Game (Thân sâu):</strong> Phong độ trung bình. Bạn giao dịch tốt nhưng đôi lúc vẫn do dự.</li>
+                            <li><strong>C-Game (Đuôi sâu):</strong> Trạng thái tồi tệ nhất. Bạn bị Tilt, tức giận trả thù thị trường, phá vỡ mọi quy tắc quản lý vốn.</li>
+                        </ul>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-orange); background:rgba(255, 107, 0, 0.01); display:flex; flex-direction:column; justify-content:center; gap:0.3rem;">
+                        <div class="card-title accent-orange">🔑 Quy Luật Bò Về Phía Trước</div>
+                        <p style="font-size:12.5px; line-height:1.45;">Để con sâu đo dịch chuyển về phía trước, nó bắt buộc phải **co phần đuôi (C-Game) lại gần trước**. Đừng cố gắng nâng cao A-Game khi chưa tiêu diệt điểm yếu tồi tệ nhất ở C-Game. Triệt tiêu C-Game tự khắc sẽ nâng tầm phong độ của bạn.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 6: MODULE 1 - BAI 2 (DESTROY C-GAME) ==================== -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 2: Tiêu Diệt C-Game">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Bản Chất Tâm Lý</span>
+                    <span class="slide-number-tag">Trang 6</span>
+                </div>
+                <h2 class="slide-title" id="editable-s6-title">Bài 2: Làm Thế Nào Để <span>Tiêu Diệt Điểm Đuôi C-Game?</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s6-desc">
+                        <div class="card-title accent-yellow">⚡ Chiến Lược Rút Đuôi Sâu Đo</div>
+                        <p style="font-size:12.5px;">Tiêu diệt C-Game là cách duy nhất để xây dựng nền tảng tâm lý vững chắc:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem; font-size:12.5px;">
+                            <li><strong>Bước 1: Định vị sai lầm C-Game.</strong> Tìm ra lỗi tồi tệ nhất của bạn (ví dụ: trả thù thị trường sau 2 lệnh thua liên tiếp).</li>
+                            <li><strong>Bước 2: Viết quy tắc chặn cứng.</strong> Tạo một "Mental Stop Loss" (ví dụ: cấm mở máy giao dịch lại trong 24 giờ nếu thua 2 lệnh).</li>
+                            <li><strong>Bước 3: Dịch chuyển B-Game lên A-Game.</strong> Khi lỗi C-Game bị loại bỏ hoàn toàn, phong độ của bạn sẽ tự động được kéo lên.</li>
+                        </ul>
+                    </div>
+
+                    <!-- SVG DIAGRAM: INCHWORM PERFORMANCE CURVE -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Bell curve performance chart -->
+                            <!-- X-axis line -->
+                            <line x1="20" y1="160" x2="280" y2="160" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+
+                            <!-- Curve representation of performance -->
+                            <!-- C-Game (left) -> B-Game (middle) -> A-Game (right) -->
+                            <path d="M 30 160 C 70 160, 90 60, 150 60 C 210 60, 230 160, 270 160" 
+                                  fill="none" stroke="var(--accent-cyan)" stroke-width="2" />
+
+                            <!-- Shading components -->
+                            <!-- C-Game (Crimson red area on the left) -->
+                            <path d="M 30 160 C 70 160, 90 60, 100 110 L 100 160 Z" fill="rgba(255, 56, 96, 0.15)" />
+                            <text x="65" y="145" class="text-chart" fill="var(--accent-red)" font-weight="bold">C-Game (Đuôi)</text>
+                            
+                            <!-- B-Game (Middle) -->
+                            <text x="150" y="50" class="text-chart" text-anchor="middle" fill="var(--accent-cyan)" font-weight="bold">B-Game (Thân)</text>
+
+                            <!-- A-Game (Mint green area on the right) -->
+                            <path d="M 200 110 C 210 60, 230 160, 270 160 L 200 160 Z" fill="rgba(0, 255, 102, 0.12)" />
+                            <text x="235" y="145" class="text-chart" fill="var(--accent-green)" font-weight="bold">A-Game (Đầu)</text>
+
+                            <!-- Dragging arrow from left to right -->
+                            <path d="M 90 120 L 140 120" fill="none" stroke="var(--accent-orange)" stroke-width="2" stroke-dasharray="3,3" class="draw-line" />
+                            <polygon points="140,120 133,116 133,124" fill="var(--accent-orange)" />
+                            <text x="115" y="112" class="text-chart" text-anchor="middle" fill="var(--accent-orange)" font-size="7">Dịch chuyển đuôi ➔</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 7: MODULE 1 - BAI 3 (PROBABILITY) ==================== -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 3: Tư Duy Xác Suất">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Bản Chất Tâm Lý</span>
+                    <span class="slide-number-tag">Trang 7</span>
+                </div>
+                <h2 class="slide-title" id="editable-s7-title">Bài 3: Tư Duy Xác Suất <span>- Tư Duy Của Pro Trader</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s7-desc">
+                        <div class="card-title accent-cyan">🪙 Cơ Chế Tung Đồng Xu</div>
+                        <p style="font-size: 13px;">Pro Trader không coi trọng kết quả của **một lệnh đơn lẻ**. Họ tập trung vào **chuỗi kết quả dài hạn**:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.2rem; font-size:12px;">
+                            <li><strong>Mỗi lệnh là độc lập:</strong> Cho dù bạn vừa thua 3 lệnh liên tiếp, xác suất thắng của lệnh thứ 4 vẫn không thay đổi theo quy tắc hệ thống.</li>
+                            <li><strong>Phân phối ngẫu nhiên:</strong> Thắng và thua phân phối hoàn toàn ngẫu nhiên trong chuỗi lệnh. Một hệ thống có tỷ lệ thắng 50% hoàn toàn có thể gặp chuỗi 7 lệnh thua liên tiếp.</li>
+                        </ul>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-cyan); background:rgba(0, 229, 255, 0.02); display:flex; flex-direction:column; justify-content:center; gap:0.3rem;">
+                        <div class="card-title accent-cyan">🧠 Chấp Nhận Rủi Ro Hoàn Toàn</div>
+                        <p style="font-size:12.5px; line-height:1.45;">"Nếu bạn thực sự chấp nhận rủi ro và hiểu tư duy xác suất, bạn sẽ không cảm thấy sợ hãi khi đặt lệnh, không do dự khi SL cắn, và không hưng phấn quá đà khi thắng. Giao dịch trở nên nhàm chán và vô cảm." ➔ Mark Douglas</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 8: MODULE 1 - BAI 3 (5 TRUTHS) ==================== -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 3: 5 Chân Lý Tối Thượng">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Bản Chất Tâm Lý</span>
+                    <span class="slide-number-tag">Trang 8</span>
+                </div>
+                <h2 class="slide-title" id="editable-s8-title">Bài 3: Năm Sự Thật <span>Tối Thượng Của Trading</span></h2>
+                <div class="grid-cards" id="editable-s8-desc">
+                    <div class="card">
+                        <div class="card-title" style="font-size:13px;">🔮 1. Mọi điều đều có thể xảy ra</div>
+                        <p style="font-size:12px;">Thị trường được tạo nên từ hàng triệu bộ óc khác nhau. Không có bất kỳ quy luật phân tích kỹ thuật nào là đúng 100%.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan" style="font-size:13px;">🛡️ 2. Không cần biết tương lai vẫn kiếm được tiền</div>
+                        <p style="font-size:12px;">Bạn chỉ cần tuân thủ lợi thế hệ thống và quản trị vốn. Kết quả dài hạn sẽ tự động sinh lời.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow" style="font-size:13px;">📊 3. Phân phối thắng/thua ngẫu nhiên</div>
+                        <p style="font-size:12px;">Bất kỳ lợi thế nào cũng có sự phân phối ngẫu nhiên giữa các lệnh thắng và thua.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-green" style="font-size:13px;">⚡ 4. Lợi thế chỉ là xác suất cao hơn</div>
+                        <p style="font-size:12px;">Lợi thế hệ thống chỉ là chỉ báo cho thấy một kịch bản có xác suất xảy ra cao hơn kịch bản còn lại.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 9: MODULE 1 - BAI 3 (COIN SIMULATION) ==================== -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 3: Phân Phối Ngẫu Nhiên">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Bản Chất Tâm Lý</span>
+                    <span class="slide-number-tag">Trang 9</span>
+                </div>
+                <h2 class="slide-title" id="editable-s9-title">Bài 3: Trực Quan Hóa <span>Sự Phân Phối Ngẫu Nhiên</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s9-desc">
+                        <div class="card-title accent-yellow">🪙 Chuỗi Phân Phối Độc Lập</div>
+                        <p style="font-size: 13px;">Một hệ thống giao dịch có **50% Winrate và tỷ lệ R:R = 1:2** (Edge cực lớn). Hãy xem chuỗi 10 lệnh ngẫu nhiên:</p>
+                        <p style="font-size: 12px; font-weight: bold; color: var(--accent-red); margin-top: 0.2rem;">Lỗ - Lỗ - Lỗ - Lỗ - Thắng - Thắng - Lỗ - Thắng - Thắng - Thắng</p>
+                        <p style="font-size: 12px; color: var(--text-secondary); margin-top: 0.2rem;">Nếu là trader mới, bạn sẽ hoảng loạn dừng giao dịch ở lệnh thứ 4 vì dính chuỗi thua liên tiếp. Nhưng Pro Trader hiểu quy luật xác suất và kiên nhẫn đi hết chuỗi lệnh để thu về <strong>+6R lợi nhuận</strong>.</p>
+                    </div>
+
+                    <!-- SVG DIAGRAM: COIN SEQUENCE -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Draw 10 coins representing trades -->
+                            <!-- Row 1: 5 coins -->
+                            <!-- Coin 1: Loss (Red) -->
+                            <circle cx="40" cy="50" r="18" fill="rgba(255, 56, 96, 0.15)" stroke="var(--accent-red)" stroke-width="1.5" />
+                            <text x="40" y="53" class="text-chart" text-anchor="middle" fill="var(--accent-red)" font-weight="bold">L</text>
+                            
+                            <!-- Coin 2: Loss (Red) -->
+                            <circle cx="90" cy="50" r="18" fill="rgba(255, 56, 96, 0.15)" stroke="var(--accent-red)" stroke-width="1.5" />
+                            <text x="90" y="53" class="text-chart" text-anchor="middle" fill="var(--accent-red)" font-weight="bold">L</text>
+
+                            <!-- Coin 3: Loss (Red) -->
+                            <circle cx="140" cy="50" r="18" fill="rgba(255, 56, 96, 0.15)" stroke="var(--accent-red)" stroke-width="1.5" />
+                            <text x="140" y="53" class="text-chart" text-anchor="middle" fill="var(--accent-red)" font-weight="bold">L</text>
+
+                            <!-- Coin 4: Loss (Red) -->
+                            <circle cx="190" cy="50" r="18" fill="rgba(255, 56, 96, 0.15)" stroke="var(--accent-red)" stroke-width="1.5" />
+                            <text x="190" y="53" class="text-chart" text-anchor="middle" fill="var(--accent-red)" font-weight="bold">L</text>
+
+                            <!-- Coin 5: Win (Green) -->
+                            <circle cx="240" cy="50" r="18" fill="rgba(0, 255, 102, 0.15)" stroke="var(--accent-green)" stroke-width="1.5" class="pulse-cyan-effect" />
+                            <text x="240" y="53" class="text-chart" text-anchor="middle" fill="var(--accent-green)" font-weight="bold">W</text>
+
+                            <!-- Row 2: 5 coins -->
+                            <!-- Coin 6: Win (Green) -->
+                            <circle cx="40" cy="110" r="18" fill="rgba(0, 255, 102, 0.15)" stroke="var(--accent-green)" stroke-width="1.5" />
+                            <text x="40" y="113" class="text-chart" text-anchor="middle" fill="var(--accent-green)" font-weight="bold">W</text>
+
+                            <!-- Coin 7: Loss (Red) -->
+                            <circle cx="90" cy="110" r="18" fill="rgba(255, 56, 96, 0.15)" stroke="var(--accent-red)" stroke-width="1.5" />
+                            <text x="90" y="113" class="text-chart" text-anchor="middle" fill="var(--accent-red)" font-weight="bold">L</text>
+
+                            <!-- Coin 8: Win (Green) -->
+                            <circle cx="140" cy="110" r="18" fill="rgba(0, 255, 102, 0.15)" stroke="var(--accent-green)" stroke-width="1.5" />
+                            <text x="140" y="113" class="text-chart" text-anchor="middle" fill="var(--accent-green)" font-weight="bold">W</text>
+
+                            <!-- Coin 9: Win (Green) -->
+                            <circle cx="190" cy="110" r="18" fill="rgba(0, 255, 102, 0.15)" stroke="var(--accent-green)" stroke-width="1.5" />
+                            <text x="190" y="113" class="text-chart" text-anchor="middle" fill="var(--accent-green)" font-weight="bold">W</text>
+
+                            <!-- Coin 10: Win (Green) -->
+                            <circle cx="240" cy="110" r="18" fill="rgba(0, 255, 102, 0.15)" stroke="var(--accent-green)" stroke-width="1.5" />
+                            <text x="240" y="113" class="text-chart" text-anchor="middle" fill="var(--accent-green)" font-weight="bold">W</text>
+
+                            <!-- Connective flow arrow -->
+                            <path d="M 20 160 L 280 160" fill="none" stroke="var(--accent-orange)" stroke-width="1.5" />
+                            <text x="150" y="180" class="text-chart" text-anchor="middle" fill="var(--accent-orange)">Chuỗi 10 Lệnh ➔ Tích lũy +6R (Mặc dù dính chuỗi 4 lệnh thua đầu)</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 10: MODULE 1 EXERCISES ==================== -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài Tập Thực Hành">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Bản Chất Tâm Lý</span>
+                    <span class="slide-number-tag">Trang 10</span>
+                </div>
+                <h2 class="slide-title" id="editable-s10-title">Hệ Thống Bài Tập <span>Rèn Luyện Tư Duy Xác Suất</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s10-desc">
+                        <div class="card-title accent-yellow">📝 Bài Tập Tuần Này</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.3rem; font-size:12px;">
+                            <li><strong>1. Nhật ký C-Game cá nhân:</strong> Lục lại lịch sử giao dịch và tìm ra 3 lỗi giao dịch tệ hại nhất do mất kiểm soát. Chép lại chi tiết cảm xúc lúc đó để định vị cái đuôi sâu đo.</li>
+                            <li><strong>2. Giả lập tung đồng xu:</strong> Tung 1 đồng xu thực tế 30 lần, ghi lại chuỗi Sấp/Ngửa. Rút ra bài học áp dụng khi tài khoản của bạn rơi vào nhịp sụt giảm tài sản (drawdown).</li>
+                        </ul>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-cyan); background:rgba(0, 229, 255, 0.02); display:flex; flex-direction:column; justify-content:center;">
+                        <div class="card-title accent-cyan">🧠 Câu Hỏi Tự Vấn Nhanh</div>
+                        <ul class="bullet-list" style="gap:0.4rem; margin-top:0.2rem; font-size:12px; list-style:none;">
+                            <li>• Bạn đã bao giờ nhồi lệnh thêm khi giá đi ngược hướng để trốn tránh nỗi đau cắt lỗ chưa?</li>
+                            <li>• Làm cách nào để bạn chấp nhận một lệnh thua đơn lẻ giống như kết quả của một lần tung đồng xu?</li>
+                            <li>• C-game tâm lý tệ hại nhất đang ngăn cản bạn tiến lên là gì?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 11: MODULE 1 SUMMARY ==================== -->
+        <section class="slide">
+            <div class="slide-content" style="align-items: center; justify-content: center; text-align: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color:var(--accent-yellow);">HOÀN THÀNH MODULE 1</div>
+                <h2 class="slide-title" id="editable-s11-title" style="font-size: var(--title-size); line-height: 1.15;">
+                    BẠN ĐÃ GIẢI MÃ THÀNH CÔNG<br><span style="color: var(--accent-orange);">TÂM LÝ HỌC GIAO DỊCH!</span>
+                </h2>
+                <p id="editable-s11-desc" style="max-width: 650px; color: var(--text-secondary); font-size: 1.1rem;">
+                    Hiểu rõ cấu trúc sinh học bộ não và tư duy xác suất là bước đệm cốt lõi để bước vào xây dựng Hệ thống bản đồ cảm xúc và giải quyết Tilt tận gốc.
+                </p>
+                <div class="highlight-box" style="border-left: 3px solid var(--accent-green); max-width: 600px; text-align: left;">
+                    🎓 <strong>Bài học tiếp theo:</strong> Module 2 - Bản Đồ Cảm Xúc & Mental Hand History. Chúng ta sẽ giải mã chi tiết cơ chế viết báo cáo 5 bước để khai trừ các lỗi Tilt!
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 12: MODULE 2 INTRO ==================== -->
+        <section class="slide" data-module="Module 2" data-lesson="Giới Thiệu Module 2">
+            <div class="slide-content" style="align-items: center; justify-content: center; text-align: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color: var(--accent-yellow);">MODULE 2</div>
+                <h2 class="slide-title" id="editable-s12-title" style="font-size: var(--title-size); line-height: 1.15;">
+                    BẢN ĐỒ CẢM XÚC &<br><span style="color: var(--accent-orange);">MENTAL HAND HISTORY</span>
+                </h2>
+                <p id="editable-s12-desc" style="max-width: 700px; color: var(--text-secondary); font-size: 1.1rem;">
+                    Xây dựng hệ thống chẩn đoán lỗi tâm lý gốc rễ. Thiết lập bộ quy chuẩn 5 bước viết Mental Hand History để triệt tiêu Tilt và các phản ứng tự hủy hoại tài khoản.
+                </p>
+                <div class="grid-3-cards" style="width: 100%; max-width: 900px; margin-top: 1rem; text-align: left;">
+                    <div class="card">
+                        <div class="card-title">Bài 4</div>
+                        <p><strong>4 Lỗi Cảm Xúc Cốt Lõi</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Lập bản đồ 4 trạng thái tàn phá: Sợ hãi, Tức giận, Tham lam và Tự tin thái quá.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">Bài 5</div>
+                        <p><strong>Mental Hand History</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Quy trình 5 bước tự đào sâu và giải quyết xung đột nhận thức tạo nên hành vi Tilt.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-green">Bài 6</div>
+                        <p><strong>Chạy Về Nỗi Đau</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Kỹ thuật rèn luyện chấp nhận thua lỗ như chi phí vận hành và rèn bản lĩnh dứt khoát.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 13: MODULE 2 - BAI 4 (4 EMOTIONAL FLAWS) ==================== -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 4: 4 Lỗi Cảm Xúc Gốc Rễ">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Bản Đồ Cảm Xúc</span>
+                    <span class="slide-number-tag">Trang 13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s13-title">Bài 4: Nhận Diện <span>4 Lỗi Cảm Xúc Gốc Rễ</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s13-desc">
+                        <div class="card-title">🔥 Trục Tọa Độ Năng Lượng Cảm Xúc</div>
+                        <p style="font-size:12.5px;">Cảm xúc không tự nhiên bùng nổ, nó tích lũy dần theo từng sự kiện giao dịch. Việc nhận diện sớm giúp ngăn chặn trạng thái Tilt:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.2rem; font-size:12px;">
+                            <li><strong>Sợ hãi (Fear):</strong> Sợ mất tiền ➔ Dẫn đến do dự, dời SL, bỏ lỡ cơ hội ngon.</li>
+                            <li><strong>Tức giận (Anger):</strong> Ghét bị thị trường quét SL rồi chạy ➔ Revenge trading, nhồi volume.</li>
+                            <li><strong>Tham lam (Greed):</strong> Muốn giàu nhanh ➔ Chốt non bảo toàn vốn hoặc nhồi lệnh bừa bãi.</li>
+                            <li><strong>Tự tin thái quá (Overconfidence):</strong> Dopamine dâng trào sau chuỗi thắng ➔ Bỏ qua quản lý vốn, nâng volume lớn.</li>
+                        </ul>
+                    </div>
+                    <!-- SVG DIAGRAM: 4 EMOTIONAL CORE HEATMAP -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Axis lines -->
+                            <line x1="150" y1="20" x2="150" y2="180" stroke="rgba(255,255,255,0.15)" stroke-width="1.2" />
+                            <line x1="30" y1="100" x2="270" y2="100" stroke="rgba(255,255,255,0.15)" stroke-width="1.2" />
+                            
+                            <text x="150" y="15" class="text-chart" text-anchor="middle" fill="var(--text-secondary)">CAO TRÀO (TILT)</text>
+                            <text x="150" y="195" class="text-chart" text-anchor="middle" fill="var(--text-secondary)">CẢNH BÁO SỚM</text>
+                            
+                            <!-- Quadrant 1: Anger (Top-Right) -->
+                            <rect x="155" y="25" width="105" height="70" rx="6" fill="rgba(255, 56, 96, 0.08)" stroke="rgba(255, 56, 96, 0.2)" stroke-width="1" />
+                            <text x="207" y="55" class="text-chart" text-anchor="middle" fill="var(--accent-red)" font-weight="bold">ANGER</text>
+                            <text x="207" y="70" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="7">Revenge Trading</text>
+                            
+                            <!-- Quadrant 2: Fear (Top-Left) -->
+                            <rect x="40" y="25" width="105" height="70" rx="6" fill="rgba(255, 107, 0, 0.08)" stroke="rgba(255, 107, 0, 0.2)" stroke-width="1" />
+                            <text x="92" y="55" class="text-chart" text-anchor="middle" fill="var(--accent-orange)" font-weight="bold">FEAR</text>
+                            <text x="92" y="70" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="7">Do Dự / Dời SL</text>
+                            
+                            <!-- Quadrant 3: Greed (Bottom-Right) -->
+                            <rect x="155" y="105" width="105" height="70" rx="6" fill="rgba(212, 255, 0, 0.08)" stroke="rgba(212, 255, 0, 0.2)" stroke-width="1" />
+                            <text x="207" y="135" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)" font-weight="bold">GREED</text>
+                            <text x="207" y="150" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="7">Chốt Non / Nhồi Bừa</text>
+                            
+                            <!-- Quadrant 4: Overconfidence (Bottom-Left) -->
+                            <rect x="40" y="105" width="105" height="70" rx="6" fill="rgba(0, 255, 102, 0.08)" stroke="rgba(0, 255, 102, 0.2)" stroke-width="1" />
+                            <text x="92" y="135" class="text-chart" text-anchor="middle" fill="var(--accent-green)" font-weight="bold">OVERCONFIDENT</text>
+                            <text x="92" y="150" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="7">Phá Quản Lý Vốn</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 14: MODULE 2 - BAI 5 (5-STEP PROCESS) ==================== -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 5: Quy Trình Mental Hand History">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Bản Đồ Cảm Xúc</span>
+                    <span class="slide-number-tag">Trang 14</span>
+                </div>
+                <h2 class="slide-title" id="editable-s14-title">Bài 5: Quy Trình <span>Mental Hand History 5 Bước</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s14-desc">
+                        <div class="card-title accent-cyan">📋 Bộ Khung Chẩn Đoán Tâm Lý</div>
+                        <p style="font-size:12.5px;">Để giải quyết triệt để lỗi Tilt, bạn phải viết Mental Hand History ngay khi vi phạm quy tắc kỷ luật:</p>
+                        <ol style="padding-left:1.2rem; display:flex; flex-direction:column; gap:0.3rem; font-size:12px; color:var(--text-secondary);">
+                            <li><strong>Bước 1: Sự việc (Event)</strong> - Ghi chép chính xác những gì xảy ra.</li>
+                            <li><strong>Bước 2: Phản ứng (Response)</strong> - Ghi nhận nhịp tim, nhịp thở, cảm xúc lúc đó.</li>
+                            <li><strong>Bước 3: Suy nghĩ ban đầu (Thoughts)</strong> - Dòng suy nghĩ tự động chạy qua đầu.</li>
+                            <li><strong>Bước 4: Niềm tin sai lệch (Flaw)</strong> - Đào sâu xem tại sao bạn lại nghĩ thế?</li>
+                            <li><strong>Bước 5: Giải pháp (Correction)</strong> - Tự viết thông điệp lý trí để sửa đổi.</li>
+                        </ol>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-cyan); background:rgba(0, 229, 255, 0.02); justify-content:center;">
+                        <div class="card-title accent-cyan">💡 Mục Tiêu Cốt Lõi</div>
+                        <p style="font-size:12.5px; line-height:1.45;">Hầu hết trader chỉ dừng lại ở việc chép phạt: *"Tôi hứa sẽ không FOMO nữa"*. Việc này vô ích. Quy trình 5 bước bắt buộc bạn phải tìm ra **lỗ hổng niềm tin** ở Bước 4 (ví dụ: tin rằng thị trường phải đi đúng ý mình) và dùng logic cứng ở Bước 5 để đập tan nó.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 15: MODULE 2 - BAI 5 (MHH DIAGRAM) ==================== -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 5: Sơ Đồ Quy Trình MHH">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Bản Đồ Cảm Xúc</span>
+                    <span class="slide-number-tag">Trang 15</span>
+                </div>
+                <h2 class="slide-title" id="editable-s15-title">Bài 5: Sơ Đồ Quy Trình <span>Giải Quyết Tilt</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s15-desc">
+                        <div class="card-title accent-yellow">⚙️ Dòng Chảy Chuyển Hóa Nhận Thức</div>
+                        <p style="font-size:13px;">Quy trình 5 bước là chiếc phễu lọc đi từ hiện tượng bề mặt (Bước 1, 2, 3) xuống tận cùng gốc rễ vấn đề (Bước 4) để thực hiện vá lỗi tư duy (Bước 5):</p>
+                        <div class="highlight-box" style="margin-top:0.4rem; font-size:12px;">
+                            <strong>Bước 4 (Flaw):</strong> "Tôi không chấp nhận sự ngẫu nhiên của thị trường, tôi có nhu cầu luôn đúng."<br>
+                            <strong>➔ Bước 5 (Correction):</strong> "Thị trường luôn đúng. Lệnh này chỉ là 1 hạt cát trong chuỗi 100 lệnh của tôi. Tôi chấp nhận cắt lỗ."
+                        </div>
+                    </div>
+                    <!-- SVG DIAGRAM: 5-STEP FLOWCHART -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Flow arrows and boxes -->
+                            <!-- Box 1: Event -->
+                            <rect x="20" y="30" width="70" height="30" rx="5" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" stroke-width="1.2" />
+                            <text x="55" y="48" class="text-chart" text-anchor="middle" fill="#fff" font-weight="bold">1. Sự Việc</text>
+                            
+                            <path d="M 90 45 L 110 45" fill="none" stroke="var(--accent-orange)" stroke-width="1.5" />
+                            
+                            <!-- Box 2: Response -->
+                            <rect x="110" y="30" width="80" height="30" rx="5" fill="rgba(255, 56, 96, 0.08)" stroke="var(--accent-red)" stroke-width="1" />
+                            <text x="150" y="48" class="text-chart" text-anchor="middle" fill="var(--accent-red)">2. Phản Ứng</text>
+                            
+                            <path d="M 190 45 L 210 45" fill="none" stroke="var(--accent-orange)" stroke-width="1.5" />
+
+                            <!-- Box 3: Thoughts -->
+                            <rect x="210" y="30" width="70" height="30" rx="5" fill="rgba(255, 107, 0, 0.08)" stroke="var(--accent-orange)" stroke-width="1" />
+                            <text x="245" y="48" class="text-chart" text-anchor="middle" fill="var(--accent-orange)">3. Ý Nghĩ</text>
+
+                            <!-- Curve arrow down -->
+                            <path d="M 245 60 L 245 105 A 15 15 0 0 1 230 120 L 210 120" fill="none" stroke="var(--accent-orange)" stroke-width="1.5" />
+                            
+                            <!-- Box 4: Underlying Flaw -->
+                            <rect x="110" y="105" width="100" height="30" rx="5" fill="rgba(0, 229, 255, 0.08)" stroke="var(--accent-cyan)" stroke-width="1.2" class="pulse-cyan-effect" />
+                            <text x="160" y="123" class="text-chart" text-anchor="middle" fill="var(--accent-cyan)" font-weight="bold">4. Niềm Tin Lỗi</text>
+                            
+                            <path d="M 110 120 L 90 120" fill="none" stroke="var(--accent-orange)" stroke-width="1.5" />
+
+                            <!-- Box 5: Correction -->
+                            <rect x="20" y="105" width="70" height="30" rx="5" fill="rgba(0, 255, 102, 0.08)" stroke="var(--accent-green)" stroke-width="1.2" class="pulse-orange-effect" />
+                            <text x="55" y="123" class="text-chart" text-anchor="middle" fill="var(--accent-green)" font-weight="bold">5. Sửa Đổi</text>
+
+                            <!-- Loop back dashed line -->
+                            <path d="M 55 135 L 55 170 L 150 170 A 20 20 0 0 0 170 150 L 170 135" fill="none" stroke="rgba(255,255,255,0.15)" stroke-dasharray="3,3" stroke-width="1" />
+                            <text x="110" y="165" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="7">Chẩn đoán lập lại ⟳</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 16: MODULE 2 - BAI 6 (BEST LOSER WINS) ==================== -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 6: Chạy Về Phía Nỗi Đau">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Bản Đồ Cảm Xúc</span>
+                    <span class="slide-number-tag">Trang 16</span>
+                </div>
+                <h2 class="slide-title" id="editable-s16-title">Bài 6: Kỹ Thuật <span>"Chạy Về Phía Nỗi Đau"</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s16-desc">
+                        <div class="card-title accent-red">🏃‍♂️ Kỹ Thuật Đối Đầu Với Thua Lỗ</div>
+                        <p style="font-size:12.5px;">Phần lớn trader tìm cách trốn tránh nỗi đau cắt lỗ dẫn đến việc để lệnh trượt sâu. Để trở thành một "Best Loser", bạn cần chủ động đón nhận nó:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.2rem; font-size:12px;">
+                            <li><strong>Chấp nhận 100% rủi ro ngay từ đầu:</strong> Khi đặt lệnh, bạn phải tự động coi như số tiền rủi ro đó đã mất. Sự mất mát không còn bất ngờ.</li>
+                            <li><strong>Stop Loss là ân nhân bảo vệ vốn:</strong> Mỗi khi giá chạm SL, hãy coi đó là minh chứng cho việc bạn quản lý vốn xuất sắc.</li>
+                            <li><strong>Không thương lượng với thị trường:</strong> Không có dời SL, không gồng lỗ mong về bờ. Cắt lỗ nhanh là hành vi đẳng cấp cao nhất.</li>
+                        </ul>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-orange); background:rgba(255, 107, 0, 0.02); justify-content:center;">
+                        <div class="card-title accent-orange">🔥 Câu Nói Kinh Điển của Tom Hougaard</div>
+                        <p style="font-size:12.5px; line-height:1.45;">"Thị trường không quan tâm đến điểm vào lệnh của bạn, tài khoản của bạn, hay cảm xúc của bạn. Người chiến thắng dài hạn không phải là người có hệ thống dự đoán tương lai tốt nhất, mà là người biết **thua cuộc thông minh nhất** khi thị trường đi ngược lại dự đoán."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 17: MODULE 2 EXERCISES ==================== -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài Tập Thực Hành">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Bản Đồ Cảm Xúc</span>
+                    <span class="slide-number-tag">Trang 17</span>
+                </div>
+                <h2 class="slide-title" id="editable-s17-title">Bài Tập Thực Hành: <span>Giải Phẫu Cảm Xúc</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s17-desc">
+                        <div class="card-title accent-yellow">📝 Nhiệm Vụ Tuần Này</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.2rem; font-size:12px;">
+                            <li><strong>1. Nhật ký cảm xúc:</strong> Tự xếp hạng 4 lỗi cảm xúc Fear, Anger, Greed, Overconfidence theo thang điểm 1-10 để lập bản đồ cảnh báo sớm của chính bạn.</li>
+                            <li><strong>2. Thực hiện 3 bản Mental Hand History:</strong> Trong tuần, mỗi khi vi phạm kỷ luật (ví dụ: FOMO hoặc chốt non), viết ngay báo cáo 5 bước để tìm ra niềm tin cốt lõi sai lệch.</li>
+                        </ul>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-green); background:rgba(0, 255, 102, 0.01); justify-content:center;">
+                        <div class="card-title accent-green">🧠 Checklist Tự Kiểm Tra</div>
+                        <ul class="bullet-list" style="gap:0.4rem; font-size:12px; list-style:none;">
+                            <li>• Bạn có cảm thấy tức giận khi Stop Loss bị quét rồi giá chạy đúng hướng không?</li>
+                            <li>• Bạn đã thực sự chấp nhận mất số tiền của Stop Loss ngay khi nhấn nút vào lệnh chưa?</li>
+                            <li>• Bạn có đang trốn tránh nỗi đau cắt lỗ bằng cách gồng tiếp không?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 18: MODULE 2 SUMMARY ==================== -->
+        <section class="slide">
+            <div class="slide-content" style="align-items: center; justify-content: center; text-align: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color:var(--accent-yellow);">HOÀN THÀNH MODULE 2</div>
+                <h2 class="slide-title" id="editable-s18-title" style="font-size: var(--title-size); line-height: 1.15;">
+                    BẢN ĐỒ CẢM XÚC ĐÃ ĐƯỢC THIẾT LẬP!<br><span style="color: var(--accent-orange);">HÃY SẴN SÀNG CHO RISK MATH</span>
+                </h2>
+                <p id="editable-s18-desc" style="max-width: 650px; color: var(--text-secondary); font-size: 1.1rem;">
+                    Bây giờ bạn đã biết cách lập bản đồ và kiểm soát phần "tâm lý" (The Mental Game). Đã đến lúc chúng ta lượng hóa nó bằng con số thông qua Toán học quản lý vốn chuyên nghiệp.
+                </p>
+                <div class="highlight-box" style="border-left: 3px solid var(--accent-cyan); max-width: 600px; text-align: left;">
+                    🎓 <strong>Bài học tiếp theo:</strong> Module 3 - Toán Học Kỳ Vọng & Hệ Thống Bội Số R. Chúng ta sẽ chứng minh tại sao tỷ lệ thắng không quyết định lợi nhuận và cách tính Expectancy thực tế.
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 19: MODULE 3 INTRO ==================== -->
+        <section class="slide" data-module="Module 3" data-lesson="Giới Thiệu Module 3">
+            <div class="slide-content" style="align-items: center; justify-content: center; text-align: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color: var(--accent-yellow);">MODULE 3</div>
+                <h2 class="slide-title" id="editable-s19-title" style="font-size: var(--title-size); line-height: 1.15;">
+                    TOÁN HỌC KỲ VỌNG &<br><span style="color: var(--accent-orange);">HỆ THỐNG BỘI SỐ R</span>
+                </h2>
+                <p id="editable-s19-desc" style="max-width: 700px; color: var(--text-secondary); font-size: 1.1rem;">
+                    Giải mã toán học quản lý vốn chuyên nghiệp của Van Tharp. Lượng hóa hệ thống giao dịch bằng công thức Expectancy và thiết lập rào chắn bảo vệ tài khoản khỏi Drawdown.
+                </p>
+                <div class="grid-3-cards" style="width: 100%; max-width: 900px; margin-top: 1rem; text-align: left;">
+                    <div class="card">
+                        <div class="card-title">Bài 7</div>
+                        <p><strong>Nghịch Lý Bội Số R</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Tại sao Winrate cao vẫn cháy tài khoản và Winrate thấp vẫn kiếm lợi nhuận khổng lồ.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">Bài 8</div>
+                        <p><strong>Expectancy (Kỳ Vọng)</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Cách đo lường, tính toán và tối ưu kỳ vọng toán học dương của hệ thống giao dịch.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-green">Bài 9</div>
+                        <p><strong>Quản Trị Drawdown</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Bản chất phi tuyến tính của sụt giảm tài khoản và quy tắc giảm rủi ro để sống sót.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 20: MODULE 3 - BAI 7 (R-MULTIPLES) ==================== -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài 7: R-Multiples & Winrate">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 3: Toán Học Kỳ Vọng</span>
+                    <span class="slide-number-tag">Trang 20</span>
+                </div>
+                <h2 class="slide-title" id="editable-s20-title">Bài 7: R-Multiples <span>& Nghịch Lý Tỷ Lệ Thắng</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s20-desc">
+                        <div class="card-title accent-orange">📊 Chuyển Đổi Tư Duy Định Lượng</div>
+                        <p style="font-size: 12.5px;">Bỏ qua việc dự đoán đúng sai từng lệnh đơn lẻ. Tập trung hoàn toàn vào Bội số R:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.2rem; font-size:11.5px;">
+                            <li><strong>R (Risk):</strong> Số tiền rủi ro ban đầu (ví dụ: 1% tài khoản).</li>
+                            <li><strong>R-Multiple:</strong> Kết quả lệnh chia cho rủi ro ban đầu (Lỗ = -1R, Thắng = +3R, v.v.).</li>
+                            <li><strong>Nghịch lý:</strong> Thắng nhiều (70% Winrate) chốt non (+0.3R) gồng lỗ sâu (-2.0R) vẫn là **Thua**. Thắng ít (30% Winrate) giữ lời (+4.0R) cắt lỗ nhanh (-1.0R) vẫn là **Thắng ròng**.</li>
+                        </ul>
+                    </div>
+                    <!-- SVG DIAGRAM: TRADER A (HIGH WINRATE, NEGATIVE) VS TRADER B (LOW WINRATE, POSITIVE) -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Divider -->
+                            <line x1="150" y1="10" x2="150" y2="190" stroke="rgba(255,255,255,0.06)" stroke-width="1.2" stroke-dasharray="3,3" />
+
+                            <!-- Trader A: Winrate 70%, Net Loss -->
+                            <text x="75" y="25" class="text-chart" text-anchor="middle" fill="var(--accent-red)" font-weight="bold">TRADER A (Winrate 70%)</text>
+                            <text x="75" y="40" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="7">7 Thắng (+0.3R) | 3 Thua (-2.0R)</text>
+                            
+                            <!-- Win bar (Green) -->
+                            <rect x="35" y="55" width="25" height="30" fill="var(--accent-green)" rx="3" />
+                            <text x="47" y="50" class="text-chart" text-anchor="middle" fill="var(--accent-green)" font-size="7">+2.1R</text>
+                            <text x="47" y="95" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="6">Tổng thắng</text>
+                            
+                            <!-- Loss bar (Red) -->
+                            <rect x="90" y="55" width="25" height="85" fill="var(--accent-red)" rx="3" />
+                            <text x="102" y="50" class="text-chart" text-anchor="middle" fill="var(--accent-red)" font-size="7">-6.0R</text>
+                            <text x="102" y="150" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="6">Tổng thua</text>
+                            
+                            <!-- Net negative text -->
+                            <text x="75" y="180" class="text-chart" text-anchor="middle" fill="var(--accent-red)" font-weight="bold" font-size="9">KẾT QUẢ: -3.9R ❌</text>
+
+                            <!-- Trader B: Winrate 30%, Net Profit -->
+                            <text x="225" y="25" class="text-chart" text-anchor="middle" fill="var(--accent-green)" font-weight="bold">TRADER B (Winrate 30%)</text>
+                            <text x="225" y="40" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="7">3 Thắng (+4.0R) | 7 Thua (-1.0R)</text>
+                            
+                            <!-- Win bar (Green) -->
+                            <rect x="185" y="55" width="25" height="100" fill="var(--accent-green)" rx="3" />
+                            <text x="197" y="50" class="text-chart" text-anchor="middle" fill="var(--accent-green)" font-size="7">+12.0R</text>
+                            <text x="197" y="165" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="6">Tổng thắng</text>
+                            
+                            <!-- Loss bar (Red) -->
+                            <rect x="240" y="55" width="25" height="60" fill="var(--accent-red)" rx="3" />
+                            <text x="252" y="50" class="text-chart" text-anchor="middle" fill="var(--accent-red)" font-size="7">-7.0R</text>
+                            <text x="252" y="125" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="6">Tổng thua</text>
+                            
+                            <!-- Net positive text -->
+                            <text x="225" y="180" class="text-chart" text-anchor="middle" fill="var(--accent-green)" font-weight="bold" font-size="9">KẾT QUẢ: +5.0R Qúy Giá! </text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 21: MODULE 3 - BAI 8 (EXPECTANCY FORMULA) ==================== -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài 8: Công Thức Expectancy">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 3: Toán Học Kỳ Vọng</span>
+                    <span class="slide-number-tag">Trang 21</span>
+                </div>
+                <h2 class="slide-title" id="editable-s21-title">Bài 8: Đo Lường Hệ Thống <span>Bằng Chỉ Số Expectancy</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s21-desc">
+                        <div class="card-title accent-cyan">📐 Công Thức Tính Kỳ Vọng (R)</div>
+                        <p style="font-size: 13px;">Công thức vàng để biết hệ thống giao dịch có thể kiếm tiền dài hạn hay không:</p>
+                        <div class="highlight-box" style="font-family: var(--font-mono); font-size:12px; margin: 0.3rem 0; border-left-color: var(--accent-cyan); background: rgba(0,229,255,0.02); color: #fff;">
+                            E = (WR * Avg_Win_R) - (LR * Avg_Loss_R)
+                        </div>
+                        <p style="font-size: 11.5px; color: var(--text-secondary);">
+                            * WR (Winrate): Tỷ lệ thắng (0 - 1)<br>
+                            * LR (Lossrate): Tỷ lệ thua (1 - WR)<br>
+                            * Avg_Win_R: Số R trung bình lệnh thắng<br>
+                            * Avg_Loss_R: Số R trung bình lệnh thua (luôn cố định bằng 1 nếu cắt lỗ chuẩn)
+                        </p>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-cyan); background:rgba(0, 229, 255, 0.02); display:flex; flex-direction:column; justify-content:center; gap:0.4rem;">
+                        <div class="card-title accent-cyan">⚡ Phân Tích Thực Tế:</div>
+                        <p style="font-size: 13px;">Hệ thống có WR = 40%, Avg_Win = +3R, Avg_Loss = -1R:</p>
+                        <p style="font-size: 12.5px; font-weight: bold; color: var(--accent-green);">➔ E = (0.4 * 3) - (0.6 * 1) = 1.2 - 0.6 = +0.6R</p>
+                        <p style="font-size: 11.5px; color: var(--text-secondary);">Nghĩa là trung bình mỗi lệnh bạn đặt, bạn kiếm được **+0.6R**. Nếu rủi ro mỗi lệnh là $100, thì trung bình cứ mỗi lệnh bạn kiếm được **$60**. E > 0 là hệ thống có kỳ vọng dương bắt buộc phải có.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 22: MODULE 3 - BAI 9 (DRAWDOWN) ==================== -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài 9: Quản Trị Drawdown">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 3: Toán Học Kỳ Vọng</span>
+                    <span class="slide-number-tag">Trang 22</span>
+                </div>
+                <h2 class="slide-title" id="editable-s22-title">Bài 9: Sự Phi Tuyến Tính <span>Của Drawdown (Sụt Giảm Vốn)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s22-desc">
+                        <div class="card-title accent-red">⚠️ Bẫy Toán Học Của Drawdown</div>
+                        <p style="font-size:12.5px;">Mức sụt giảm tài khoản tỉ lệ nghịch phi tuyến tính với phần trăm cần thiết để phục hồi tài khoản (hòa vốn):</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.2rem; font-size:11.5px;">
+                            <li>Sụt giảm <strong>10%</strong> ➔ Cần tăng trưởng <strong>11.1%</strong> để hòa vốn.</li>
+                            <li>Sụt giảm <strong>30%</strong> ➔ Cần tăng trưởng <strong>42.9%</strong> để hòa vốn.</li>
+                            <li>Sụt giảm <strong>50%</strong> ➔ Cần tăng trưởng <strong>100%</strong> để hòa vốn.</li>
+                            <li>Sụt giảm <strong>90%</strong> ➔ Cần tăng trưởng <strong>900%</strong> để hòa vốn.</li>
+                        </ul>
+                        <p style="font-size:11.5px; color: var(--accent-orange); font-weight: 500;">➔ Khi sụt giảm quá 30%, việc về bờ trở nên cực kỳ khó khăn về mặt tâm lý và toán học.</p>
+                    </div>
+                    <!-- SVG DIAGRAM: NON-LINEAR DRAWDOWN RECOVERY CURVE -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Grid lines -->
+                            <line x1="30" y1="170" x2="280" y2="170" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+                            <line x1="30" y1="20" x2="30" y2="170" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+                            
+                            <!-- X Axis: Drawdown % (10% to 90%) -->
+                            <text x="30" y="182" class="text-chart" font-size="7">0%</text>
+                            <text x="100" y="182" class="text-chart" font-size="7">30%</text>
+                            <text x="160" y="182" class="text-chart" font-size="7">50%</text>
+                            <text x="270" y="182" class="text-chart" font-size="7">90%</text>
+                            <text x="150" y="195" class="text-chart" text-anchor="middle" fill="var(--text-secondary)">Mức Sụt Giảm Tài Khoản (Drawdown %)</text>
+                            
+                            <!-- Y Axis: Recovery % (0% to 100% to 900%) -->
+                            <text x="25" y="140" class="text-chart" text-anchor="end" font-size="7">11%</text>
+                            <text x="25" y="100" class="text-chart" text-anchor="end" font-size="7">100%</text>
+                            <text x="25" y="30" class="text-chart" text-anchor="end" font-size="7">900%</text>
+                            
+                            <!-- Draw non-linear path -->
+                            <path d="M 30 170 Q 140 160 160 100 T 270 20" fill="none" stroke="var(--accent-red)" stroke-width="2.5" class="draw-line" />
+                            
+                            <!-- Dot at 50% DD -> 100% Recovery -->
+                            <circle cx="160" cy="100" r="4" fill="var(--accent-orange)" class="pulse-orange-effect" />
+                            <text x="170" y="104" class="text-chart" fill="var(--accent-orange)" font-weight="bold" font-size="8">50% DD ➔ 100% Recovery</text>
+                            
+                            <!-- Dot at 90% DD -> 900% Recovery -->
+                            <circle cx="270" cy="20" r="3" fill="var(--accent-red)" />
+                            <text x="265" y="14" class="text-chart" text-anchor="end" fill="var(--accent-red)" font-weight="bold" font-size="7">90% DD ➔ 900% Recovery</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 23: MODULE 3 EXERCISES ==================== -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài Tập Thực Hành">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 3: Toán Học Kỳ Vọng</span>
+                    <span class="slide-number-tag">Trang 23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s23-title">Bài Tập Thực Hành: <span>Tính Toán Kỳ Vọng</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s23-desc">
+                        <div class="card-title accent-yellow">📝 Bài Tập Toán Học Quản Trị Vốn</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.2rem; font-size:12px;">
+                            <li><strong>1. Tính toán Expectancy cá nhân:</strong> Sử dụng lịch sử 30 lệnh gần nhất của bạn, tính Winrate, Avg Win R, Avg Loss R và chỉ số Expectancy của hệ thống.</li>
+                            <li><strong>2. Bản kế hoạch Drawdown:</strong> Xác định rõ mức sụt giảm tài khoản tối đa (ví dụ: 5% hoặc 10%) để bạn tự động giảm 50% khối lượng giao dịch mỗi lệnh để sinh tồn.</li>
+                        </ul>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-cyan); background:rgba(0, 229, 255, 0.01); justify-content:center;">
+                        <div class="card-title accent-cyan">🧠 Câu Hỏi Tự Vấn Toán Học</div>
+                        <ul class="bullet-list" style="gap:0.4rem; font-size:12px; list-style:none;">
+                            <li>• Bạn có đang theo đuổi tỷ lệ thắng 90% bằng cách chốt non lệnh thắng và gồng lỗ sâu không?</li>
+                            <li>• Expectancy thực tế của hệ thống của bạn là Dương hay Âm?</li>
+                            <li>• Bạn sẽ làm gì để kéo dài chuỗi lệnh sống sót khi dính chuỗi 5 lệnh thua liên tiếp?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 24: MODULE 3 SUMMARY ==================== -->
+        <section class="slide">
+            <div class="slide-content" style="align-items: center; justify-content: center; text-align: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color:var(--accent-yellow);">HOÀN THÀNH MODULE 3</div>
+                <h2 class="slide-title" id="editable-s24-title" style="font-size: var(--title-size); line-height: 1.15;">
+                    BẠN ĐÃ LÀM CHỦ TOÁN HỌC KỲ VỌNG!<br><span style="color: var(--accent-orange);">HÃY SẴN SÀNG CHO MODULE TIẾP THEO</span>
+                </h2>
+                <p id="editable-s24-desc" style="max-width: 650px; color: var(--text-secondary); font-size: 1.1rem;">
+                    Bây giờ bạn đã sở hữu hai vũ khí mạnh nhất của một Professional Trader: Bản đồ kiểm soát cảm xúc (Module 2) và Toán học kỳ vọng để tính toán lợi thế thống kê (Module 3).
+                </p>
+                <div class="highlight-box" style="border-left: 3px solid var(--accent-green); max-width: 600px; text-align: left;">
+                    🎓 <strong>Bài học tiếp theo:</strong> Module 4 - Các Mô Hình Định Cỡ Vị Thế Chuyên Nghiệp. Chúng ta sẽ nghiên cứu chuyên sâu về các mô hình CPR (Constant Percent Risk) và cách mở rộng quy mô vốn an toàn!
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 25: MODULE 4 INTRO ==================== -->
+        <section class="slide" data-module="Module 4" data-lesson="Giới Thiệu Module 4">
+            <div class="slide-content" style="align-items: center; justify-content: center; text-align: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color: var(--accent-yellow);">MODULE 4</div>
+                <h2 class="slide-title" id="editable-s25-title" style="font-size: var(--title-size); line-height: 1.15;">
+                    CÁC MÔ HÌNH ĐỊNH CỠ<br><span style="color: var(--accent-orange);">VỊ THẾ CHUYÊN NGHIỆP</span>
+                </h2>
+                <p id="editable-s25-desc" style="max-width: 700px; color: var(--text-secondary); font-size: 1.1rem;">
+                    Nghiên cứu sâu các mô hình định cỡ vị thế toán học nâng cao của Van Tharp để tối ưu hóa hiệu suất và quản trị rủi ro ở cấp độ quản lý quỹ.
+                </p>
+                <div class="grid-3-cards" style="width: 100%; max-width: 900px; margin-top: 1rem; text-align: left;">
+                    <div class="card">
+                        <div class="card-title">Bài 10</div>
+                        <p><strong>Mô Hình CPR</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Cách tính toán Lot Size tự động điều chỉnh theo khoảng cách Stop Loss để rủi ro luôn không đổi.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">Bài 11</div>
+                        <p><strong>Fixed Ratio/Amount</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Phương pháp nâng quy mô vốn lớn và bảo vệ vốn ban đầu khi gặp Drawdown.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-green">Bài 12</div>
+                        <p><strong>Market Expectancy</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Phân tích tương tác giữa hệ thống của bạn và trạng thái biến động thực tế của thị trường.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 26: Bài 10 - CPR ==================== -->
+        <section class="slide" data-module="Module 4" data-lesson="Bài 10: Mô Hình CPR">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 4: Định Cỡ Vị Thế</span>
+                    <span class="slide-number-tag">Trang 26</span>
+                </div>
+                <h2 class="slide-title" id="editable-s26-title">Bài 10: Constant Percent Risk <span>(Rủi Ro Phần Trăm Cố Định)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s26-desc">
+                        <div class="card-title accent-orange">⚙️ Công Thức Tính Lot Size</div>
+                        <p style="font-size: 12.5px;">Để rủi ro luôn cố định ở mức 1R, khối lượng giao dịch bắt buộc phải điều chỉnh theo Stop Loss:</p>
+                        <div class="highlight-box" style="font-family: var(--font-mono); font-size:12px; margin: 0.3rem 0; border-left-color: var(--accent-orange); background: rgba(255, 107, 0, 0.02); color: #fff;">
+                            Lot Size = (Balance * Risk%) / (SL in pips * Pip Value)
+                        </div>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.2rem; font-size:11px;">
+                            <li><strong>SL Hẹp (10 pips):</strong> Bạn giao dịch khối lượng lớn (ví dụ: 1.0 Lot). SL quét mất đúng $100 (1R).</li>
+                            <li><strong>SL Rộng (50 pips):</strong> Bạn giao dịch khối lượng nhỏ (ví dụ: 0.2 Lot). SL quét mất đúng $100 (1R).</li>
+                        </ul>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-cyan); background:rgba(0, 229, 255, 0.01); justify-content:center;">
+                        <div class="card-title accent-cyan">💡 Lợi Ích Tâm Lý Cốt Lõi</div>
+                        <p style="font-size:12.5px; line-height:1.45;">Khi dính Stop Loss, số tiền mất đi là **hoàn toàn như nhau** cho dù Stop Loss của lệnh đó rộng 5 pips hay 100 pips. Điều này loại bỏ nỗi sợ hãi khi giao dịch các khung thời gian lớn và giúp trader giữ được sự bình tĩnh tuyệt đối.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 27: Bài 10 - CPR DIAGRAM ==================== -->
+        <section class="slide" data-module="Module 4" data-lesson="Bài 10: Sơ Đồ CPR">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 4: Định Cỡ Vị Thế</span>
+                    <span class="slide-number-tag">Trang 27</span>
+                </div>
+                <h2 class="slide-title" id="editable-s27-title">Bài 10: Trực Quan Hóa <span>Định Cỡ Vị Thế CPR</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s27-desc">
+                        <div class="card-title accent-cyan">⚖️ Cân Bằng Rủi Ro Tự Động</div>
+                        <p style="font-size: 13px;">Sơ đồ bên cạnh minh họa cách hệ thống tự động co giãn Lot size tương ứng với độ rộng của Stop Loss để giữ cho rủi ro (Risk) luôn không đổi ở mức **$100 (1R)**:</p>
+                        <div class="highlight-box" style="margin-top:0.4rem; font-size:12px;">
+                            <strong>Entry đến SL ngắn ➔ Cột Volume to (Lot cao)</strong><br>
+                            <strong>Entry đến SL rộng ➔ Cột Volume nhỏ (Lot thấp)</strong>
+                        </div>
+                    </div>
+                    <!-- SVG DIAGRAM: DYNAMIC POSITION SIZING (CPR) -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Left: Tight Stop Loss -->
+                            <text x="75" y="25" class="text-chart" text-anchor="middle" fill="var(--accent-orange)" font-weight="bold">SL HẸP (10 pips)</text>
+                            <!-- Entry & SL lines -->
+                            <line x1="20" y1="50" x2="130" y2="50" stroke="var(--accent-green)" stroke-width="1" />
+                            <text x="25" y="45" class="text-chart" fill="var(--accent-green)" font-size="6">Entry</text>
+                            <line x1="20" y1="70" x2="130" y2="70" stroke="var(--accent-red)" stroke-dasharray="2,2" stroke-width="1" />
+                            <text x="25" y="66" class="text-chart" fill="var(--accent-red)" font-size="6">Stop Loss (10 pips)</text>
+                            <!-- Big Lot visual (Wide cylinder) -->
+                            <rect x="55" y="90" width="40" height="60" fill="rgba(0, 229, 255, 0.15)" stroke="var(--accent-cyan)" stroke-width="1.5" />
+                            <text x="75" y="125" class="text-chart" text-anchor="middle" fill="var(--accent-cyan)" font-weight="bold" font-size="8">1.0 LOT</text>
+                            <text x="75" y="175" class="text-chart" text-anchor="middle" fill="var(--text-primary)" font-size="8">RỦI RO: $100 (1R)</text>
+
+                            <!-- Vertical divider -->
+                            <line x1="150" y1="10" x2="150" y2="190" stroke="rgba(255,255,255,0.06)" stroke-width="1.2" stroke-dasharray="3,3" />
+
+                            <!-- Right: Wide Stop Loss -->
+                            <text x="225" y="25" class="text-chart" text-anchor="middle" fill="var(--accent-orange)" font-weight="bold">SL RỘNG (50 pips)</text>
+                            <!-- Entry & SL lines -->
+                            <line x1="170" y1="50" x2="280" y2="50" stroke="var(--accent-green)" stroke-width="1" />
+                            <text x="175" y="45" class="text-chart" fill="var(--accent-green)" font-size="6">Entry</text>
+                            <line x1="170" y1="130" x2="280" y2="130" stroke="var(--accent-red)" stroke-dasharray="2,2" stroke-width="1" />
+                            <text x="175" y="126" class="text-chart" fill="var(--accent-red)" font-size="6">Stop Loss (50 pips)</text>
+                            <!-- Small Lot visual (Narrow cylinder) -->
+                            <rect x="215" y="90" width="20" height="60" fill="rgba(0, 229, 255, 0.05)" stroke="var(--accent-cyan)" stroke-width="1.5" />
+                            <text x="225" y="125" class="text-chart" text-anchor="middle" fill="var(--accent-cyan)" font-weight="bold" font-size="8">0.2 LOT</text>
+                            <text x="225" y="175" class="text-chart" text-anchor="middle" fill="var(--text-primary)" font-size="8">RỦI RO: $100 (1R)</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 28: Bài 11 - Fixed Ratio/Amount ==================== -->
+        <section class="slide" data-module="Module 4" data-lesson="Bài 11: Fixed Ratio & Amount">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 4: Định Cỡ Vị Thế</span>
+                    <span class="slide-number-tag">Trang 28</span>
+                </div>
+                <h2 class="slide-title" id="editable-s28-title">Bài 11: Mở Rộng Quy Mô <span>Fixed Ratio & Fixed Amount</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s28-desc">
+                        <div class="card-title accent-yellow">📈 Fixed Amount (Số Tiền Cố Định)</div>
+                        <p style="font-size:12.5px;">* Giao dịch một khối lượng lot nhất định cho một lượng vốn cố định.</p>
+                        <p style="font-size:12px; color:var(--text-secondary);">* Ví dụ: 0.1 Lot cho mỗi $2,000 vốn. Tài khoản có $10,000 ➔ 0.5 Lot. Khi tài khoản giảm về $8,000, khối lượng tự động giảm về 0.4 Lot để bảo vệ vốn gốc.</p>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-green); background:rgba(0, 255, 102, 0.01); display:flex; flex-direction:column; justify-content:center; gap:0.3rem;">
+                        <div class="card-title accent-green">🚀 Fixed Ratio & Delta (Ryan Jones)</div>
+                        <p style="font-size:12.5px;">* Khối lượng lot tăng lên dựa trên <strong>số tiền lợi nhuận tích lũy kiếm được</strong>, không phải số dư tài khoản.</p>
+                        <p style="font-size:12px; color:var(--text-secondary);">* Khái niệm <strong>Delta</strong>: Số tiền lãi cần kiếm được để nâng thêm 1 đơn vị lot. Fixed Ratio giúp giảm quy mô cực nhanh khi gặp chuỗi thua lỗ để giữ chặt phần vốn ban đầu.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 29: Bài 12 - Market Expectancy ==================== -->
+        <section class="slide" data-module="Module 4" data-lesson="Bài 12: Kỳ Vọng Hệ Thống vs Thị Trường">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 4: Định Cỡ Vị Thế</span>
+                    <span class="slide-number-tag">Trang 29</span>
+                </div>
+                <h2 class="slide-title" id="editable-s29-title">Bài 12: Market Expectancy <span>vs System Expectancy</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s29-desc">
+                        <div class="card-title accent-cyan">📊 Đo Lường Hiệu Năng Thực Tế</div>
+                        <p style="font-size:12.5px;">* <strong>System Expectancy (Kỳ vọng lý thuyết):</strong> Năng lực kiếm tiền dài hạn của hệ thống trong điều kiện trung bình (dữ liệu backtest).</p>
+                        <p style="font-size:12.5px;">* <strong>Market Expectancy (Kỳ vọng thực tế):</strong> Hiệu suất thực tế tương tác với trạng thái thị trường hiện tại.</p>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-orange); background:rgba(255, 107, 0, 0.02); display:flex; flex-direction:column; justify-content:center; gap:0.3rem;">
+                        <div class="card-title accent-orange">⚠️ Cảnh Báo Lỗi Nhận Thức</div>
+                        <p style="font-size:12.5px; line-height:1.45;">Nhiều trader tự ý sửa đổi quy tắc giao dịch khi gặp chuỗi thua, do lầm tưởng hệ thống bị hỏng. Nhưng thực tế là do **Kỳ vọng thị trường (Market Expectancy) đang suy giảm** tạm thời (ví dụ: hệ thống Trend Following chạy trong thị trường đi ngang). Hãy kiên nhẫn vượt qua.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 30: Bài tập thực hành Module 4 ==================== -->
+        <section class="slide" data-module="Module 4" data-lesson="Bài Tập Thực Hành">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 4: Định Cỡ Vị Thế</span>
+                    <span class="slide-number-tag">Trang 30</span>
+                </div>
+                <h2 class="slide-title" id="editable-s30-title">Bài Tập Thực Hành: <span>Định Cỡ Vị Thế CPR</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s30-desc">
+                        <div class="card-title accent-yellow">📝 Bài Tập Tính Toán Lot Size</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.2rem; font-size:12px;">
+                            <li><strong>1. Thực hành CPR:</strong> Cho tài khoản $25,000, rủi ro 0.8% mỗi lệnh. Tính Lot Size cho các lệnh có SL lần lượt là: 12 pips, 35 pips và 8 pips (EURUSD, 1 pip = $10).</li>
+                            <li><strong>2. Thiết lập Delta:</strong> Tính toán các mốc nâng vốn từ 1 Lot lên 5 Lots theo mô hình Fixed Ratio với vốn ban đầu $10,000 và Delta = $3,000.</li>
+                        </ul>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-cyan); background:rgba(0, 229, 255, 0.01); justify-content:center;">
+                        <div class="card-title accent-cyan">🧠 Câu Hỏi Tự Vấn Định Cỡ Vị Thế</div>
+                        <ul class="bullet-list" style="gap:0.4rem; font-size:12px; list-style:none;">
+                            <li>• Bạn có đang sử dụng Lot size cố định bất kể khoảng cách SL xa hay gần không?</li>
+                            <li>• Bạn có hiểu tại sao việc co giãn Lot size theo SL giúp bạn điềm tĩnh hơn khi giữ lệnh không?</li>
+                            <li>• Bạn đã thiết lập Delta nâng quy mô giao dịch cho tài khoản của mình chưa?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 31: Hoàn thành Module 4 ==================== -->
+        <section class="slide">
+            <div class="slide-content" style="align-items: center; justify-content: center; text-align: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color:var(--accent-yellow);">HOÀN THÀNH MODULE 4</div>
+                <h2 class="slide-title" id="editable-s31-title" style="font-size: var(--title-size); line-height: 1.15;">
+                    ĐỊNH CỠ VỊ THẾ TOÁN HỌC ĐÃ HOÀN TẤT!<br><span style="color: var(--accent-orange);">HÃY SẴN SÀNG CHO HỆ THỐNG GHI CHÉP</span>
+                </h2>
+                <p id="editable-s31-desc" style="max-width: 650px; color: var(--text-secondary); font-size: 1.1rem;">
+                    Bây giờ bạn đã biết cách định cỡ vị thế chính xác theo CPR để rủi ro luôn không đổi. Bước tiếp theo là xây dựng một hệ thống lưu trữ nhật ký để theo dõi và tối ưu hóa các con số này.
+                </p>
+                <div class="highlight-box" style="border-left: 3px solid var(--accent-cyan); max-width: 600px; text-align: left;">
+                    🎓 <strong>Bài học tiếp theo:</strong> Module 5 - Thiết Lập Hệ Thống Ghi Chép Nhật Ký & Theo Dõi R-Multiple. Chúng ta sẽ xây dựng Nhật ký giao dịch 2 tầng độc đáo!
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 32: Module 5 Intro ==================== -->
+        <section class="slide" data-module="Module 5" data-lesson="Giới Thiệu Module 5">
+            <div class="slide-content" style="align-items: center; justify-content: center; text-align: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color: var(--accent-yellow);">MODULE 5</div>
+                <h2 class="slide-title" id="editable-s32-title" style="font-size: var(--title-size); line-height: 1.15;">
+                    THIẾT LẬP HỆ THỐNG GHI CHÉP<br><span style="color: var(--accent-orange);">NHẬT KÝ & R-MULTIPLE</span>
+                </h2>
+                <p id="editable-s32-desc" style="max-width: 700px; color: var(--text-secondary); font-size: 1.1rem;">
+                    Xây dựng hệ thống nhật ký 2 tầng ghi nhận song song các số liệu Risk Math và trạng thái cảm xúc. Ứng dụng các chỉ số Sharpe Ratio và Profit Factor để tối ưu hóa hiệu suất.
+                </p>
+                <div class="grid-3-cards" style="width: 100%; max-width: 900px; margin-top: 1rem; text-align: left;">
+                    <div class="card">
+                        <div class="card-title">Bài 13</div>
+                        <p><strong>Nhật Ký 2 Tầng</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Theo dõi số liệu cứng (Risk Math) và diễn biến cảm xúc/phong độ mềm (Mental Game).</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">Bài 14</div>
+                        <p><strong>Profit Factor & Sharpe</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Cách tính toán và phân tích các chỉ số quản lý danh mục chuẩn chuyên nghiệp.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-green">Bài 15</div>
+                        <p><strong>Tối Ưu Hóa Quy Tắc</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Quy trình lọc bỏ setup yếu và ngăn chặn rò rỉ R-Multiple dựa trên dữ liệu nhật ký.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 33: Bài 13 - Nhật ký 2 Tầng ==================== -->
+        <section class="slide" data-module="Module 5" data-lesson="Bài 13: Nhật Ký 2 Tầng">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 5: Nhật Ký & Thống Kê</span>
+                    <span class="slide-number-tag">Trang 33</span>
+                </div>
+                <h2 class="slide-title" id="editable-s33-title">Bài 13: Nhật Ký Giao Dịch <span>2 Tầng Chuyên Nghiệp</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s33-desc">
+                        <div class="card-title accent-orange">🗂️ Tầng 1: Số Liệu Cứng (Risk Math)</div>
+                        <p style="font-size:12px; color:var(--text-secondary);">* Ghi nhận thông số định lượng chính xác: Mã giao dịch, Asset, Buy/Sell, Entry, SL, TP, Khối lượng Lot, và kết quả R-Multiple đạt được (-1.0R, +3.5R, v.v.).</p>
+                        <div class="card-title accent-cyan" style="margin-top:0.4rem;">🧠 Tầng 2: Cảm Xúc Mềm (Mental Game)</div>
+                        <p style="font-size:12px; color:var(--text-secondary);">* Ghi nhận trạng thái tâm lý tại thời điểm vào lệnh (FOMO, Revenge, Calm) và phong độ theo Inchworm (A-Game, B-Game, C-Game) để phát hiện nguồn gốc lỗi.</p>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-orange); background:rgba(255, 107, 0, 0.01); justify-content:center;">
+                        <div class="card-title accent-orange">💡 Tại Sao Phải Ghi Cả Hai?</div>
+                        <p style="font-size:12.5px; line-height:1.45;">Nhật ký chỉ ghi số tiền lời/lỗ sẽ không giúp bạn tìm ra nguyên nhân tại sao bạn lại FOMO dời Stop Loss. Ngược lại, nhật ký chỉ ghi cảm xúc sẽ không giúp bạn tính được Expectancy. Hợp nhất hai tầng là cách duy nhất để hoàn thiện hệ thống.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 34: Bài 13 - Sơ đồ SVG Nhật ký 2 Tầng ==================== -->
+        <section class="slide" data-module="Module 5" data-lesson="Bài 13: Sơ Đồ Nhật Ký 2 Tầng">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 5: Nhật Ký & Thống Kê</span>
+                    <span class="slide-number-tag">Trang 34</span>
+                </div>
+                <h2 class="slide-title" id="editable-s34-title">Bài 13: Trực Quan Hóa <span>Cấu Trúc Nhật Ký 2 Tầng</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s34-desc">
+                        <div class="card-title accent-cyan">📋 Kết Nối Thống Kê & Cảm Xúc</div>
+                        <p style="font-size: 13px;">Nhật ký 2 tầng liên kết trực tiếp mỗi dòng số liệu toán học cứng của giao dịch với nhãn phân loại tâm lý mềm tương ứng:</p>
+                        <div class="highlight-box" style="margin-top:0.4rem; font-size:12px;">
+                            <strong>Lỗ -1R ➔ Nhãn C-Game (Tức giận/Trả thù)</strong><br>
+                            <strong>Lời +3R ➔ Nhãn A-Game (Kỷ luật/Điềm tĩnh)</strong>
+                        </div>
+                    </div>
+                    <!-- SVG DIAGRAM: 2-TIER JOURNAL CORRELATION -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Table representation -->
+                            <!-- Table Header -->
+                            <rect x="20" y="20" width="260" height="20" fill="rgba(255, 107, 0, 0.15)" stroke="var(--accent-orange)" stroke-width="1" />
+                            <text x="35" y="33" class="text-chart" fill="#fff" font-weight="bold" font-size="7">ID</text>
+                            <text x="80" y="33" class="text-chart" fill="#fff" font-weight="bold" font-size="7">Lot/SL</text>
+                            <text x="140" y="33" class="text-chart" fill="#fff" font-weight="bold" font-size="7">R-Result</text>
+                            <text x="210" y="33" class="text-chart" fill="#fff" font-weight="bold" font-size="7">Tâm Lý / Phong Độ</text>
+
+                            <!-- Row 1: A-Game (Green) -->
+                            <rect x="20" y="45" width="260" height="25" fill="rgba(0, 255, 102, 0.05)" stroke="rgba(0, 255, 102, 0.15)" stroke-width="0.8" />
+                            <text x="35" y="61" class="text-chart" font-size="7">#01</text>
+                            <text x="80" y="61" class="text-chart" font-size="7">1.0 Lot / 10p</text>
+                            <text x="140" y="61" class="text-chart" fill="var(--accent-green)" font-weight="bold" font-size="7">+3.0R</text>
+                            <text x="210" y="61" class="text-chart" fill="var(--accent-green)" font-size="7">Điềm tĩnh [A-Game]</text>
+
+                            <!-- Row 2: C-Game (Red) -->
+                            <rect x="20" y="75" width="260" height="25" fill="rgba(255, 56, 96, 0.05)" stroke="rgba(255, 56, 96, 0.15)" stroke-width="0.8" />
+                            <text x="35" y="91" class="text-chart" font-size="7">#02</text>
+                            <text x="80" y="91" class="text-chart" font-size="7">2.0 Lot / 10p</text>
+                            <text x="140" y="91" class="text-chart" fill="var(--accent-red)" font-weight="bold" font-size="7">-1.0R</text>
+                            <text x="210" y="91" class="text-chart" fill="var(--accent-red)" font-size="7">Revenge trade [C-Game]</text>
+
+                            <!-- Row 3: B-Game (Cyan) -->
+                            <rect x="20" y="105" width="260" height="25" fill="rgba(0, 229, 255, 0.05)" stroke="rgba(0, 229, 255, 0.15)" stroke-width="0.8" />
+                            <text x="35" y="121" class="text-chart" font-size="7">#03</text>
+                            <text x="80" y="121" class="text-chart" font-size="7">0.5 Lot / 20p</text>
+                            <text x="140" y="121" class="text-chart" fill="var(--accent-cyan)" font-weight="bold" font-size="7">+1.5R</text>
+                            <text x="210" y="121" class="text-chart" fill="var(--accent-cyan)" font-size="7">Do dự nhẹ [B-Game]</text>
+
+                            <!-- Dashed loop highlighting connection -->
+                            <path d="M 175 60 C 195 50, 195 70, 205 60" fill="none" stroke="var(--accent-green)" stroke-width="1" stroke-dasharray="2,2" />
+                            <path d="M 175 90 C 195 80, 195 100, 205 90" fill="none" stroke="var(--accent-red)" stroke-width="1" stroke-dasharray="2,2" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 35: Bài 14 - Profit Factor & Sharpe Ratio ==================== -->
+        <section class="slide" data-module="Module 5" data-lesson="Bài 14: Profit Factor & Sharpe">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 5: Nhật Ký & Thống Kê</span>
+                    <span class="slide-number-tag">Trang 35</span>
+                </div>
+                <h2 class="slide-title" id="editable-s35-title">Bài 14: Đo Lường Hiệu Suất <span>Profit Factor & Sharpe Ratio</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s35-desc">
+                        <div class="card-title accent-yellow">📊 Profit Factor (Hệ Số Lợi Nhuận)</div>
+                        <p style="font-size:12px; color:var(--text-secondary);">* Công thức: Profit Factor = (Tổng tiền thắng) / (Tổng tiền thua).</p>
+                        <p style="font-size:12px; color:var(--text-secondary);">* Hệ số này bắt buộc phải **> 1.5** để chứng minh hệ thống sinh lời ổn định lâu dài. Nếu < 1.0, bạn đang giao dịch thua lỗ ròng.</p>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-green); background:rgba(0, 255, 102, 0.01); display:flex; flex-direction:column; justify-content:center; gap:0.3rem;">
+                        <div class="card-title accent-green">🛡️ Sharpe Ratio (Độ Mượt Đường Cong Vốn)</div>
+                        <p style="font-size:12.5px;">* Công thức giản lược: Sharpe = (Lợi nhuận trung bình R) / (Độ lệch chuẩn kết quả R).</p>
+                        <p style="font-size:12px; color:var(--text-secondary);">* Chỉ số Sharpe đo lường xem sự tăng trưởng tài khoản có ổn định hay không. Nhà đầu tư lớn luôn ưu tiên Sharpe Ratio **> 1.5** để tránh những biến động Equity đột ngột.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 36: Bài 15 - Tối ưu hóa hệ thống từ dữ liệu nhật ký ==================== -->
+        <section class="slide" data-module="Module 5" data-lesson="Bài 15: Tối Ưu Hóa Bộ Quy Tắc">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 5: Nhật Ký & Thống Kê</span>
+                    <span class="slide-number-tag">Trang 36</span>
+                </div>
+                <h2 class="slide-title" id="editable-s36-title">Bài 15: Tối Ưu Hóa Bộ Quy Tắc <span>Từ Dữ Liệu Thực Tế</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s36-desc">
+                        <div class="card-title accent-orange">🛠️ Quy Trình Tối Ưu Hóa 3 Bước</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.2rem; font-size:12px;">
+                            <li><strong>Bước 1: Lọc bỏ setup yếu.</strong> Tính Expectancy riêng biệt for từng setup kỹ thuật. Thiết lập nào có Expectancy âm ➔ Kiên quyết xóa bỏ.</li>
+                            <li><strong>Bước 2: Đo lường "R-Leak".</strong> So sánh lợi nhuận lý thuyết vs thực tế để xem cảm xúc đã làm rò rỉ bao nhiêu R (do chốt non, can thiệp lệnh tay).</li>
+                            <li><strong>Bước 3: Đếm số lệnh C-Game.</strong> Tính tổng số R bị đốt bởi các lệnh trả thù thị trường. Triệt tiêu C-Game tự động cộng thêm R ròng cho tài khoản.</li>
+                        </ul>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-cyan); background:rgba(0, 229, 255, 0.02); justify-content:center;">
+                        <div class="card-title accent-cyan">💡 Chân Lý Thống Kê</div>
+                        <p style="font-size:12.5px; line-height:1.45;">Bạn không cần phải tìm kiếm thêm setup mới. Việc loại bỏ các lệnh C-Game tồi tệ nhất và cắt bỏ những thiết lập có tỷ lệ thắng kém trong nhật ký sẽ lập tức nâng hiệu suất giao dịch của bạn lên gấp đôi.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 37: Bài tập thực hành Module 5 ==================== -->
+        <section class="slide" data-module="Module 5" data-lesson="Bài Tập Thực Hành">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 5: Nhật Ký & Thống Kê</span>
+                    <span class="slide-number-tag">Trang 37</span>
+                </div>
+                <h2 class="slide-title" id="editable-s37-title">Bài Tập Thực Hành: <span>Xây Dựng Nhật Ký</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s37-desc">
+                        <div class="card-title accent-yellow">📝 Bài Tập Thực Hành Ghi Chép</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.2rem; font-size:12px;">
+                            <li><strong>1. Thiết kế Nhật ký 2 tầng:</strong> Tạo file Excel/Notion của riêng bạn tích hợp đủ trường Số liệu cứng (Lot, SL, R-multiple) và trường Cảm xúc/Phong độ (A/B/C-Game).</li>
+                            <li><strong>2. Đo lường thiệt hại C-Game:</strong> Rà soát lịch sử lệnh tháng trước, đếm số lệnh vi phạm kỷ luật và tính xem chúng đã làm thiệt hại bao nhiêu R của tài khoản.</li>
+                        </ul>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-green); background:rgba(0, 255, 102, 0.01); justify-content:center;">
+                        <div class="card-title accent-green">🧠 Checklist Đánh Giá Hiệu Suất</div>
+                        <ul class="bullet-list" style="gap:0.4rem; font-size:12px; list-style:none;">
+                            <li>• Hệ số Profit Factor thực tế của bạn có lớn hơn 1.5 không?</li>
+                            <li>• Bạn có can thiệp lệnh tay quá nhiều dẫn đến rò rỉ lợi nhuận (R-Leak) không?</li>
+                            <li>• Bạn đã phân loại phong độ theo 3 mức A-Game, B-Game, C-Game chưa?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 38: Hoàn thành Module 5 ==================== -->
+        <section class="slide">
+            <div class="slide-content" style="align-items: center; justify-content: center; text-align: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color:var(--accent-yellow);">HOÀN THÀNH MODULE 5</div>
+                <h2 class="slide-title" id="editable-s38-title" style="font-size: var(--title-size); line-height: 1.15;">
+                    GHI CHÉP NHẬT KÝ ĐÃ THIẾT LẬP!<br><span style="color: var(--accent-orange);">HÃY BẮT ĐẦU LỘ TRÌNH 90 NGÀY RÈN LUYỆN</span>
+                </h2>
+                <p id="editable-s38-desc" style="max-width: 650px; color: var(--text-secondary); font-size: 1.1rem;">
+                    Bạn đã lượng hóa toàn bộ hiệu suất giao dịch và trạng thái cảm xúc của mình. Bây giờ là lúc đưa toàn bộ lý thuyết này vào một kế hoạch hành động 90 ngày nghiêm ngặt.
+                </p>
+                <div class="highlight-box" style="border-left: 3px solid var(--accent-green); max-width: 600px; text-align: left;">
+                    🎓 <strong>Bài học tiếp theo:</strong> Module 6 - Kế Hoạch 90 Ngày Tái Cấu Trúc Tư Duy & Rèn Luyện Thép. Chúng ta sẽ kích hoạt "Mental Stop Loss" để bảo vệ tài khoản!
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 39: Module 6 Intro ==================== -->
+        <section class="slide" data-module="Module 6" data-lesson="Giới Thiệu Module 6">
+            <div class="slide-content" style="align-items: center; justify-content: center; text-align: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color: var(--accent-yellow);">MODULE 6</div>
+                <h2 class="slide-title" id="editable-s39-title" style="font-size: var(--title-size); line-height: 1.15;">
+                    KẾ HOẠCH 90 NGÀY<br><span style="color: var(--accent-orange);">TÁI CẤU TRÚC TƯ DUY & RÈN LUYỆN</span>
+                </h2>
+                <p id="editable-s39-desc" style="max-width: 700px; color: var(--text-secondary); font-size: 1.1rem;">
+                    Bắt đầu lộ trình rèn luyện kỷ luật thép 90 ngày. Thiết lập cơ chế ngắt kết nối tinh thần (Mental Stop Loss) và quy trình phục hồi sau chuỗi thua lỗ liên tiếp.
+                </p>
+                <div class="grid-3-cards" style="width: 100%; max-width: 900px; margin-top: 1rem; text-align: left;">
+                    <div class="card">
+                        <div class="card-title">Bài 16</div>
+                        <p><strong>Mental Stop Loss</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Cơ chế chặn cứng và ngắt kết nối giao dịch tự động khi rơi vào vùng Tilt nguy hiểm.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">Bài 17</div>
+                        <p><strong>Cắt Chuỗi Thua</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Quy trình 3 bước hạ Cortisol và phục hồi năng lượng lý trí sau chuỗi 3 lệnh thua.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-green">Bài 18</div>
+                        <p><strong>Lộ Trình 90 Ngày</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Lộ trình 3 giai đoạn chuyển hóa từ con bạc thành nhà quản trị vốn chuyên nghiệp.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 40: Bài 16 - Mental Stop Loss & Chặn Tilt ==================== -->
+        <section class="slide" data-module="Module 6" data-lesson="Bài 16: Mental Stop Loss">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 6: Kế Hoạch 90 Ngày</span>
+                    <span class="slide-number-tag">Trang 40</span>
+                </div>
+                <h2 class="slide-title" id="editable-s40-title">Bài 16: Thiết Lập Rào Chắn <span>Mental Stop Loss</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s40-desc">
+                        <div class="card-title accent-red">🛑 Giới Hạn Cứng Ngăn Chặn Tilt</div>
+                        <p style="font-size: 12.5px;">Bắt buộc phải dừng giao dịch khi các ngưỡng rủi ro sau bị kích hoạt:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.2rem; font-size:11.5px;">
+                            <li><strong>Hard Limit (Số liệu):</strong> Dừng giao dịch ngay lập tức trong ngày nếu thua 2 lệnh liên tiếp. Dừng giao dịch trong tuần nếu sụt giảm quá 5% vốn.</li>
+                            <li><strong>Soft Limit (Cảm xúc):</strong> Đóng máy tính ngay lập tức khi phát hiện triệu chứng vật lý: tim đập nhanh, tay run, tức giận trả thù thị trường.</li>
+                        </ul>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-orange); background:rgba(255, 107, 0, 0.02); justify-content:center;">
+                        <div class="card-title accent-orange">💡 Cơ Chế Tự Bảo Vệ</div>
+                        <p style="font-size:12.5px; line-height:1.45;">Mental Stop Loss được thiết kế để bảo vệ tài khoản khỏi chính **trạng thái cảm xúc mất kiểm soát** của bạn. Khi hạch hạnh nhân kích hoạt trạng thái sinh tồn hoảng loạn, cách duy nhất để chiến thắng là **ngắt kết nối vật lý** (đóng máy tính đi ra ngoài).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 41: Bài 17 - Quy tắc 3 Lệnh thua & Phục hồi ==================== -->
+        <section class="slide" data-module="Module 6" data-lesson="Bài 17: Quy Tắc 3 Lệnh Thua">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 6: Kế Hoạch 90 Ngày</span>
+                    <span class="slide-number-tag">Trang 41</span>
+                </div>
+                <h2 class="slide-title" id="editable-s41-title">Bài 17: Quy Tắc Phục Hồi <span>Sau 3 Lệnh Thua Liên Tiếp</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s41-desc">
+                        <div class="card-title accent-yellow">🧠 Cơ Chế Ego Depletion</div>
+                        <p style="font-size:12.5px;">Sau 3 lệnh thua liên tiếp, bộ não của bạn sẽ hoàn toàn cạn kiệt năng lượng lý trí (Ego Depletion) và tràn ngập hormone Cortisol gây căng thẳng:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.2rem; font-size:11.5px;">
+                            <li><strong>Không cố gắng phân tích tiếp:</strong> Khả năng phán đoán logic tại thời điểm này bằng không. Bạn sẽ giao dịch cảm tính.</li>
+                            <li><strong>Kích hoạt quy trình 3 bước phục hồi:</strong> Cách ly vật lý ➔ Chuyển đổi trạng thái nhận thức ➔ Viết Mental Hand History sau 12-24 giờ.</li>
+                        </ul>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-cyan); background:rgba(0, 229, 255, 0.02); justify-content:center;">
+                        <div class="card-title accent-cyan">🧠 Mantra Phục Hồi:</div>
+                        <p style="font-size:12.5px; line-height:1.45;">"Việc dính chuỗi 3 lệnh thua liên tiếp chỉ là sự phân phối ngẫu nhiên bình thường của hệ thống. Tôi chọn đóng máy để bảo vệ năng lượng lý trí và bảo vệ vốn. Tôi sẽ quay lại vào ngày mai với tư thế tốt nhất."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 42: Bài 18 - Lộ trình 90 ngày rèn luyện ==================== -->
+        <section class="slide" data-module="Module 6" data-lesson="Bài 18: Lộ Trình 90 Ngày">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 6: Kế Hoạch 90 Ngày</span>
+                    <span class="slide-number-tag">Trang 42</span>
+                </div>
+                <h2 class="slide-title" id="editable-s42-title">Bài 18: Lộ Trình 90 Ngày <span>Rèn Luyện Kỷ Luật Thép</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s42-desc">
+                        <div class="card-title accent-green">🎯 3 Chặng Đường Chuyển Hóa Nhận Thức</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.2rem; font-size:11px;">
+                            <li><strong>Chặng 1 (Ngày 1 - 30): Tiêu diệt đuôi C-Game.</strong> Tập trung ghi chép nhật ký 2 tầng và chặn các lỗi Tilt trả thù thị trường bằng Mental Stop Loss.</li>
+                            <li><strong>Chặng 2 (Ngày 31 - 60): Risk Math & CPR.</strong> Lượng hóa hệ thống bằng chỉ số Expectancy và áp dụng mô hình định cỡ vị thế Constant Percent Risk.</li>
+                            <li><strong>Chặng 3 (Ngày 61 - 90): Vận hành chuyên nghiệp.</strong> Độc lập tuyệt đối với kết quả lệnh đơn lẻ, tối ưu hóa Profit Factor và Sharpe Ratio > 1.5.</li>
+                        </ul>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-green); background:rgba(0, 255, 102, 0.01); justify-content:center;">
+                        <div class="card-title accent-green">🏆 Trở Thành Nhà Quản Lý Quỹ Chuyên Nghiệp</div>
+                        <p style="font-size:12.5px; line-height:1.45;">Con bạc tập trung vào kết quả của giao dịch tiếp theo. Nhà quản lý quỹ tập trung vào quy trình vận hành và hiệu suất của chuỗi 100 giao dịch tiếp theo. Hãy lựa chọn đẳng cấp của bạn.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 43: Bài 18 - Sơ đồ SVG Lộ trình 90 ngày ==================== -->
+        <section class="slide" data-module="Module 6" data-lesson="Bài 18: Sơ Đồ Lộ Trình 90 Ngày">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 6: Kế Hoạch 90 Ngày</span>
+                    <span class="slide-number-tag">Trang 43</span>
+                </div>
+                <h2 class="slide-title" id="editable-s43-title">Bài 18: Sơ Đồ Lộ Trình <span>90 Ngày Rèn Luyện</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s43-desc">
+                        <div class="card-title accent-yellow">📈 Tiến Trình Nâng Tầm Kỷ Luật</div>
+                        <p style="font-size: 13px;">Sơ đồ bậc thang bên cạnh minh họa 3 nấc thang chuyển hóa bạn từ một trader giao dịch theo cảm tính thành một nhà quản trị quỹ chuyên nghiệp:</p>
+                        <div class="highlight-box" style="margin-top:0.4rem; font-size:12px;">
+                            <strong>Tháng 1: Tiêu diệt điểm yếu tồi tệ nhất (C-Game)</strong><br>
+                            <strong>Tháng 2: Làm chủ toán học quản lý vốn (Risk Math)</strong><br>
+                            <strong>Tháng 3: Nhất quán quy trình vận hành (Pro Trader)</strong>
+                        </div>
+                    </div>
+                    <!-- SVG DIAGRAM: 90-DAY STAIRCASE ROADMAP -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Staircase -->
+                            <!-- Step 1: Days 1-30 -->
+                            <rect x="30" y="130" width="70" height="40" rx="4" fill="rgba(255, 107, 0, 0.15)" stroke="var(--accent-orange)" stroke-width="1.5" />
+                            <text x="65" y="150" class="text-chart" text-anchor="middle" fill="var(--accent-orange)" font-weight="bold">Ngày 1 - 30</text>
+                            <text x="65" y="162" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="6">Diệt C-Game</text>
+
+                            <!-- Step 2: Days 31-60 -->
+                            <rect x="115" y="85" width="70" height="45" rx="4" fill="rgba(0, 229, 255, 0.15)" stroke="var(--accent-cyan)" stroke-width="1.5" />
+                            <text x="150" y="105" class="text-chart" text-anchor="middle" fill="var(--accent-cyan)" font-weight="bold">Ngày 31 - 60</text>
+                            <text x="150" y="117" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="6">Risk Math & CPR</text>
+
+                            <!-- Step 3: Days 61-90 -->
+                            <rect x="200" y="40" width="70" height="50" rx="4" fill="rgba(0, 255, 102, 0.15)" stroke="var(--accent-green)" stroke-width="1.5" class="pulse-cyan-effect" />
+                            <text x="235" y="60" class="text-chart" text-anchor="middle" fill="var(--accent-green)" font-weight="bold">Ngày 61 - 90</text>
+                            <text x="235" y="72" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="6">Vận Hành Quỹ</text>
+
+                            <!-- Connecting arrows -->
+                            <path d="M 100 150 L 115 110" fill="none" stroke="var(--accent-orange)" stroke-width="1.2" stroke-dasharray="2,2" />
+                            <path d="M 185 110 L 200 65" fill="none" stroke="var(--accent-cyan)" stroke-width="1.2" stroke-dasharray="2,2" />
+                            
+                            <text x="235" y="25" class="text-chart" text-anchor="middle" fill="var(--accent-green)" font-weight="bold" font-size="8">MỤC TIÊU: SHARPE > 1.5 🏆</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 44: Bài tập thực hành Module 6 ==================== -->
+        <section class="slide" data-module="Module 6" data-lesson="Bài Tập Thực Hành">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 6: Kế Hoạch 90 Ngày</span>
+                    <span class="slide-number-tag">Trang 44</span>
+                </div>
+                <h2 class="slide-title" id="editable-s44-title">Bài Tập Thực Hành: <span>Cam Kết Rèn Luyện</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s44-desc">
+                        <div class="card-title accent-yellow">📝 Bài Tập Chặn Cứng Tinh Thần</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.2rem; font-size:12px;">
+                            <li><strong>1. Viết cam kết Mental Stop Loss:</strong> Viết ra giấy và dán ngay trước màn hình máy tính của bạn: "Tôi cam kết sẽ ngắt kết nối giao dịch ngay lập tức nếu dính 2 lệnh thua trong ngày."</li>
+                            <li><strong>2. Bắt đầu lộ trình 90 ngày:</strong> In lộ trình 90 ngày rèn luyện ra và đánh giá xếp hạng phong độ vào cuối mỗi tuần giao dịch để theo dõi sự cải thiện của C-Game.</li>
+                        </ul>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-cyan); background:rgba(0, 229, 255, 0.01); justify-content:center;">
+                        <div class="card-title accent-cyan">🧠 Checklist Tự Kiểm Tra Kỷ Luật</div>
+                        <ul class="bullet-list" style="gap:0.4rem; font-size:12px; list-style:none;">
+                            <li>• Bạn đã thiết lập rào chắn ngắt kết nối Mental Stop Loss chưa?</li>
+                            <li>• Bạn có đóng máy tính và đi bộ thư giãn khi dính 3 lệnh thua liên tiếp không?</li>
+                            <li>• Bạn có cam kết rèn luyện kiên nhẫn hết lộ trình 90 ngày không?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 45: Tổng kết Masterclass ==================== -->
+        <section class="slide">
+            <div class="slide-content" style="align-items: center; justify-content: center; text-align: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color:var(--accent-yellow);">HOÀN THÀNH MASTERCLASS</div>
+                <h2 class="slide-title" id="editable-s45-title" style="font-size: var(--title-size); line-height: 1.15;">
+                    CHÚC MỪNG BẠN ĐÃ TỐT NGHIỆP<br><span style="color: var(--accent-orange);">THE MENTAL GAME & RISK MATH!</span>
+                </h2>
+                <p id="editable-s45-desc" style="max-width: 700px; color: var(--text-secondary); font-size: 1.1rem;">
+                    Bạn đã đi hết hành trình rèn luyện tinh thần và toán học giao dịch. Bạn đã có bản đồ cảm xúc để diệt Tilt, và công thức quản lý vị thế chuẩn quỹ đầu tư.
+                </p>
+                <div class="highlight-box" style="border-left: 3px solid var(--accent-green); max-width: 600px; text-align: left;">
+                    🎓 <strong>Thông điệp cuối cùng:</strong> "Lợi thế hệ thống chỉ mang lại xác suất chiến thắng trong dài hạn. Kỷ luật thép của chính bạn mới là yếu tố quyết định bạn có sống sót để hưởng thành quả đó hay không."
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Floating arrows for navigation (fallback) -->
+    <div class="slide-nav">
+        <button class="nav-btn" id="prevBtn" aria-label="Previous Slide">▲</button>
+        <button class="nav-btn" id="nextBtn" aria-label="Next Slide">▼</button>
+        <div class="nav-dots" id="navDots"></div>
+    </div>
+
+    <!-- =========================================================================
+         SCRIPTS: CONTROLLERS & INTERACTION
+         ========================================================================= -->
+    <script>
+        // --- 1. SLIDE PRESENTATION CONTROLLER ---
+        class SlidePresentation {
+            constructor() {
+                this.container = document.getElementById('slideContainer');
+                this.slides = Array.from(document.querySelectorAll('.slide'));
+                this.currentSlide = 0;
+                
+                this.init();
+            }
+
+            init() {
+                this.setupKeyboardNav();
+                this.setupTouchNav();
+                this.setupNavDots();
+                this.setupIntersectionObserver();
+                this.updateDynamicPageNumbers();
+                
+                // Track mouse wheel scroll
+                let scrollTimeout;
+                window.addEventListener('wheel', (e) => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(() => {
+                        if (e.deltaY > 30) {
+                            this.setActiveSlide(this.currentSlide + 1);
+                        } else if (e.deltaY < -30) {
+                            this.setActiveSlide(this.currentSlide - 1);
+                        }
+                    }, 50);
+                }, { passive: true });
+            }
+
+            setupIntersectionObserver() {
+                const observerOptions = {
+                    root: null,
+                    threshold: 0.5
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const index = this.slides.indexOf(entry.target);
+                            this.currentSlide = index;
+                            this.updateActiveState();
+                        }
+                    });
+                }, observerOptions);
+
+                this.slides.forEach(slide => observer.observe(slide));
+            }
+
+            updateDynamicPageNumbers() {
+                const total = this.slides.length;
+                this.slides.forEach((slide, idx) => {
+                    const pageTag = slide.querySelector('.slide-number-tag');
+                    if (pageTag) {
+                        pageTag.textContent = `Trang ${idx + 1}/${total}`;
+                    }
+                });
+            }
+
+            setActiveSlide(index) {
+                if (index < 0 || index >= this.slides.length) return;
+                this.currentSlide = index;
+                this.slides[index].scrollIntoView({ behavior: 'smooth' });
+                this.updateActiveState();
+            }
+
+            updateActiveState() {
+                this.slides.forEach((slide, idx) => {
+                    if (idx === this.currentSlide) {
+                        slide.classList.add('visible');
+                    } else {
+                        slide.classList.remove('visible');
+                    }
+                });
+
+                // Update progress bar
+                const percent = (this.currentSlide / (this.slides.length - 1)) * 100;
+                document.getElementById('progressBar').style.width = `${percent}%`;
+
+                // Update dots
+                const dots = document.querySelectorAll('.nav-dot');
+                dots.forEach((dot, idx) => {
+                    if (idx === this.currentSlide) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+
+                // Update sidebar active items
+                const sidebarItems = document.querySelectorAll('.sidebar-item');
+                sidebarItems.forEach(item => item.classList.remove('active'));
+                
+                // Find matching sidebar item based on data attributes of current slide
+                const currentSlideEl = this.slides[this.currentSlide];
+                const moduleName = currentSlideEl.getAttribute('data-module');
+                const lessonName = currentSlideEl.getAttribute('data-lesson');
+                
+                if (moduleName && lessonName) {
+                    sidebarItems.forEach(item => {
+                        if (item.getAttribute('data-slide-index') == this.currentSlide) {
+                            item.classList.add('active');
+                        }
+                    });
+                }
+            }
+
+            setupKeyboardNav() {
+                document.addEventListener('keydown', (e) => {
+                    // Do not navigate if user is currently editing text
+                    if (e.target.getAttribute('contenteditable') === 'true') return;
+
+                    if (e.key === 'ArrowDown' || e.key === 'Space') {
+                        e.preventDefault();
+                        this.setActiveSlide(this.currentSlide + 1);
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        this.setActiveSlide(this.currentSlide - 1);
+                    }
+                });
+            }
+
+            setupTouchNav() {
+                let startY = 0;
+                document.addEventListener('touchstart', (e) => {
+                    startY = e.touches[0].clientY;
+                }, { passive: true });
+
+                document.addEventListener('touchend', (e) => {
+                    const endY = e.changedTouches[0].clientY;
+                    const diff = startY - endY;
+
+                    if (Math.abs(diff) > 50) { // minimum threshold for swipe
+                        if (diff > 0) {
+                            this.setActiveSlide(this.currentSlide + 1);
+                        } else {
+                            this.setActiveSlide(this.currentSlide - 1);
+                        }
+                    }
+                }, { passive: true });
+            }
+
+            setupNavDots() {
+                const navDotsContainer = document.getElementById('navDots');
+                navDotsContainer.innerHTML = '';
+                
+                this.slides.forEach((slide, idx) => {
+                    const dot = document.createElement('button');
+                    dot.className = `nav-dot ${idx === 0 ? 'active' : ''}`;
+                    dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
+                    dot.addEventListener('click', () => {
+                        this.setActiveSlide(idx);
+                    });
+                    navDotsContainer.appendChild(dot);
+                });
+            }
+        }
+
+        // --- 2. CYBER SIDEBAR CONTROLLER ---
+        class SidebarController {
+            constructor(presentation) {
+                this.presentation = presentation;
+                this.toggleBtn = document.getElementById('sidebarToggle');
+                this.sidebar = document.getElementById('sidebar');
+                this.backdrop = document.getElementById('sidebarBackdrop');
+                this.menu = document.getElementById('sidebarMenu');
+                
+                this.init();
+            }
+
+            init() {
+                this.buildMenu();
+                
+                this.toggleBtn.addEventListener('click', () => this.toggleSidebar());
+                this.backdrop.addEventListener('click', () => this.closeSidebar());
+                
+                // Close sidebar on ESC key
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') this.closeSidebar();
+                });
+            }
+
+            toggleSidebar() {
+                this.sidebar.classList.toggle('open');
+                this.backdrop.classList.toggle('show');
+            }
+
+            closeSidebar() {
+                this.sidebar.classList.remove('open');
+                this.backdrop.classList.remove('show');
+            }
+
+            buildMenu() {
+                this.menu.innerHTML = '';
+                
+                // Add Intro Slide first
+                const homeLi = document.createElement('li');
+                homeLi.className = 'sidebar-item active';
+                homeLi.setAttribute('data-slide-index', '0');
+                homeLi.innerHTML = `
+                    <span class="sidebar-module-tag">MASTERCLASS</span>
+                    <span>Màn Hình Chào & Hướng Dẫn</span>
+                `;
+                homeLi.addEventListener('click', () => {
+                    this.presentation.setActiveSlide(0);
+                    this.closeSidebar();
+                });
+                this.menu.appendChild(homeLi);
+
+                // Group and add items
+                this.presentation.slides.forEach((slide, idx) => {
+                    if (idx === 0) return;
+                    
+                    const moduleName = slide.getAttribute('data-module');
+                    const lessonName = slide.getAttribute('data-lesson');
+                    
+                    if (moduleName && lessonName) {
+                        const li = document.createElement('li');
+                        li.className = 'sidebar-item';
+                        li.setAttribute('data-slide-index', idx);
+                        li.innerHTML = `
+                            <span class="sidebar-module-tag">${moduleName}</span>
+                            <span>${lessonName}</span>
+                        `;
+                        li.addEventListener('click', () => {
+                            this.presentation.setActiveSlide(idx);
+                            this.closeSidebar();
+                        });
+                        this.menu.appendChild(li);
+                    }
+                });
+            }
+        }
+
+        // --- 3. INLINE EDITING CONTROLLER WITH LOCALSTORAGE PERSISTENCE ---
+        class LessonEditor {
+            constructor() {
+                this.isActive = false;
+                this.editToggle = document.getElementById('editToggle');
+                this.hotzone = document.getElementById('editHotzone');
+                this.saveIndicator = document.getElementById('saveIndicator');
+                this.hideTimeout = null;
+                
+                this.setupEditingTrigger();
+                this.loadSavedContent();
+            }
+
+            setupEditingTrigger() {
+                // Hotzone hover with 400ms grace period to show Edit Button
+                this.hotzone.addEventListener('mouseenter', () => {
+                    clearTimeout(this.hideTimeout);
+                    this.editToggle.classList.add('show');
+                });
+                
+                this.hotzone.addEventListener('mouseleave', () => {
+                    this.hideTimeout = setTimeout(() => {
+                        if (!this.isActive) this.editToggle.classList.remove('show');
+                    }, 400);
+                });
+
+                this.editToggle.addEventListener('mouseenter', () => {
+                    clearTimeout(this.hideTimeout);
+                });
+
+                this.editToggle.addEventListener('mouseleave', () => {
+                    this.hideTimeout = setTimeout(() => {
+                        if (!this.isActive) this.editToggle.classList.remove('show');
+                    }, 400);
+                });
+
+                // Clicking hotzone or button toggles Edit Mode
+                this.editToggle.addEventListener('click', () => this.toggleEditMode());
+
+                // Keyboard E shortcut
+                document.addEventListener('keydown', (e) => {
+                    if ((e.key === 'e' || e.key === 'E') && e.target.getAttribute('contenteditable') !== 'true') {
+                        e.preventDefault();
+                        this.toggleEditMode();
+                    }
+                });
+            }
+
+            getEditableIds() {
+                const ids = [
+                    'editable-s1-title', 'editable-s1-desc',
+                    'editable-s2-title', 'editable-s2-desc',
+                    'editable-s3-title', 'editable-s3-desc',
+                    'editable-s4-title', 'editable-s4-desc',
+                    'editable-s5-title', 'editable-s5-desc',
+                    'editable-s6-title', 'editable-s6-desc',
+                    'editable-s7-title', 'editable-s7-desc',
+                    'editable-s8-title', 'editable-s8-desc',
+                    'editable-s9-title', 'editable-s9-desc',
+                    'editable-s10-title', 'editable-s10-desc',
+                    'editable-s11-title', 'editable-s11-desc',
+                    'editable-s12-title', 'editable-s12-desc',
+                    'editable-s13-title', 'editable-s13-desc',
+                    'editable-s14-title', 'editable-s14-desc',
+                    'editable-s15-title', 'editable-s15-desc',
+                    'editable-s16-title', 'editable-s16-desc',
+                    'editable-s17-title', 'editable-s17-desc',
+                    'editable-s18-title', 'editable-s18-desc',
+                    'editable-s19-title', 'editable-s19-desc',
+                    'editable-s20-title', 'editable-s20-desc',
+                    'editable-s21-title', 'editable-s21-desc',
+                    'editable-s22-title', 'editable-s22-desc',
+                    'editable-s23-title', 'editable-s23-desc',
+                    'editable-s24-title', 'editable-s24-desc',
+                    'editable-s25-title', 'editable-s25-desc',
+                    'editable-s26-title', 'editable-s26-desc',
+                    'editable-s27-title', 'editable-s27-desc',
+                    'editable-s28-title', 'editable-s28-desc',
+                    'editable-s29-title', 'editable-s29-desc',
+                    'editable-s30-title', 'editable-s30-desc',
+                    'editable-s31-title', 'editable-s31-desc',
+                    'editable-s32-title', 'editable-s32-desc',
+                    'editable-s33-title', 'editable-s33-desc',
+                    'editable-s34-title', 'editable-s34-desc',
+                    'editable-s35-title', 'editable-s35-desc',
+                    'editable-s36-title', 'editable-s36-desc',
+                    'editable-s37-title', 'editable-s37-desc',
+                    'editable-s38-title', 'editable-s38-desc',
+                    'editable-s39-title', 'editable-s39-desc',
+                    'editable-s40-title', 'editable-s40-desc',
+                    'editable-s41-title', 'editable-s41-desc',
+                    'editable-s42-title', 'editable-s42-desc',
+                    'editable-s43-title', 'editable-s43-desc',
+                    'editable-s44-title', 'editable-s44-desc',
+                    'editable-s45-title', 'editable-s45-desc'
+                ];
+                return ids;
+            }
+
+            toggleEditMode() {
+                this.isActive = !this.isActive;
+                
+                if (this.isActive) {
+                    this.editToggle.classList.add('active');
+                    this.editToggle.textContent = '💾 LƯU BÀI GIẢNG';
+                    this.enableEditableElements();
+                } else {
+                    this.editToggle.classList.remove('active');
+                    this.editToggle.textContent = '✏️ EDIT MODE (E)';
+                    this.disableEditableElements();
+                    this.saveContent();
+                }
+            }
+
+            enableEditableElements() {
+                this.getEditableIds().forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.setAttribute('contenteditable', 'true');
+                    }
+                });
+            }
+
+            disableEditableElements() {
+                this.getEditableIds().forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.removeAttribute('contenteditable');
+                    }
+                });
+            }
+
+            saveContent() {
+                const contentData = {};
+                this.getEditableIds().forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        contentData[id] = el.innerHTML;
+                    }
+                });
+
+                localStorage.setItem('mental_game_risk_math_data', JSON.stringify(contentData));
+                
+                // Show notification toast
+                this.saveIndicator.classList.add('show');
+                setTimeout(() => {
+                    this.saveIndicator.classList.remove('show');
+                }, 2000);
+            }
+
+            loadSavedContent() {
+                const saved = localStorage.getItem('mental_game_risk_math_data');
+                if (saved) {
+                    try {
+                        const contentData = JSON.parse(saved);
+                        Object.keys(contentData).forEach(id => {
+                            const el = document.getElementById(id);
+                            if (el) {
+                                el.innerHTML = contentData[id];
+                            }
+                        });
+                    } catch (e) {
+                        console.error("Lỗi khi tải dữ liệu bài giảng cũ:", e);
+                    }
+                }
+            }
+        }
+
+        // Initialize all controllers
+        window.addEventListener('DOMContentLoaded', () => {
+            const presentation = new SlidePresentation();
+            window.presentation = presentation;
+            window.sidebar = new SidebarController(presentation);
+            window.editor = new LessonEditor();
+
+            // Arrows fallback click handlers
+            document.getElementById('prevBtn').addEventListener('click', () => {
+                presentation.setActiveSlide(presentation.currentSlide - 1);
+            });
+            document.getElementById('nextBtn').addEventListener('click', () => {
+                presentation.setActiveSlide(presentation.currentSlide + 1);
+            });
+        });
+    </script>
+</body>
+</html>

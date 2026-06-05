@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Module 11 - Quản trị rủi ro và kế hoạch giao dịch</title>
+  <link rel="stylesheet" href="course-theme.css">
+</head>
+<body>
+<main class="deck">
+  <section class="slide active">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Module 11 · Risk Management</div>
+        <h1>Quản trị rủi ro: sống đủ lâu để edge phát huy</h1>
+        <p class="lead">Trading không chết vì một lệnh thua bình thường. Nó chết vì position size sai, overtrading, gồng lỗ, revenge trade và không có giới hạn rủi ro.</p>
+        <div class="tagrow"><span class="tag red">Risk per trade</span><span class="tag amber">Drawdown</span><span class="tag">Position sizing</span><span class="tag green">Journal</span><span class="tag violet">Trading plan</span></div>
+      </div>
+      <div class="chartbox"><div class="chart-title"><b>Risk dashboard</b><span>Survival before profit</span></div><svg class="chart" id="chart-cover" viewBox="0 0 760 480"></svg></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div><div class="eyebrow">Mục tiêu học tập</div><h2>Sau module này, bạn phải biết mình được phép thua bao nhiêu trước khi vào lệnh</h2></div>
+      <div class="grid-4">
+        <div class="card"><div class="num">1</div><h3>Risk per trade</h3><p>Xác định % tài khoản rủi ro mỗi lệnh và giữ nhất quán.</p></div>
+        <div class="card"><div class="num">2</div><h3>Position size</h3><p>Khối lượng phụ thuộc vào stop distance, không phụ thuộc cảm xúc.</p></div>
+        <div class="card"><div class="num">3</div><h3>Drawdown control</h3><p>Có giới hạn thua trong ngày/tuần để tránh spiral.</p></div>
+        <div class="card"><div class="num">4</div><h3>Trading plan</h3><p>Chỉ trade setup đã định nghĩa, có journal và review.</p></div>
+      </div>
+      <div class="note">Trader sống sót không phải vì không thua. Họ sống sót vì mỗi lần thua đều nằm trong kế hoạch.</div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox"><div class="chart-title"><b>Risk per trade</b><span>Small losses keep you alive</span></div><svg class="chart" id="chart-risk" viewBox="0 0 760 480"></svg></div>
+      <div>
+        <div class="eyebrow">Bài 11A · Rủi ro mỗi lệnh</div>
+        <h2>Rủi ro nhỏ giúp bạn chịu được chuỗi thua bình thường</h2>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Người mới nên bắt đầu rất nhỏ: 0.25% - 0.5% mỗi lệnh.</span></div>
+          <div class="check"><i>✓</i><span>Trader có dữ liệu ổn định mới tăng dần lên 1%.</span></div>
+          <div class="check bad"><i>!</i><span>Rủi ro 3-5% mỗi lệnh có thể phá tài khoản chỉ sau một chuỗi thua ngắn.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Bài 11B · Position Sizing</div>
+        <h2>Khối lượng lệnh phải đi sau stop loss</h2>
+        <p class="lead">Công thức thực dụng: Position size = số tiền rủi ro / khoảng cách stop. Stop xa thì size nhỏ. Stop gần thì size lớn hơn, nhưng stop vẫn phải hợp lý theo cấu trúc.</p>
+        <div class="mentor"><i>M</i><div><b>Lời giảng mentor</b><p>Đừng chọn lot trước rồi mới tìm chỗ đặt stop. Làm vậy là để lòng tham quyết định rủi ro.</p></div></div>
+      </div>
+      <div class="chartbox"><div class="chart-title"><b>Position sizing</b><span>Risk amount / stop distance</span></div><svg class="chart" id="chart-sizing" viewBox="0 0 760 480"></svg></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox"><div class="chart-title"><b>Drawdown curve</b><span>Losses compound emotionally</span></div><svg class="chart" id="chart-dd" viewBox="0 0 760 480"></svg></div>
+      <div>
+        <div class="eyebrow">Bài 11C · Drawdown</div>
+        <h2>Drawdown càng sâu, càng khó hồi cả về toán học lẫn tâm lý</h2>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Mất 10% cần +11.1% để hòa vốn.</span></div>
+          <div class="check"><i>✓</i><span>Mất 25% cần +33.3% để hòa vốn.</span></div>
+          <div class="check"><i>✓</i><span>Mất 50% cần +100% để hòa vốn.</span></div>
+          <div class="check bad"><i>!</i><span>Vì vậy ưu tiên số một là không để drawdown phình to.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Bài 11D · Daily Stop</div>
+        <h2>Giới hạn thua trong ngày giúp chặn revenge trading</h2>
+        <p class="lead">Một ngày xấu không được phép trở thành thảm họa. Daily stop là cầu dao ngắt điện khi bạn mất trạng thái thực thi.</p>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Ví dụ: dừng ngày sau -2R hoặc 3 lệnh thua liên tiếp.</span></div>
+          <div class="check"><i>✓</i><span>Dừng sau khi vi phạm rule, dù P/L chưa chạm ngưỡng.</span></div>
+          <div class="check bad"><i>!</i><span>Không “gỡ lại” khi bạn đang mất bình tĩnh.</span></div>
+        </div>
+      </div>
+      <div class="chartbox"><div class="chart-title"><b>Daily loss limit</b><span>Circuit breaker</span></div><svg class="chart" id="chart-daily-stop" viewBox="0 0 760 480"></svg></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox"><div class="chart-title"><b>Correlation risk</b><span>Same idea, multiple tickets</span></div><svg class="chart" id="chart-correlation" viewBox="0 0 760 480"></svg></div>
+      <div>
+        <div class="eyebrow">Bài 11E · Correlation</div>
+        <h2>Nhiều lệnh giống nhau có thể là một rủi ro duy nhất</h2>
+        <p class="lead">Long EURUSD, long GBPUSD, short DXY cùng lúc có thể chỉ là một bet chống USD. Nếu sai, bạn không thua một lệnh, bạn thua cả cụm.</p>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Giới hạn tổng rủi ro cho các lệnh cùng ý tưởng.</span></div>
+          <div class="check"><i>✓</i><span>Không nhân đôi risk bằng cách mở nhiều cặp tương quan cao.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div><div class="eyebrow">Trading Plan</div><h2>Kế hoạch giao dịch phải đủ cụ thể để bạn biết khi nào không trade</h2></div>
+      <div class="grid-3">
+        <div class="card"><h3>Setup được phép trade</h3><p>Trend pullback, failure test, breakout pullback... định nghĩa bằng điều kiện rõ.</p></div>
+        <div class="card"><h3>Điều kiện thị trường</h3><p>Khung giờ, sản phẩm, volatility, tin tức, trạng thái trend/range.</p></div>
+        <div class="card"><h3>Risk rules</h3><p>Risk/lệnh, max loss/ngày, max số lệnh, điều kiện dừng.</p></div>
+        <div class="card"><h3>Execution rules</h3><p>Entry trigger, SL, TP, quản trị sau entry, không dời stop tùy hứng.</p></div>
+        <div class="card"><h3>Journal rules</h3><p>Chụp chart trước/sau, ghi lý do vào, cảm xúc, rule có tuân thủ không.</p></div>
+        <div class="card"><h3>Review rules</h3><p>Review tuần/tháng theo R, không theo cảm xúc thắng thua từng lệnh.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Journal</div>
+        <h2>Nhật ký giao dịch là nơi edge được kiểm chứng</h2>
+        <p class="lead">Không có journal, bạn chỉ đang nhớ những lệnh gây cảm xúc mạnh. Journal biến cảm giác thành dữ liệu.</p>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Ghi setup, bối cảnh, entry, SL, TP, R-result.</span></div>
+          <div class="check"><i>✓</i><span>Ghi “có theo rule không?” quan trọng hơn “có thắng không?”.</span></div>
+          <div class="check"><i>✓</i><span>Review lỗi lặp lại: entry muộn, overtrade, stop sai, bỏ lệnh đẹp.</span></div>
+        </div>
+      </div>
+      <div class="chartbox"><div class="chart-title"><b>Journal loop</b><span>Trade · Record · Review · Improve</span></div><svg class="chart" id="chart-journal" viewBox="0 0 760 480"></svg></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div><div class="eyebrow">Playbook Module 11</div><h2>Bộ rule tối thiểu trước khi trade live</h2></div>
+      <div class="grid-4">
+        <div class="card"><div class="num">1</div><h3>Risk nhỏ</h3><p>Risk cố định theo % tài khoản. Không tăng size sau lệnh thua.</p></div>
+        <div class="card"><div class="num">2</div><h3>Daily stop</h3><p>Dừng ngày khi chạm giới hạn lỗ hoặc vi phạm rule.</p></div>
+        <div class="card"><div class="num">3</div><h3>Setup list</h3><p>Chỉ trade setup nằm trong playbook đã backtest.</p></div>
+        <div class="card"><div class="num">4</div><h3>Journal bắt buộc</h3><p>Không ghi chép thì không tăng size.</p></div>
+      </div>
+      <div class="note">Tăng size là phần thưởng cho kỷ luật và dữ liệu, không phải phần thưởng cho vài lệnh thắng.</div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox"><div class="chart-title"><b>Worksheet</b><span>Build your risk plan</span></div><svg class="chart" id="chart-exercise" viewBox="0 0 760 480"></svg></div>
+      <div>
+        <div class="eyebrow">Bài tập thực hành</div>
+        <h2>Viết risk plan một trang</h2>
+        <div class="checklist">
+          <div class="check"><i>1</i><span>Risk/lệnh: ___% tài khoản.</span></div>
+          <div class="check"><i>2</i><span>Max loss/ngày: ___R hoặc ___ lệnh thua liên tiếp.</span></div>
+          <div class="check"><i>3</i><span>Setup được phép trade: tối đa 3 setup.</span></div>
+          <div class="check"><i>4</i><span>Điều kiện bắt buộc phải journal trước khi trade tiếp.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div><div class="eyebrow">Quiz cuối Module 11</div><h2>Kiểm tra tư duy rủi ro</h2></div>
+      <div class="quiz">
+        <div class="q">1. Vì sao risk/lệnh nhỏ quan trọng hơn việc tìm setup thắng cao?</div>
+        <div class="q">2. Position size nên được tính sau yếu tố nào?</div>
+        <div class="q">3. Daily stop dùng để ngăn lỗi tâm lý nào?</div>
+        <div class="q">4. Vì sao nhiều lệnh tương quan có thể nguy hiểm?</div>
+        <div class="q">5. Journal nên ưu tiên câu hỏi “thắng không” hay “có theo rule không”?</div>
+      </div>
+      <div class="note">Module tiếp theo: Tâm lý trader và lộ trình luyện chart 30-60-90 ngày.</div>
+    </div>
+  </section>
+  <footer><div class="progress" id="progress">Slide 1 / 12</div><div class="nav"><button id="prev" aria-label="Slide trước">‹</button><button id="next" aria-label="Slide sau">›</button></div><div class="dots" id="dots"></div></footer>
+</main>
+<script src="course-charts.js"></script>
+<script>
+function dashboard(id){const svg=document.getElementById(id);grid(svg);[['Risk/lệnh',120,130,'0.5%','#245fa8'],['Daily stop',330,130,'-2R','#c83f3f'],['Journal',540,130,'100%','#13845a'],['Max trades',220,300,'3','#b77918'],['Review',450,300,'Weekly','#6d59d4']].forEach(([t,x,y,v,c])=>{el('rect',{x:x-70,y:y-50,width:140,height:100,rx:8,fill:'#fffdf8',stroke:c,'stroke-width':2},svg);label(svg,v,x-28,y,c,24);label(svg,t,x-48,y+30,'#66706f',14)})}
+function risk(){const svg=document.getElementById('chart-risk');grid(svg);[.5,1,3,5].forEach((v,i)=>{const h=v*44;el('rect',{x:120+i*130,y:390-h,width:70,height:h,fill:i<2?'#dff3e8':'#f8dfdc',stroke:i<2?'#13845a':'#c83f3f'},svg);label(svg,v+'%',128+i*130,420,i<2?'#13845a':'#c83f3f',18)});label(svg,'Risk càng lớn, chuỗi thua càng nguy hiểm',190,82,'#245fa8',18)}
+function sizing(){const svg=document.getElementById('chart-sizing');grid(svg);label(svg,'Risk amount',110,150,'#245fa8',22);label(svg,'÷',328,150,'#66706f',28);label(svg,'Stop distance',390,150,'#c83f3f',22);label(svg,'=',290,245,'#66706f',28);label(svg,'Position size',260,310,'#13845a',26)}
+function dd(){const svg=document.getElementById('chart-dd');grid(svg);el('path',{class:'path-red',d:'M90 110 L220 160 L350 230 L500 322 L650 390'},svg);[['-10% cần +11%',150,150],['-25% cần +33%',300,230],['-50% cần +100%',480,330]].forEach(([t,x,y])=>label(svg,t,x,y,'#c83f3f',16))}
+function daily(){const svg=document.getElementById('chart-daily-stop');grid(svg);el('path',{class:'path-blue',d:'M90 160 L180 126 L270 190 L360 250 L450 330'},svg);el('line',{class:'stop',x1:80,y1:330,x2:680,y2:330},svg);label(svg,'Daily stop: dừng tại -2R',250,352,'#c83f3f',18)}
+function correlation(){const svg=document.getElementById('chart-correlation');grid(svg);[['EURUSD Long',160,170],['GBPUSD Long',380,170],['DXY Short',270,300]].forEach(([t,x,y])=>{el('circle',{cx:x,cy:y,r:70,fill:'rgba(36,95,168,.10)',stroke:'#245fa8','stroke-width':2},svg);label(svg,t,x-50,y,'#245fa8',15)});label(svg,'Một ý tưởng USD risk',260,82,'#c83f3f',18)}
+function journal(){const svg=document.getElementById('chart-journal');grid(svg);[['Trade',170,150],['Record',390,150],['Review',390,310],['Improve',170,310]].forEach(([t,x,y])=>{el('rect',{x:x-60,y:y-35,width:120,height:70,rx:8,fill:'#fffdf8',stroke:'#245fa8','stroke-width':2},svg);label(svg,t,x-32,y+6,'#245fa8',18)});el('path',{class:'path-blue dash',d:'M230 150 L330 150 M390 185 L390 275 M330 310 L230 310 M170 275 L170 185'},svg)}
+dashboard('chart-cover');risk();sizing();dd();daily();correlation();journal();dashboard('chart-exercise');initDeck();
+</script>
+</body>
+</html>

@@ -1,0 +1,2188 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wyckoff Method & Volume Profile Masterclass - Module 1</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===========================================
+           CSS CUSTOM PROPERTIES (THEME: ELECTRIC PURPLE / CYBER DARK)
+           =========================================== */
+        :root {
+            --bg-primary: #070913;
+            --bg-secondary: #0d0f22;
+            --bg-card: rgba(19, 21, 44, 0.7);
+            --border-color: rgba(155, 81, 224, 0.15);
+            
+            --text-primary: #ffffff;
+            --text-secondary: #8b92b6;
+            
+            --accent-purple: #9b51e0;
+            --accent-cyan: #00e5ff;
+            --accent-green: #00ff66;
+            --accent-red: #ff3860;
+            --accent-yellow: #d4ff00;
+            
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-title: 'Archivo Black', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+            
+            --title-size: clamp(1.8rem, 4.2vw, 3.4rem);
+            --h2-size: clamp(1.3rem, 3vw, 2.1rem);
+            --h3-size: clamp(1rem, 2.2vw, 1.4rem);
+            --body-size: clamp(0.8rem, 1.2vw, 1.02rem);
+            --small-size: clamp(0.68rem, 0.9vw, 0.82rem);
+            
+            --slide-padding: clamp(1rem, 3.5vw, 3rem);
+            --content-gap: clamp(0.5rem, 1.8vw, 1.4rem);
+            --element-gap: clamp(0.3rem, 1.1vw, 0.8rem);
+            
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-neon: 0 0 20px rgba(155, 81, 224, 0.25);
+            --shadow-green: 0 0 20px rgba(0, 255, 102, 0.2);
+            --shadow-red: 0 0 20px rgba(255, 56, 96, 0.2);
+        }
+
+        /* ===========================================
+           BASE RESET & SCROLL SNAP
+           =========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-display);
+            line-height: 1.45;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        /* ===========================================
+           SLIDE FRAMEWORK
+           =========================================== */
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Cyber grid background */
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(rgba(155, 81, 224, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(155, 81, 224, 0.015) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Purple ambient glow shapes */
+        .slide::after {
+            content: '';
+            position: absolute;
+            width: 40vw;
+            height: 40vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(155, 81, 224, 0.06) 0%, transparent 70%);
+            bottom: -10vw;
+            right: -10vw;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .slide:nth-child(even)::after {
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.04) 0%, transparent 70%);
+            top: -10vw;
+            left: -10vw;
+            bottom: auto;
+            right: auto;
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-height: 100%;
+            overflow: hidden;
+            padding: var(--slide-padding);
+            z-index: 2;
+            gap: var(--content-gap);
+        }
+
+        /* Header structure */
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(155, 81, 224, 0.1);
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.1rem;
+        }
+
+        .slide-module-tag {
+            font-size: var(--small-size);
+            color: var(--accent-purple);
+            font-family: var(--font-mono);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .slide-number-tag {
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+        }
+
+        .slide-title {
+            font-family: var(--font-title);
+            font-size: var(--h2-size);
+            color: var(--text-primary);
+            line-height: 1.15;
+            letter-spacing: -0.5px;
+        }
+
+        .slide-title span {
+            color: var(--accent-purple);
+        }
+
+        /* Layout styles */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--content-gap);
+            align-items: center;
+            max-height: min(72vh, 490px);
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--element-gap);
+        }
+
+        .grid-3-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--element-gap);
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: clamp(0.7rem, 1.6vw, 1.6rem);
+            transition: all 0.3s ease;
+            max-height: min(68vh, 450px);
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .card:hover {
+            border-color: rgba(155, 81, 224, 0.4);
+            box-shadow: 0 4px 20px rgba(155, 81, 224, 0.08);
+        }
+
+        .card-title {
+            font-size: var(--h3-size);
+            font-weight: 700;
+            color: var(--accent-purple);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .card-title.accent-green { color: var(--accent-green); }
+        .card-title.accent-red { color: var(--accent-red); }
+        .card-title.accent-cyan { color: var(--accent-cyan); }
+        .card-title.accent-yellow { color: var(--accent-yellow); }
+
+        .card p, .card li {
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .card ul {
+            padding-left: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        /* Typography Helpers */
+        .highlight-box {
+            border-left: 3px solid var(--accent-purple);
+            padding: 0.5rem 0.8rem;
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+            background: rgba(155, 81, 224, 0.02);
+            border-radius: 0 6px 6px 0;
+        }
+
+        .highlight-box strong {
+            color: var(--text-primary);
+        }
+
+        /* Diagram Viewport fit */
+        .diagram-container {
+            width: 100%;
+            height: 100%;
+            max-height: min(50vh, 320px);
+            background-color: #0b0c16;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0.5rem;
+        }
+
+        /* Interactive controls for slides */
+        .slide-nav {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 100;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--accent-purple);
+            color: var(--accent-purple);
+            box-shadow: var(--shadow-neon);
+        }
+
+        .nav-dots {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-dot.active {
+            background-color: var(--accent-purple);
+            box-shadow: var(--shadow-neon);
+            width: 16px;
+            border-radius: 4px;
+        }
+
+        /* Progress Bar */
+        .progress-bar-container {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background-color: rgba(255, 255, 255, 0.05);
+            z-index: 100;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
+            box-shadow: 0 0 10px rgba(155, 81, 224, 0.5);
+            transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* ===========================================
+           CYBER SIDEBAR NAVIGATION
+           =========================================== */
+        .sidebar-toggle {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 101;
+            background-color: rgba(13, 15, 34, 0.85);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: var(--small-size);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .sidebar-toggle:hover {
+            border-color: var(--accent-purple);
+            color: var(--accent-purple);
+            box-shadow: var(--shadow-neon);
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0; left: -320px;
+            width: 300px;
+            height: 100%;
+            background-color: rgba(7, 9, 19, 0.97);
+            border-right: 1px solid var(--border-color);
+            z-index: 200;
+            backdrop-filter: blur(12px);
+            padding: 5rem 1.5rem 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            transition: left 0.4s var(--ease-out-expo);
+            overflow-y: auto;
+        }
+
+        .sidebar.open {
+            left: 0;
+            box-shadow: 10px 0 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .sidebar-title {
+            font-family: var(--font-title);
+            font-size: 1rem;
+            color: var(--accent-purple);
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .sidebar-item {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.35rem 0.5rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+
+        .sidebar-item:hover {
+            background-color: rgba(155, 81, 224, 0.05);
+            color: var(--accent-purple);
+        }
+
+        .sidebar-item.active {
+            background: linear-gradient(90deg, rgba(155, 81, 224, 0.1) 0%, transparent 100%);
+            border-left: 2px solid var(--accent-purple);
+            color: var(--accent-purple);
+            font-weight: 500;
+        }
+
+        .sidebar-module-tag {
+            font-size: 0.6rem;
+            font-family: var(--font-mono);
+            color: var(--accent-yellow);
+            text-transform: uppercase;
+        }
+
+        .sidebar-backdrop {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 199;
+            backdrop-filter: blur(2px);
+            display: none;
+        }
+
+        .sidebar-backdrop.show {
+            display: block;
+        }
+
+        /* ===========================================
+           INLINE EDITING SYSTEM
+           =========================================== */
+        .edit-hotzone {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            width: 160px;
+            height: 40px;
+            z-index: 100;
+        }
+
+        .edit-toggle {
+            position: absolute;
+            left: 0; bottom: 0;
+            background-color: rgba(13, 15, 34, 0.85);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: var(--small-size);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            white-space: nowrap;
+        }
+
+        .edit-hotzone:hover .edit-toggle,
+        .edit-toggle.show,
+        .edit-toggle.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .edit-toggle.active {
+            background-color: var(--accent-purple);
+            color: var(--bg-primary);
+            border-color: var(--accent-purple);
+            box-shadow: var(--shadow-neon);
+        }
+
+        [contenteditable="true"] {
+            border: 1px dashed var(--accent-purple) !important;
+            padding: 4px;
+            border-radius: 4px;
+            outline: none;
+            background-color: rgba(155, 81, 224, 0.03);
+        }
+
+        .save-indicator {
+            position: fixed;
+            bottom: 5rem;
+            left: 1.5rem;
+            background-color: #1a0b2e;
+            border: 1px solid var(--accent-purple);
+            color: var(--accent-purple);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: var(--small-size);
+            font-family: var(--font-mono);
+            z-index: 100;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s var(--ease-out-expo);
+            pointer-events: none;
+        }
+
+        .save-indicator.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* SVG DRAWING CLASSES */
+        .candle-body {
+            stroke-width: 1px;
+        }
+        .candle-body.bull {
+            fill: #00ff66;
+            stroke: #00ff66;
+        }
+        .candle-body.bear {
+            fill: #ff3860;
+            stroke: #ff3860;
+        }
+        .candle-body.doji {
+            fill: #8b92b6;
+            stroke: #8b92b6;
+        }
+        .wick {
+            stroke-width: 2px;
+        }
+        .wick.bull { stroke: #00ff66; }
+        .wick.bear { stroke: #ff3860; }
+        .wick.doji { stroke: #8b92b6; }
+        
+        .text-chart {
+            font-family: var(--font-mono);
+            fill: var(--text-secondary);
+            font-size: 9px;
+        }
+
+        /* Animations */
+        @keyframes pulsePurple {
+            0% { filter: drop-shadow(0 0 2px var(--accent-purple)); }
+            50% { filter: drop-shadow(0 0 8px var(--accent-purple)); }
+            100% { filter: drop-shadow(0 0 2px var(--accent-purple)); }
+        }
+        @keyframes pulseGreen {
+            0% { filter: drop-shadow(0 0 2px var(--accent-green)); }
+            50% { filter: drop-shadow(0 0 8px var(--accent-green)); }
+            100% { filter: drop-shadow(0 0 2px var(--accent-green)); }
+        }
+        @keyframes dash {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        .pulse-purple-effect {
+            animation: pulsePurple 2s infinite ease-in-out;
+        }
+        .pulse-green-effect {
+            animation: pulseGreen 2s infinite ease-in-out;
+        }
+        .draw-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 3s forwards ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Sidebar Trigger Button -->
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle Lesson Index">
+        <span>☰</span> BẢN ĐỒ KHÓA HỌC
+    </button>
+
+    <!-- Slide-out Sidebar Navigation -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-title">WYCKOFF & VOLUME PROFILE</div>
+        <ul class="sidebar-menu" id="sidebarMenu">
+            <!-- Dynamically populated via JS -->
+        </ul>
+    </div>
+
+    <!-- Floating Editor Button -->
+    <div class="edit-hotzone" id="editHotzone">
+        <button class="edit-toggle" id="editToggle">✏️ EDIT MODE (E)</button>
+    </div>
+    <div class="save-indicator" id="saveIndicator">💾 ĐÃ LƯU BÀI GIẢNG!</div>
+
+    <!-- =========================================================================
+         SLIDES LIST (WYCKOFF & VOLUME PROFILE: MODULE 1)
+         ========================================================================= -->
+    <main id="slideContainer">
+
+        <!-- ==================== SLIDE 1: HOME ==================== -->
+        <section class="slide">
+            <div class="slide-content" style="align-items: center; text-align: center; justify-content: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color: var(--accent-yellow);">GIÁO TRÌNH THỰC CHIẾN NÂNG CAO</div>
+                <h1 class="slide-title" id="editable-s1-title" style="font-size: var(--title-size); line-height: 1.1;">
+                    WYCKOFF &<br><span style="color: var(--accent-purple);">VOLUME PROFILE MASTERCLASS</span>
+                </h1>
+                <p id="editable-s1-desc" style="font-size: 1.15rem; color: var(--text-secondary); max-width: 800px; font-family: var(--font-display);">
+                    Học viện giao dịch nâng cao: Làm chủ quy luật Cung - Cầu, giải mã chu kỳ tích lũy/phân phối của Wyckoff, và đo đạc thanh khoản thực bằng Volume Profile.
+                </p>
+                <div class="highlight-box" style="border: 1px solid var(--border-color); border-left: 3px solid var(--accent-yellow); max-width: 600px; text-align: left; margin-top: 1rem;">
+                    💡 <strong>Hướng dẫn học viên:</strong> Sử dụng phím <strong>Space / Mũi tên xuống</strong> để sang trang. Nhấp nút <strong>BẢN ĐỒ KHÓA HỌC</strong> ở góc trái để chọn nhanh bài giảng. Nhấn phím <strong>E</strong> để tự do chỉnh sửa nội dung bài học.
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 2: MODULE 1 - BAI 1 (AUCTION THEORY) ==================== -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 1: Luật Đấu Giá & Khớp Lệnh">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Nền Tảng Volume & VPA</span>
+                    <span class="slide-number-tag">Trang 2/11</span>
+                </div>
+                <h2 class="slide-title" id="editable-s2-title">Bài 1: Cơ Chế <span>Đấu Giá & Khớp Lệnh Thực Tế</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s2-desc">
+                        <div class="card-title">⚖️ 1. Luật Đấu Giá Hai Chiều (Auction Theory)</div>
+                        <p>Thị trường tài chính là một quy trình đấu giá hai chiều liên tục để **tạo điều kiện cho giao dịch**. Giá (Price) quảng cáo cơ hội, Thời gian (Time) điều chỉnh thời gian cơ hội tồn tại, và **Khối lượng (Volume) đo lường sự chấp nhận hay từ chối** cơ hội đó.</p>
+                        <div class="card-title accent-purple" style="margin-top:0.4rem;">🔑 2. Cơ Chế Khớp Lệnh Sổ Lệnh</div>
+                        <p>Volume chỉ được tạo ra khi **Lệnh giới hạn thụ động (Limit Orders)** của phe chặn cản khớp với **Lệnh thị trường chủ động (Market Orders)** của phe khẩn trương giao dịch. Volume chính là dấu chân dòng tiền thực tế, không thể che giấu.</p>
+                    </div>
+
+                    <!-- SVG DIAGRAM: ORDER BOOK & VOLUME -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Limit Ask (Sellers) -->
+                            <rect x="20" y="30" width="100" height="18" fill="rgba(255, 56, 96, 0.15)" stroke="var(--accent-red)" stroke-width="1" />
+                            <text x="70" y="42" class="text-chart" text-anchor="middle" fill="var(--accent-red)">Ask (Lệnh Chờ Bán)</text>
+                            <rect x="20" y="52" width="100" height="18" fill="rgba(255, 56, 96, 0.08)" stroke="var(--accent-red)" stroke-width="0.5" />
+                            
+                            <!-- Bid-Ask Spread -->
+                            <line x1="20" y1="80" x2="280" y2="80" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="3,3" />
+                            <text x="150" y="84" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)">SPREAD</text>
+
+                            <!-- Limit Bid (Buyers) -->
+                            <rect x="20" y="90" width="100" height="18" fill="rgba(0, 255, 102, 0.08)" stroke="var(--accent-green)" stroke-width="0.5" />
+                            <rect x="20" y="112" width="100" height="18" fill="rgba(0, 255, 102, 0.15)" stroke="var(--accent-green)" stroke-width="1" />
+                            <text x="70" y="124" class="text-chart" text-anchor="middle" fill="var(--accent-green)">Bid (Lệnh Chờ Mua)</text>
+
+                            <!-- Market Order Entry -->
+                            <path d="M 230 160 L 230 105" fill="none" stroke="var(--accent-cyan)" stroke-width="2.5" class="draw-line" />
+                            <polygon points="230,105 226,112 234,112" fill="var(--accent-cyan)" />
+                            <text x="230" y="175" class="text-chart" text-anchor="middle" fill="var(--accent-cyan)">Market Buy Order</text>
+                            <text x="230" y="150" class="text-chart" text-anchor="middle" fill="var(--accent-cyan)" font-size="8">(Phe Chủ Động)</text>
+
+                            <!-- Match point -->
+                            <circle cx="230" cy="100" r="8" fill="none" stroke="var(--accent-yellow)" stroke-width="1.5" class="pulse-purple-effect" />
+                            <text x="230" y="92" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)" font-size="8">Khớp lệnh</text>
+
+                            <!-- Volume chart indicator -->
+                            <rect x="135" y="140" width="30" height="40" fill="var(--accent-purple)" opacity="0.8" />
+                            <text x="150" y="195" class="text-chart" text-anchor="middle" fill="var(--accent-purple)">VOLUME</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 3: MODULE 1 - BAI 1 (PRICE + VOLUME) ==================== -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 1: Price + Volume">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Nền Tảng Volume & VPA</span>
+                    <span class="slide-number-tag">Trang 3/11</span>
+                </div>
+                <h2 class="slide-title" id="editable-s3-title">Bài 1: Tại Sao Giá Kết Hợp <span>Volume Mới Là Bức Tranh Toàn Cảnh?</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s3-desc">
+                        <div class="card-title accent-yellow">🕵️ Hợp Nhất Hai Chiều Dữ Liệu</div>
+                        <p>Nếu chỉ phân tích Price Action (giá) mà bỏ qua Volume, bạn giống như thám tử chỉ nhìn thấy dấu vết mà không biết lực tác động thực tế mạnh hay nhẹ:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem;">
+                            <li><strong>Giá tăng + Volume lớn:</strong> Dòng tiền tổ chức khẩn trương đẩy giá và phe bán đối lập sẵn lòng cung cấp hàng. Xu hướng tăng bền vững, thực chất.</li>
+                            <li><strong>Giá tăng + Volume nhỏ:</strong> Giá tăng chỉ vì phe bán rút cản (thiếu cung Limit chặn), chứ không có lực mua chủ động khẩn trương. Xu hướng tăng rỗng, cực kỳ dễ sụp đổ.</li>
+                        </ul>
+                    </div>
+                    <div class="grid-cards">
+                        <div class="card active" style="border-color: var(--accent-green); background: rgba(0, 255, 102, 0.02);">
+                            <div class="card-title accent-green">🟢 Breakout Thật (Đồng thuận)</div>
+                            <p style="font-size:12px;">Giá phá cản bằng cây nến xanh lớn, đi kèm cột Volume vượt trội ➔ Dòng tiền tổ chức tham gia mạnh mẽ để đẩy giá đi.</p>
+                        </div>
+                        <div class="card active" style="border-color: var(--accent-red); background: rgba(255, 56, 96, 0.02);">
+                            <div class="card-title accent-red">🔴 Breakout Giả (Dị thường)</div>
+                            <p style="font-size:12px;">Giá cố phá cản nhưng Volume cực nhỏ ➔ Thiếu sự tham gia của Smart Money. Rất dễ bị giật ngược (Trap).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 4: MODULE 1 - BAI 2 (EFFORT VS RESULT) ==================== -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 2: Quy Luật Nỗ Lực & Kết Quả">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Nền Tảng Volume & VPA</span>
+                    <span class="slide-number-tag">Trang 4/11</span>
+                </div>
+                <h2 class="slide-title" id="editable-s4-title">Bài 2: Quy Luật <span>Nỗ Lực vs Kết Quả (Effort vs Result)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s4-desc">
+                        <div class="card-title accent-purple">💡 Quy Luật Thứ Ba Của Richard Wyckoff</div>
+                        <p>Mọi nỗ lực trong thị trường phải mang lại một kết quả tương xứng:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem;">
+                            <li><strong>Nỗ lực (Effort):</strong> Đại diện bằng **Khối lượng giao dịch (Volume)**.</li>
+                            <li><strong>Kết quả (Result):</strong> Đại diện bằng **Biên độ thân nến (Spread)**.</li>
+                        </ul>
+                        <div class="highlight-box" style="margin-top:0.3rem;">
+                            Sự đồng thuận (Harmony) tạo ra sự an toàn. Sự bất đồng thuận (Anomaly) báo hiệu bẫy giá và đảo chiều sắp xảy ra.
+                        </div>
+                    </div>
+
+                    <!-- SVG DIAGRAM: EFFORT VS RESULT -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Left: Harmony (Đồng Thuận) -->
+                            <text x="75" y="22" class="text-chart" text-anchor="middle" fill="var(--accent-green)" font-weight="bold">1. ĐỒNG THUẬN (Harmony)</text>
+                            
+                            <line x1="75" y1="40" x2="75" y2="110" class="wick bull" />
+                            <rect x="67" y="45" width="16" height="55" class="candle-body bull" />
+                            
+                            <rect x="65" y="130" width="20" height="45" fill="var(--accent-green)" opacity="0.8" />
+                            <text x="75" y="190" class="text-chart" text-anchor="middle" fill="var(--accent-green)" font-size="8">Vol lớn + Thân lớn</text>
+
+                            <!-- Vertical divider -->
+                            <line x1="150" y1="10" x2="150" y2="190" stroke="rgba(255,255,255,0.06)" stroke-width="1.2" stroke-dasharray="3,3" />
+
+                            <!-- Right: Anomaly (Bất Đồng Thuận) -->
+                            <text x="225" y="22" class="text-chart" text-anchor="middle" fill="var(--accent-red)" font-weight="bold">2. BẤT ĐỒNG (Anomaly)</text>
+                            
+                            <line x1="225" y1="40" x2="225" y2="110" class="wick bull" style="stroke: var(--accent-red);" />
+                            <!-- Small body with wicks -->
+                            <rect x="217" y="45" width="16" height="15" class="candle-body bull" style="fill: var(--accent-red); stroke: var(--accent-red);" />
+                            
+                            <rect x="215" y="130" width="20" height="50" fill="var(--accent-red)" opacity="0.8" class="pulse-purple-effect" />
+                            <text x="225" y="190" class="text-chart" text-anchor="middle" fill="var(--accent-red)" font-size="8">Vol lớn + Thân nhỏ</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 5: MODULE 1 - BAI 2 (HARMONY SAMPLES) ==================== -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 2: Các Tình Huống VPA">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Nền Tảng Volume & VPA</span>
+                    <span class="slide-number-tag">Trang 5/11</span>
+                </div>
+                <h2 class="slide-title" id="editable-s5-title">Bài 2: Các Tình Huống <span>Đồng Thuận & Dị Thường Trong VPA</span></h2>
+                <div class="grid-3-cards">
+                    <div class="card" id="editable-s5-card1">
+                        <div class="card-title accent-green">🟢 A. Đồng Thuận Tăng</div>
+                        <p style="font-weight:bold; color:#fff;">Vol lớn + Thân nến dài</p>
+                        <p style="font-size: 13px; margin-top:0.2rem;">Xác nhận dòng tiền mua vào ồ ạt và dứt khoát. Phe bán đầu hàng hoàn toàn. Đây là điểm tiếp diễn xu hướng an toàn.</p>
+                    </div>
+                    <div class="card" id="editable-s5-card2">
+                        <div class="card-title accent-orange">🟡 B. Hấp Thụ Cung</div>
+                        <p style="font-weight:bold; color:#fff;">Vol cực lớn + Thân nhỏ</p>
+                        <p style="font-size: 13px; margin-top:0.2rem;">Sự dị thường cực độ. Nỗ lực mua khổng lồ của nhỏ lẻ bị chặn lại hoàn toàn bởi bức tường lệnh Limit bán của tổ chức. Cảnh báo đảo chiều giảm.</p>
+                    </div>
+                    <div class="card" id="editable-s5-card3">
+                        <div class="card-title accent-red">🔴 C. Thiếu Lực Mua</div>
+                        <p style="font-weight:bold; color:#fff;">Vol cực nhỏ + Thân lớn</p>
+                        <p style="font-size: 13px; margin-top:0.2rem;">Nỗ lực rất ít nhưng giá đi xa chỉ vì trống cản. Không bền vững, giá dễ dàng bị giật ngược khi gặp lực cản thực tế của Market Makers.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 6: MODULE 1 - BAI 3 (VOLUME CLIMAX) ==================== -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 3: Volume Climax">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Nền Tảng Volume & VPA</span>
+                    <span class="slide-number-tag">Trang 6/11</span>
+                </div>
+                <h2 class="slide-title" id="editable-s6-title">Bài 3: Nhận Diện <span>Volume Climax (Khối Lượng Cực Đoan)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s6-desc">
+                        <div class="card-title accent-orange">⚡ Volume Climax Là Gì?</div>
+                        <p>Là hiện tượng cột Volume tăng vọt lên mức khổng lồ đột biến (vượt trội hoàn toàn so với 20 phiên trước đó) sau một xu hướng tăng/giảm đã kéo dài.</p>
+                        <p style="margin-top:0.3rem;"><strong>Selling Climax (Bán kiệt quệ):</strong> Xuất hiện ở cuối nhịp sụp đổ mạnh. Nhỏ lẻ hoảng loạn cắt lỗ (Panic selling), dòng tiền thông minh âm thầm gom mua toàn bộ lực bán này. Giá lập tức rút chân và tạo đáy trung hạn.</p>
+                    </div>
+
+                    <!-- SVG DIAGRAM: SELLING CLIMAX -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Trend Bars (Bearish) -->
+                            <!-- Bar 1 -->
+                            <line x1="40" y1="30" x2="40" y2="90" class="wick bear" />
+                            <rect x="34" y="40" width="12" height="40" class="candle-body bear" />
+                            <rect x="32" y="150" width="16" height="20" fill="var(--accent-red)" opacity="0.6" />
+
+                            <!-- Bar 2 -->
+                            <line x1="80" y1="65" x2="80" y2="120" class="wick bear" />
+                            <rect x="74" y="75" width="12" height="35" class="candle-body bear" />
+                            <rect x="72" y="145" width="16" height="25" fill="var(--accent-red)" opacity="0.6" />
+
+                            <!-- Climax Bar (Huge volume, long lower wick) -->
+                            <line x1="130" y1="85" x2="130" y2="185" class="wick bear" style="stroke: var(--accent-yellow); stroke-width: 2.5px;" />
+                            <rect x="124" y="90" width="12" height="20" class="candle-body bear" style="fill: var(--accent-yellow); stroke: var(--accent-yellow);" />
+                            
+                            <!-- Climax Volume Bar -->
+                            <rect x="122" y="115" width="16" height="65" fill="var(--accent-yellow)" class="pulse-purple-effect" />
+                            
+                            <text x="130" y="22" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)" font-weight="bold">Selling Climax</text>
+                            <text x="130" y="105" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)" font-size="8">Vol Khổng Lồ Ở Đáy</text>
+
+                            <!-- Bounce Bar -->
+                            <line x1="180" y1="50" x2="180" y2="110" class="wick bull" />
+                            <rect x="174" y="60" width="12" height="40" class="candle-body bull" />
+                            <rect x="172" y="140" width="16" height="30" fill="var(--accent-green)" opacity="0.6" />
+
+                            <!-- Arrow upward -->
+                            <path d="M 185 60 L 220 25 L 250 15" fill="none" stroke="var(--accent-green)" stroke-width="2" stroke-dasharray="3,3" class="draw-line" />
+                            <polygon points="250,15 243,18 247,22" fill="var(--accent-green)" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 7: MODULE 1 - BAI 3 (ABSORPTION) ==================== -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 3: Hấp Thụ (Absorption)">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Nền Tảng Volume & VPA</span>
+                    <span class="slide-number-tag">Trang 7/11</span>
+                </div>
+                <h2 class="slide-title" id="editable-s7-title">Bài 3: Cơ Chế <span>Hấp Thụ Chủ Động Tại Kháng Cự</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s7-desc">
+                        <div class="card-title accent-green">📥 Hấp Thụ Chủ Động (Active Absorption)</div>
+                        <p>Xảy ra khi giá tiến sát vùng cản kháng cự cũ nhưng không hề bị đẩy lùi. Các nến nhỏ tích lũy đi kèm Volume tăng cao đều đặn.</p>
+                        <p style="margin-top:0.3rem;"><strong>Ý nghĩa thực chiến:</strong> Phe Mua lớn chấp nhận mua gom toàn bộ lực cung bán ra ngay tại cản. Đây là hành vi triệt tiêu nguồn cung trước khi bùng nổ cú phá vỡ (Breakout) khổng lồ.</p>
+                        <div class="highlight-box" style="margin-top:0.3rem;">
+                            💡 **Lời khuyên:** Đừng bán khống khi thấy Volume tăng cao ở cản mà giá không giảm. Đó là dấu hiệu cản sắp sập!
+                        </div>
+                    </div>
+                    <div class="card" style="justify-content: center; align-items: center; background-color:#0b0c16;">
+                        <svg width="100%" height="150" viewBox="0 0 200 150">
+                            <!-- Resistance Line -->
+                            <line x1="20" y1="50" x2="180" y2="50" stroke="var(--accent-red)" stroke-width="1.5" stroke-dasharray="4,2" />
+                            <text x="140" y="42" class="text-chart" fill="var(--accent-red)">Kháng Cự</text>
+                            
+                            <!-- Absorption accumulation candles -->
+                            <rect x="40" y="55" width="10" height="15" class="candle-body bull" />
+                            <rect x="70" y="52" width="10" height="20" class="candle-body bull" />
+                            <rect x="100" y="51" width="10" height="15" class="candle-body bear" />
+                            <rect x="130" y="50" width="10" height="25" class="candle-body bull" style="fill:var(--accent-yellow); stroke:var(--accent-yellow);" />
+
+                            <!-- Vol bars rising -->
+                            <rect x="38" y="110" width="14" height="20" fill="var(--accent-purple)" opacity="0.6" />
+                            <rect x="68" y="105" width="14" height="25" fill="var(--accent-purple)" opacity="0.7" />
+                            <rect x="98" y="100" width="14" height="30" fill="var(--accent-purple)" opacity="0.8" />
+                            <rect x="128" y="90" width="14" height="40" fill="var(--accent-yellow)" opacity="0.9" />
+
+                            <text x="100" y="142" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)">Vol tăng dần sát cản</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 8: MODULE 1 - BAI 3 (REJECTION) ==================== -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 3: Từ Chối Giá">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Nền Tảng Volume & VPA</span>
+                    <span class="slide-number-tag">Trang 8/11</span>
+                </div>
+                <h2 class="slide-title" id="editable-s8-title">Bài 3: Từ Chối Giá <span>Có Khối Lượng Xác Nhận</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s8-desc">
+                        <div class="card-title accent-orange">🙅‍♂️ Sức Mạnh Của Cú Quét Thanh Khoản</div>
+                        <p>Giá chọc nhanh qua một cản cứng (EMA 20/Hỗ trợ cũ) rồi ngay lập tức rút râu phản kháng cực mạnh.</p>
+                        <p style="margin-top:0.3rem;">Để xác nhận đây là vùng được bảo vệ bởi tổ chức lớn, **Volume bắt buộc phải tăng cao đột biến**. Nó cho thấy dòng tiền thông minh đã kích hoạt lượng lớn lệnh Limit mua/bán để hấp thụ và từ chối vùng giá này.</p>
+                        <div class="highlight-box" style="margin-top:0.3rem;">
+                            🎯 **Setup:** Vào lệnh đảo chiều ngay khi nến từ chối đóng cửa. Stop Loss đặt cách đầu râu nến 2 ticks.
+                        </div>
+                    </div>
+                    <div class="card" style="justify-content: center; align-items: center; background-color:#0b0c16;">
+                        <svg width="100%" height="150" viewBox="0 0 200 150">
+                            <!-- Support line -->
+                            <line x1="20" y1="100" x2="180" y2="100" stroke="var(--accent-yellow)" stroke-width="1.5" stroke-dasharray="3,3" />
+                            <text x="130" y="112" class="text-chart" fill="var(--accent-yellow)">Hỗ Trợ Cứng</text>
+
+                            <!-- Pinbar rejection -->
+                            <line x1="90" y1="50" x2="90" y2="125" class="wick bull" style="stroke-width:2.5px;" />
+                            <rect x="82" y="55" width="16" height="20" class="candle-body bull" />
+
+                            <circle cx="90" cy="115" r="8" fill="none" stroke="var(--accent-cyan)" stroke-width="1.5" class="pulse-purple-effect" />
+
+                            <!-- Volume bar -->
+                            <rect x="80" y="125" width="20" height="20" fill="var(--accent-cyan)" opacity="0.9" />
+                            <text x="135" y="70" class="text-chart" fill="var(--accent-cyan)">Rút chân + Vol lớn</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 9: MODULE 1 - TỔNG KẾT VPA ==================== -->
+        <section class="slide" data-module="Module 1" data-lesson="Tổng Kết VPA">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Nền Tảng Volume & VPA</span>
+                    <span class="slide-number-tag">Trang 9/11</span>
+                </div>
+                <h2 class="slide-title" id="editable-s9-title">Tổng Kết: Quy Trình Đọc <span>VPA Từng Cây Nến (Bar-by-Bar)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s9-desc">
+                        <div class="card-title">🔍 Quy Trình 3 Bước Tư Duy Của Thám Tử VPA</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.2rem;">
+                            <li><strong>Bước 1: Quan sát Thân nến (Spread).</strong> Biên độ thân lớn hay nhỏ? Giá đóng cửa nằm ở đâu so với đỉnh/đáy nến?</li>
+                            <li><strong>Bước 2: Đối chiếu Cột Volume (Effort).</strong> Volume này có tương xứng với thân nến không? (Có lớn hơn trung bình không?).</li>
+                            <li><strong>Bước 3: Nhận định bối cảnh.</strong> Cụm nến này đang xuất hiện tại xu hướng nào? Có ở EMA 20 hay cản cứng không?</li>
+                        </ul>
+                    </div>
+                    <div class="card active" style="border-color: var(--accent-purple); background: rgba(155, 81, 224, 0.02);">
+                        <div class="card-title accent-purple">🛡️ Quy Tắc Thực Chiến Tối Thượng</div>
+                        <p style="font-size:13px;">"Không bao giờ giao dịch đơn lẻ dựa trên mô hình nến. Luôn sử dụng Khối lượng giao dịch làm **chất lọc xác minh sự tham gia của tổ chức lớn**."</p>
+                        <p style="font-size:12px; font-weight:bold; color:var(--accent-yellow); margin-top:0.4rem;">➔ Không có Volume xác nhận, breakout chỉ là ảo ảnh!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 10: MODULE 1 - BÀI TẬP THỰC HÀNH ==================== -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài Tập Thực Hành">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Nền Tảng Volume & VPA</span>
+                    <span class="slide-number-tag">Trang 10/11</span>
+                </div>
+                <h2 class="slide-title" id="editable-s10-title">Hệ Thống Bài Tập <span>Rèn Luyện Tư Duy VPA</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s10-desc">
+                        <div class="card-title accent-yellow">📝 Bài Tập Tuần Này</div>
+                        <p>Mở biểu đồ BTCUSDT hoặc XAUUSD khung thời gian H1:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.3rem;">
+                            <li><strong>1. Tìm 3 điểm dị thường (Anomaly):</strong> Thân nến nhỏ nhưng Volume cực lớn. Giải thích bối cảnh và diễn biến giá sau đó.</li>
+                            <li><strong>2. Nhận diện Selling Climax:</strong> Tìm nến Vol khổng lồ ở đáy nhịp sụt giảm mạnh. Đo thời gian giá tạo đáy sau đó.</li>
+                        </ul>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-cyan); background:rgba(0, 229, 255, 0.02);">
+                        <div class="card-title accent-cyan">🧠 Câu Hỏi Ôn Tập Nhanh</div>
+                        <ul class="bullet-list" style="gap:0.4rem; margin-top:0.2rem;">
+                            <li style="font-size:12px; color:#fff;">Tại sao giá tăng với Volume nhỏ lại là xu hướng rỗng tuếch dễ sụp đổ?</li>
+                            <li style="font-size:12px; color:#fff;">Sự khác nhau giữa lệnh Limit và lệnh Market ảnh hưởng như thế nào đến việc khớp Volume?</li>
+                            <li style="font-size:12px; color:#fff;">Hiện tượng Hấp Thụ (Absorption) tại Kháng cự báo hiệu điều gì cho cản đó?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 11: MODULE THIẾT KẾ KHÓA HỌC ==================== -->
+        <section class="slide">
+            <div class="slide-content" style="align-items: center; justify-content: center; text-align: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color:var(--accent-yellow);">HOÀN THÀNH MODULE 1</div>
+                <h2 class="slide-title" id="editable-s11-title" style="font-size: var(--title-size); line-height: 1.15;">
+                    BẠN ĐÃ LÀM CHỦ NỀN TẢNG<br><span style="color: var(--accent-purple);">VOLUME & PHÂN TÍCH VPA!</span>
+                </h2>
+                <p id="editable-s11-desc" style="max-width: 650px; color: var(--text-secondary); font-size: 1.1rem;">
+                    Nền tảng Volume Price Analysis là chìa khóa mở cánh cửa tiếp theo dẫn tới Phương Pháp Wyckoff huyền thoại và chỉ báo thanh khoản thực Volume Profile.
+                </p>
+                <div class="highlight-box" style="border-left: 3px solid var(--accent-green); max-width: 600px; text-align: left;">
+                    🎓 <strong>Bài học tiếp theo:</strong> Module 2 - Tinh Hoa Phương Pháp Wyckoff. Chúng ta sẽ giải mã các giai đoạn gom hàng tích lũy và xả hàng phân phối của dòng tiền lớn!
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 12: INTRO MODULE 2 ==================== -->
+        <section class="slide" data-module="Module 2" data-lesson="Giới Thiệu Module 2">
+            <div class="slide-content" style="align-items: center; justify-content: center; text-align: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color: var(--accent-yellow);">MODULE 2</div>
+                <h2 class="slide-title" id="editable-s12-title" style="font-size: var(--title-size); line-height: 1.15;">
+                    TINH HOA PHƯƠNG PHÁP WYCKOFF<br><span style="color: var(--accent-purple);">(WYCKOFF SCHEMATICS)</span>
+                </h2>
+                <p id="editable-s12-desc" style="max-width: 700px; color: var(--text-secondary); font-size: 1.1rem;">
+                    Tìm hiểu các quy luật cung cầu vận hành thị trường của Richard Wyckoff. Giải mã hành vi mua gom ở đáy (Tích lũy) và phân phối bán xả ở đỉnh (Phân phối) của dòng tiền lớn.
+                </p>
+                <div class="grid-3-cards" style="width: 100%; max-width: 900px; margin-top: 1rem; text-align: left;">
+                    <div class="card">
+                        <div class="card-title">Bài 4</div>
+                        <p><strong>Chu Kỳ Thị Trường</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Hành vi của "Composite Man" trong 4 giai đoạn: Tích lũy, Đẩy giá, Phân phối, Đè giá.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-green">Bài 5</div>
+                        <p><strong>Sơ Đồ Tích Lũy</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Chi tiết 5 pha (Phase A-E) từ điểm Selling Climax, cú rũ bỏ Spring đến nhịp nhảy SOS bứt phá.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-red">Bài 6</div>
+                        <p><strong>Sơ Đồ Phân Phối</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Giải mã bẫy mua UTAD, các điểm phân phối LPSY và nhịp rơi tự do SOW.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 13: MODULE 2 - BAI 4 (WYCKOFF CYCLE) ==================== -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 4: Chu Kỳ Thị Trường">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Tinh Hoa Wyckoff</span>
+                    <span class="slide-number-tag">Trang 13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s13-title">Bài 4: Bốn Giai Đoạn <span>Chu Kỳ Thị Trường Wyckoff</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s13-desc">
+                        <div class="card-title accent-yellow">👤 Khái Niệm "Composite Man"</div>
+                        <p>Hãy coi toàn bộ thị trường hoạt động như một thực thể duy nhất. Composite Man chuẩn bị các chiến dịch tích trữ và bán xả một cách có kế hoạch.</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.3rem; font-size:12px;">
+                            <li><strong>1. Tích Lũy (Accumulation):</strong> Tổ chức gom hàng từ nhỏ lẻ bán cắt lỗ hoảng loạn. Giá đi ngang tích lũy.</li>
+                            <li><strong>2. Đẩy Giá (Markup):</strong> Cung cạn kiệt, tổ chức đẩy giá lên dễ dàng, tạo xu hướng tăng.</li>
+                            <li><strong>3. Phân Phối (Distribution):</strong> Tổ chức xả hàng cho nhỏ lẻ đang FOMO. Giá đi ngang phân phối.</li>
+                            <li><strong>4. Đè Giá (Markdown):</strong> Tổ chức thoát hết hàng, giá rơi tự do khi thiếu lực đỡ.</li>
+                        </ul>
+                    </div>
+
+                    <!-- SVG DIAGRAM: MARKET CYCLE LOOP -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Accumulation Range Box -->
+                            <rect x="20" y="120" width="60" height="30" fill="rgba(155, 81, 224, 0.05)" stroke="var(--accent-purple)" stroke-width="1" stroke-dasharray="2,2" />
+                            <text x="50" y="138" class="text-chart" text-anchor="middle" fill="var(--accent-purple)" font-weight="bold">TÍCH LŨY</text>
+                            <text x="50" y="148" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="7">(Strong Hands Gom)</text>
+
+                            <!-- Markup Arrow Line -->
+                            <path d="M 80 135 L 140 65" fill="none" stroke="var(--accent-green)" stroke-width="2.5" class="draw-line" />
+                            <text x="100" y="90" class="text-chart" fill="var(--accent-green)" font-weight="bold" transform="rotate(-40, 100, 90)">MARKUP ↗</text>
+
+                            <!-- Distribution Range Box -->
+                            <rect x="140" y="50" width="60" height="30" fill="rgba(255, 56, 96, 0.05)" stroke="var(--accent-red)" stroke-width="1" stroke-dasharray="2,2" />
+                            <text x="170" y="68" class="text-chart" text-anchor="middle" fill="var(--accent-red)" font-weight="bold">PHÂN PHỐI</text>
+                            <text x="170" y="78" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="7">(Weak Hands Nhận)</text>
+
+                            <!-- Markdown Arrow Line -->
+                            <path d="M 200 65 L 260 135" fill="none" stroke="var(--accent-red)" stroke-width="2.5" class="draw-line" />
+                            <text x="210" y="110" class="text-chart" fill="var(--accent-red)" font-weight="bold" transform="rotate(40, 210, 110)">MARKDOWN ↘</text>
+
+                            <!-- Flow Arrows -->
+                            <circle cx="50" cy="135" r="4" fill="var(--accent-purple)" class="pulse-purple-effect" />
+                            <circle cx="170" cy="65" r="4" fill="var(--accent-red)" class="pulse-purple-effect" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 14: MODULE 2 - BAI 5 (ACCUMULATION) ==================== -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 5: Sơ Đồ Tích Lũy">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Tinh Hoa Wyckoff</span>
+                    <span class="slide-number-tag">Trang 14</span>
+                </div>
+                <h2 class="slide-title" id="editable-s14-title">Bài 5: Giải Mã <span>Sơ Đồ Tích Lũy (Phase A - E)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s14-desc">
+                        <div class="card-title accent-green">🌱 5 Pha Tích Lũy Điển Hình</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.25rem; font-size:12px;">
+                            <li><strong>Phase A (Dừng xu hướng):</strong> Gồm PS, SC (Bán kiệt quệ), AR (Hồi tự động thiết lập biên kháng cự), ST (Secondary Test).</li>
+                            <li><strong>Phase B (Hấp thụ):</strong> Đi ngang dài hạn, tạo UA (Upthrust Action) quét biên trên. Cung được hấp thụ dần.</li>
+                            <li><strong>Phase C (Rũ bỏ):</strong> Cú **Spring** đâm thủng hỗ trợ dưới để quét sạch Stop Loss rồi rút chân đóng cửa lại trong range.</li>
+                            <li><strong>Phase D (SOS trong range):</strong> Xuất hiện nến tăng mạnh Volume lớn (SOS) và các nhịp hồi nông giữ đáy cao dần (LPS, BU).</li>
+                            <li><strong>Phase E (Markup):</strong> Giá thoát ly hẳn khỏi range, tăng tốc mạnh mẽ.</li>
+                        </ul>
+                    </div>
+
+                    <!-- SVG DIAGRAM: ACCUMULATION SCHEMATIC -->
+                    <div class="diagram-container" style="max-height: min(52vh, 340px);">
+                        <svg width="100%" height="100%" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Resistance Line -->
+                            <line x1="20" y1="60" x2="300" y2="60" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="3,3" />
+                            <text x="25" y="52" class="text-chart" fill="var(--accent-purple)">Kháng Cự (AR)</text>
+                            
+                            <!-- Support Line -->
+                            <line x1="20" y1="130" x2="300" y2="130" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="3,3" />
+                            <text x="25" y="145" class="text-chart" fill="var(--accent-purple)">Hỗ Trợ (SC)</text>
+
+                            <!-- Phase divisions -->
+                            <line x1="90" y1="30" x2="90" y2="170" stroke="rgba(155, 81, 224, 0.2)" stroke-width="0.8" stroke-dasharray="4,4" />
+                            <text x="55" y="180" class="text-chart" fill="var(--text-secondary)" font-size="7">Phase A</text>
+
+                            <line x1="180" y1="30" x2="180" y2="170" stroke="rgba(155, 81, 224, 0.2)" stroke-width="0.8" stroke-dasharray="4,4" />
+                            <text x="135" y="180" class="text-chart" fill="var(--text-secondary)" font-size="7">Phase B</text>
+
+                            <line x1="220" y1="30" x2="220" y2="170" stroke="rgba(155, 81, 224, 0.2)" stroke-width="0.8" stroke-dasharray="4,4" />
+                            <text x="200" y="180" class="text-chart" fill="var(--text-secondary)" font-size="7">Phase C</text>
+
+                            <line x1="270" y1="30" x2="270" y2="170" stroke="rgba(155, 81, 224, 0.2)" stroke-width="0.8" stroke-dasharray="4,4" />
+                            <text x="245" y="180" class="text-chart" fill="var(--text-secondary)" font-size="7">Phase D</text>
+                            <text x="290" y="180" class="text-chart" fill="var(--accent-green)" font-size="7">Phase E</text>
+
+                            <!-- Price Path (Wyckoff Accumulation) -->
+                            <path d="M 20 40 L 30 110 L 45 130 L 60 70 L 75 110 L 90 90 L 110 120 L 130 55 L 145 105 L 165 85 L 180 125 L 205 148 L 218 115 L 235 80 L 250 100 L 270 58 L 285 75 L 305 35" 
+                                  fill="none" stroke="var(--text-primary)" stroke-width="1.8" />
+
+                            <!-- Technical Labels -->
+                            <!-- SC -->
+                            <circle cx="45" cy="130" r="3" fill="var(--accent-red)" />
+                            <text x="45" y="124" class="text-chart" text-anchor="middle" font-size="7">SC</text>
+                            <!-- AR -->
+                            <circle cx="60" cy="70" r="3" fill="var(--accent-purple)" />
+                            <text x="60" y="65" class="text-chart" text-anchor="middle" font-size="7">AR</text>
+                            <!-- Spring -->
+                            <circle cx="205" cy="148" r="4.5" fill="none" stroke="var(--accent-yellow)" stroke-width="1" class="pulse-green-effect" />
+                            <text x="205" y="160" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)" font-weight="bold" font-size="8">Spring</text>
+                            <!-- SOS -->
+                            <circle cx="270" cy="58" r="3" fill="var(--accent-green)" />
+                            <text x="270" y="52" class="text-chart" text-anchor="middle" fill="var(--accent-green)" font-size="7">SOS</text>
+                            <!-- BU/LPS -->
+                            <circle cx="285" cy="75" r="3" fill="var(--accent-cyan)" />
+                            <text x="285" y="86" class="text-chart" text-anchor="middle" fill="var(--accent-cyan)" font-size="7">BU/LPS</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 15: MODULE 2 - BAI 6 (DISTRIBUTION) ==================== -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 6: Sơ Đồ Phân Phối">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Tinh Hoa Wyckoff</span>
+                    <span class="slide-number-tag">Trang 15</span>
+                </div>
+                <h2 class="slide-title" id="editable-s15-title">Bài 6: Giải Mã <span>Sơ Đồ Phân Phối (Phase A - E)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s15-desc">
+                        <div class="card-title accent-red">🍂 5 Pha Phân Phối Cốt Lõi</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.25rem; font-size:12px;">
+                            <li><strong>Phase A (Dừng xu hướng tăng):</strong> Gồm PSY, BC (Mua kiệt quệ FOMO), AR (Phản ứng tự động định hình hỗ trợ đáy range), ST.</li>
+                            <li><strong>Phase B (Phân phối hàng):</strong> Smart Money bán xả hàng, tạo UT (Upthrust) dụ mua nhưng giá đóng ngược vào range.</li>
+                            <li><strong>Phase C (Bẫy Mua UTAD):</strong> Cú vượt đỉnh range **UTAD** cực mạnh quét Stop Loss phe Short và trap phe Buy rồi rơi sâu bất ngờ.</li>
+                            <li><strong>Phase D (SOW trong range):</strong> Nhịp rơi mạnh phá vỡ hỗ trợ (SOW) và các cú hồi yếu ớt bị chặn lại (LPSY).</li>
+                            <li><strong>Phase E (Markdown):</strong> Giá rơi tự do ngoài range dưới áp lực bán tháo.</li>
+                        </ul>
+                    </div>
+
+                    <!-- SVG DIAGRAM: DISTRIBUTION SCHEMATIC -->
+                    <div class="diagram-container" style="max-height: min(52vh, 340px);">
+                        <svg width="100%" height="100%" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Resistance Line -->
+                            <line x1="20" y1="70" x2="300" y2="70" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="3,3" />
+                            <text x="25" y="62" class="text-chart" fill="var(--accent-red)">Kháng Cự (BC)</text>
+                            
+                            <!-- Support Line -->
+                            <line x1="20" y1="140" x2="300" y2="140" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="3,3" />
+                            <text x="25" y="153" class="text-chart" fill="var(--accent-red)">Hỗ Trợ (AR)</text>
+
+                            <!-- Phase divisions -->
+                            <line x1="90" y1="30" x2="90" y2="170" stroke="rgba(255, 56, 96, 0.2)" stroke-width="0.8" stroke-dasharray="4,4" />
+                            <text x="55" y="180" class="text-chart" fill="var(--text-secondary)" font-size="7">Phase A</text>
+
+                            <line x1="180" y1="30" x2="180" y2="170" stroke="rgba(255, 56, 96, 0.2)" stroke-width="0.8" stroke-dasharray="4,4" />
+                            <text x="135" y="180" class="text-chart" fill="var(--text-secondary)" font-size="7">Phase B</text>
+
+                            <line x1="220" y1="30" x2="220" y2="170" stroke="rgba(255, 56, 96, 0.2)" stroke-width="0.8" stroke-dasharray="4,4" />
+                            <text x="200" y="180" class="text-chart" fill="var(--text-secondary)" font-size="7">Phase C</text>
+
+                            <line x1="270" y1="30" x2="270" y2="170" stroke="rgba(255, 56, 96, 0.2)" stroke-width="0.8" stroke-dasharray="4,4" />
+                            <text x="245" y="180" class="text-chart" fill="var(--text-secondary)" font-size="7">Phase D</text>
+                            <text x="290" y="180" class="text-chart" fill="var(--accent-red)" font-size="7">Phase E</text>
+
+                            <!-- Price Path (Wyckoff Distribution) -->
+                            <path d="M 20 155 L 35 75 L 55 65 L 70 135 L 85 90 L 105 110 L 125 78 L 140 125 L 160 85 L 180 115 L 202 52 L 215 95 L 235 142 L 248 122 L 265 145 L 280 135 L 305 175" 
+                                  fill="none" stroke="var(--text-primary)" stroke-width="1.8" />
+
+                            <!-- Technical Labels -->
+                            <!-- BC -->
+                            <circle cx="55" cy="65" r="3" fill="var(--accent-red)" />
+                            <text x="55" y="58" class="text-chart" text-anchor="middle" font-size="7">BC</text>
+                            <!-- AR -->
+                            <circle cx="70" cy="135" r="3" fill="var(--accent-purple)" />
+                            <text x="70" y="145" class="text-chart" text-anchor="middle" font-size="7">AR</text>
+                            <!-- UTAD -->
+                            <circle cx="202" cy="52" r="4.5" fill="none" stroke="var(--accent-yellow)" stroke-width="1" class="pulse-purple-effect" />
+                            <text x="202" y="44" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)" font-weight="bold" font-size="8">UTAD</text>
+                            <!-- SOW -->
+                            <circle cx="235" cy="142" r="3" fill="var(--accent-red)" />
+                            <text x="235" y="152" class="text-chart" text-anchor="middle" fill="var(--accent-red)" font-size="7">SOW</text>
+                            <!-- LPSY -->
+                            <circle cx="280" cy="135" r="3" fill="var(--accent-cyan)" />
+                            <text x="280" y="128" class="text-chart" text-anchor="middle" fill="var(--accent-cyan)" font-size="7">LPSY</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 16: INTRO MODULE 3 ==================== -->
+        <section class="slide" data-module="Module 3" data-lesson="Giới Thiệu Module 3">
+            <div class="slide-content" style="align-items: center; justify-content: center; text-align: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color: var(--accent-yellow);">MODULE 3</div>
+                <h2 class="slide-title" id="editable-s16-title" style="font-size: var(--title-size); line-height: 1.15;">
+                    GIAO DỊCH THỰC CHIẾN<br><span style="color: var(--accent-purple);">VOLUME PROFILE (HỒ SƠ KHỐI LƯỢNG)</span>
+                </h2>
+                <p id="editable-s16-desc" style="max-width: 700px; color: var(--text-secondary); font-size: 1.1rem;">
+                    Nắm bắt cấu trúc thanh khoản ẩn sâu trên thị trường bằng cách theo dõi sự phân phối khối lượng theo chiều ngang. Xác định vùng giá trị Fair Value của tổ chức.
+                </p>
+                <div class="grid-3-cards" style="width: 100%; max-width: 900px; margin-top: 1rem; text-align: left;">
+                    <div class="card">
+                        <div class="card-title">Bài 7</div>
+                        <p><strong>Phân Loại Profile</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Sự khác nhau giữa Session Profile (Phiên), Visible Range (Khung nhìn) và Composite Profile (Dài hạn).</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-purple">Bài 8</div>
+                        <p><strong>Cấu Trúc Value Area</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Lý giải đường Point of Control (POC) và hai biên VAH/VAL theo phân phối chuẩn 70% thanh khoản.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">Bài 9</div>
+                        <p><strong>HVN vs LVN Thực Chiến</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Khai thác nút khối lượng dày HVN làm nam châm hút giá, nút mỏng LVN làm bức tường cản thép.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 17: MODULE 3 - BAI 7 (VOLUME PROFILE TYPES) ==================== -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài 7: Phân Loại Profile">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 3: Volume Profile</span>
+                    <span class="slide-number-tag">Trang 17</span>
+                </div>
+                <h2 class="slide-title" id="editable-s17-title">Bài 7: Phân Loại <span>Volume Profile & Ứng Dụng</span></h2>
+                <div class="grid-3-cards">
+                    <div class="card">
+                        <div class="card-title accent-purple">🌅 1. Session Profile</div>
+                        <p style="font-size:12px; margin-top:0.2rem;">Tính toán riêng cho mỗi ngày giao dịch độc lập. Thể hiện sự biến động thanh khoản ngắn hạn.</p>
+                        <p style="font-size:11px; font-weight:bold; color:var(--accent-yellow); margin-top:0.4rem;">➔ Chiến lược: Phù hợp cho Day Trader săn lùng cản phiên trước.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">👁️ 2. Visible Range Profile</div>
+                        <p style="font-size:12px; margin-top:0.2rem;">Tính toán khối lượng dựa trên các nến đang hiển thị trực quan trên màn hình. Tự động vẽ lại khi scroll.</p>
+                        <p style="font-size:11px; font-weight:bold; color:var(--accent-yellow); margin-top:0.4rem;">➔ Chiến lược: Phù hợp phân tích nhanh xu thế của con sóng hiện tại.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-green">🏰 3. Composite Profile</div>
+                        <p style="font-size:12px; margin-top:0.2rem;">Tính toán khối lượng trên một khoảng thời gian dài (tháng, năm). Tìm các vùng tích lũy chiến lược.</p>
+                        <p style="font-size:11px; font-weight:bold; color:var(--accent-yellow); margin-top:0.4rem;">➔ Chiến lược: Phù hợp cho Swing Trader tìm xu thế cốt lõi.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 18: MODULE 3 - BAI 8 (VALUE AREA) ==================== -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài 8: Cấu Trúc Value Area">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 3: Volume Profile</span>
+                    <span class="slide-number-tag">Trang 18</span>
+                </div>
+                <h2 class="slide-title" id="editable-s18-title">Bài 8: POC & Value Area <span>- Thanh Khoản Tổ Chức</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s18-desc">
+                        <div class="card-title accent-purple">📊 Quy Luật Phân Phối Chuẩn Gaussian</div>
+                        <p>Thị trường đấu giá dành 70% thời gian hoạt động trong Vùng Giá Trị (Value Area - VA) nơi người mua và bán đồng thuận giá cả.</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.3rem; font-size:12px;">
+                            <li><strong>Point of Control (POC):</strong> Mức giá có khối lượng giao dịch lớn nhất (đường hút giá).</li>
+                            <li><strong>Value Area High (VAH):</strong> Biên trên vùng giá trị. Vượt qua đây giá được coi là Đắt.</li>
+                            <li><strong>Value Area Low (VAL):</strong> Biên dưới vùng giá trị. Dưới đây giá được coi là Rẻ.</li>
+                        </ul>
+                    </div>
+
+                    <!-- SVG DIAGRAM: GAUSSIAN BELL PROFILE -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Bell curve horizontal histogram -->
+                            <!-- VAH line -->
+                            <line x1="20" y1="50" x2="280" y2="50" stroke="var(--accent-red)" stroke-width="1.2" stroke-dasharray="3,3" />
+                            <text x="230" y="45" class="text-chart" fill="var(--accent-red)" font-weight="bold">VAH (Biên Trên)</text>
+                            
+                            <!-- POC line -->
+                            <line x1="20" y1="100" x2="280" y2="100" stroke="var(--accent-yellow)" stroke-width="1.5" />
+                            <text x="230" y="94" class="text-chart" fill="var(--accent-yellow)" font-weight="bold">★ POC (Kiểm Soát)</text>
+
+                            <!-- VAL line -->
+                            <line x1="20" y1="150" x2="280" y2="150" stroke="var(--accent-green)" stroke-width="1.2" stroke-dasharray="3,3" />
+                            <text x="230" y="162" class="text-chart" fill="var(--accent-green)" font-weight="bold">VAL (Biên Dưới)</text>
+
+                            <!-- Volume Profile Curve Fill -->
+                            <path d="M 30 180 C 40 170, 50 160, 60 150 C 70 140, 80 120, 100 100 C 80 80, 70 60, 60 50 C 50 40, 40 30, 30 20 L 20 20 L 20 180 Z" 
+                                  fill="rgba(155, 81, 224, 0.15)" stroke="var(--accent-purple)" stroke-width="1.5" />
+
+                            <!-- Shaded Value Area -->
+                            <path d="M 60 150 C 70 140, 80 120, 100 100 C 80 80, 70 60, 60 50 L 20 50 L 20 150 Z" 
+                                  fill="rgba(0, 229, 255, 0.12)" />
+
+                            <text x="35" y="104" class="text-chart" fill="var(--text-primary)" font-size="8">VALUE AREA (70%)</text>
+                            <text x="40" y="165" class="text-chart" fill="var(--text-secondary)" font-size="7">Unfair Low</text>
+                            <text x="40" y="35" class="text-chart" fill="var(--text-secondary)" font-size="7">Unfair High</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 19: MODULE 3 - BAI 9 (HVN VS LVN) ==================== -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài 9: HVN vs LVN Thực Chiến">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 3: Volume Profile</span>
+                    <span class="slide-number-tag">Trang 19</span>
+                </div>
+                <h2 class="slide-title" id="editable-s19-title">Bài 9: Khai Thác <span>HVN vs LVN Thực Chiến</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s19-desc">
+                        <div class="card-title accent-cyan">⚖️ Đỉnh & Thung Lũng Khối Lượng</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.25rem; font-size:12px;">
+                            <li><strong>High Volume Nodes (HVN):</strong> Vùng lồi ra dày đặc. Nơi giá tích lũy đi ngang rất lâu (Nam châm hút giá làm chậm nhịp đi).</li>
+                            <li><strong>Low Volume Nodes (LVN):</strong> Vùng lõm sâu. Nơi thiếu thanh khoản khớp lệnh (Bức tường cản cực mạnh, giá đập vào dễ bật ngược hoặc phá qua sẽ chạy siêu nhanh).</li>
+                            <li><strong>Setup nPOC Bounce:</strong> Chờ giá hồi về Naked POC cũ rồi đánh đảo chiều khi có Volume từ chối xác xác nhận.</li>
+                            <li><strong>Setup LVN Breakout:</strong> Đặt lệnh chờ sẵn để đánh bứt phá khi giá nén chặt cạnh LVN rồi vượt qua khoảng trống.</li>
+                        </ul>
+                    </div>
+
+                    <!-- SVG DIAGRAM: CANDLES + HORIZONTAL PROFILE -->
+                    <div class="diagram-container" style="max-height: min(52vh, 340px);">
+                        <svg width="100%" height="100%" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Horizontal dashed reference line for POC -->
+                            <line x1="20" y1="100" x2="300" y2="100" stroke="var(--accent-yellow)" stroke-width="1.2" stroke-dasharray="3,3" />
+                            <text x="170" y="94" class="text-chart" fill="var(--accent-yellow)" font-size="8">Naked POC</text>
+
+                            <!-- Vertical grid lines -->
+                            <line x1="240" y1="20" x2="240" y2="180" stroke="rgba(255,255,255,0.06)" stroke-width="1" />
+
+                            <!-- Candlesticks (Price Chart) -->
+                            <!-- Candle 1 (Bull) -->
+                            <line x1="50" y1="110" x2="50" y2="160" class="wick bull" />
+                            <rect x="44" y="120" width="12" height="30" class="candle-body bull" />
+                            <!-- Candle 2 (Bear) -->
+                            <line x1="90" y1="80" x2="90" y2="140" class="wick bear" />
+                            <rect x="84" y="90" width="12" height="40" class="candle-body bear" />
+                            <!-- Candle 3 (Pinbar Rejection at POC) -->
+                            <line x1="130" y1="40" x2="130" y2="100" class="wick bull" style="stroke: var(--accent-yellow); stroke-width:2px;" />
+                            <rect x="124" y="45" width="12" height="15" class="candle-body bull" style="fill: var(--accent-yellow); stroke: var(--accent-yellow);" />
+                            <circle cx="130" cy="100" r="6" fill="none" stroke="var(--accent-yellow)" stroke-width="1" class="pulse-green-effect" />
+                            <text x="130" y="115" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)" font-size="7">Bounce at POC</text>
+
+                            <!-- Volume Profile Curve on the right (răng cưa) -->
+                            <path d="M 240 20 
+                                     C 260 30, 290 50, 290 60
+                                     C 290 70, 260 80, 255 90
+                                     C 250 95, 245 98, 242 100
+                                     C 245 102, 250 105, 265 110
+                                     C 285 120, 310 130, 310 140
+                                     C 310 150, 280 160, 260 170
+                                     C 250 175, 242 178, 240 180" 
+                                  fill="none" stroke="var(--accent-purple)" stroke-width="1.8" />
+                            
+                            <!-- Shaded nodes -->
+                            <path d="M 240 20 
+                                     C 260 30, 290 50, 290 60
+                                     C 290 70, 260 80, 255 90
+                                     C 250 95, 245 98, 242 100 L 240 100 Z" 
+                                  fill="rgba(155, 81, 224, 0.15)" />
+                                  
+                            <path d="M 240 100
+                                     C 245 102, 250 105, 265 110
+                                     C 285 120, 310 130, 310 140
+                                     C 310 150, 280 160, 260 170
+                                     C 250 175, 242 178, 240 180 Z" 
+                                  fill="rgba(0, 229, 255, 0.15)" />
+
+                            <!-- Node labels -->
+                            <text x="280" y="50" class="text-chart" fill="var(--accent-purple)" font-size="7">HVN (Kháng Cự)</text>
+                            <text x="245" y="103" class="text-chart" fill="var(--accent-yellow)" font-size="7" font-weight="bold">LVN (Cản thép)</text>
+                            <text x="290" y="150" class="text-chart" fill="var(--accent-cyan)" font-size="7">HVN (Hỗ trợ / POC)</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 20: MODULE 2 & 3 EXERCISES ==================== -->
+        <section class="slide" data-module="Module 2 & 3" data-lesson="Bài Tập Thực Hành">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2 & 3: Thực Hành Thực Chiến</span>
+                    <span class="slide-number-tag">Trang 20</span>
+                </div>
+                <h2 class="slide-title" id="editable-s20-title">Hệ Thống Bài Tập <span>Wyckoff & Volume Profile</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s20-desc">
+                        <div class="card-title accent-yellow">📝 Bài Tập Thực Hành</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.25rem; font-size:12px;">
+                            <li><strong>1. Giải mã Spring/UTAD thực tế:</strong> Chọn 1 biểu đồ vàng (XAUUSD) hoặc Crypto (BTCUSDT) khung H1. Hãy tìm và chụp lại 1 cú rũ bỏ Spring (trong tích lũy) hoặc UTAD (trong phân phối). Giải thích VPA tại cây nến quét thanh khoản đó.</li>
+                            <li><strong>2. Giao dịch theo Naked POC:</strong> Sử dụng công chỉ báo Volume Profile tìm các Naked POC của các ngày trước. Chụp lại phản ứng của giá khi giá chạm nPOC lần đầu tiên.</li>
+                        </ul>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-purple); background:rgba(155, 81, 224, 0.02);">
+                        <div class="card-title accent-purple">🛡️ Tư Duy Giao Dịch Chuyên Nghiệp</div>
+                        <p style="font-size:11.5px; line-height:1.45;">
+                            "Wyckoff cho bạn biết **ai đang làm chủ cuộc chơi và bẫy giá nằm ở đâu**. Volume Profile chỉ rõ cho bạn **mức giá nào có thanh khoản thực** để đặt điểm vào lệnh và dừng lỗ chuẩn xác. Sự hợp nhất của hai phương pháp này loại bỏ hoàn toàn việc giao dịch theo cảm tính."
+                        </p>
+                        <p style="font-size:12px; font-weight:bold; color:var(--accent-green); margin-top:0.4rem;">➔ Hãy kiên nhẫn chờ đợi các bẫy giá hoàn thành trước khi hành động!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 21: INTRO MODULE 4 ==================== -->
+        <section class="slide" data-module="Module 4" data-lesson="Giới Thiệu Module 4">
+            <div class="slide-content" style="align-items: center; justify-content: center; text-align: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color: var(--accent-yellow);">MODULE 4</div>
+                <h2 class="slide-title" id="editable-s21-title" style="font-size: var(--title-size); line-height: 1.15;">
+                    SÓNG WEIS WAVE VOLUME<br><span style="color: var(--accent-purple);">& NHỊP ĐI KHỐI LƯỢNG</span>
+                </h2>
+                <p id="editable-s21-desc" style="max-width: 700px; color: var(--text-secondary); font-size: 1.1rem;">
+                    Học cách loại bỏ nhiễu thời gian bằng phương pháp tích lũy volume theo sóng giá của David Weis. Phân tích nỗ lực thực của phe Mua/Bán theo từng con sóng.
+                </p>
+                <div class="grid-3-cards" style="width: 100%; max-width: 900px; margin-top: 1rem; text-align: left;">
+                    <div class="card">
+                        <div class="card-title">Bài 10</div>
+                        <p><strong>Weis Wave Volume</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Khái niệm gộp volume theo sóng và cách chỉ báo loại bỏ độ nhiễu của nến thời gian cố định.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-purple">Bài 11</div>
+                        <p><strong>Lực Đi Con Sóng</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Đọc vị nỗ lực lũy kế của sóng. Nhận diện sớm bẫy cạn kiệt lực qua phân kỳ sóng Volume.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">Bài 12</div>
+                        <p><strong>Điểm Đảo Chiều Sóng</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Xác định điểm đảo chiều khi xuất hiện sóng volume đối lập khổng lồ chặn đứng đà tăng.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 22: MODULE 4 - BAI 10 & 11 (WEIS WAVE VOLUME) ==================== -->
+        <section class="slide" data-module="Module 4" data-lesson="Bài 10 & 11: Nguyên Lý Sóng Volume">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 4: Sóng Weis Wave</span>
+                    <span class="slide-number-tag">Trang 22</span>
+                </div>
+                <h2 class="slide-title" id="editable-s22-title">Bài 10 & 11: <span>Nguyên Lý Weis Wave & Lực Đi Con Sóng</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s22-desc">
+                        <div class="card-title accent-purple">🌊 1. Nguyên Lý Gộp Khối Lượng Theo Sóng</div>
+                        <p style="font-size:12.5px;">Thay vị cắt nhỏ volume ra theo từng nến (ví dụ: M5, H1), Weis Wave cộng dồn toàn bộ volume cho đến khi giá đảo chiều ➔ Đo lường chính xác sức mạnh thực của sóng.</p>
+                        <div class="card-title accent-yellow" style="margin-top:0.4rem;">⚠️ 2. Phân Kỳ Cạn Kiệt Lực Sóng</div>
+                        <p style="font-size:12.5px;">Giá vượt đỉnh cũ tạo đỉnh cao mới (Higher High) nhưng cột volume sóng tăng sau lại nhỏ hơn sóng tăng trước ➔ Cảnh báo lực mua đẩy giá đã cạn kiệt. Chuẩn bị đảo chiều giảm cực mạnh.</p>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-purple); background:rgba(155, 81, 224, 0.02); display:flex; flex-direction:column; justify-content:center;">
+                        <div class="card-title">💡 Quy Tắc Vàng Quyết Định</div>
+                        <p style="font-size:12.5px; line-height:1.45;">"Giá di chuyển lên hoặc xuống dễ dàng chỉ vì sự thiếu cản của phe đối lập (volume nhỏ) chứ không có dòng tiền tổ chức tham gia đẩy sóng. Nhịp tăng/giảm đó rất dễ bị giật ngược khi gặp cản thực sự."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 23: MODULE 4 - BAI 12 (WAVE REVERSAL) ==================== -->
+        <section class="slide" data-module="Module 4" data-lesson="Bài 12: Điểm Đảo Chiều Sóng">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 4: Sóng Weis Wave</span>
+                    <span class="slide-number-tag">Trang 23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s23-title">Bài 12: Nhận Diện <span>Điểm Đảo Chiều Sóng Volume</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s23-desc">
+                        <div class="card-title accent-red">🚨 Sóng Đối Lập Đột Biến (Surge of Opposite Volume)</div>
+                        <p style="font-size:12.5px;">Xu thế tăng kết thúc khi xuất hiện một con sóng giảm mạnh đầu tiên đi kèm cột volume sóng giảm khổng lồ, phá vỡ đường xu hướng tăng.</p>
+                        <div class="highlight-box" style="margin-top:0.4rem; font-size:11.5px;">
+                            🎯 **Chiến lược:** Vào lệnh Short khi giá hồi phục yếu ớt tiếp theo (Up Wave) tạo ra cột volume sóng tăng cực nhỏ ➔ Xác nhận phe Mua đã kiệt sức hoàn toàn.
+                        </div>
+                    </div>
+
+                    <!-- SVG DIAGRAM: WEIS WAVE VOLUME -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Price waves (zigzag) -->
+                            <path d="M 20 150 L 80 50 L 120 110 L 180 40 L 220 130 L 260 160" fill="none" stroke="var(--text-primary)" stroke-width="1.8" />
+                            
+                            <!-- Highlights -->
+                            <line x1="80" y1="50" x2="180" y2="40" stroke="var(--accent-yellow)" stroke-width="1" stroke-dasharray="2,2" />
+                            <text x="130" y="32" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)">Giá tạo đỉnh cao hơn ↗</text>
+
+                            <circle cx="220" cy="130" r="4.5" fill="none" stroke="var(--accent-red)" stroke-width="1" class="pulse-green-effect" />
+                            <text x="250" y="125" class="text-chart" fill="var(--accent-red)" font-weight="bold">Surge ↘</text>
+
+                            <!-- Weis Wave Volume Bars -->
+                            <rect x="40" y="145" width="20" height="40" fill="var(--accent-green)" opacity="0.8" />
+                            <text x="50" y="195" class="text-chart" text-anchor="middle" fill="var(--accent-green)" font-size="7">Vol lớn</text>
+
+                            <rect x="90" y="165" width="20" height="20" fill="var(--accent-red)" opacity="0.8" />
+
+                            <rect x="140" y="155" width="20" height="30" fill="var(--accent-green)" opacity="0.8" />
+                            <text x="150" y="195" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)" font-size="7">Phân kỳ ↘</text>
+
+                            <rect x="190" y="135" width="20" height="50" fill="var(--accent-red)" opacity="0.8" class="pulse-purple-effect" />
+                            <text x="210" y="120" class="text-chart" fill="var(--accent-red)" font-size="7" font-weight="bold">Sóng sập lớn!</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 24: INTRO MODULE 5 ==================== -->
+        <section class="slide" data-module="Module 5" data-lesson="Giới Thiệu Module 5">
+            <div class="slide-content" style="align-items: center; justify-content: center; text-align: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color: var(--accent-yellow);">MODULE 5</div>
+                <h2 class="slide-title" id="editable-s24-title" style="font-size: var(--title-size); line-height: 1.15;">
+                    CÁC SETUP WYCKOFF &<br><span style="color: var(--accent-purple);">VOLUME HỢP NHẤT NÂNG CAO</span>
+                </h2>
+                <p id="editable-s24-desc" style="max-width: 700px; color: var(--text-secondary); font-size: 1.1rem;">
+                    Áp dụng toàn bộ kiến thức về cấu trúc giá và chiều sâu thanh khoản của khối lượng để xây dựng 3 bộ thiết lập giao dịch có tỷ lệ thắng và tỷ lệ R:R cao nhất.
+                </p>
+                <div class="grid-3-cards" style="width: 100%; max-width: 900px; margin-top: 1rem; text-align: left;">
+                    <div class="card">
+                        <div class="card-title">Bài 13</div>
+                        <p><strong>Spring & Upthrust</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Quy trình 3 bước bẫy quét thanh khoản biên range và nhịp test cạn volume để vào lệnh.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-purple">Bài 14</div>
+                        <p><strong>nPOC & VA Edge Play</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Khai thác Naked POC chưa chạm làm điểm tựa phản ứng và các setup biên của Value Area.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">Bài 15</div>
+                        <p><strong>No Supply / Demand Test</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Nhận diện nến thân hẹp volume cạn kiệt tại EMA 20 để bắt đầu nhịp tăng tốc mới.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 25: MODULE 5 - BAI 13 (SPRING SETUP) ==================== -->
+        <section class="slide" data-module="Module 5" data-lesson="Bài 13: Giao Dịch Spring">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 5: Setup Wyckoff Nâng Cao</span>
+                    <span class="slide-number-tag">Trang 25</span>
+                </div>
+                <h2 class="slide-title" id="editable-s25-title">Bài 13: Quy Trình <span>Giao Dịch Spring & Upthrust</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s25-desc">
+                        <div class="card-title accent-green">🎯 Quy Trình 3 Bước Vào Lệnh:</div>
+                        <p style="font-size:12.5px;"><strong>Bước 1: Quét biên (Sweep).</strong> Giá đâm thủng hỗ trợ range với cột volume cực lớn (Climax volume).</p>
+                        <p style="font-size:12.5px;"><strong>Bước 2: Chui lại range (Re-entry).</strong> Nến sau đóng cửa ngược vào trong range ➔ Phe Short dính bẫy.</p>
+                        <p style="font-size:12.5px;"><strong>Bước 3: Nhịp Test (Entry).</strong> Chờ giá hồi phục nhẹ giảm lại test đáy Spring với <strong>volume cực nhỏ</strong> ➔ Phe bán đã cạn. Vào lệnh Mua ngay khi nến Test đóng cửa.</p>
+                    </div>
+                    <div class="card active" style="border-color:var(--accent-green); background:rgba(0, 255, 102, 0.02); display:flex; flex-direction:column; justify-content:center;">
+                        <div class="card-title accent-green">🛡️ Quản Trị Vị Thế</div>
+                        <p style="font-size:13px;">Đặt dừng lỗ (SL) dưới đáy nến Spring 2 ticks. Chốt lời (TP) tại biên trên đối diện của Trading Range.</p>
+                        <p style="font-size:12px; font-weight:bold; color:var(--accent-green); margin-top:0.4rem;">➔ Tỷ lệ R:R lý tưởng thường từ 1:3 đến 1:5.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 26: MODULE 5 - BAI 14 (POC BOUNCE) ==================== -->
+        <section class="slide" data-module="Module 5" data-lesson="Bài 14: Setup nPOC Bounce">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 5: Setup Wyckoff Nâng Cao</span>
+                    <span class="slide-number-tag">Trang 26</span>
+                </div>
+                <h2 class="slide-title" id="editable-s26-title">Bài 14: Setup <span>POC Bounce & Value Area Edge Play</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s26-desc">
+                        <div class="card-title accent-purple">🛡️ 1. Naked POC Bounce Setup</div>
+                        <p style="font-size:12.5px;">Naked POC (nPOC) là Point of Control của các ngày giao dịch hôm trước chưa từng bị giá chạm lại. Nó hoạt động như một bức tường nam châm hút và nảy giá.</p>
+                        <p style="font-size:12px; font-weight:bold; color:var(--accent-yellow); margin-top:0.3rem;">➔ Hành động: Đặt lệnh đảo chiều ngay lần đầu giá chạm nPOC và xuất hiện phản ứng VPA rút chân.</p>
+                    </div>
+                    <div class="card" style="border-color:var(--accent-cyan); background:rgba(0, 229, 255, 0.02); display:flex; flex-direction:column; justify-content:center; gap:0.4rem;">
+                        <div class="card-title accent-cyan">⚖️ 2. Biên Value Area Edge Play</div>
+                        <p style="font-size:12.5px;">Trong một xu hướng tăng mạnh, biên dưới VAL (Value Area Low) của ngày hôm trước là vùng giá trị rẻ để mua vào.</p>
+                        <p style="font-size:12px; font-weight:bold; color:var(--accent-green); margin-top:0.2rem;">➔ Giao dịch: Chờ giá điều chỉnh (pullback) về VAL, mua khi có volume từ chối bán.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 27: MODULE 5 - BAI 15 (NO SUPPLY TEST) ==================== -->
+        <section class="slide" data-module="Module 5" data-lesson="Bài 15: Chiến Lược No Supply Test">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 5: Setup Wyckoff Nâng Cao</span>
+                    <span class="slide-number-tag">Trang 27</span>
+                </div>
+                <h2 class="slide-title" id="editable-s27-title">Bài 15: Chiến Lược <span>Cạn Kiệt Nguồn Cung (No Supply Test)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s27-desc">
+                        <div class="card-title accent-yellow">🔎 Cách Nhận Diện Nến No Supply Test</div>
+                        <p style="font-size:12.5px;">Xuất hiện khi giá hồi quy (pullback) về đường EMA 20 dốc lên trong xu hướng tăng:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.25rem; font-size:12px; margin-top:0.2rem;">
+                            <li><strong>Thân nến (Spread):</strong> Cực kỳ nhỏ hẹp (nến Doji hoặc nến thân nhỏ).</li>
+                            <li><strong>Giá đóng cửa:</strong> Đóng ở nửa dưới hoặc chính giữa nến.</li>
+                            <li><strong>Volume:</strong> Cực kỳ thấp (thấp nhất trong 10-15 nến gần đó).</li>
+                        </ul>
+                        <p style="font-size:11.5px; color:var(--text-secondary); margin-top:0.2rem;">➔ Ý nghĩa: Cho thấy không còn ai muốn bán giá thấp. Phe bán biến mất. Chỉ cần một lực mua nhỏ nến sau sẽ đẩy giá vọt tăng.</p>
+                    </div>
+
+                    <!-- SVG DIAGRAM: NO SUPPLY TEST ON EMA 20 -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- EMA 20 Curve -->
+                            <path d="M 20 160 Q 150 130 280 60" fill="none" stroke="var(--accent-cyan)" stroke-width="2.5" class="draw-line" />
+                            <text x="210" y="82" class="text-chart" fill="var(--accent-cyan)">EMA 20 Dốc Lên</text>
+
+                            <!-- Candlesticks -->
+                            <line x1="50" y1="80" x2="50" y2="130" class="wick bull" />
+                            <rect x="44" y="90" width="12" height="30" class="candle-body bull" />
+                            
+                            <line x1="90" y1="100" x2="90" y2="150" class="wick bear" />
+                            <rect x="84" y="110" width="12" height="30" class="candle-body bear" />
+
+                            <line x1="130" y1="125" x2="130" y2="138" class="wick bear" style="stroke: var(--accent-yellow); stroke-width:1.5px;" />
+                            <rect x="125" y="127" width="10" height="6" class="candle-body bear" style="fill: var(--accent-yellow); stroke: var(--accent-yellow);" />
+                            
+                            <circle cx="130" cy="133" r="10" fill="none" stroke="var(--accent-yellow)" stroke-width="1.2" class="pulse-green-effect" />
+                            <text x="130" y="110" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)" font-weight="bold" font-size="8">No Supply Test</text>
+
+                            <!-- Volume bars -->
+                            <rect x="44" y="160" width="12" height="25" fill="var(--accent-purple)" opacity="0.6" />
+                            <rect x="84" y="160" width="12" height="20" fill="var(--accent-purple)" opacity="0.6" />
+                            <rect x="124" y="175" width="12" height="5" fill="var(--accent-yellow)" />
+                            <text x="130" y="192" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)" font-size="7">Vol cực cạn</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 28: INTRO MODULE 6 ==================== -->
+        <section class="slide" data-module="Module 6" data-lesson="Giới Thiệu Module 6">
+            <div class="slide-content" style="align-items: center; justify-content: center; text-align: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color: var(--accent-yellow);">MODULE 6</div>
+                <h2 class="slide-title" id="editable-s28-title" style="font-size: var(--title-size); line-height: 1.15;">
+                    QUẢN TRỊ RỦI RO &<br><span style="color: var(--accent-purple);">LỘ TRÌNH LUYỆN TẬP 90 NGÀY</span>
+                </h2>
+                <p id="editable-s28-desc" style="max-width: 700px; color: var(--text-secondary); font-size: 1.1rem;">
+                    Bảo vệ dòng vốn bằng phương pháp toán học và thiết lập lộ trình rèn luyện kỷ luật thép 90 ngày để trở thành một nhà giao dịch Wyckoff thực chiến độc lập.
+                </p>
+                <div class="grid-3-cards" style="width: 100%; max-width: 900px; margin-top: 1rem; text-align: left;">
+                    <div class="card">
+                        <div class="card-title">Bài 16</div>
+                        <p><strong>Quản Lý Vốn Kelly</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Sử dụng công thức Kelly Criterion và bội số R để tính toán quy mô vị thế an toàn.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-purple">Bài 17</div>
+                        <p><strong>Kế Hoạch Hàng Ngày</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">Quy trình 4 bước lập kế hoạch giao dịch Wyckoff trước phiên để tránh giao dịch cảm xúc.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">Bài 18</div>
+                        <p><strong>Lộ Trình 90 Ngày</strong></p>
+                        <p style="font-size: 12px; margin-top: 0.2rem;">3 chặng rèn luyện nghiêm ngặt từ đọc biểu đồ VPA đến giao dịch Demo và Live vốn nhỏ.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 29: MODULE 6 - BAI 16 & 17 (RISK MANAGEMENT) ==================== -->
+        <section class="slide" data-module="Module 6" data-lesson="Bài 16 & 17: Quản Trị Rủi Ro">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 6: Quản Trị & Lộ Trình</span>
+                    <span class="slide-number-tag">Trang 29</span>
+                </div>
+                <h2 class="slide-title" id="editable-s29-title">Bài 16 & 17: <span>Công Thức Kelly & Kế Hoạch Chuẩn Phiên</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s29-desc">
+                        <div class="card-title accent-purple">🧮 1. Half-Kelly & R-multiple</div>
+                        <p style="font-size:12px;">Áp dụng công thức Kelly xác định quy mô rủi ro tối ưu:</p>
+                        <p style="font-size:11.5px; font-family:var(--font-mono); color:var(--accent-yellow);">K% = W - (1 - W) / R</p>
+                        <p style="font-size:12px;">Sử dụng <strong>Half-Kelly</strong> (rủi ro bằng 1/2 kết quả tính toán) để bảo vệ tài khoản ổn định. Đo lường hiệu suất theo đơn vị <strong>R-multiple</strong> (ví dụ: rủi ro 1% = 1R).</p>
+                    </div>
+                    <div class="card" style="border-color:var(--accent-cyan); background:rgba(0, 229, 255, 0.02); display:flex; flex-direction:column; justify-content:center; gap:0.25rem;">
+                        <div class="card-title accent-cyan">🗺️ 2. Quy Trình Chuẩn Bị Hàng Ngày</div>
+                        <p style="font-size:12px;"><strong>Bước 1:</strong> Xác định xu hướng HTF (Bias khung D1/H4).</p>
+                        <p style="font-size:12px;"><strong>Bước 2:</strong> Vẽ các vùng Trading Range (TR) khung H1/M15.</p>
+                        <p style="font-size:12px;"><strong>Bước 3:</strong> Định vị Phase hiện tại (Phase A - Phase E).</p>
+                        <p style="font-size:12px;"><strong>Bước 4:</strong> Đặt báo thức tại các vùng cản biên range và chờ đợi setup.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 30: MODULE 6 - BAI 18 (90 DAYS ROADMAP) ==================== -->
+        <section class="slide" data-module="Module 6" data-lesson="Bài 18: Lộ Trình 90 Ngày">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 6: Quản Trị & Lộ Trình</span>
+                    <span class="slide-number-tag">Trang 30</span>
+                </div>
+                <h2 class="slide-title" id="editable-s30-title">Bài 18: Lộ Trình <span>90 Ngày Làm Chủ Wyckoff Thực Chiến</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s30-desc">
+                        <div class="card-title accent-yellow">📅 3 Chặng Đường Rèn Luyện</div>
+                        <p style="font-size:12px;"><strong>• Chặng 1 (Ngày 1-30):</strong> Nhật ký VPA bar-by-bar. Tập trung đọc hành vi nến và mark các pha, không giao dịch.</p>
+                        <p style="font-size:12px;"><strong>• Chặng 2 (Ngày 31-60):</strong> Giao dịch Demo/Simulator. Luyện tập duy nhất setup Spring/Upthrust và Naked POC Bounce.</p>
+                        <p style="font-size:12px;"><strong>• Chặng 3 (Ngày 61-90):</strong> Live trading vốn siêu nhỏ (rủi ro tối đa 5 USD/lệnh). Rèn luyện tâm lý kỷ luật bội số R.</p>
+                    </div>
+
+                    <!-- SVG DIAGRAM: ROADMAP STEPS -->
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Connection Line -->
+                            <path d="M 50 150 Q 150 150 150 90 T 250 50" fill="none" stroke="rgba(155, 81, 224, 0.2)" stroke-width="4" />
+                            <path d="M 50 150 Q 150 150 150 90 T 250 50" fill="none" stroke="var(--accent-purple)" stroke-width="2" class="draw-line" />
+
+                            <!-- Station 1 (Day 1-30) -->
+                            <circle cx="50" cy="150" r="8" fill="var(--accent-purple)" class="pulse-purple-effect" />
+                            <text x="50" y="170" class="text-chart" text-anchor="middle" fill="var(--accent-purple)" font-weight="bold">Ngày 1 - 30</text>
+                            <text x="50" y="182" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="7">Nhật ký VPA</text>
+
+                            <!-- Station 2 (Day 31-60) -->
+                            <circle cx="150" cy="90" r="8" fill="var(--accent-cyan)" class="pulse-purple-effect" style="animation-name: pulseGreen;" />
+                            <text x="150" y="74" class="text-chart" text-anchor="middle" fill="var(--accent-cyan)" font-weight="bold">Ngày 31 - 60</text>
+                            <text x="150" y="62" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="7">Demo & Setup</text>
+
+                            <!-- Station 3 (Day 61-90) -->
+                            <circle cx="250" cy="50" r="8" fill="var(--accent-green)" class="pulse-green-effect" />
+                            <text x="250" y="34" class="text-chart" text-anchor="middle" fill="var(--accent-green)" font-weight="bold">Ngày 61 - 90</text>
+                            <text x="250" y="24" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="7">Live Vốn Nhỏ</text>
+
+                            <!-- Glowing stars/nodes -->
+                            <circle cx="95" cy="148" r="2" fill="var(--accent-yellow)" />
+                            <circle cx="195" cy="67" r="2" fill="var(--accent-yellow)" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Floating arrows for navigation (fallback) -->
+    <div class="slide-nav">
+        <button class="nav-btn" id="prevBtn" aria-label="Previous Slide">▲</button>
+        <button class="nav-btn" id="nextBtn" aria-label="Next Slide">▼</button>
+        <div class="nav-dots" id="navDots"></div>
+    </div>
+
+    <!-- =========================================================================
+         SCRIPTS: CONTROLLERS & INTERACTION
+         ========================================================================= -->
+    <script>
+        // --- 1. SLIDE PRESENTATION CONTROLLER ---
+        class SlidePresentation {
+            constructor() {
+                this.container = document.getElementById('slideContainer');
+                this.slides = Array.from(document.querySelectorAll('.slide'));
+                this.currentSlide = 0;
+                
+                this.init();
+            }
+
+            init() {
+                this.setupKeyboardNav();
+                this.setupTouchNav();
+                this.setupNavDots();
+                this.setupIntersectionObserver();
+                this.updateDynamicPageNumbers();
+                
+                // Track mouse wheel scroll
+                let scrollTimeout;
+                window.addEventListener('wheel', (e) => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(() => {
+                        if (e.deltaY > 30) {
+                            this.setActiveSlide(this.currentSlide + 1);
+                        } else if (e.deltaY < -30) {
+                            this.setActiveSlide(this.currentSlide - 1);
+                        }
+                    }, 50);
+                }, { passive: true });
+            }
+
+            setupIntersectionObserver() {
+                const observerOptions = {
+                    root: null,
+                    threshold: 0.5
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const index = this.slides.indexOf(entry.target);
+                            this.currentSlide = index;
+                            this.updateActiveState();
+                        }
+                    });
+                }, observerOptions);
+
+                this.slides.forEach(slide => observer.observe(slide));
+            }
+
+            updateDynamicPageNumbers() {
+                const total = this.slides.length;
+                this.slides.forEach((slide, idx) => {
+                    const pageTag = slide.querySelector('.slide-number-tag');
+                    if (pageTag) {
+                        pageTag.textContent = `Trang ${idx + 1}/${total}`;
+                    }
+                });
+            }
+
+            setActiveSlide(index) {
+                if (index < 0 || index >= this.slides.length) return;
+                this.currentSlide = index;
+                this.slides[index].scrollIntoView({ behavior: 'smooth' });
+                this.updateActiveState();
+            }
+
+            updateActiveState() {
+                this.slides.forEach((slide, idx) => {
+                    if (idx === this.currentSlide) {
+                        slide.classList.add('visible');
+                    } else {
+                        slide.classList.remove('visible');
+                    }
+                });
+
+                // Update progress bar
+                const percent = (this.currentSlide / (this.slides.length - 1)) * 100;
+                document.getElementById('progressBar').style.width = `${percent}%`;
+
+                // Update dots
+                const dots = document.querySelectorAll('.nav-dot');
+                dots.forEach((dot, idx) => {
+                    if (idx === this.currentSlide) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+
+                // Update sidebar active items
+                const sidebarItems = document.querySelectorAll('.sidebar-item');
+                sidebarItems.forEach(item => item.classList.remove('active'));
+                
+                // Find matching sidebar item based on data attributes of current slide
+                const currentSlideEl = this.slides[this.currentSlide];
+                const moduleName = currentSlideEl.getAttribute('data-module');
+                const lessonName = currentSlideEl.getAttribute('data-lesson');
+                
+                if (moduleName && lessonName) {
+                    sidebarItems.forEach(item => {
+                        if (item.getAttribute('data-slide-index') == this.currentSlide) {
+                            item.classList.add('active');
+                        }
+                    });
+                }
+            }
+
+            setupKeyboardNav() {
+                document.addEventListener('keydown', (e) => {
+                    // Do not navigate if user is currently editing text
+                    if (e.target.getAttribute('contenteditable') === 'true') return;
+
+                    if (e.key === 'ArrowDown' || e.key === 'Space') {
+                        e.preventDefault();
+                        this.setActiveSlide(this.currentSlide + 1);
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        this.setActiveSlide(this.currentSlide - 1);
+                    }
+                });
+            }
+
+            setupTouchNav() {
+                let startY = 0;
+                document.addEventListener('touchstart', (e) => {
+                    startY = e.touches[0].clientY;
+                }, { passive: true });
+
+                document.addEventListener('touchend', (e) => {
+                    const endY = e.changedTouches[0].clientY;
+                    const diff = startY - endY;
+
+                    if (Math.abs(diff) > 50) { // minimum threshold for swipe
+                        if (diff > 0) {
+                            this.setActiveSlide(this.currentSlide + 1);
+                        } else {
+                            this.setActiveSlide(this.currentSlide - 1);
+                        }
+                    }
+                }, { passive: true });
+            }
+
+            setupNavDots() {
+                const navDotsContainer = document.getElementById('navDots');
+                navDotsContainer.innerHTML = '';
+                
+                this.slides.forEach((slide, idx) => {
+                    const dot = document.createElement('button');
+                    dot.className = `nav-dot ${idx === 0 ? 'active' : ''}`;
+                    dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
+                    dot.addEventListener('click', () => {
+                        this.setActiveSlide(idx);
+                    });
+                    navDotsContainer.appendChild(dot);
+                });
+            }
+        }
+
+        // --- 2. CYBER SIDEBAR CONTROLLER ---
+        class SidebarController {
+            constructor(presentation) {
+                this.presentation = presentation;
+                this.toggleBtn = document.getElementById('sidebarToggle');
+                this.sidebar = document.getElementById('sidebar');
+                this.backdrop = document.getElementById('sidebarBackdrop');
+                this.menu = document.getElementById('sidebarMenu');
+                
+                this.init();
+            }
+
+            init() {
+                this.buildMenu();
+                
+                this.toggleBtn.addEventListener('click', () => this.toggleSidebar());
+                this.backdrop.addEventListener('click', () => this.closeSidebar());
+                
+                // Close sidebar on ESC key
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') this.closeSidebar();
+                });
+            }
+
+            toggleSidebar() {
+                this.sidebar.classList.toggle('open');
+                this.backdrop.classList.toggle('show');
+            }
+
+            closeSidebar() {
+                this.sidebar.classList.remove('open');
+                this.backdrop.classList.remove('show');
+            }
+
+            buildMenu() {
+                this.menu.innerHTML = '';
+                
+                // Add Intro Slide first
+                const homeLi = document.createElement('li');
+                homeLi.className = 'sidebar-item active';
+                homeLi.setAttribute('data-slide-index', '0');
+                homeLi.innerHTML = `
+                    <span class="sidebar-module-tag">MASTERCLASS</span>
+                    <span>Màn Hình Chào & Hướng Dẫn</span>
+                `;
+                homeLi.addEventListener('click', () => {
+                    this.presentation.setActiveSlide(0);
+                    this.closeSidebar();
+                });
+                this.menu.appendChild(homeLi);
+
+                // Group and add items
+                this.presentation.slides.forEach((slide, idx) => {
+                    if (idx === 0) return;
+                    
+                    const moduleName = slide.getAttribute('data-module');
+                    const lessonName = slide.getAttribute('data-lesson');
+                    
+                    if (moduleName && lessonName) {
+                        const li = document.createElement('li');
+                        li.className = 'sidebar-item';
+                        li.setAttribute('data-slide-index', idx);
+                        li.innerHTML = `
+                            <span class="sidebar-module-tag">${moduleName}</span>
+                            <span>${lessonName}</span>
+                        `;
+                        li.addEventListener('click', () => {
+                            this.presentation.setActiveSlide(idx);
+                            this.closeSidebar();
+                        });
+                        this.menu.appendChild(li);
+                    }
+                });
+            }
+        }
+
+        // --- 3. INLINE EDITING CONTROLLER WITH LOCALSTORAGE PERSISTENCE ---
+        class LessonEditor {
+            constructor() {
+                this.isActive = false;
+                this.editToggle = document.getElementById('editToggle');
+                this.hotzone = document.getElementById('editHotzone');
+                this.saveIndicator = document.getElementById('saveIndicator');
+                this.hideTimeout = null;
+                
+                this.setupEditingTrigger();
+                this.loadSavedContent();
+            }
+
+            setupEditingTrigger() {
+                // Hotzone hover with 400ms grace period to show Edit Button
+                this.hotzone.addEventListener('mouseenter', () => {
+                    clearTimeout(this.hideTimeout);
+                    this.editToggle.classList.add('show');
+                });
+                
+                this.hotzone.addEventListener('mouseleave', () => {
+                    this.hideTimeout = setTimeout(() => {
+                        if (!this.isActive) this.editToggle.classList.remove('show');
+                    }, 400);
+                });
+
+                this.editToggle.addEventListener('mouseenter', () => {
+                    clearTimeout(this.hideTimeout);
+                });
+
+                this.editToggle.addEventListener('mouseleave', () => {
+                    this.hideTimeout = setTimeout(() => {
+                        if (!this.isActive) this.editToggle.classList.remove('show');
+                    }, 400);
+                });
+
+                // Clicking hotzone or button toggles Edit Mode
+                this.editToggle.addEventListener('click', () => this.toggleEditMode());
+
+                // Keyboard E shortcut
+                document.addEventListener('keydown', (e) => {
+                    if ((e.key === 'e' || e.key === 'E') && e.target.getAttribute('contenteditable') !== 'true') {
+                        e.preventDefault();
+                        this.toggleEditMode();
+                    }
+                });
+            }
+
+            getEditableIds() {
+                const ids = [
+                    'editable-s1-title', 'editable-s1-desc',
+                    'editable-s2-title', 'editable-s2-desc',
+                    'editable-s3-title', 'editable-s3-desc',
+                    'editable-s4-title', 'editable-s4-desc',
+                    'editable-s5-title', 'editable-s5-card1', 'editable-s5-card2', 'editable-s5-card3',
+                    'editable-s6-title', 'editable-s6-desc',
+                    'editable-s7-title', 'editable-s7-desc',
+                    'editable-s8-title', 'editable-s8-desc',
+                    'editable-s9-title', 'editable-s9-desc',
+                    'editable-s10-title', 'editable-s10-desc',
+                    'editable-s11-title', 'editable-s11-desc',
+                    'editable-s12-title', 'editable-s12-desc',
+                    'editable-s13-title', 'editable-s13-desc',
+                    'editable-s14-title', 'editable-s14-desc',
+                    'editable-s15-title', 'editable-s15-desc',
+                    'editable-s16-title', 'editable-s16-desc',
+                    'editable-s17-title', 'editable-s17-desc',
+                    'editable-s18-title', 'editable-s18-desc',
+                    'editable-s19-title', 'editable-s19-desc',
+                    'editable-s20-title', 'editable-s20-desc',
+                    'editable-s21-title', 'editable-s21-desc',
+                    'editable-s22-title', 'editable-s22-desc',
+                    'editable-s23-title', 'editable-s23-desc',
+                    'editable-s24-title', 'editable-s24-desc',
+                    'editable-s25-title', 'editable-s25-desc',
+                    'editable-s26-title', 'editable-s26-desc',
+                    'editable-s27-title', 'editable-s27-desc',
+                    'editable-s28-title', 'editable-s28-desc',
+                    'editable-s29-title', 'editable-s29-desc',
+                    'editable-s30-title', 'editable-s30-desc'
+                ];
+                return ids;
+            }
+
+            toggleEditMode() {
+                this.isActive = !this.isActive;
+                
+                if (this.isActive) {
+                    this.editToggle.classList.add('active');
+                    this.editToggle.textContent = '💾 LƯU BÀI GIẢNG';
+                    this.enableEditableElements();
+                } else {
+                    this.editToggle.classList.remove('active');
+                    this.editToggle.textContent = '✏️ EDIT MODE (E)';
+                    this.disableEditableElements();
+                    this.saveContent();
+                }
+            }
+
+            enableEditableElements() {
+                this.getEditableIds().forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.setAttribute('contenteditable', 'true');
+                    }
+                });
+            }
+
+            disableEditableElements() {
+                this.getEditableIds().forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.removeAttribute('contenteditable');
+                    }
+                });
+            }
+
+            saveContent() {
+                const contentData = {};
+                this.getEditableIds().forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        contentData[id] = el.innerHTML;
+                    }
+                });
+
+                localStorage.setItem('wyckoff_volume_masterclass_data', JSON.stringify(contentData));
+                
+                // Show notification toast
+                this.saveIndicator.classList.add('show');
+                setTimeout(() => {
+                    this.saveIndicator.classList.remove('show');
+                }, 2000);
+            }
+
+            loadSavedContent() {
+                const saved = localStorage.getItem('wyckoff_volume_masterclass_data');
+                if (saved) {
+                    try {
+                        const contentData = JSON.parse(saved);
+                        Object.keys(contentData).forEach(id => {
+                            const el = document.getElementById(id);
+                            if (el) {
+                                el.innerHTML = contentData[id];
+                            }
+                        });
+                    } catch (e) {
+                        console.error("Lỗi khi tải dữ liệu bài giảng cũ:", e);
+                    }
+                }
+            }
+        }
+
+        // Initialize all controllers
+        window.addEventListener('DOMContentLoaded', () => {
+            const presentation = new SlidePresentation();
+            window.presentation = presentation;
+            window.sidebar = new SidebarController(presentation);
+            window.editor = new LessonEditor();
+
+            // Arrows fallback click handlers
+            document.getElementById('prevBtn').addEventListener('click', () => {
+                presentation.setActiveSlide(presentation.currentSlide - 1);
+            });
+            document.getElementById('nextBtn').addEventListener('click', () => {
+                presentation.setActiveSlide(presentation.currentSlide + 1);
+            });
+        });
+    </script>
+</body>
+</html>

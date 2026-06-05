@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Module 7 - Các setup Price Action thực chiến</title>
+  <link rel="stylesheet" href="course-theme.css">
+</head>
+<body>
+<main class="deck">
+  <section class="slide active">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Module 7 · Setup thực chiến</div>
+        <h1>Từ bối cảnh thành kế hoạch giao dịch cụ thể</h1>
+        <p class="lead">Module này gom các setup cốt lõi từ Al Brooks, Adam Grimes và Bob Volman theo một quy trình thực dụng: bối cảnh, vùng, tín hiệu, entry, stop, target.</p>
+        <div class="tagrow"><span class="tag green">Pullback</span><span class="tag amber">Failure Test</span><span class="tag">Breakout Pullback</span><span class="tag red">Range Fade</span><span class="tag violet">Double Pressure</span></div>
+      </div>
+      <div class="chartbox"><div class="chart-title"><b>Setup playbook</b><span>Context-driven trades</span></div><svg class="chart" id="chart-cover" viewBox="0 0 760 480"></svg></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div><div class="eyebrow">Mục tiêu học tập</div><h2>Mỗi setup phải trả lời đủ 6 câu hỏi</h2></div>
+      <div class="grid-3">
+        <div class="card"><div class="num">1</div><h3>Bối cảnh là gì?</h3><p>Trend, range, breakout mode, climax hay chuyển trạng thái?</p></div>
+        <div class="card"><div class="num">2</div><h3>Vùng nào đang được test?</h3><p>Hỗ trợ, kháng cự, breakout cũ, trendline, biên range?</p></div>
+        <div class="card"><div class="num">3</div><h3>Ai đang bị kẹt?</h3><p>Người mua breakout, người bán breakdown, người bắt đáy, người short ngược trend?</p></div>
+        <div class="card"><div class="num">4</div><h3>Entry kích hoạt ở đâu?</h3><p>Phá high/low signal bar, phá đường pullback nhỏ, retest fail?</p></div>
+        <div class="card"><div class="num">5</div><h3>Ý tưởng sai ở đâu?</h3><p>Stop phải nằm tại điểm cấu trúc mất hiệu lực.</p></div>
+        <div class="card"><div class="num">6</div><h3>Target hợp lý ở đâu?</h3><p>Đỉnh/đáy cũ, measured move, biên range, vùng cản kế tiếp.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox"><div class="chart-title"><b>Setup 1 · Trend Pullback</b><span>Trade with trend</span></div><svg class="chart" id="chart-trend-pullback" viewBox="0 0 760 480"></svg></div>
+      <div>
+        <div class="eyebrow">Setup 1 · Pullback theo xu hướng</div>
+        <h2>Setup nền tảng nhất: trend còn khỏe, giá hồi yếu về vùng hợp lý</h2>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Trend rõ bằng HH/HL hoặc LH/LL.</span></div>
+          <div class="check"><i>✓</i><span>Pullback yếu hơn nhịp trend, không phá cấu trúc.</span></div>
+          <div class="check"><i>✓</i><span>Entry khi có signal bar hoặc phá đường pullback nhỏ.</span></div>
+          <div class="check bad"><i>!</i><span>Bỏ qua nếu pullback quá sâu hoặc trend đã chuyển thành range.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Setup 2 · Failure Test</div>
+        <h2>Failure test: giá thử phá một vùng nhưng thất bại</h2>
+        <p class="lead">Adam Grimes nhấn mạnh failure test như một setup quan trọng: thị trường kiểm tra vùng cũ, không phá được, rồi đi ngược lại. Lợi thế nằm ở việc phe thử phá bị mắc kẹt.</p>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Vùng bị test phải rõ: swing high/low, biên range, hỗ trợ/kháng cự.</span></div>
+          <div class="check"><i>✓</i><span>Phá nhẹ hoặc test vùng nhưng không có follow-through.</span></div>
+          <div class="check"><i>✓</i><span>Entry khi giá quay lại và phá theo hướng ngược.</span></div>
+        </div>
+      </div>
+      <div class="chartbox"><div class="chart-title"><b>Setup 2 · Failure Test</b><span>Test fails, reversal triggers</span></div><svg class="chart" id="chart-failure-test" viewBox="0 0 760 480"></svg></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox"><div class="chart-title"><b>Setup 3 · Breakout Pullback</b><span>Retest after breakout</span></div><svg class="chart" id="chart-bopb" viewBox="0 0 760 480"></svg></div>
+      <div>
+        <div class="eyebrow">Setup 3 · Breakout Pullback</div>
+        <h2>Chờ retest giúp tránh mua/bán ngay lúc cảm xúc cao nhất</h2>
+        <div class="checklist">
+          <div class="check"><i>1</i><span>Breakout có thân nến rõ và close ngoài vùng.</span></div>
+          <div class="check"><i>2</i><span>Pullback quay lại test vùng vừa phá.</span></div>
+          <div class="check"><i>3</i><span>Vùng giữ được, tạo signal bar hoặc mini breakout.</span></div>
+          <div class="check"><i>4</i><span>SL sau vùng retest, TP tại vùng cản kế tiếp hoặc measured move.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Setup 4 · First Pullback</div>
+        <h2>Pullback đầu tiên sau breakout mạnh thường đáng chú ý</h2>
+        <p class="lead">Sau breakout mạnh, nhiều trader lỡ entry đầu sẽ chờ pullback đầu tiên. Nếu pullback yếu và giữ vùng phá vỡ, nó có thể tạo entry có xác suất tốt.</p>
+        <div class="mentor"><i>M</i><div><b>Lời giảng mentor</b><p>Đừng mua cây breakout quá xa nếu stop vô lý. Hãy chờ pullback đầu tiên. Nếu breakout thật, thị trường thường cho một cơ hội tiếp diễn có cấu trúc hơn.</p></div></div>
+      </div>
+      <div class="chartbox"><div class="chart-title"><b>Setup 4 · First Pullback</b><span>After strong breakout</span></div><svg class="chart" id="chart-first-pullback" viewBox="0 0 760 480"></svg></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox"><div class="chart-title"><b>Setup 5 · Range Fade</b><span>Buy low, sell high</span></div><svg class="chart" id="chart-range-fade" viewBox="0 0 760 480"></svg></div>
+      <div>
+        <div class="eyebrow">Setup 5 · Range Fade</div>
+        <h2>Trong range rõ, lợi thế nằm ở biên, không nằm ở giữa</h2>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Mua tại biên dưới khi có từ chối giảm hoặc spring.</span></div>
+          <div class="check"><i>✓</i><span>Bán tại biên trên khi có từ chối tăng hoặc upthrust.</span></div>
+          <div class="check"><i>✓</i><span>Target thường là giữa range hoặc biên đối diện, tùy lực.</span></div>
+          <div class="check bad"><i>!</i><span>Không fade breakout mạnh có follow-through.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Setup 6 · Range Break</div>
+        <h2>Range break tốt cần phá vỡ rõ và giữ được ngoài range</h2>
+        <p class="lead">Range càng lâu, breakout càng dễ thu hút chú ý. Nhưng cũng càng nhiều false break. Vì vậy cần đọc close, follow-through và retest.</p>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Biên range rõ, nhiều lần phản ứng.</span></div>
+          <div class="check"><i>✓</i><span>Nến phá đóng ngoài range.</span></div>
+          <div class="check"><i>✓</i><span>Retest không quay sâu lại range.</span></div>
+        </div>
+      </div>
+      <div class="chartbox"><div class="chart-title"><b>Setup 6 · Range Break</b><span>Accepted outside range</span></div><svg class="chart" id="chart-range-break" viewBox="0 0 760 480"></svg></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox"><div class="chart-title"><b>Setup 7 · Double Pressure</b><span>Two groups forced same direction</span></div><svg class="chart" id="chart-double-pressure" viewBox="0 0 760 480"></svg></div>
+      <div>
+        <div class="eyebrow">Setup 7 · Double Pressure</div>
+        <h2>Double pressure: hai nhóm trader cùng tạo lực về một hướng</h2>
+        <p class="lead">Theo Bob Volman, double pressure xuất hiện khi một nhóm vào theo hướng mới và nhóm còn lại buộc thoát lệnh sai. Ví dụ: breakout lên khiến buyer mới mua vào, đồng thời short seller phải cover.</p>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Có vùng rõ khiến một nhóm trader bị kẹt.</span></div>
+          <div class="check"><i>✓</i><span>Breakout hoặc reversal kích hoạt lệnh mới.</span></div>
+          <div class="check"><i>✓</i><span>Stop của phe sai hướng tạo thêm lực đẩy.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div><div class="eyebrow">So sánh setup</div><h2>Chọn setup theo trạng thái thị trường</h2></div>
+      <div class="grid-4">
+        <div class="card"><h3>Trend rõ</h3><p>Trend pullback, first pullback, second entry, breakout pullback.</p></div>
+        <div class="card"><h3>Range rõ</h3><p>Range fade, spring/upthrust, failure test tại biên range.</p></div>
+        <div class="card"><h3>Breakout mode</h3><p>Range break, inside range break, breakout pullback sau khi phá rõ.</p></div>
+        <div class="card"><h3>Climax</h3><p>Không đuổi giá. Chờ range hóa, failure test hoặc reversal có xác nhận.</p></div>
+      </div>
+      <div class="note">Không có setup tốt cho mọi trạng thái. Trader giỏi chọn đúng setup cho đúng môi trường.</div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Quản trị lệnh</div>
+        <h2>Mỗi setup phải có điểm sai rõ ràng</h2>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Pullback: sai khi giá phá vùng hồi và gãy cấu trúc.</span></div>
+          <div class="check"><i>✓</i><span>Failure test: sai khi giá quay lại phá vùng test theo hướng ban đầu.</span></div>
+          <div class="check"><i>✓</i><span>Breakout pullback: sai khi retest thất bại và giá quay vào range.</span></div>
+          <div class="check"><i>✓</i><span>Range fade: sai khi breakout có follow-through ngoài biên range.</span></div>
+        </div>
+      </div>
+      <div class="chartbox"><div class="chart-title"><b>Risk map</b><span>Invalidation points</span></div><svg class="chart" id="chart-risk-map" viewBox="0 0 760 480"></svg></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox"><div class="chart-title"><b>Worksheet</b><span>Build your setup journal</span></div><svg class="chart" id="chart-exercise" viewBox="0 0 760 480"></svg></div>
+      <div>
+        <div class="eyebrow">Bài tập thực hành</div>
+        <h2>Lập playbook cá nhân cho 5 setup</h2>
+        <div class="checklist">
+          <div class="check"><i>1</i><span>Chọn 5 setup bạn dễ hiểu nhất.</span></div>
+          <div class="check"><i>2</i><span>Với mỗi setup, tìm 10 ví dụ trên chart thật.</span></div>
+          <div class="check"><i>3</i><span>Ghi bối cảnh, vùng, trigger, SL, TP, kết quả.</span></div>
+          <div class="check"><i>4</i><span>Chỉ giữ setup có điều kiện rõ và lặp lại được.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div><div class="eyebrow">Quiz cuối Module 7</div><h2>Kiểm tra tư duy setup</h2></div>
+      <div class="quiz">
+        <div class="q">1. Vì sao không nên dùng cùng một setup cho mọi trạng thái thị trường?</div>
+        <div class="q">2. Pullback theo trend khác failure test ở điểm nào?</div>
+        <div class="q">3. Breakout pullback tốt cần điều kiện gì?</div>
+        <div class="q">4. Range fade sai khi nào?</div>
+        <div class="q">5. Double pressure là gì và vì sao nó tạo lực mạnh?</div>
+      </div>
+      <div class="note">Module tiếp theo: Mô hình biểu đồ - double top/bottom, H&S, triangle, wedge, flag và cách dùng Bulkowski theo bối cảnh.</div>
+    </div>
+  </section>
+  <footer><div class="progress" id="progress">Slide 1 / 13</div><div class="nav"><button id="prev" aria-label="Slide trước">‹</button><button id="next" aria-label="Slide sau">›</button></div><div class="dots" id="dots"></div></footer>
+</main>
+<script src="course-charts.js"></script>
+<script>
+const trend=[{o:100,h:108,l:98,c:106},{o:106,h:116,l:104,c:114},{o:114,h:118,l:108,c:110},{o:110,h:124,l:109,c:122},{o:122,h:130,l:120,c:128},{o:128,h:132,l:122,c:124},{o:124,h:128,l:114,c:120},{o:120,h:126,l:112,c:124},{o:124,h:136,l:122,c:134},{o:134,h:142,l:132,c:140}];
+function pullback(id){const c=drawCandles(id,trend),{svg,scale:s,x}=c;el('rect',{class:'support',x:78,y:s(118),width:590,height:44,rx:7},svg);el('line',{class:'entry',x1:x(7),y1:s(126),x2:670,y2:s(126)},svg);el('line',{class:'stop',x1:x(7),y1:s(112),x2:670,y2:s(112)},svg);label(svg,'Pullback yếu về hỗ trợ',92,s(118)+29,'#13845a',16)}
+function failure(id){const svg=document.getElementById(id);grid(svg);el('rect',{class:'resist',x:90,y:132,width:540,height:44,rx:7},svg);el('path',{class:'path-red',d:'M90 300 C150 210, 220 312, 300 168 L360 118 L430 206 L530 270 L640 340'},svg);label(svg,'Test kháng cự thất bại',292,108,'#c83f3f',17);el('line',{class:'entry',x1:420,y1:218,x2:650,y2:218},svg)}
+function bopb(id){const svg=document.getElementById(id);grid(svg);el('rect',{class:'range',x:80,y:210,width:360,height:110,rx:7},svg);el('path',{class:'path-green',d:'M90 270 C150 218, 230 322, 320 232 L430 178 L510 226 L620 138'},svg);label(svg,'Breakout → Retest → Tiếp diễn',260,112,'#13845a',17);el('line',{class:'entry',x1:500,y1:218,x2:650,y2:218},svg)}
+function rangeFade(id){const svg=document.getElementById(id);grid(svg);el('rect',{class:'range',x:90,y:128,width:540,height:220,rx:7},svg);el('path',{class:'path-amber',d:'M100 270 C150 140, 230 346, 300 160 S460 342, 620 150'},svg);label(svg,'Bán biên trên',460,116,'#c83f3f',16);label(svg,'Mua biên dưới',130,368,'#13845a',16)}
+function firstPB(id){const svg=document.getElementById(id);grid(svg);el('rect',{class:'range',x:90,y:238,width:300,height:84,rx:7},svg);el('path',{class:'path-green',d:'M100 280 C160 244, 230 320, 330 248 L420 132 L500 190 L620 112'},svg);label(svg,'Pullback đầu tiên sau breakout',388,218,'#245fa8',16)}
+function doublePressure(id){const svg=document.getElementById(id);grid(svg);el('rect',{class:'resist',x:90,y:206,width:540,height:44,rx:7},svg);el('path',{class:'path-green',d:'M100 288 C150 220, 230 300, 320 232 L420 160 L520 122 L640 88'},svg);label(svg,'Buyer mới mua',430,146,'#13845a',16);label(svg,'Short seller cover',360,264,'#245fa8',16)}
+pullback('chart-cover');pullback('chart-trend-pullback');failure('chart-failure-test');bopb('chart-bopb');firstPB('chart-first-pullback');rangeFade('chart-range-fade');bopb('chart-range-break');doublePressure('chart-double-pressure');pullback('chart-risk-map');pullback('chart-exercise');initDeck();
+</script>
+</body>
+</html>

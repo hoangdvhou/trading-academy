@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Module 10 - Entry, Stop Loss, Take Profit</title>
+  <link rel="stylesheet" href="course-theme.css">
+</head>
+<body>
+<main class="deck">
+  <section class="slide active">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Module 10 · Entry, SL, TP</div>
+        <h1>Biến setup thành kế hoạch giao dịch có rủi ro rõ ràng</h1>
+        <p class="lead">Một setup đẹp chưa đủ. Bạn cần entry hợp lý, stop đặt theo cấu trúc, target thực tế và hiểu kỳ vọng xác suất trước khi bấm lệnh.</p>
+        <div class="tagrow"><span class="tag">Entry</span><span class="tag red">Stop Loss</span><span class="tag green">Take Profit</span><span class="tag amber">R:R</span><span class="tag violet">Expectancy</span></div>
+      </div>
+      <div class="chartbox"><div class="chart-title"><b>Trade plan overlay</b><span>Entry · Stop · Target</span></div><svg class="chart" id="chart-cover" viewBox="0 0 760 480"></svg></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div><div class="eyebrow">Mục tiêu học tập</div><h2>Sau module này, bạn không còn vào lệnh khi chưa biết điểm sai</h2></div>
+      <div class="grid-4">
+        <div class="card"><div class="num">1</div><h3>Entry theo trigger</h3><p>Không vào vì cảm giác. Vào khi thị trường kích hoạt ý tưởng.</p></div>
+        <div class="card"><div class="num">2</div><h3>SL theo cấu trúc</h3><p>Stop nằm ở điểm chứng minh setup sai, không phải điểm bạn muốn lỗ ít.</p></div>
+        <div class="card"><div class="num">3</div><h3>TP theo vùng</h3><p>Target dựa trên cản, measured move, range, hoặc vùng giá được chấp nhận/từ chối.</p></div>
+        <div class="card"><div class="num">4</div><h3>Expectancy</h3><p>R:R đẹp vô nghĩa nếu xác suất thấp và bạn không thực thi nhất quán.</p></div>
+      </div>
+      <div class="note">Câu hỏi trước lệnh: nếu lệnh này sai, thị trường phải làm gì để chứng minh mình sai?</div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox"><div class="chart-title"><b>Entry types</b><span>Stop order · Limit order · Confirmation</span></div><svg class="chart" id="chart-entry-types" viewBox="0 0 760 480"></svg></div>
+      <div>
+        <div class="eyebrow">Bài 10A · Các kiểu Entry</div>
+        <h2>Mỗi kiểu entry đổi lấy một loại rủi ro khác nhau</h2>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span><b>Stop entry:</b> vào khi giá phá signal bar, xác nhận tốt hơn nhưng có thể muộn.</span></div>
+          <div class="check"><i>✓</i><span><b>Limit entry:</b> vào giá tốt hơn nhưng dễ bị bắt dao rơi nếu bối cảnh sai.</span></div>
+          <div class="check"><i>✓</i><span><b>Confirmation entry:</b> chờ thêm nến xác nhận, an toàn hơn nhưng R:R có thể kém.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Bài 10B · Stop Loss</div>
+        <h2>Stop loss tốt nằm sau cấu trúc, không nằm trong vùng nhiễu</h2>
+        <p class="lead">Nếu bạn đặt stop quá sát chỉ để R:R đẹp, bạn đang để thị trường bình thường quét mình ra trước khi setup có cơ hội hoạt động.</p>
+        <div class="mentor"><i>M</i><div><b>Lời giảng mentor</b><p>Stop không phải nơi bạn “chịu được lỗ”. Stop là nơi ý tưởng giao dịch không còn đúng.</p></div></div>
+      </div>
+      <div class="chartbox"><div class="chart-title"><b>Good stop vs tight stop</b><span>Structure-based invalidation</span></div><svg class="chart" id="chart-stop" viewBox="0 0 760 480"></svg></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox"><div class="chart-title"><b>Target placement</b><span>Previous high · Resistance · Measured move</span></div><svg class="chart" id="chart-target" viewBox="0 0 760 480"></svg></div>
+      <div>
+        <div class="eyebrow">Bài 10C · Take Profit</div>
+        <h2>Target tốt nằm ở nơi thị trường có lý do phản ứng</h2>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Đỉnh/đáy cũ, biên range, hỗ trợ/kháng cự kế tiếp.</span></div>
+          <div class="check"><i>✓</i><span>Measured move nếu thị trường có momentum tốt.</span></div>
+          <div class="check"><i>✓</i><span>POC/Value Area nếu dùng Volume Profile.</span></div>
+          <div class="check bad"><i>!</i><span>Không đặt TP xa chỉ vì muốn R:R đẹp.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Bài 10D · R:R</div>
+        <h2>R:R không thể tách khỏi xác suất</h2>
+        <p class="lead">Một lệnh R:R 3:1 nhưng xác suất rất thấp có thể tệ hơn lệnh 1.5:1 có xác suất cao và dễ thực thi. Cần nhìn expectancy, không chỉ nhìn hình học.</p>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Expectancy = Win rate × Avg win - Loss rate × Avg loss.</span></div>
+          <div class="check"><i>✓</i><span>R:R cao thường đòi hỏi giữ lệnh lâu hơn và chịu pullback nhiều hơn.</span></div>
+          <div class="check"><i>✓</i><span>Scalp, intraday swing, daily swing cần R:R và xác suất khác nhau.</span></div>
+        </div>
+      </div>
+      <div class="chartbox"><div class="chart-title"><b>R:R and probability</b><span>Expectancy, not fantasy</span></div><svg class="chart" id="chart-rr" viewBox="0 0 760 480"></svg></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox"><div class="chart-title"><b>Trade management</b><span>Hold, scale, exit early</span></div><svg class="chart" id="chart-management" viewBox="0 0 760 480"></svg></div>
+      <div>
+        <div class="eyebrow">Bài 10E · Quản trị sau khi vào lệnh</div>
+        <h2>Vào lệnh xong mới là bắt đầu quản trị</h2>
+        <div class="checklist">
+          <div class="check"><i>✓</i><span>Nếu giá đi đúng nhanh: có thể dời stop theo cấu trúc hoặc chốt một phần.</span></div>
+          <div class="check"><i>✓</i><span>Nếu giá đi đúng nhưng yếu: quan sát vùng cản gần và giảm kỳ vọng.</span></div>
+          <div class="check"><i>✓</i><span>Nếu giá không đi sau entry: setup có thể mất lực.</span></div>
+          <div class="check bad"><i>!</i><span>Không dời stop ngẫu nhiên vì sợ thua.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div><div class="eyebrow">3 loại kế hoạch thoát</div><h2>Thoát lệnh phải được định nghĩa trước khi vào</h2></div>
+      <div class="grid-3">
+        <div class="card"><h3>Thoát theo giá</h3><p>TP tại vùng cản, measured move, biên range, high/low cũ.</p></div>
+        <div class="card"><h3>Thoát theo hành vi</h3><p>Giá tạo signal ngược, breakout fail, mất momentum, không follow-through.</p></div>
+        <div class="card"><h3>Thoát theo thời gian</h3><p>Sau một số nến mà setup không đi, hoặc gần tin tức/đóng phiên.</p></div>
+      </div>
+      <div class="note">Một exit tốt không cần bắt đúng đỉnh đáy. Nó cần nhất quán với lý do vào lệnh.</div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split">
+      <div>
+        <div class="eyebrow">Case study</div>
+        <h2>Cùng setup, stop khác nhau tạo kết quả khác nhau</h2>
+        <p class="lead">Stop quá sát có thể bị quét bởi nhiễu bình thường. Stop quá xa làm position size nhỏ và R:R kém. Stop hợp lý nằm sau cấu trúc vừa đủ để setup được chứng minh đúng/sai.</p>
+      </div>
+      <div class="chartbox"><div class="chart-title"><b>Stop placement comparison</b><span>Too tight · Structural · Too wide</span></div><svg class="chart" id="chart-stop-compare" viewBox="0 0 760 480"></svg></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div><div class="eyebrow">Playbook Module 10</div><h2>Checklist kế hoạch lệnh hoàn chỉnh</h2></div>
+      <div class="grid-4">
+        <div class="card"><div class="num">1</div><h3>Ý tưởng</h3><p>Setup là gì? Trend pullback, failure test, breakout pullback, range fade?</p></div>
+        <div class="card"><div class="num">2</div><h3>Trigger</h3><p>Giá phải làm gì để mình vào? Phá high/low, retest, close xác nhận?</p></div>
+        <div class="card"><div class="num">3</div><h3>Invalidation</h3><p>Giá phải làm gì để chứng minh mình sai?</p></div>
+        <div class="card"><div class="num">4</div><h3>Exit</h3><p>TP ở đâu, quản trị ra sao nếu giá đi yếu/mạnh/ngược?</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap split reverse">
+      <div class="chartbox"><div class="chart-title"><b>Worksheet</b><span>Write the trade plan first</span></div><svg class="chart" id="chart-exercise" viewBox="0 0 760 480"></svg></div>
+      <div>
+        <div class="eyebrow">Bài tập thực hành</div>
+        <h2>Viết 20 kế hoạch lệnh trước khi xem kết quả</h2>
+        <div class="checklist">
+          <div class="check"><i>1</i><span>Chọn 20 setup trên chart quá khứ, che phần bên phải.</span></div>
+          <div class="check"><i>2</i><span>Ghi entry, SL, TP, R:R và lý do invalidation.</span></div>
+          <div class="check"><i>3</i><span>Mở chart sang phải và ghi kết quả khách quan.</span></div>
+          <div class="check"><i>4</i><span>Phân tích lỗi: entry muộn, stop sai, target ảo, quản trị cảm xúc.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <div><div class="eyebrow">Quiz cuối Module 10</div><h2>Kiểm tra tư duy quản trị lệnh</h2></div>
+      <div class="quiz">
+        <div class="q">1. Stop loss nên đặt theo số tiền muốn lỗ hay theo điểm invalidation?</div>
+        <div class="q">2. Vì sao R:R đẹp không đảm bảo setup tốt?</div>
+        <div class="q">3. Khi nào nên chốt sớm dù chưa chạm TP?</div>
+        <div class="q">4. Stop quá sát và stop quá xa gây vấn đề gì?</div>
+        <div class="q">5. Một kế hoạch lệnh hoàn chỉnh cần có những thành phần nào?</div>
+      </div>
+      <div class="note">Module tiếp theo: Quản trị rủi ro, position sizing, drawdown, risk of ruin và kế hoạch giao dịch.</div>
+    </div>
+  </section>
+  <footer><div class="progress" id="progress">Slide 1 / 12</div><div class="nav"><button id="prev" aria-label="Slide trước">‹</button><button id="next" aria-label="Slide sau">›</button></div><div class="dots" id="dots"></div></footer>
+</main>
+<script src="course-charts.js"></script>
+<script>
+const d=[{o:100,h:108,l:98,c:106},{o:106,h:116,l:104,c:114},{o:114,h:118,l:108,c:110},{o:110,h:124,l:109,c:122},{o:122,h:130,l:120,c:128},{o:128,h:132,l:122,c:124},{o:124,h:128,l:114,c:120},{o:120,h:126,l:112,c:124},{o:124,h:136,l:122,c:134},{o:134,h:142,l:132,c:140}];
+function plan(id){const c=drawCandles(id,d),{svg,scale:s,x}=c;el('rect',{class:'support',x:78,y:s(118),width:590,height:44,rx:7},svg);el('rect',{class:'resist',x:78,y:s(140),width:590,height:38,rx:7},svg);el('line',{class:'entry',x1:x(7),y1:s(126),x2:670,y2:s(126)},svg);el('line',{class:'stop',x1:x(7),y1:s(112),x2:670,y2:s(112)},svg);el('line',{class:'target',x1:x(7),y1:s(140),x2:670,y2:s(140)},svg);label(svg,'Entry',674,s(126)+6,'#245fa8',16);label(svg,'SL',674,s(112)+6,'#c83f3f',16);label(svg,'TP',674,s(140)+6,'#13845a',16)}
+function entryTypes(){plan('chart-entry-types');const svg=document.getElementById('chart-entry-types');label(svg,'Stop entry: xác nhận',350,222,'#245fa8',16);label(svg,'Limit entry: giá tốt hơn, rủi ro hơn',160,300,'#b77918',16)}
+function stop(){plan('chart-stop');const svg=document.getElementById('chart-stop');el('line',{x1:250,y1:300,x2:660,y2:300,stroke:'#c83f3f','stroke-width':3,'stroke-dasharray':'5 5'},svg);label(svg,'Stop quá sát nằm trong nhiễu',330,292,'#c83f3f',16)}
+function target(){plan('chart-target')}
+function rr(){const svg=document.getElementById('chart-rr');grid(svg);el('rect',{x:120,y:100,width:160,height:260,rx:8,fill:'#dff3e8',stroke:'#13845a'},svg);el('rect',{x:430,y:220,width:160,height:140,rx:8,fill:'#f8dfdc',stroke:'#c83f3f'},svg);label(svg,'Avg Win',158,90,'#13845a',18);label(svg,'Avg Loss',466,210,'#c83f3f',18);label(svg,'Expectancy = xác suất × kết quả',220,420,'#245fa8',18)}
+function management(){plan('chart-management');const svg=document.getElementById('chart-management');el('path',{class:'path-blue dash',d:'M420 230 L510 190 L610 146'},svg);label(svg,'Dời stop theo cấu trúc, không theo cảm xúc',260,86,'#245fa8',16)}
+function compare(){plan('chart-stop-compare');const svg=document.getElementById('chart-stop-compare');label(svg,'Quá sát',246,304,'#c83f3f',15);label(svg,'Theo cấu trúc',460,368,'#13845a',15);label(svg,'Quá xa',530,420,'#b77918',15)}
+plan('chart-cover');entryTypes();stop();target();rr();management();compare();plan('chart-exercise');initDeck();
+</script>
+</body>
+</html>
