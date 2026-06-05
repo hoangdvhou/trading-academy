@@ -11,7 +11,7 @@
     
     /* Giao diện chọn Khóa Học */
     .portal-header { text-align: center; margin-bottom: 12px; }
-    .courses-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+    .courses-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
     
     /* Giao diện danh sách Module khóa 1 */
     .course-detail { display: none; width: min(1180px, 100%); margin: 0 auto; display: grid; gap: 24px; }
@@ -23,7 +23,7 @@
     .card-body { display: grid; gap: 8px; }
     .card-footer { margin-top: 14px; display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--line); padding-top: 10px; font-weight: 800; font-size: 14px; }
     
-    .course-card { min-height: 280px; }
+    .course-card { min-height: 240px; }
     .course-card .card-footer { color: var(--blue); }
     
     .meta { color: var(--muted); font-size: 14px; font-weight: 800; }
@@ -111,15 +111,28 @@
             <p>12 Module bài giảng nền tảng đọc bối cảnh, nến tín hiệu vi mô, cấu trúc sóng hồi và thiết lập điểm vào lệnh có lợi thế.</p>
           </div>
           <div class="card-footer">
-            <span>📚 12 Modules</span>
+            <span>📚 12 Modules (Nền tảng)</span>
             <span>Bắt đầu học →</span>
           </div>
         </div>
 
         <!-- Khóa 2 -->
-        <div class="panel card course-card" onclick="window.location.hash = 'mental_game_risk_math.html'">
+        <div class="panel card course-card" onclick="window.location.hash = 'masterclass_presentation.html'">
           <div class="card-body">
             <span class="meta">Khóa Học 02</span>
+            <h3>Price Action Masterclass</h3>
+            <p>Khóa học nâng cao hợp nhất tinh hoa của Al Brooks, Bob Volman và Thomas Bulkowski. Bao gồm 12 Module (32 Bài học thực chiến).</p>
+          </div>
+          <div class="card-footer">
+            <span>⚡ 12 Modules (32 bài học)</span>
+            <span>Bắt đầu học →</span>
+          </div>
+        </div>
+
+        <!-- Khóa 3 -->
+        <div class="panel card course-card" onclick="window.location.hash = 'mental_game_risk_math.html'">
+          <div class="card-body">
+            <span class="meta">Khóa Học 03</span>
             <h3>The Mental Game & Risk Math</h3>
             <p>Khóa học làm chủ tâm lý giao dịch qua phương pháp Mental Hand History và toán học quản trị rủi ro, định cỡ vị thế co giãn.</p>
           </div>
@@ -129,10 +142,10 @@
           </div>
         </div>
 
-        <!-- Khóa 3 -->
+        <!-- Khóa 4 -->
         <div class="panel card course-card" onclick="window.location.hash = 'wyckoff_volume_masterclass.html'">
           <div class="card-body">
-            <span class="meta">Khóa Học 03</span>
+            <span class="meta">Khóa Học 04</span>
             <h3>Wyckoff & Volume Masterclass</h3>
             <p>Lý thuyết hộp Wyckoff, tích lũy/phân phối, phân tích khối lượng chênh lệch VSA và chu kỳ cung cầu chuyên sâu.</p>
           </div>
@@ -222,16 +235,21 @@
         } else {
           moduleTitle.textContent = "Khóa 1: Price Action Foundation";
         }
-      } else if (hash === '#mental_game_risk_math.html') {
-        // Xem slide Khóa 2
+      } else if (hash === '#masterclass_presentation.html') {
+        // Xem slide Khóa 2 (Price Action Masterclass nâng cao)
         moduleViewer.style.display = 'flex';
-        moduleFrame.src = 'mental_game_risk_math.html';
-        moduleTitle.textContent = "Khóa 2: The Mental Game & Risk Math";
-      } else if (hash === '#wyckoff_volume_masterclass.html') {
+        moduleFrame.src = 'masterclass_presentation.html';
+        moduleTitle.textContent = "Khóa 2: Price Action Masterclass (Nâng cao)";
+      } else if (hash === '#mental_game_risk_math.html') {
         // Xem slide Khóa 3
         moduleViewer.style.display = 'flex';
+        moduleFrame.src = 'mental_game_risk_math.html';
+        moduleTitle.textContent = "Khóa 3: The Mental Game & Risk Math";
+      } else if (hash === '#wyckoff_volume_masterclass.html') {
+        // Xem slide Khóa 4
+        moduleViewer.style.display = 'flex';
         moduleFrame.src = 'wyckoff_volume_masterclass.html';
-        moduleTitle.textContent = "Khóa 3: Wyckoff & Volume Masterclass";
+        moduleTitle.textContent = "Khóa 4: Wyckoff & Volume Masterclass";
       }
     }
 
@@ -251,7 +269,7 @@
         // Nếu đang xem bài học Khóa 1, quay lại danh sách bài học Khóa 1
         window.location.hash = 'course-1';
       } else {
-        // Nếu là Khóa 2 hoặc Khóa 3, quay lại trang chủ Portal chính
+        // Nếu là Khóa 2, 3 hoặc 4, quay lại trang chủ Portal chính
         window.location.hash = '';
       }
     });
