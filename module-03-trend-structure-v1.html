@@ -275,18 +275,160 @@ function grid(svg,w=760,h=480,p=54){svg.innerHTML='';el('rect',{width:w,height:h
 function scaleFactory(min,max,top,bottom){return v=>bottom-((v-min)/(max-min))*(bottom-top)}
 function candle(svg,x,o,h,l,c,s,cls){const yO=s(o),yH=s(h),yL=s(l),yC=s(c),top=Math.min(yO,yC),height=Math.max(5,Math.abs(yC-yO));el('line',{class:'wick',x1:x,y1:yH,x2:x,y2:yL},svg);el('rect',{class:cls||(c>=o?'bull':'bear'),x:x-9,y:top,width:18,height,rx:3},svg)}
 function drawCandles(id,data,opt={}){const svg=document.getElementById(id),w=opt.w||760,h=opt.h||480,p=opt.pad||54;grid(svg,w,h,p);const min=Math.min(...data.map(d=>d.l))-2,max=Math.max(...data.map(d=>d.h))+2,s=scaleFactory(min,max,p,h-p),step=(w-p*2)/(data.length-1);data.forEach((d,i)=>candle(svg,p+i*step,d.o,d.h,d.l,d.c,s));return{svg,scale:s,x:i=>p+i*step,w,h,p}}
+
+function drawLineSegment(svg, points, strokeClass, color) {
+  let defs = svg.querySelector('defs');
+  if (!defs) defs = el('defs', {}, svg);
+  const cleanColor = color.replace('#', '').replace(/[(),]/g, '').replace(/\s/g, '');
+  const gradId = 'grad-' + strokeClass + '-' + svg.id + '-' + cleanColor;
+  if (!document.getElementById(gradId)) {
+    const grad = el('linearGradient', { id: gradId, x1: '0%', y1: '0%', x2: '0%', y2: '100%' }, defs);
+    el('stop', { offset: '0%', 'stop-color': color, 'stop-opacity': '0.15' }, grad);
+    el('stop', { offset: '100%', 'stop-color': color, 'stop-opacity': '0.0' }, grad);
+  }
+  
+  let areaD = `M ${points[0][0]} 426`;
+  points.forEach(p => { areaD += ` L ${p[0]} ${p[1]}`; });
+  areaD += ` L ${points[points.length-1][0]} 426 Z`;
+  el('path', { d: areaD, fill: `url(#${gradId})` }, svg);
+  
+  let lineD = `M ${points[0][0]} ${points[0][1]}`;
+  for (let i = 1; i < points.length; i++) {
+    lineD += ` L ${points[i][0]} ${points[i][1]}`;
+  }
+  el('path', { class: strokeClass, d: lineD }, svg);
+}
+
 const up=[{o:100,h:107,l:98,c:105},{o:105,h:114,l:103,c:112},{o:112,h:116,l:108,c:110},{o:110,h:124,l:109,c:122},{o:122,h:128,l:118,c:126},{o:126,h:130,l:120,c:123},{o:123,h:135,l:121,c:133},{o:133,h:140,l:130,c:138},{o:138,h:142,l:134,c:136},{o:136,h:149,l:135,c:147},{o:147,h:154,l:144,c:152}];
 const down=[{o:152,h:155,l:144,c:146},{o:146,h:150,l:136,c:138},{o:138,h:144,l:134,c:142},{o:142,h:145,l:128,c:130},{o:130,h:136,l:124,c:126},{o:126,h:132,l:122,c:130},{o:130,h:133,l:116,c:118},{o:118,h:124,l:112,c:114},{o:114,h:120,l:110,c:118},{o:118,h:121,l:104,c:106},{o:106,h:110,l:98,c:100}];
 function drawHHHL(id='chart-hhhl'){const c=drawCandles(id,up),{svg,scale:s,x}=c;el('path',{class:'path-green dash',d:`M${x(0)} ${s(99)} L${x(10)} ${s(144)}`},svg);[['HH',4,128,-12],['HL',5,120,26],['HH',7,140,-12],['HL',8,134,26],['HH',10,154,-12]].forEach(([t,i,v,dy])=>label(svg,t,x(i)-12,s(v)+dy,'#13845a',16));el('rect',{class:'support',x:80,y:s(121),width:590,height:42,rx:7},svg);label(svg,'Vùng mua pullback khi HL còn giữ',94,s(121)+27,'#13845a',16)}
 function drawLHLL(){const c=drawCandles('chart-lhll',down),{svg,scale:s,x}=c;el('path',{class:'path-red dash',d:`M${x(0)} ${s(153)} L${x(10)} ${s(110)}`},svg);[['LH',2,144,-12],['LL',4,124,26],['LH',6,133,-12],['LL',10,98,26]].forEach(([t,i,v,dy])=>label(svg,t,x(i)-12,s(v)+dy,'#c83f3f',16));el('rect',{class:'resist',x:80,y:s(133),width:590,height:42,rx:7},svg);label(svg,'Vùng bán hồi khi LH còn giữ',94,s(133)+27,'#c83f3f',16)}
 function drawCover(){drawHHHL('chart-cover')}
-function drawPullbackQuality(){const svg=document.getElementById('chart-pullback-quality');grid(svg);el('line',{x1:380,y1:54,x2:380,y2:426,stroke:'#ddd6c9','stroke-width':2},svg);el('path',{class:'path-green',d:'M70 360 L124 310 L178 330 L232 250 L286 284 L336 214'},svg);el('path',{class:'path-amber',d:'M336 214 L300 252 L326 270 L292 306 L322 292 L360 238'},svg);label(svg,'Pullback tốt: yếu, có cấu trúc',70,82,'#13845a',19);el('path',{class:'path-green',d:'M426 360 L480 310 L534 330 L588 250'},svg);el('path',{class:'path-red',d:'M588 250 L544 314 L508 356 L470 392'},svg);label(svg,'Pullback xấu: phá sâu, quá mạnh',426,82,'#c83f3f',19)}
-function drawTwoLegs(){const svg=document.getElementById('chart-two-legs');grid(svg);el('path',{class:'path-green',d:'M70 362 L128 304 L184 326 L242 238 L292 258'},svg);el('path',{class:'path-amber',d:'M292 258 L252 300 L286 282 L250 330 L314 296'},svg);el('path',{class:'path-green',d:'M314 296 L388 214 L460 178 L540 126'},svg);label(svg,'Leg 1',250,306,'#b77918',18);label(svg,'Leg 2',246,356,'#b77918',18);label(svg,'Continuation',418,156,'#13845a',18)}
-function drawSecondEntry(){const svg=document.getElementById('chart-second-entry');grid(svg);el('path',{class:'path-green',d:'M70 360 L128 306 L190 330 L250 246 L310 268'},svg);el('path',{class:'path-amber',d:'M310 268 L270 312 L318 290 L278 334 L336 306'},svg);el('line',{class:'entry',x1:342,y1:286,x2:620,y2:286},svg);el('line',{class:'stop',x1:278,y1:354,x2:620,y2:354},svg);el('path',{class:'path-green',d:'M342 286 L420 214 L506 168 L608 116'},svg);label(svg,'First entry',286,282,'#66706f',15);label(svg,'Second entry',360,272,'#245fa8',17);label(svg,'SL dưới đáy lần thử thứ 2',360,378,'#c83f3f',15)}
+
+function drawPullbackQuality(){
+  const svg=document.getElementById('chart-pullback-quality');
+  grid(svg);
+  el('line',{x1:380,y1:54,x2:380,y2:426,stroke:'#ddd6c9','stroke-width':2},svg);
+  
+  // Left: Good Pullback (weak, gradual, structured)
+  const goodTrend = [[50, 350], [100, 290], [140, 310], [190, 240], [230, 260], [270, 210]];
+  const goodPull = [[270, 210], [290, 230], [305, 222], [325, 240], [340, 232], [350, 245]];
+  const goodCont = [[350, 245], [360, 230], [370, 210]];
+  
+  drawLineSegment(svg, goodTrend, 'path-green', '#13845a');
+  drawLineSegment(svg, goodPull, 'path-amber', '#b77918');
+  drawLineSegment(svg, goodCont, 'path-green', '#13845a');
+  
+  el('circle', { cx: 270, cy: 210, r: 5, fill: '#13845a' }, svg);
+  el('circle', { cx: 350, cy: 245, r: 5, fill: '#b77918' }, svg);
+  
+  label(svg,'Pullback tốt: yếu, có cấu trúc',50,82,'#13845a',18);
+  
+  // Right: Bad Pullback (deep, aggressive sell-off)
+  const badTrend = [[410, 350], [460, 290], [500, 310], [550, 240], [590, 260], [630, 210]];
+  const badPull = [[630, 210], [655, 290], [675, 350], [695, 385]];
+  
+  drawLineSegment(svg, badTrend, 'path-green', '#13845a');
+  drawLineSegment(svg, badPull, 'path-red', '#c83f3f');
+  
+  el('circle', { cx: 630, cy: 210, r: 5, fill: '#13845a' }, svg);
+  el('circle', { cx: 695, cy: 385, r: 5, fill: '#c83f3f' }, svg);
+  
+  label(svg,'Pullback xấu: phá sâu, quá mạnh',410,82,'#c83f3f',18);
+}
+
+function drawTwoLegs(){
+  const svg=document.getElementById('chart-two-legs');
+  grid(svg);
+  
+  const trend = [[70, 360], [130, 290], [180, 310], [240, 230], [290, 250]];
+  const leg1 = [[290, 250], [330, 295]];
+  const bounce = [[330, 295], [360, 275]];
+  const leg2 = [[360, 275], [400, 320]];
+  const continuation = [[400, 320], [460, 240], [520, 200], [590, 130]];
+  
+  drawLineSegment(svg, trend, 'path-green', '#13845a');
+  drawLineSegment(svg, leg1, 'path-amber', '#b77918');
+  drawLineSegment(svg, bounce, 'path-green', '#13845a');
+  drawLineSegment(svg, leg2, 'path-amber', '#b77918');
+  drawLineSegment(svg, continuation, 'path-green', '#13845a');
+  
+  el('circle', { cx: 330, cy: 295, r: 5, fill: '#b77918' }, svg);
+  el('circle', { cx: 400, cy: 320, r: 5, fill: '#b77918' }, svg);
+  
+  label(svg,'Leg 1',315,315,'#b77918',16);
+  label(svg,'Leg 2',385,340,'#b77918',16);
+  label(svg,'Continuation',480,180,'#13845a',16);
+}
+
+function drawSecondEntry(){
+  const svg=document.getElementById('chart-second-entry');
+  grid(svg);
+  
+  const trend = [[70, 360], [130, 290], [180, 310], [240, 230], [290, 250]];
+  const leg1 = [[290, 250], [330, 300]];
+  const bounce = [[330, 300], [360, 270]];
+  const leg2 = [[360, 270], [390, 305]];
+  const continuation = [[390, 305], [420, 270], [480, 200], [550, 160], [620, 100]];
+  
+  drawLineSegment(svg, trend, 'path-green', '#13845a');
+  drawLineSegment(svg, leg1, 'path-amber', '#b77918');
+  drawLineSegment(svg, bounce, 'path-green', '#13845a');
+  drawLineSegment(svg, leg2, 'path-amber', '#b77918');
+  drawLineSegment(svg, continuation, 'path-green', '#13845a');
+  
+  el('line', { x1: 300, y1: 305, x2: 410, y2: 305, stroke: '#c83f3f', 'stroke-width': 1.5, 'stroke-dasharray': '3,3' }, svg);
+  el('line',{class:'entry dash',x1:360,y1:270,x2:620,y2:270},svg);
+  el('line',{class:'stop dash',x1:390,y1:315,x2:620,y2:315},svg);
+  
+  el('circle', { cx: 420, cy: 270, r: 6, fill: 'var(--blue)' }, svg);
+  
+  label(svg,'First entry attempt',300,255,'#66706f',14);
+  label(svg,'Second entry trigger',430,255,'#245fa8',15);
+  label(svg,'SL dưới đáy lần 2',430,335,'#c83f3f',14);
+}
+
 function drawStrongTrend(){const data=[{o:100,h:108,l:99,c:107},{o:107,h:119,l:106,c:117},{o:117,h:126,l:115,c:124},{o:124,h:130,l:120,c:122},{o:122,h:136,l:121,c:134},{o:134,h:145,l:132,c:143},{o:143,h:150,l:140,c:146},{o:146,h:158,l:145,c:156},{o:156,h:164,l:153,c:160}];const c=drawCandles('chart-strong-trend',data),{svg,scale:s,x}=c;label(svg,'Pullback nông',x(3)-40,s(120)+32,'#13845a',16);label(svg,'Follow-through',x(7)-44,s(164)-18,'#13845a',16)}
 function drawWeakTrend(){const data=[{o:100,h:108,l:98,c:106},{o:106,h:114,l:102,c:110},{o:110,h:116,l:104,c:108},{o:108,h:119,l:102,c:116},{o:116,h:121,l:108,c:112},{o:112,h:123,l:106,c:120},{o:120,h:124,l:110,c:114},{o:114,h:126,l:112,c:122},{o:122,h:125,l:114,c:118}];const c=drawCandles('chart-weak-trend',data),{svg,scale:s}=c;el('rect',{x:78,y:s(122),width:590,height:s(106)-s(122),rx:7,fill:'rgba(183,121,24,.12)',stroke:'rgba(183,121,24,.68)','stroke-width':2},svg);label(svg,'Chồng lấn nhiều, dễ thành range',160,s(114),'#b77918',17)}
-function drawChannel(){const svg=document.getElementById('chart-channel');grid(svg);el('path',{class:'path-green',d:'M80 372 L138 318 L192 338 L250 260 L308 282 L366 208 L426 230 L488 150 L560 178 L636 112'},svg);el('line',{class:'entry dash',x1:86,y1:384,x2:636,y2:126},svg);el('line',{class:'target dash',x1:136,y1:304,x2:690,y2:46},svg);label(svg,'Trendline: nhịp hỗ trợ động',126,396,'#245fa8',16);label(svg,'Channel line: vùng quá đà',458,78,'#13845a',16)}
-function drawBreakStructure(){const svg=document.getElementById('chart-break-structure');grid(svg);el('path',{class:'path-green',d:'M76 370 L130 320 L188 340 L246 258 L304 286 L362 206 L420 234'},svg);el('line',{class:'entry dash',x1:90,y1:386,x2:434,y2:216},svg);el('path',{class:'path-red',d:'M420 234 L480 314 L540 276 L602 334 L676 382'},svg);label(svg,'Phá trendline',450,314,'#c83f3f',16);label(svg,'Không tạo HH mới',520,250,'#c83f3f',16);label(svg,'Cấu trúc đổi',590,408,'#c83f3f',16)}
+
+function drawChannel(){
+  const svg=document.getElementById('chart-channel');
+  grid(svg);
+  
+  const points = [[80, 372], [138, 318], [192, 338], [250, 260], [308, 282], [366, 208], [426, 230], [488, 150], [560, 178], [636, 112]];
+  drawLineSegment(svg, points, 'path-green', '#13845a');
+  
+  el('line',{class:'entry dash',x1:86,y1:384,x2:636,y2:126},svg);
+  el('line',{class:'target dash',x1:136,y1:304,x2:690,y2:46},svg);
+  
+  el('circle', { cx: 192, cy: 338, r: 4.5, fill: 'var(--blue)' }, svg);
+  el('circle', { cx: 308, cy: 282, r: 4.5, fill: 'var(--blue)' }, svg);
+  el('circle', { cx: 426, cy: 230, r: 4.5, fill: 'var(--blue)' }, svg);
+  
+  label(svg,'Trendline: hỗ trợ động',126,396,'#245fa8',16);
+  label(svg,'Channel line: cản động',458,78,'#13845a',16);
+}
+
+function drawBreakStructure(){
+  const svg=document.getElementById('chart-break-structure');
+  grid(svg);
+  
+  const trend = [[76, 370], [130, 320], [188, 340], [246, 258], [304, 286], [362, 206], [420, 234]];
+  const breakPath = [[420, 234], [480, 314], [540, 276], [602, 334], [676, 382]];
+  
+  drawLineSegment(svg, trend, 'path-green', '#13845a');
+  drawLineSegment(svg, breakPath, 'path-red', '#c83f3f');
+  
+  el('line',{class:'entry dash',x1:90,y1:386,x2:500,y2:230},svg);
+  
+  el('circle', { cx: 460, cy: 286, r: 5, fill: 'var(--red)' }, svg);
+  el('circle', { cx: 540, cy: 276, r: 5, fill: 'var(--red)' }, svg);
+  
+  label(svg,'Phá trendline',470,320,'#c83f3f',15);
+  label(svg,'LH: Không tạo đỉnh mới',520,255,'#c83f3f',15);
+  label(svg,'Cấu trúc gãy (LL)',590,405,'#c83f3f',15);
+}
+
 function drawExercise(){drawHHHL('chart-exercise');const svg=document.getElementById('chart-exercise');label(svg,'Bài tập: tự đánh dấu pullback, two legs, second entry',90,78,'#245fa8',18)}
 drawCover();drawHHHL();drawLHLL();drawPullbackQuality();drawTwoLegs();drawSecondEntry();drawStrongTrend();drawWeakTrend();drawChannel();drawBreakStructure();drawExercise();
 const slides=[...document.querySelectorAll('.slide')],progress=document.querySelector('#progress'),dots=document.querySelector('#dots');let current=0;slides.forEach((_,i)=>{const d=document.createElement('span');d.className=`dot${i===0?' active':''}`;d.addEventListener('click',()=>show(i));dots.appendChild(d)});const dotEls=[...document.querySelectorAll('.dot')];function show(i){current=(i+slides.length)%slides.length;slides.forEach((s,n)=>s.classList.toggle('active',n===current));dotEls.forEach((d,n)=>d.classList.toggle('active',n===current));progress.textContent=`Slide ${current+1} / ${slides.length}`}document.querySelector('#prev').addEventListener('click',()=>show(current-1));document.querySelector('#next').addEventListener('click',()=>show(current+1));window.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')show(current+1);if(e.key==='ArrowLeft')show(current-1)});
