@@ -188,26 +188,79 @@
     }
 
     /* Định nghĩa màu sắc riêng biệt cho từng Card */
-    .courses-grid > div:nth-child(1) {
+    .card-purple {
       --hover-color: #9b51e0;
       --glow-color: rgba(155, 81, 224, 0.15);
     }
-    .courses-grid > div:nth-child(2) {
+    .card-orange {
       --hover-color: #ff6600;
       --glow-color: rgba(255, 102, 0, 0.15);
     }
-    .courses-grid > div:nth-child(3) {
+    .card-cyan {
       --hover-color: #00e5ff;
       --glow-color: rgba(0, 229, 255, 0.15);
     }
-    .courses-grid > div:nth-child(4) {
+    .card-green {
       --hover-color: #00ffb3;
       --glow-color: rgba(0, 255, 179, 0.15);
     }
-    .courses-grid > div:nth-child(5) {
+    .card-gold {
       --hover-color: #ffd700;
       --glow-color: rgba(255, 215, 0, 0.15);
     }
+    .card-pink {
+      --hover-color: #ff007f;
+      --glow-color: rgba(255, 0, 127, 0.15);
+    }
+    .card-coral {
+      --hover-color: #ff4757;
+      --glow-color: rgba(255, 71, 87, 0.15);
+    }
+
+    /* Section Headings */
+    .section-title-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 12px;
+      margin-top: 40px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .section-title-container::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(90deg, #00ffb3, #00e5ff);
+    }
+    .section-title-container.price-action-section::after {
+      background: linear-gradient(90deg, #9b51e0, #ff007f);
+    }
+    .section-title {
+      font-size: clamp(18px, 3vw, 24px);
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: -0.5px;
+      text-transform: uppercase;
+    }
+    .section-badge {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: #8c9bb4;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.02);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
     
     /* Giao diện danh sách Module khóa 1 cũ */
     .course-detail {
@@ -331,12 +384,52 @@
       <div class="portal-header">
         <div class="eyebrow">Trading Academy Portal</div>
         <h1>Học Viện Giao Dịch Thực Chiến</h1>
-        <p class="lead">Hệ thống bài giảng Masterclass chuyên sâu: Quy luật Cung - Cầu Wyckoff, Động lượng RSI, Vi mô dòng tiền Forex và Đầu cơ xu hướng Livermore.</p>
+        <p class="lead">Hệ thống bài giảng thực chiến chuyên sâu: Nền tảng &amp; Masterclass Price Action, Quy luật Wyckoff, Động lượng RSI, Vi mô dòng tiền Forex và Đầu cơ Livermore.</p>
+      </div>
+
+      <!-- Price Action Section -->
+      <div class="section-title-container price-action-section">
+        <h2 class="section-title">Chuyên Đề Price Action</h2>
+        <div class="section-badge">Nền Tảng & Thực Chiến</div>
+      </div>
+      
+      <section class="courses-grid" style="margin-bottom: 24px;">
+        <!-- Khóa Price Action Nền Tảng -->
+        <div class="panel card course-card card-pink" onclick="window.location.hash = 'course-1'">
+          <div class="card-body">
+            <span class="meta">Nền Tảng</span>
+            <h3>Price Action Foundation</h3>
+            <p>Đọc hành vi nến theo bối cảnh, xác định xu hướng cấu trúc, signal/entry bar, breakout/trap và thiết lập kế hoạch giao dịch chuẩn chỉnh.</p>
+          </div>
+          <div class="card-footer">
+            <span>🕯️ 12 Modules (Nền tảng)</span>
+            <span>Bắt đầu học →</span>
+          </div>
+        </div>
+
+        <!-- Khóa Price Action Masterclass -->
+        <div class="panel card course-card card-coral" onclick="window.location.hash = 'masterclass_presentation.html'">
+          <div class="card-body">
+            <span class="meta">Nâng Cao</span>
+            <h3>Price Action Masterclass</h3>
+            <p>Hợp nhất tinh hoa hành vi giá của Al Brooks, Bob Volman và Thomas Bulkowski. Đi sâu mô hình 2-legged pullback, breakout trap và timing lệnh.</p>
+          </div>
+          <div class="card-footer">
+            <span>⚡ 12 Modules (32 bài học)</span>
+            <span>Bắt đầu học →</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Masterclass Section -->
+      <div class="section-title-container">
+        <h2 class="section-title">Chuyên Đề Masterclass Nâng Cao</h2>
+        <div class="section-badge">Tinh Hoa Dòng Tiền</div>
       </div>
       
       <section class="courses-grid">
         <!-- Khóa 1 -->
-        <div class="panel card course-card" onclick="window.location.hash = 'wyckoff_volume_masterclass.html'">
+        <div class="panel card course-card card-purple" onclick="window.location.hash = 'wyckoff_volume_masterclass.html'">
           <div class="card-body">
             <span class="meta">Khóa Học 01</span>
             <h3>Wyckoff & Volume Profile</h3>
@@ -349,7 +442,7 @@
         </div>
 
         <!-- Khóa 2 -->
-        <div class="panel card course-card" onclick="window.location.hash = 'advanced_rsi_correlation.html'">
+        <div class="panel card course-card card-orange" onclick="window.location.hash = 'advanced_rsi_correlation.html'">
           <div class="card-body">
             <span class="meta">Khóa Học 02</span>
             <h3>Advanced RSI & MTF Correlation</h3>
@@ -362,7 +455,7 @@
         </div>
 
         <!-- Khóa 3 -->
-        <div class="panel card course-card" onclick="window.location.hash = 'mental_game_risk_math.html'">
+        <div class="panel card course-card card-cyan" onclick="window.location.hash = 'mental_game_risk_math.html'">
           <div class="card-body">
             <span class="meta">Khóa Học 03</span>
             <h3>The Mental Game & Risk Math</h3>
@@ -375,7 +468,7 @@
         </div>
 
         <!-- Khóa 4 -->
-        <div class="panel card course-card" onclick="window.location.hash = 'forex_microstructure_day_trading.html'">
+        <div class="panel card course-card card-green" onclick="window.location.hash = 'forex_microstructure_day_trading.html'">
           <div class="card-body">
             <span class="meta">Khóa Học 04</span>
             <h3>Forex Microstructure & Day Trading</h3>
@@ -388,7 +481,7 @@
         </div>
 
         <!-- Khóa 5 -->
-        <div class="panel card course-card" onclick="window.location.hash = 'livermore_trend_following.html'">
+        <div class="panel card course-card card-gold" onclick="window.location.hash = 'livermore_trend_following.html'">
           <div class="card-body">
             <span class="meta">Khóa Học 05</span>
             <h3>Livermore Trend Following</h3>
@@ -400,6 +493,7 @@
           </div>
         </div>
       </section>
+
     </div>
   </main>
 
