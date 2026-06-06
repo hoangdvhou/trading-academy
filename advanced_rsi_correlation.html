@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced RSI & Multi-Timeframe Correlation - Masterclass</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===========================================
+           CSS CUSTOM PROPERTIES (THEME: NEON ORANGE & ACID YELLOW)
+           =========================================== */
+        :root {
+            --bg-primary: #090a10;
+            --bg-secondary: #111322;
+            --bg-card: rgba(26, 20, 36, 0.7);
+            --border-color: rgba(255, 102, 0, 0.15);
+            
+            --text-primary: #ffffff;
+            --text-secondary: #9ea4c4;
+            
+            --accent-orange: #ff6600;
+            --accent-yellow: #d4ff00;
+            --accent-cyan: #00e5ff;
+            --accent-red: #ff3860;
+            --accent-green: #00ff66;
+            
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-title: 'Archivo Black', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+            
+            --title-size: clamp(1.8rem, 4.2vw, 3.4rem);
+            --h2-size: clamp(1.3rem, 3vw, 2.1rem);
+            --h3-size: clamp(1rem, 2.2vw, 1.4rem);
+            --body-size: clamp(0.8rem, 1.2vw, 1.02rem);
+            --small-size: clamp(0.68rem, 0.9vw, 0.82rem);
+            
+            --slide-padding: clamp(1rem, 3.5vw, 3rem);
+            --content-gap: clamp(0.5rem, 1.8vw, 1.4rem);
+            --element-gap: clamp(0.3rem, 1.1vw, 0.8rem);
+            
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-neon: 0 0 20px rgba(255, 102, 0, 0.25);
+            --shadow-yellow: 0 0 20px rgba(212, 255, 0, 0.2);
+        }
+
+        /* ===========================================
+           BASE RESET & SCROLL SNAP
+           =========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-display);
+            line-height: 1.45;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Cyber grid background */
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255, 102, 0, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 102, 0, 0.015) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Ambient glow shapes */
+        .slide::after {
+            content: '';
+            position: absolute;
+            width: 40vw;
+            height: 40vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 102, 0, 0.05) 0%, transparent 70%);
+            bottom: -10vw;
+            right: -10vw;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .slide:nth-child(even)::after {
+            background: radial-gradient(circle, rgba(212, 255, 0, 0.03) 0%, transparent 70%);
+            top: -10vw;
+            left: -10vw;
+            bottom: auto;
+            right: auto;
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-height: 100%;
+            overflow: hidden;
+            padding: var(--slide-padding);
+            z-index: 2;
+            gap: var(--content-gap);
+        }
+
+        /* Header structure */
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 102, 0, 0.1);
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.1rem;
+        }
+
+        .slide-module-tag {
+            font-size: var(--small-size);
+            color: var(--accent-orange);
+            font-family: var(--font-mono);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .slide-number-tag {
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+        }
+
+        .slide-title {
+            font-family: var(--font-title);
+            font-size: var(--h2-size);
+            color: var(--text-primary);
+            line-height: 1.15;
+            letter-spacing: -0.5px;
+        }
+
+        .slide-title span {
+            color: var(--accent-orange);
+        }
+
+        /* Layout styles */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--content-gap);
+            align-items: center;
+            max-height: min(72vh, 490px);
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--element-gap);
+        }
+
+        .grid-3-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--element-gap);
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: clamp(0.7rem, 1.6vw, 1.6rem);
+            transition: all 0.3s ease;
+            max-height: min(68vh, 450px);
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .card:hover {
+            border-color: rgba(255, 102, 0, 0.4);
+            box-shadow: 0 4px 20px rgba(255, 102, 0, 0.08);
+        }
+
+        .card-title {
+            font-size: var(--h3-size);
+            font-weight: 700;
+            color: var(--accent-orange);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .card-title.accent-yellow { color: var(--accent-yellow); }
+        .card-title.accent-green { color: var(--accent-green); }
+        .card-title.accent-red { color: var(--accent-red); }
+        .card-title.accent-cyan { color: var(--accent-cyan); }
+
+        .card p, .card li {
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .card ul {
+            padding-left: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        /* Typography Helpers */
+        .highlight-box {
+            border-left: 3px solid var(--accent-orange);
+            padding: 0.5rem 0.8rem;
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+            background: rgba(255, 102, 0, 0.02);
+            border-radius: 0 6px 6px 0;
+        }
+
+        .highlight-box strong {
+            color: var(--text-primary);
+        }
+
+        /* Diagram Viewport fit */
+        .diagram-container {
+            width: 100%;
+            height: 100%;
+            max-height: min(50vh, 320px);
+            background-color: #08090f;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0.5rem;
+        }
+
+        /* Interactive controls for slides */
+        .slide-nav {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 100;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--accent-orange);
+            color: var(--accent-orange);
+            box-shadow: var(--shadow-neon);
+        }
+
+        .nav-dots {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-dot.active {
+            background-color: var(--accent-orange);
+            box-shadow: var(--shadow-neon);
+            width: 16px;
+            border-radius: 4px;
+        }
+
+        /* Progress Bar */
+        .progress-bar-container {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background-color: rgba(255, 255, 255, 0.05);
+            z-index: 100;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-orange), var(--accent-yellow));
+            box-shadow: 0 0 10px rgba(255, 102, 0, 0.5);
+            transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* ===========================================
+           CYBER SIDEBAR NAVIGATION
+           =========================================== */
+        .sidebar-toggle {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 101;
+            background-color: rgba(17, 19, 34, 0.85);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: var(--small-size);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .sidebar-toggle:hover {
+            border-color: var(--accent-orange);
+            color: var(--accent-orange);
+            box-shadow: var(--shadow-neon);
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0; left: -320px;
+            width: 300px;
+            height: 100%;
+            background-color: rgba(9, 10, 16, 0.97);
+            border-right: 1px solid var(--border-color);
+            z-index: 200;
+            backdrop-filter: blur(12px);
+            padding: 5rem 1.5rem 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            transition: left 0.4s var(--ease-out-expo);
+            overflow-y: auto;
+        }
+
+        .sidebar.open {
+            left: 0;
+            box-shadow: 10px 0 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .sidebar-title {
+            font-family: var(--font-title);
+            font-size: 1rem;
+            color: var(--accent-orange);
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .sidebar-item {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.35rem 0.5rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+
+        .sidebar-item:hover {
+            background-color: rgba(255, 102, 0, 0.05);
+            color: var(--accent-orange);
+        }
+
+        .sidebar-item.active {
+            background: linear-gradient(90deg, rgba(255, 102, 0, 0.1) 0%, transparent 100%);
+            border-left: 2px solid var(--accent-orange);
+            color: var(--accent-orange);
+            font-weight: 500;
+        }
+
+        .sidebar-module-tag {
+            font-size: 0.6rem;
+            font-family: var(--font-mono);
+            color: var(--accent-yellow);
+            text-transform: uppercase;
+        }
+
+        .sidebar-backdrop {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 199;
+            backdrop-filter: blur(2px);
+            display: none;
+        }
+
+        .sidebar-backdrop.show {
+            display: block;
+        }
+
+        /* ===========================================
+           INLINE EDITING SYSTEM
+           =========================================== */
+        .edit-hotzone {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            width: 160px;
+            height: 40px;
+            z-index: 100;
+        }
+
+        .edit-toggle {
+            position: absolute;
+            left: 0; bottom: 0;
+            background-color: rgba(17, 19, 34, 0.85);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: var(--small-size);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            white-space: nowrap;
+        }
+
+        .edit-hotzone:hover .edit-toggle,
+        .edit-toggle.show,
+        .edit-toggle.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .edit-toggle.active {
+            background-color: var(--accent-orange);
+            color: var(--bg-primary);
+            border-color: var(--accent-orange);
+            box-shadow: var(--shadow-neon);
+        }
+
+        [contenteditable="true"] {
+            border: 1px dashed var(--accent-orange) !important;
+            padding: 4px;
+            border-radius: 4px;
+            outline: none;
+            background-color: rgba(255, 102, 0, 0.03);
+        }
+
+        .save-indicator {
+            position: fixed;
+            bottom: 5rem;
+            left: 1.5rem;
+            background-color: #2e1205;
+            border: 1px solid var(--accent-orange);
+            color: var(--accent-orange);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: var(--small-size);
+            font-family: var(--font-mono);
+            z-index: 100;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s var(--ease-out-expo);
+            pointer-events: none;
+        }
+
+        .save-indicator.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* SVG CHART STYLES */
+        .text-chart {
+            font-family: var(--font-mono);
+            fill: var(--text-secondary);
+            font-size: 9px;
+        }
+        @keyframes pulseOrange {
+            0% { filter: drop-shadow(0 0 2px var(--accent-orange)); }
+            50% { filter: drop-shadow(0 0 8px var(--accent-orange)); }
+            100% { filter: drop-shadow(0 0 2px var(--accent-orange)); }
+        }
+        @keyframes dash {
+            to { stroke-dashoffset: 0; }
+        }
+        .pulse-orange-effect {
+            animation: pulseOrange 2s infinite ease-in-out;
+        }
+        .draw-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 3s forwards ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Sidebar Trigger Button -->
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle Lesson Index">
+        <span>☰</span> BẢN ĐỒ KHÓA HỌC
+    </button>
+
+    <!-- Slide-out Sidebar Navigation -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-title">RSI & CORRELATION</div>
+        <ul class="sidebar-menu" id="sidebarMenu">
+            <!-- Dynamically populated via JS -->
+        </ul>
+    </div>
+
+    <!-- Floating Editor Button -->
+    <div class="edit-hotzone" id="editHotzone">
+        <button class="edit-toggle" id="editToggle">✏️ EDIT MODE (E)</button>
+    </div>
+    <div class="save-indicator" id="saveIndicator">💾 ĐÃ LƯU BÀI GIẢNG!</div>
+
+    <!-- =========================================================================
+         SLIDES LIST (ADVANCED RSI & CORRELATION: SLIDE 1 - 13)
+         ========================================================================= -->
+    <main id="slideContainer">
+
+        <!-- ==================== SLIDE 1: HOME ==================== -->
+        <section class="slide">
+            <div class="slide-content" style="align-items: center; text-align: center; justify-content: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color: var(--accent-yellow);">CHUYÊN SÂU CHỈ BÁO MOMENTUM</div>
+                <h1 class="slide-title" id="editable-s1-title" style="font-size: var(--title-size); line-height: 1.1;">
+                    ADVANCED RSI &<br><span style="color: var(--accent-orange);">MTF CORRELATION</span>
+                </h1>
+                <p id="editable-s1-desc" style="font-size: 1.15rem; color: var(--text-secondary); max-width: 800px; font-family: var(--font-display);">
+                    Làm chủ kỹ thuật động lượng nâng cao: Vượt qua tư duy lối mòn quá mua/quá bán, khai thác cơ chế dịch chuyển biên Range Shift và đồng thuận đa khung thời gian thực chiến.
+                </p>
+                <div class="highlight-box" style="border: 1px solid var(--border-color); border-left: 3px solid var(--accent-yellow); max-width: 600px; text-align: left; margin-top: 1rem;">
+                    💡 <strong>Hướng dẫn:</strong> Dùng phím <strong>Space / Mũi tên xuống</strong> để sang trang tiếp theo. Click nút <strong>BẢN ĐỒ KHÓA HỌC</strong> ở góc trái để mở menu chọn nhanh bài giảng. Nhấn phím <strong>E</strong> để tự do chỉnh sửa nội dung.
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 1 ==================== -->
+        <!-- SLIDE 2: M1 - BÀI 1: BẢN CHẤT TOÁN HỌC -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 1: Công Thức Toán Học RSI">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Bản Chất Toán Học Của RSI</span>
+                    <span class="slide-number-tag">Trang 2/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s2-title">Bài 1: Giải Mã Công Thức <span>& Ý Nghĩa Momentum Thực Tế</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s2-desc">
+                        <div class="card-title">🧮 1. Bản Chất Toán Học Của RSI</div>
+                        <p>RSI (Relative Strength Index) do J. Welles Wilder phát minh, được tính dựa trên tỷ lệ giữa trung bình số phiên tăng điểm và trung bình số phiên giảm điểm (RS):</p>
+                        <p style="font-family: var(--font-mono); color: var(--accent-yellow); font-size: 13px; padding: 4px; background: rgba(0,0,0,0.3); border-radius: 4px; margin: 4px 0;">
+                            RSI = 100 - [100 / (1 + RS)]<br>
+                            RS = Avg(Gain) / Avg(Loss)
+                        </p>
+                        <div class="card-title accent-orange" style="margin-top:0.4rem;">🔑 2. Tư Duy Lối Mòn Cần Tránh</div>
+                        <p> Wilder khuyên dùng mốc 70 (Quá mua) và 30 (Quá bán). Tuy nhiên, trong xu hướng mạnh, RSI có thể duy trì ở vùng quá mua/quá bán rất lâu. **Bán khống chỉ vì RSI > 70 là hành vi tự sát**.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">⚙️ Nguyên Lý Hoạt Động Của RS</div>
+                        <p>RSI đo lường **tốc độ thay đổi giá**. Nó là một chỉ báo dao động giới hạn từ 0 đến 100. Khi RSI nằm ở vùng cao, điều đó chứng tỏ lực tăng đang có **gia tốc cực đại**, chứ không có nghĩa là giá sắp đảo chiều giảm ngay lập tức.</p>
+                        <div class="highlight-box" style="margin-top:0.4rem;">
+                            📌 <strong>Key-takeaway:</strong> RSI là thước đo gia tốc. Gia tốc mạnh nhất xuất hiện ở giai đoạn đầu và giữa của một xu hướng lớn.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 2 ==================== -->
+        <!-- SLIDE 3: M2 - BÀI 2: RANGE SHIFT CONCEPT -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 2: Range Shift Concept">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Kỹ Thuật Dịch Chuyển Biên Độ Range Shift</span>
+                    <span class="slide-number-tag">Trang 3/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s3-title">Bài 2: Cơ Chế Dịch Chuyển Biên Độ <span>RSI Range Shift</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s3-desc">
+                        <div class="card-title">📈 1. Xu Hướng Tăng (Bullish Range: 40 - 80)</div>
+                        <p>Trong một thị trường tăng giá mạnh mẽ (Bull Market), biên độ hoạt động của RSI dịch chuyển lên trên. RSI dao động chủ yếu trong vùng **40 - 80**.</p>
+                        <p style="margin-top:0.3rem;">Khi giá điều chỉnh giảm (pullback), lực cầu bắt đáy mạnh mẽ của tổ chức sẽ đẩy giá lên trước khi RSI chạm vùng quá bán truyền thống. Vùng **40 trở thành Hỗ Trợ Động** cực kỳ quan trọng.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">📉 2. Xu Hướng Giảm (Bearish Range: 20 - 60)</div>
+                        <p>Ngược lại, trong thị trường giảm giá (Bear Market), biên độ của RSI dịch chuyển xuống dưới, dao động chủ yếu trong khoảng **20 - 60**.</p>
+                        <p style="margin-top:0.3rem;">Mỗi nhịp hồi phục kỹ thuật của giá chỉ đủ sức đẩy RSI lên quanh mốc **60 (Kháng Cự Động)** trước khi phe bán lớn tiếp tục đè giá xuống sâu, khiến RSI quay về mốc 20.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: M2 - DIAGRAM: RANGE SHIFT VISUALIZATION -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 2: Sơ Đồ Range Shift">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Kỹ Thuật Dịch Chuyển Biên Độ Range Shift</span>
+                    <span class="slide-number-tag">Trang 4/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s4-title">Bài 2: Trực Quan Hóa Cơ Chế <span>RSI Range Shift</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s4-desc">
+                        <div class="card-title accent-orange">📊 Giải Mã Sơ Đồ Range Shift</div>
+                        <p>Sơ đồ bên cạnh biểu diễn hành vi dao động thực tế của RSI:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem;">
+                            <li><strong style="color:var(--accent-green);">Vùng Tăng Giá (Bull Market):</strong> RSI liên tục kiểm định mốc 40 và bật tăng mạnh lên chạm mốc 80.</li>
+                            <li><strong style="color:var(--accent-red);">Vùng Giảm Giá (Bear Market):</strong> RSI thất bại hoàn toàn trong việc vượt qua mốc 60 và suy sụp về mốc 20.</li>
+                        </ul>
+                    </div>
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Background Lines (80, 60, 40, 20) -->
+                            <line x1="20" y1="30" x2="280" y2="30" stroke="rgba(255,255,255,0.06)" stroke-width="1" />
+                            <text x="285" y="33" class="text-chart">80</text>
+                            
+                            <line x1="20" y1="70" x2="280" y2="70" stroke="var(--accent-yellow)" stroke-width="1" stroke-dasharray="3,3" />
+                            <text x="285" y="73" class="text-chart" fill="var(--accent-yellow)">60</text>
+                            
+                            <line x1="20" y1="110" x2="280" y2="110" stroke="var(--accent-orange)" stroke-width="1" stroke-dasharray="3,3" />
+                            <text x="285" y="113" class="text-chart" fill="var(--accent-orange)">40</text>
+                            
+                            <line x1="20" y1="150" x2="280" y2="150" stroke="rgba(255,255,255,0.06)" stroke-width="1" />
+                            <text x="285" y="153" class="text-chart">20</text>
+
+                            <!-- Dividing Center vertical line -->
+                            <line x1="140" y1="20" x2="140" y2="180" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="4,4" />
+                            <text x="75" y="18" class="text-chart" text-anchor="middle" fill="var(--accent-green)">BULLISH RANGE (40-80)</text>
+                            <text x="205" y="18" class="text-chart" text-anchor="middle" fill="var(--accent-red)">BEARISH RANGE (20-60)</text>
+
+                            <!-- Bullish RSI wave -->
+                            <path d="M 20 110 Q 35 30, 50 50 T 80 110 T 110 50 T 135 110" fill="none" stroke="var(--accent-green)" stroke-width="2.5" class="draw-line" />
+                            <circle cx="80" cy="110" r="4" fill="var(--accent-green)" class="pulse-orange-effect" />
+                            <text x="80" y="123" class="text-chart" text-anchor="middle" fill="var(--accent-green)">Hỗ trợ 40</text>
+
+                            <!-- Bearish RSI wave -->
+                            <path d="M 145 110 Q 160 150, 175 70 T 205 150 T 235 70 T 260 150" fill="none" stroke="var(--accent-red)" stroke-width="2.5" class="draw-line" />
+                            <circle cx="235" cy="70" r="4" fill="var(--accent-red)" />
+                            <text x="235" y="62" class="text-chart" text-anchor="middle" fill="var(--accent-red)">Kháng cự 60</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 3 ==================== -->
+        <!-- SLIDE 5: M3 - BÀI 3: PHÂN KỲ RSI NÂNG CAO -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài 3: Phân Kỳ RSI Nâng Cao">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 3: Kỹ Thuật Giao Dịch Phân Kỳ Nâng Cao</span>
+                    <span class="slide-number-tag">Trang 5/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s5-title">Bài 3: Phân Biệt Phân Kỳ Thường <span>& Phân Kỳ Ẩn (Hidden)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s5-desc">
+                        <div class="card-title">🔄 1. Phân Kỳ Thường (Regular Divergence)</div>
+                        <p>Xảy ra khi Giá tạo đỉnh cao mới nhưng RSI tạo đỉnh thấp hơn (Phân kỳ giảm - Bearish), hoặc Giá tạo đáy thấp mới nhưng RSI tạo đáy cao hơn (Phân kỳ tăng - Bullish).</p>
+                        <p style="margin-top:0.2rem; font-weight:bold; color:#fff;">⚠️ Chỉ báo tín hiệu đảo chiều tiềm năng.</p>
+                        
+                        <div class="card-title accent-yellow" style="margin-top:0.4rem;">🎯 2. Phân Kỳ Ẩn (Hidden Divergence)</div>
+                        <p>Xảy ra khi Giá tạo đáy cao hơn (HL) nhưng RSI tạo đáy thấp hơn (LL) trong xu hướng tăng. Thể hiện nỗ lực của phe gấu rất lớn nhưng không đè được giá.</p>
+                        <p style="margin-top:0.2rem; font-weight:bold; color:var(--accent-yellow);">🔥 Tín hiệu tiếp diễn xu hướng cực kỳ mạnh mẽ.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">💡 Cách Đọc Vị Phân Kỳ Ẩn Thực Chiến</div>
+                        <p>Phân kỳ ẩn chính là dấu chân của **Smart Money đang gom thêm hàng giá rẻ (Buy the Dip)**. Khi giá chỉ điều chỉnh nhẹ mà RSI đã bị xả mạnh về vùng quá bán, chứng tỏ phe bán nhỏ lẻ đang hoảng loạn cắt lỗ trong khi tay to âm thầm kê lệnh mua đối ứng.</p>
+                        <div class="highlight-box" style="margin-top:0.4rem;">
+                            💡 <strong>Quy tắc vàng:</strong> Giao dịch theo phân kỳ ẩn luôn có xác suất thắng cao hơn phân kỳ thường vì bạn đang **thuận xu hướng**.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: M3 - DIAGRAM: HIDDEN DIVERGENCE -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài 3: Sơ Đồ Phân Kỳ Ẩn">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 3: Kỹ Thuật Giao Dịch Phân Kỳ Nâng Cao</span>
+                    <span class="slide-number-tag">Trang 6/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s6-title">Bài 3: Sơ Đồ Phân Kỳ Ẩn <span>Bullish Hidden Divergence</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s6-desc">
+                        <div class="card-title accent-yellow">📈 Phân Tích Cấu Trúc Đáy</div>
+                        <p>Hãy chú ý sự lệch pha giữa Đồ thị Giá và Chỉ báo RSI:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem;">
+                            <li><strong>Đồ thị Giá:</strong> Đáy sau (HL) cao hơn hẳn Đáy trước (L) ➔ Cấu trúc tăng giá được bảo toàn tuyệt đối.</li>
+                            <li><strong>Chỉ báo RSI:</strong> Đáy sau (LL) lại thấp hơn hẳn Đáy trước (L) ➔ Động lượng giảm bị vắt kiệt.</li>
+                        </ul>
+                    </div>
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Upper panel: PRICE -->
+                            <text x="20" y="25" class="text-chart" fill="#fff" font-weight="bold">BIỂU ĐỒ GIÁ</text>
+                            <path d="M 20 80 L 60 40 L 110 70 L 160 20 L 210 50 L 260 10" fill="none" stroke="var(--accent-cyan)" stroke-width="2" class="draw-line" />
+                            
+                            <!-- Price lows line (connecting 80 and 70/50) -->
+                            <line x1="60" y1="40" x2="210" y2="50" stroke="none" /> <!-- Anchor ref -->
+                            <!-- Connect bottom lows of price -->
+                            <line x1="20" y1="80" x2="110" y2="70" stroke="var(--accent-yellow)" stroke-width="1.5" stroke-dasharray="4,2" />
+                            <text x="65" y="90" class="text-chart" fill="var(--accent-yellow)">Đáy sau Cao hơn (HL)</text>
+
+                            <!-- Panel separator -->
+                            <line x1="20" y1="110" x2="280" y2="110" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+
+                            <!-- Lower panel: RSI -->
+                            <text x="20" y="125" class="text-chart" fill="var(--accent-orange)" font-weight="bold">RSI (14)</text>
+                            <path d="M 20 150 L 60 130 L 110 170 L 160 125 L 210 180" fill="none" stroke="var(--accent-orange)" stroke-width="2" />
+                            
+                            <!-- Connect bottom lows of RSI -->
+                            <line x1="20" y1="150" x2="110" y2="170" stroke="var(--accent-red)" stroke-width="1.5" stroke-dasharray="4,2" />
+                            <text x="65" y="180" class="text-chart" fill="var(--accent-red)">Đáy sau Thấp hơn (LL)</text>
+
+                            <!-- Actionable trigger circles -->
+                            <circle cx="110" cy="70" r="5" fill="none" stroke="var(--accent-yellow)" stroke-width="1.5" class="pulse-orange-effect" />
+                            <circle cx="110" cy="170" r="5" fill="none" stroke="var(--accent-red)" stroke-width="1.5" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 4 ==================== -->
+        <!-- SLIDE 7: M4 - BÀI 4: ĐỒNG BỘ ĐA KHUNG (MTF) -->
+        <section class="slide" data-module="Module 4" data-lesson="Bài 4: Đa Khung Thời Gian Correlation">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 4: Đồng Bộ Hóa Đa Khung Thời Gian Correlation</span>
+                    <span class="slide-number-tag">Trang 7/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s7-title">Bài 4: Tư Duy Đồng Bộ Hóa <span>Đa Khung H4 - H1 - M15</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s7-desc">
+                        <div class="card-title">🕒 1. Khung Lớn H4 (Trend Filter - Định Hướng)</div>
+                        <p>Xác định bối cảnh tổng quan. RSI trên H4 phải nằm trong **Bullish Range (>50)**. Nếu RSI H4 < 40, tuyệt đối không tìm kiếm lệnh Buy dài hạn.</p>
+                        
+                        <div class="card-title accent-yellow" style="margin-top:0.4rem;">🕑 2. Khung Trung Gian H1 (Location - Vùng Cản)</div>
+                        <p>Tìm điểm điều chỉnh. Chờ đợi nhịp pullback của giá đẩy RSI H1 lùi về vùng hỗ trợ **40 - 45** của xu hướng tăng.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">🕐 3. Khung Nhỏ M15 (Trigger - Điểm Vào Lệnh)</div>
+                        <p>Tìm điểm kích hoạt tinh vi. Khi H4 đồng thuận tăng và H1 đã chạm vùng cản, mở khung M15 chờ đợi tín hiệu **Phân Kỳ Thường Tăng (Regular Bullish Divergence)** hoặc RSI M15 giảm quá mức chạm mốc **30** rồi rút chân đi lên.</p>
+                        <div class="highlight-box" style="margin-top:0.4rem;">
+                            🎯 <strong>Sức mạnh đồng bộ:</strong> Sự kết hợp này giúp bạn có điểm dừng lỗ (SL) cực ngắn trên M15 nhưng mục tiêu chốt lời (TP) rộng lớn theo H4.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 8: M4 - DIAGRAM: MTF CORRELATION -->
+        <section class="slide" data-module="Module 4" data-lesson="Bài 4: Sơ Đồ MTF Correlation">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 4: Đồng Bộ Hóa Đa Khung Thời Gian Correlation</span>
+                    <span class="slide-number-tag">Trang 8/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s8-title">Bài 4: Sơ Đồ Đồng Bộ <span>Quy Trình Vào Lệnh Đa Khung</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s8-desc">
+                        <div class="card-title accent-yellow">⚙️ Quy Trình 3 Bước Nghiêm Ngặt</div>
+                        <ol style="display:flex; flex-direction:column; gap:0.4rem; padding-left:1rem;">
+                            <li>**Bước 1:** Kiểm tra H4 xem RSI có duy trì trên 50 để xác nhận cấu trúc tăng bền vững.</li>
+                            <li>**Bước 2:** Chờ RSI H1 điều chỉnh về mốc 40 (Location có lợi thế).</li>
+                            <li>**Bước 3:** Vào lệnh khi RSI M15 tạo phân kỳ tăng hoặc bật lên từ vùng quá bán.</li>
+                        </ol>
+                    </div>
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Box 1: H4 -->
+                            <rect x="20" y="20" width="75" height="100" fill="var(--bg-card)" stroke="var(--accent-orange)" stroke-width="1.5" rx="6" />
+                            <text x="57" y="40" class="text-chart" text-anchor="middle" fill="#fff" font-weight="bold">H4 (Trend)</text>
+                            <text x="57" y="65" class="text-chart" text-anchor="middle" fill="var(--accent-green)">RSI > 50</text>
+                            <text x="57" y="80" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="7">Xu hướng Tăng</text>
+                            <text x="57" y="95" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="7">Chủ Đạo</text>
+
+                            <!-- Arrow 1 to 2 -->
+                            <path d="M 95 70 L 115 70" fill="none" stroke="var(--accent-yellow)" stroke-width="2" class="draw-line" />
+                            <polygon points="115,70 109,66 109,74" fill="var(--accent-yellow)" />
+
+                            <!-- Box 2: H1 -->
+                            <rect x="120" y="20" width="75" height="100" fill="var(--bg-card)" stroke="var(--accent-yellow)" stroke-width="1.5" rx="6" />
+                            <text x="157" y="40" class="text-chart" text-anchor="middle" fill="#fff" font-weight="bold">H1 (Location)</text>
+                            <text x="157" y="65" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)">RSI ~ 40</text>
+                            <text x="157" y="80" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="7">Pullback Về</text>
+                            <text x="157" y="95" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="7">Hỗ Trợ Biên</text>
+
+                            <!-- Arrow 2 to 3 -->
+                            <path d="M 195 70 L 215 70" fill="none" stroke="var(--accent-cyan)" stroke-width="2" class="draw-line" />
+                            <polygon points="215,70 209,66 209,74" fill="var(--accent-cyan)" />
+
+                            <!-- Box 3: M15 -->
+                            <rect x="220" y="20" width="65" height="100" fill="var(--bg-card)" stroke="var(--accent-cyan)" stroke-width="1.5" rx="6" class="pulse-orange-effect" />
+                            <text x="252" y="40" class="text-chart" text-anchor="middle" fill="#fff" font-weight="bold">M15 (Entry)</text>
+                            <text x="252" y="65" class="text-chart" text-anchor="middle" fill="var(--accent-cyan)">Divergence</text>
+                            <text x="252" y="80" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="7">Phân kỳ tăng</text>
+                            <text x="252" y="95" class="text-chart" text-anchor="middle" fill="var(--accent-green)" font-weight="bold" font-size="8">BUY!</text>
+
+                            <!-- Flow connection path below -->
+                            <path d="M 57 120 L 57 150 L 252 150 L 252 120" fill="none" stroke="rgba(255,102,0,0.2)" stroke-width="1.5" stroke-dasharray="3,3" />
+                            <text x="157" y="165" class="text-chart" text-anchor="middle" fill="var(--accent-orange)">Tối ưu hóa điểm kích hoạt và kiểm soát rủi ro</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== ADDITIONAL SLIDES ==================== -->
+        <!-- SLIDE 9: M2 - RANGE SHIFT EXAMPLES -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 2: Ví Dụ Thực Chiến Range Shift">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Kỹ Thuật Dịch Chuyển Biên Độ Range Shift</span>
+                    <span class="slide-number-tag">Trang 9/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s9-title">Bài 2: Thực Chiến Range Shift <span>& Bẫy Phá Vỡ Giả</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s9-desc">
+                        <div class="card-title accent-yellow">⚠️ Lưu Ý Đặc Biệt Về Mốc Cân Bằng 50</div>
+                        <p>Mốc 50 là ranh giới phân định lực mua/bán trung hạn:</p>
+                        <p style="margin-top:0.3rem;">Khi thị trường thay đổi trạng thái xu hướng, RSI sẽ có hành vi vượt qua mốc 50 và kiểm định lại mốc này. Nếu RSI chui hẳn xuống dưới 40 và không thể vượt lại lên trên 50 trong các nhịp hồi, xu hướng đã chính thức xoay chuyển sang **Bearish**.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-orange">🔍 Cách Phát Hiện Sự Thay Đổi Xu Hướng</div>
+                        <p>Một tín hiệu đảo chiều sớm đáng tin cậy là sự thất bại của RSI khi quay lại vùng biên cũ:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.3rem;">
+                            <li>Trong xu hướng tăng, nếu RSI điều chỉnh xuyên thủng mốc 40 và cắm sâu về dưới 30, lực mua lớn đã rút lui.</li>
+                            <li>Sự chuyển dịch này báo hiệu cấu trúc tích lũy cũ bị phá vỡ hoàn toàn.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 10: M3 - BEARISH HIDDEN DIVERGENCE -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài 3: Phân Kỳ Ẩn Giảm Giá">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 3: Kỹ Thuật Giao Dịch Phân Kỳ Nâng Cao</span>
+                    <span class="slide-number-tag">Trang 10/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s10-title">Bài 3: Phân Kỳ Ẩn Giảm Giá <span>Bearish Hidden Divergence</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s10-desc">
+                        <div class="card-title accent-red">📉 Kịch Bản Đè Giá Của Phe Bán</div>
+                        <p>Bearish Hidden Divergence xuất hiện trong xu hướng giảm:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem;">
+                            <li><strong>Giá:</strong> Tạo đỉnh sau thấp hơn đỉnh trước (LH) - giữ nguyên cấu trúc giảm.</li>
+                            <li><strong>RSI:</strong> Tạo đỉnh sau cao hơn đỉnh trước (HH) - thể hiện nỗ lực hồi phục cực đại nhưng thất bại hoàn toàn trong việc đẩy giá đi lên.</li>
+                        </ul>
+                        <p style="margin-top:0.3rem;">Đây là điểm vào lệnh Short cực đẹp thuận xu hướng giảm chủ đạo.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">⚙️ Quy Tắc Thực Chiến</div>
+                        <p>Không bao giờ giao dịch phân kỳ ẩn khi giá đã chạm cản cứng của khung thời gian lớn. Luôn kiểm tra cấu trúc sóng giảm trước khi kích hoạt lệnh bán.</p>
+                        <div class="highlight-box" style="margin-top:0.4rem; border-left-color: var(--accent-red); background: rgba(255,56,96,0.02);">
+                            ⚠️ Cắt lỗ tuyệt đối trên đỉnh gần nhất của nến tín hiệu để bảo vệ tài khoản khỏi những cây nến quét thanh khoản (Squeeze).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 11: M4 - QUY TẮC PHỐI HỢP EMA -->
+        <section class="slide" data-module="Module 4" data-lesson="Bài 4: Kết Hợp RSI & Đường EMA">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 4: Đồng Bộ Hóa Đa Khung Thời Gian Correlation</span>
+                    <span class="slide-number-tag">Trang 11/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s11-title">Bài 4: Nghệ Thuật Phối Hợp <span>RSI & Đường Trung Bình EMA 20/50</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s11-desc">
+                        <div class="card-title accent-cyan">⚡ Sự Hợp Nhất Động Lượng & Xu Hướng</div>
+                        <p>RSI là chỉ báo động lượng, còn EMA là chỉ báo xu hướng. Sự kết hợp giữa chúng tạo nên bộ lọc lệnh hoàn hảo:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.3rem;">
+                            <li>Chỉ mua khi giá nằm trên EMA 20 và RSI đang ở trong Bullish Range (kiểm định mốc 40 thành công).</li>
+                            <li>Mỗi khi giá pullback chạm lại EMA 20 đồng thời RSI kiểm định mốc 40-45 ➔ Đó là điểm mua tối ưu nhất của một xu hướng tăng.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-orange">🔑 Kỹ Thuật Đọc Vị Lực Đẩy (Momentum)</div>
+                        <p>Nếu giá vượt xa đường EMA nhưng RSI bắt đầu tạo phân kỳ thường giảm, đây là dấu hiệu xu hướng đang bị kéo căng quá mức (Overextended). Hãy tiến hành thu hẹp chốt lời từng phần thay vì tiếp tục nhồi thêm lệnh.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 12: TỔNG KẾT KHÓA HỌC -->
+        <section class="slide" data-module="Hệ Thống Lọc Lệnh" data-lesson="Tổng Kết RSI">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Hệ Thống Lọc Lệnh Thực Chiến</span>
+                    <span class="slide-number-tag">Trang 12/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s12-title">Hệ Thống Lọc Lệnh <span>RSI Kỷ Luật & Chuyên Nghiệp</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s12-desc">
+                        <div class="card-title">📜 Quy Tắc Kỷ Luật 4 Không</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem;">
+                            <li>**Không** mua khống khi RSI H4 dưới 40.</li>
+                            <li>**Không** cố bắt đỉnh khi RSI đang duy trì ở mốc 80 với gia tốc tăng mạnh.</li>
+                            <li>**Không** bỏ qua bối cảnh xu hướng của khung thời gian lớn hơn khi giao dịch phân kỳ trên khung nhỏ.</li>
+                            <li>**Không** nhồi lệnh khi giá chạy xa khỏi đường hỗ trợ EMA 20.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">🛡️ Kế Hoạch Quản Lý Vị Thế</div>
+                        <p>Sử dụng các quy tắc RSI Range Shift để quản lý lệnh đang chạy. Nếu bạn mua tại vùng hỗ trợ 40 của RSI, nhưng sau đó RSI không thể bật vượt qua mốc 60 và quay đầu giảm mạnh, hãy chủ động đóng lệnh hòa vốn hoặc cắt lỗ sớm vì lực mua yếu hơn dự kiến.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 13: BÀI TẬP THỰC HÀNH -->
+        <section class="slide" data-module="Thực Hành" data-lesson="Bài Tập Luyện Tập">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Thực Hành & Luyện Tập</span>
+                    <span class="slide-number-tag">Trang 13/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s13-title">Bài Tập Rèn Luyện <span>Khai Thác Chỉ Báo RSI</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s13-desc">
+                        <div class="card-title accent-yellow">📝 Bài Tập 1: Nhật Ký Range Shift (15 ngày)</div>
+                        <p>Chọn 3 cặp tiền tệ hoặc tài sản yêu thích. Hàng ngày ghi chép lại biên độ hoạt động của RSI trên khung H1. Xác định thị trường đang nằm trong Bullish Range hay Bearish Range.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">📝 Bài Tập 2: Lọc Tín Hiệu Phân Kỳ Ẩn</div>
+                        <p>Tìm kiếm và chụp lại ít nhất 10 trường hợp xuất hiện phân kỳ ẩn (Hidden Divergence) trên biểu đồ lịch sử thuận xu hướng. Phân tích kết quả sau đó của giá để rút kinh nghiệm.</p>
+                        <div class="highlight-box" style="margin-top:0.4rem;">
+                            💡 Ghi chép kỹ lại các trường hợp phân kỳ bị thất bại để tìm ra lỗi thiết lập bối cảnh.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Navigation Overlay -->
+    <div class="slide-nav">
+        <button class="nav-btn" id="prevBtn" aria-label="Previous Slide">←</button>
+        <div class="nav-dots" id="navDots"></div>
+        <button class="nav-btn" id="nextBtn" aria-label="Next Slide">→</button>
+    </div>
+
+    <!-- =========================================================================
+         JAVASCRIPT CONTROLLERS
+         ========================================================================= -->
+    <script>
+        // --- 1. CORE PRESENTATION ENGINE ---
+        class SlidePresentation {
+            constructor() {
+                this.container = document.getElementById('slideContainer');
+                this.slides = Array.from(document.querySelectorAll('.slide'));
+                this.currentSlide = 0;
+                
+                this.init();
+            }
+
+            init() {
+                this.setupIntersectionObserver();
+                this.setupKeyboardNav();
+                this.setupTouchNav();
+                this.setupNavDots();
+                this.updateDynamicPageNumbers();
+                
+                // Track mouse wheel scroll
+                let scrollTimeout;
+                window.addEventListener('wheel', (e) => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(() => {
+                        if (e.deltaY > 30) {
+                            this.setActiveSlide(this.currentSlide + 1);
+                        } else if (e.deltaY < -30) {
+                            this.setActiveSlide(this.currentSlide - 1);
+                        }
+                    }, 50);
+                }, { passive: true });
+            }
+
+            setupIntersectionObserver() {
+                const observerOptions = {
+                    root: null,
+                    threshold: 0.5
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const index = this.slides.indexOf(entry.target);
+                            this.currentSlide = index;
+                            this.updateActiveState();
+                        }
+                    });
+                }, observerOptions);
+
+                this.slides.forEach(slide => observer.observe(slide));
+            }
+
+            updateDynamicPageNumbers() {
+                const total = this.slides.length;
+                this.slides.forEach((slide, idx) => {
+                    const pageTag = slide.querySelector('.slide-number-tag');
+                    if (pageTag) {
+                        pageTag.textContent = `Trang ${idx + 1}/${total}`;
+                    }
+                });
+            }
+
+            setActiveSlide(index) {
+                if (index < 0 || index >= this.slides.length) return;
+                this.currentSlide = index;
+                this.slides[index].scrollIntoView({ behavior: 'smooth' });
+                this.updateActiveState();
+            }
+
+            updateActiveState() {
+                this.slides.forEach((slide, idx) => {
+                    if (idx === this.currentSlide) {
+                        slide.classList.add('visible');
+                    } else {
+                        slide.classList.remove('visible');
+                    }
+                });
+
+                // Update progress bar
+                const percent = (this.currentSlide / (this.slides.length - 1)) * 100;
+                document.getElementById('progressBar').style.width = `${percent}%`;
+
+                // Update dots
+                const dots = document.querySelectorAll('.nav-dot');
+                dots.forEach((dot, idx) => {
+                    if (idx === this.currentSlide) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+
+                // Update sidebar active items
+                const sidebarItems = document.querySelectorAll('.sidebar-item');
+                sidebarItems.forEach(item => item.classList.remove('active'));
+                
+                const currentSlideEl = this.slides[this.currentSlide];
+                const moduleName = currentSlideEl.getAttribute('data-module');
+                const lessonName = currentSlideEl.getAttribute('data-lesson');
+                
+                if (moduleName && lessonName) {
+                    sidebarItems.forEach(item => {
+                        if (item.getAttribute('data-slide-index') == this.currentSlide) {
+                            item.classList.add('active');
+                        }
+                    });
+                }
+            }
+
+            setupKeyboardNav() {
+                document.addEventListener('keydown', (e) => {
+                    if (e.target.getAttribute('contenteditable') === 'true') return;
+
+                    if (e.key === 'ArrowDown' || e.key === 'Space') {
+                        e.preventDefault();
+                        this.setActiveSlide(this.currentSlide + 1);
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        this.setActiveSlide(this.currentSlide - 1);
+                    }
+                });
+            }
+
+            setupTouchNav() {
+                let startY = 0;
+                document.addEventListener('touchstart', (e) => {
+                    startY = e.touches[0].clientY;
+                }, { passive: true });
+
+                document.addEventListener('touchend', (e) => {
+                    const endY = e.changedTouches[0].clientY;
+                    const diff = startY - endY;
+
+                    if (Math.abs(diff) > 50) { 
+                        if (diff > 0) {
+                            this.setActiveSlide(this.currentSlide + 1);
+                        } else {
+                            this.setActiveSlide(this.currentSlide - 1);
+                        }
+                    }
+                }, { passive: true });
+            }
+
+            setupNavDots() {
+                const navDotsContainer = document.getElementById('navDots');
+                navDotsContainer.innerHTML = '';
+                
+                this.slides.forEach((slide, idx) => {
+                    const dot = document.createElement('button');
+                    dot.className = `nav-dot ${idx === 0 ? 'active' : ''}`;
+                    dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
+                    dot.addEventListener('click', () => {
+                        this.setActiveSlide(idx);
+                    });
+                    navDotsContainer.appendChild(dot);
+                });
+            }
+        }
+
+        // --- 2. CYBER SIDEBAR CONTROLLER ---
+        class SidebarController {
+            constructor(presentation) {
+                this.presentation = presentation;
+                this.toggleBtn = document.getElementById('sidebarToggle');
+                this.sidebar = document.getElementById('sidebar');
+                this.backdrop = document.getElementById('sidebarBackdrop');
+                this.menu = document.getElementById('sidebarMenu');
+                
+                this.init();
+            }
+
+            init() {
+                this.buildMenu();
+                
+                this.toggleBtn.addEventListener('click', () => this.toggleSidebar());
+                this.backdrop.addEventListener('click', () => this.closeSidebar());
+                
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') this.closeSidebar();
+                });
+            }
+
+            toggleSidebar() {
+                this.sidebar.classList.toggle('open');
+                this.backdrop.classList.toggle('show');
+            }
+
+            closeSidebar() {
+                this.sidebar.classList.remove('open');
+                this.backdrop.classList.remove('show');
+            }
+
+            buildMenu() {
+                this.menu.innerHTML = '';
+                
+                const homeLi = document.createElement('li');
+                homeLi.className = 'sidebar-item active';
+                homeLi.setAttribute('data-slide-index', '0');
+                homeLi.innerHTML = `
+                    <span class="sidebar-module-tag">MASTERCLASS</span>
+                    <span>Màn Hình Chào & Hướng Dẫn</span>
+                `;
+                homeLi.addEventListener('click', () => {
+                    this.presentation.setActiveSlide(0);
+                    this.closeSidebar();
+                });
+                this.menu.appendChild(homeLi);
+
+                this.presentation.slides.forEach((slide, idx) => {
+                    if (idx === 0) return;
+                    
+                    const moduleName = slide.getAttribute('data-module');
+                    const lessonName = slide.getAttribute('data-lesson');
+                    
+                    if (moduleName && lessonName) {
+                        const li = document.createElement('li');
+                        li.className = 'sidebar-item';
+                        li.setAttribute('data-slide-index', idx);
+                        li.innerHTML = `
+                            <span class="sidebar-module-tag">${moduleName}</span>
+                            <span>${lessonName}</span>
+                        `;
+                        li.addEventListener('click', () => {
+                            this.presentation.setActiveSlide(idx);
+                            this.closeSidebar();
+                        });
+                        this.menu.appendChild(li);
+                    }
+                });
+            }
+        }
+
+        // --- 3. INLINE EDITING CONTROLLER WITH LOCALSTORAGE PERSISTENCE ---
+        class LessonEditor {
+            constructor() {
+                this.isActive = false;
+                this.editToggle = document.getElementById('editToggle');
+                this.hotzone = document.getElementById('editHotzone');
+                this.saveIndicator = document.getElementById('saveIndicator');
+                this.hideTimeout = null;
+                
+                this.setupEditingTrigger();
+                this.loadSavedContent();
+            }
+
+            setupEditingTrigger() {
+                this.hotzone.addEventListener('mouseenter', () => {
+                    clearTimeout(this.hideTimeout);
+                    this.editToggle.classList.add('show');
+                });
+                
+                this.hotzone.addEventListener('mouseleave', () => {
+                    this.hideTimeout = setTimeout(() => {
+                        if (!this.isActive) this.editToggle.classList.remove('show');
+                    }, 400);
+                });
+
+                this.editToggle.addEventListener('mouseenter', () => {
+                    clearTimeout(this.hideTimeout);
+                });
+
+                this.editToggle.addEventListener('mouseleave', () => {
+                    this.hideTimeout = setTimeout(() => {
+                        if (!this.isActive) this.editToggle.classList.remove('show');
+                    }, 400);
+                });
+
+                this.editToggle.addEventListener('click', () => this.toggleEditMode());
+
+                document.addEventListener('keydown', (e) => {
+                    if ((e.key === 'e' || e.key === 'E') && e.target.getAttribute('contenteditable') !== 'true') {
+                        e.preventDefault();
+                        this.toggleEditMode();
+                    }
+                });
+            }
+
+            getEditableIds() {
+                return [
+                    'editable-s1-title', 'editable-s1-desc',
+                    'editable-s2-title', 'editable-s2-desc',
+                    'editable-s3-title', 'editable-s3-desc',
+                    'editable-s4-title', 'editable-s4-desc',
+                    'editable-s5-title', 'editable-s5-desc',
+                    'editable-s6-title', 'editable-s6-desc',
+                    'editable-s7-title', 'editable-s7-desc',
+                    'editable-s8-title', 'editable-s8-desc',
+                    'editable-s9-title', 'editable-s9-desc',
+                    'editable-s10-title', 'editable-s10-desc',
+                    'editable-s11-title', 'editable-s11-desc',
+                    'editable-s12-title', 'editable-s12-desc',
+                    'editable-s13-title', 'editable-s13-desc'
+                ];
+            }
+
+            toggleEditMode() {
+                this.isActive = !this.isActive;
+                
+                if (this.isActive) {
+                    this.editToggle.classList.add('active');
+                    this.editToggle.textContent = '💾 LƯU BÀI GIẢNG';
+                    this.enableEditableElements();
+                } else {
+                    this.editToggle.classList.remove('active');
+                    this.editToggle.textContent = '✏️ EDIT MODE (E)';
+                    this.disableEditableElements();
+                    this.saveContent();
+                }
+            }
+
+            enableEditableElements() {
+                this.getEditableIds().forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.setAttribute('contenteditable', 'true');
+                });
+            }
+
+            disableEditableElements() {
+                this.getEditableIds().forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.removeAttribute('contenteditable');
+                });
+            }
+
+            saveContent() {
+                const contentData = {};
+                this.getEditableIds().forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) contentData[id] = el.innerHTML;
+                });
+
+                localStorage.setItem('rsi_masterclass_data', JSON.stringify(contentData));
+                
+                this.saveIndicator.classList.add('show');
+                setTimeout(() => {
+                    this.saveIndicator.classList.remove('show');
+                }, 2000);
+            }
+
+            loadSavedContent() {
+                const saved = localStorage.getItem('rsi_masterclass_data');
+                if (saved) {
+                    try {
+                        const contentData = JSON.parse(saved);
+                        Object.keys(contentData).forEach(id => {
+                            const el = document.getElementById(id);
+                            if (el) el.innerHTML = contentData[id];
+                        });
+                    } catch (e) {
+                        console.error("Lỗi khi tải dữ liệu bài giảng cũ:", e);
+                    }
+                }
+            }
+        }
+
+        // Initialize all controllers
+        window.addEventListener('DOMContentLoaded', () => {
+            const presentation = new SlidePresentation();
+            window.presentation = presentation;
+            window.sidebar = new SidebarController(presentation);
+            window.editor = new LessonEditor();
+
+            document.getElementById('prevBtn').addEventListener('click', () => {
+                presentation.setActiveSlide(presentation.currentSlide - 1);
+            });
+            document.getElementById('nextBtn').addEventListener('click', () => {
+                presentation.setActiveSlide(presentation.currentSlide + 1);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forex Market Microstructure & Day Trading - Masterclass</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===========================================
+           CSS CUSTOM PROPERTIES (THEME: CYBER MINT GREEN)
+           =========================================== */
+        :root {
+            --bg-primary: #050811;
+            --bg-secondary: #0e1422;
+            --bg-card: rgba(14, 25, 34, 0.75);
+            --border-color: rgba(0, 255, 179, 0.15);
+            
+            --text-primary: #ffffff;
+            --text-secondary: #8c9bb4;
+            
+            --accent-mint: #00ffb3;
+            --accent-green: #00e676;
+            --accent-cyan: #00e5ff;
+            --accent-red: #ff3b30;
+            --accent-yellow: #d4ff00;
+            
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-title: 'Archivo Black', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+            
+            --title-size: clamp(1.8rem, 4.2vw, 3.4rem);
+            --h2-size: clamp(1.3rem, 3vw, 2.1rem);
+            --h3-size: clamp(1rem, 2.2vw, 1.4rem);
+            --body-size: clamp(0.8rem, 1.2vw, 1.02rem);
+            --small-size: clamp(0.68rem, 0.9vw, 0.82rem);
+            
+            --slide-padding: clamp(1rem, 3.5vw, 3rem);
+            --content-gap: clamp(0.5rem, 1.8vw, 1.4rem);
+            --element-gap: clamp(0.3rem, 1.1vw, 0.8rem);
+            
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-neon: 0 0 20px rgba(0, 255, 179, 0.25);
+            --shadow-green: 0 0 20px rgba(0, 230, 118, 0.2);
+        }
+
+        /* ===========================================
+           BASE RESET & SCROLL SNAP
+           =========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-display);
+            line-height: 1.45;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Cyber grid background */
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(rgba(0, 255, 179, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 179, 0.015) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Mint ambient glow shapes */
+        .slide::after {
+            content: '';
+            position: absolute;
+            width: 40vw;
+            height: 40vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 179, 0.05) 0%, transparent 70%);
+            bottom: -10vw;
+            right: -10vw;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .slide:nth-child(even)::after {
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.03) 0%, transparent 70%);
+            top: -10vw;
+            left: -10vw;
+            bottom: auto;
+            right: auto;
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-height: 100%;
+            overflow: hidden;
+            padding: var(--slide-padding);
+            z-index: 2;
+            gap: var(--content-gap);
+        }
+
+        /* Header structure */
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 255, 179, 0.1);
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.1rem;
+        }
+
+        .slide-module-tag {
+            font-size: var(--small-size);
+            color: var(--accent-mint);
+            font-family: var(--font-mono);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .slide-number-tag {
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+        }
+
+        .slide-title {
+            font-family: var(--font-title);
+            font-size: var(--h2-size);
+            color: var(--text-primary);
+            line-height: 1.15;
+            letter-spacing: -0.5px;
+        }
+
+        .slide-title span {
+            color: var(--accent-mint);
+        }
+
+        /* Layout styles */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--content-gap);
+            align-items: center;
+            max-height: min(72vh, 490px);
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--element-gap);
+        }
+
+        .grid-3-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--element-gap);
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: clamp(0.7rem, 1.6vw, 1.6rem);
+            transition: all 0.3s ease;
+            max-height: min(68vh, 450px);
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .card:hover {
+            border-color: rgba(0, 255, 179, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 255, 179, 0.08);
+        }
+
+        .card-title {
+            font-size: var(--h3-size);
+            font-weight: 700;
+            color: var(--accent-mint);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .card-title.accent-green { color: var(--accent-green); }
+        .card-title.accent-red { color: var(--accent-red); }
+        .card-title.accent-cyan { color: var(--accent-cyan); }
+        .card-title.accent-yellow { color: var(--accent-yellow); }
+
+        .card p, .card li {
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .card ul {
+            padding-left: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        /* Typography Helpers */
+        .highlight-box {
+            border-left: 3px solid var(--accent-mint);
+            padding: 0.5rem 0.8rem;
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+            background: rgba(0, 255, 179, 0.02);
+            border-radius: 0 6px 6px 0;
+        }
+
+        .highlight-box strong {
+            color: var(--text-primary);
+        }
+
+        /* Diagram Viewport fit */
+        .diagram-container {
+            width: 100%;
+            height: 100%;
+            max-height: min(50vh, 320px);
+            background-color: #03050a;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0.5rem;
+        }
+
+        /* Interactive controls for slides */
+        .slide-nav {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 100;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--accent-mint);
+            color: var(--accent-mint);
+            box-shadow: var(--shadow-neon);
+        }
+
+        .nav-dots {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-dot.active {
+            background-color: var(--accent-mint);
+            box-shadow: var(--shadow-neon);
+            width: 16px;
+            border-radius: 4px;
+        }
+
+        /* Progress Bar */
+        .progress-bar-container {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background-color: rgba(255, 255, 255, 0.05);
+            z-index: 100;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-mint), var(--accent-cyan));
+            box-shadow: 0 0 10px rgba(0, 255, 179, 0.5);
+            transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* ===========================================
+           CYBER SIDEBAR NAVIGATION
+           =========================================== */
+        .sidebar-toggle {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 101;
+            background-color: rgba(14, 20, 34, 0.85);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: var(--small-size);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .sidebar-toggle:hover {
+            border-color: var(--accent-mint);
+            color: var(--accent-mint);
+            box-shadow: var(--shadow-neon);
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0; left: -320px;
+            width: 300px;
+            height: 100%;
+            background-color: rgba(5, 8, 17, 0.97);
+            border-right: 1px solid var(--border-color);
+            z-index: 200;
+            backdrop-filter: blur(12px);
+            padding: 5rem 1.5rem 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            transition: left 0.4s var(--ease-out-expo);
+            overflow-y: auto;
+        }
+
+        .sidebar.open {
+            left: 0;
+            box-shadow: 10px 0 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .sidebar-title {
+            font-family: var(--font-title);
+            font-size: 1rem;
+            color: var(--accent-mint);
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .sidebar-item {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.35rem 0.5rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+
+        .sidebar-item:hover {
+            background-color: rgba(0, 255, 179, 0.05);
+            color: var(--accent-mint);
+        }
+
+        .sidebar-item.active {
+            background: linear-gradient(90deg, rgba(0, 255, 179, 0.1) 0%, transparent 100%);
+            border-left: 2px solid var(--accent-mint);
+            color: var(--accent-mint);
+            font-weight: 500;
+        }
+
+        .sidebar-module-tag {
+            font-size: 0.6rem;
+            font-family: var(--font-mono);
+            color: var(--accent-yellow);
+            text-transform: uppercase;
+        }
+
+        .sidebar-backdrop {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 199;
+            backdrop-filter: blur(2px);
+            display: none;
+        }
+
+        .sidebar-backdrop.show {
+            display: block;
+        }
+
+        /* ===========================================
+           INLINE EDITING SYSTEM
+           =========================================== */
+        .edit-hotzone {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            width: 160px;
+            height: 40px;
+            z-index: 100;
+        }
+
+        .edit-toggle {
+            position: absolute;
+            left: 0; bottom: 0;
+            background-color: rgba(14, 20, 34, 0.85);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: var(--small-size);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            white-space: nowrap;
+        }
+
+        .edit-hotzone:hover .edit-toggle,
+        .edit-toggle.show,
+        .edit-toggle.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .edit-toggle.active {
+            background-color: var(--accent-mint);
+            color: var(--bg-primary);
+            border-color: var(--accent-mint);
+            box-shadow: var(--shadow-neon);
+        }
+
+        [contenteditable="true"] {
+            border: 1px dashed var(--accent-mint) !important;
+            padding: 4px;
+            border-radius: 4px;
+            outline: none;
+            background-color: rgba(0, 255, 179, 0.03);
+        }
+
+        .save-indicator {
+            position: fixed;
+            bottom: 5rem;
+            left: 1.5rem;
+            background-color: #052e22;
+            border: 1px solid var(--accent-mint);
+            color: var(--accent-mint);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: var(--small-size);
+            font-family: var(--font-mono);
+            z-index: 100;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s var(--ease-out-expo);
+            pointer-events: none;
+        }
+
+        .save-indicator.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* SVG CHART STYLES */
+        .text-chart {
+            font-family: var(--font-mono);
+            fill: var(--text-secondary);
+            font-size: 9px;
+        }
+        @keyframes pulseMint {
+            0% { filter: drop-shadow(0 0 2px var(--accent-mint)); }
+            50% { filter: drop-shadow(0 0 8px var(--accent-mint)); }
+            100% { filter: drop-shadow(0 0 2px var(--accent-mint)); }
+        }
+        @keyframes dash {
+            to { stroke-dashoffset: 0; }
+        }
+        .pulse-mint-effect {
+            animation: pulseMint 2s infinite ease-in-out;
+        }
+        .draw-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 3s forwards ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Sidebar Trigger Button -->
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle Lesson Index">
+        <span>☰</span> BẢN ĐỒ KHÓA HỌC
+    </button>
+
+    <!-- Slide-out Sidebar Navigation -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-title">FX MICROSTRUCTURE</div>
+        <ul class="sidebar-menu" id="sidebarMenu">
+            <!-- Dynamically populated via JS -->
+        </ul>
+    </div>
+
+    <!-- Floating Editor Button -->
+    <div class="edit-hotzone" id="editHotzone">
+        <button class="edit-toggle" id="editToggle">✏️ EDIT MODE (E)</button>
+    </div>
+    <div class="save-indicator" id="saveIndicator">💾 ĐÃ LƯU BÀI GIẢNG!</div>
+
+    <!-- =========================================================================
+         SLIDES LIST (FOREX MICROSTRUCTURE: SLIDE 1 - 13)
+         ========================================================================= -->
+    <main id="slideContainer">
+
+        <!-- ==================== SLIDE 1: HOME ==================== -->
+        <section class="slide">
+            <div class="slide-content" style="align-items: center; text-align: center; justify-content: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color: var(--accent-yellow);">DAY TRADING NGOẠI HỐI CHUYÊN NGHIỆP</div>
+                <h1 class="slide-title" id="editable-s1-title" style="font-size: var(--title-size); line-height: 1.1;">
+                    FX MICROSTRUCTURE<br><span style="color: var(--accent-mint);">& DAY TRADING</span>
+                </h1>
+                <p id="editable-s1-desc" style="font-size: 1.15rem; color: var(--text-secondary); max-width: 800px; font-family: var(--font-display);">
+                    Làm chủ cấu trúc vi mô thị trường liên ngân hàng: Giải mã chu kỳ hoạt động của các phiên giao dịch, cơ chế hấp thụ thanh khoản vĩ mô và thiết lập kế hoạch Day Trading kỷ luật.
+                </p>
+                <div class="highlight-box" style="border: 1px solid var(--border-color); border-left: 3px solid var(--accent-yellow); max-width: 600px; text-align: left; margin-top: 1rem;">
+                    💡 <strong>Hướng dẫn:</strong> Dùng phím <strong>Space / Mũi tên xuống</strong> để sang trang tiếp theo. Click nút <strong>BẢN ĐỒ KHÓA HỌC</strong> ở góc trái để mở menu chọn nhanh bài giảng. Nhấn phím <strong>E</strong> để tự do chỉnh sửa nội dung.
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 1 ==================== -->
+        <!-- SLIDE 2: M1 - BÀI 1: LIÊN NGÂN HÀNG -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 1: Thị Trường Liên Ngân Hàng">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Cấu Trúc Vi Mô Thị Trường</span>
+                    <span class="slide-number-tag">Trang 2/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s2-title">Bài 1: Cấu Trúc Thị Trường <span>Liên Ngân Hàng (Interbank Market)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s2-desc">
+                        <div class="card-title">🏦 1. Bản Chất Mạng Lưới Phi Tập Trung</div>
+                        <p>Thị trường Ngoại hối (FX) không có sàn giao dịch tập trung như cổ phiếu. Nó là một mạng lưới **OTC phi tập trung** khổng lồ kết nối các ngân hàng cấp 1 (Tier 1 Banks) như JP Morgan, Citibank, HSBC qua các cổng thanh khoản điện tử (EBS, Reuters).</p>
+                        <div class="card-title accent-mint" style="margin-top:0.4rem;">💧 2. Dòng Chảy Thanh Khoản (Order Flow)</div>
+                        <p>Nhỏ lẻ (Retail Traders) không giao dịch trực tiếp với Interbank. Chúng ta giao dịch qua các sàn Broker (nhà cung cấp thanh khoản phụ cấp). Dấu chân của Smart Money thực chất là **dòng lệnh thương mại thực tế** từ ngân hàng trung ương và các quỹ phòng hộ.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">🔑 Cơ Chế Phân Cấp Thanh Khoản</div>
+                        <p>Dòng chảy khớp lệnh di chuyển từ cấp cao nhất xuống thấp nhất:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem;">
+                            <li>**Cấp 1:** Mạng lưới liên ngân hàng (Khối lượng lớn nhất, Spread = 0).</li>
+                            <li>**Cấp 2:** Prime Brokers & Nhà tạo lập thị trường phi ngân hàng (Citadel, XTX).</li>
+                            <li>**Cấp 3:** Retail Brokers (Sàn giao dịch nhỏ lẻ khớp lệnh ECN/STP).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 2 ==================== -->
+        <!-- SLIDE 3: M2 - BÀI 2: CHU KỲ PHIÊN -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 2: Chu Kỳ Phiên Giao Dịch">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Giao Dịch Theo Chu Kỳ Phiên</span>
+                    <span class="slide-number-tag">Trang 3/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s3-title">Bài 2: Chu Kỳ Phiên Giao Dịch <span>& Quét Thanh Khoản</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s3-desc">
+                        <div class="card-title">🌏 1. Phiên Á (Asian Range - Tích Lũy)</div>
+                        <p>Khối lượng giao dịch thấp nhất. Giá thường di chuyển trong biên độ hẹp (Range-bound). Mức đỉnh và đáy của phiên Á tạo ra **hai vùng tích lũy thanh khoản dừng lỗ lớn** (Buy/Sell Stops).</p>
+                        
+                        <div class="card-title accent-mint" style="margin-top:0.4rem;">🇪🇺 2. Phiên Âu (London Open Sweep & Breakout)</div>
+                        <p>Khối lượng tăng vọt. London Open thường thực hiện một pha **quét thanh khoản giả (Judas Swing)**: quét qua đỉnh/đáy phiên Á trước khi đảo chiều đi theo hướng đi thực sự trong ngày.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">🇺🇸 3. Phiên Mỹ (NY Reversal - Đảo Chiều New York)</div>
+                        <p>Thời điểm thanh khoản dày đặc nhất khi phiên Âu và Mỹ chồng chéo (Overlap). Sau nhịp đẩy ban đầu, mốc **19:30 - 21:00 (giờ VN)** thường xuất hiện pha đảo chiều New York (New York Reversal) do chốt lời lớn.</p>
+                        <div class="highlight-box" style="margin-top:0.4rem;">
+                            📌 <strong>Mẹo thực chiến:</strong> Tránh giao dịch ngay tại thời điểm mở phiên. Hãy chờ đợi pha quét thanh khoản (Liquidity Sweep) hoàn tất rồi mới tìm điểm vào.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: M2 - DIAGRAM: SESSION CYCLE -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 2: Sơ Đồ Chu Kỳ Phiên">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Giao Dịch Theo Chu Kỳ Phiên</span>
+                    <span class="slide-number-tag">Trang 4/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s4-title">Bài 2: Sơ Đồ Quy Luật <span>Vòng Đời Phiên Intraday</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s4-desc">
+                        <div class="card-title accent-mint">📊 Đọc Vị Quy Luật Quét Cản</div>
+                        <p>Sơ đồ bên cạnh mô tả hành vi tiêu biểu của giá vàng (XAU) hoặc bảng Anh (GBP):</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem;">
+                            <li>**Phiên Á:** Đi ngang tạo hộp thanh khoản.</li>
+                            <li>**Phiên Âu:** Đạp xuống quét râu nến qua đáy Á rồi kéo giật ngược lên tạo xu hướng tăng mạnh.</li>
+                            <li>**Phiên Mỹ:** Tạo đỉnh ngày rồi đảo chiều giảm chốt lời.</li>
+                        </ul>
+                    </div>
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Box Asia Range -->
+                            <rect x="20" y="70" width="70" height="40" fill="none" stroke="var(--accent-yellow)" stroke-width="1.5" stroke-dasharray="3,2" />
+                            <text x="55" y="60" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)">1. Asia Range</text>
+                            
+                            <!-- Path Price -->
+                            <!-- Asia -->
+                            <path d="M 20 90 L 35 80 L 50 100 L 70 85 L 90 90" fill="none" stroke="var(--text-secondary)" stroke-width="1.5" />
+                            
+                            <!-- London Judas Swing Down to Sweep and Pump -->
+                            <path d="M 90 90 L 110 125 L 120 120 L 150 50 L 180 30" fill="none" stroke="var(--accent-green)" stroke-width="2.5" class="draw-line" />
+                            <circle cx="110" cy="125" r="5" fill="none" stroke="var(--accent-red)" stroke-width="1.5" class="pulse-mint-effect" />
+                            <text x="110" y="142" class="text-chart" text-anchor="middle" fill="var(--accent-red)">2. Judas Sweep</text>
+                            <text x="180" y="22" class="text-chart" text-anchor="middle" fill="var(--accent-green)">London Pump</text>
+
+                            <!-- NY Reversal Down -->
+                            <path d="M 180 30 L 210 25 L 230 60 L 280 110" fill="none" stroke="var(--accent-cyan)" stroke-width="2.5" class="draw-line" />
+                            <circle cx="210" cy="25" r="5" fill="none" stroke="var(--accent-yellow)" stroke-width="1.5" />
+                            <text x="235" y="20" class="text-chart" fill="var(--accent-cyan)">3. NY Reversal</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 3 ==================== -->
+        <!-- SLIDE 5: M3 - BÀI 3: TIN TỨC VĨ MÔ -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài 3: Đọc Vị Tin Tức Vĩ Mô">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 3: Đọc Vị Tin Tức Vĩ Mô</span>
+                    <span class="slide-number-tag">Trang 5/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s5-title">Bài 3: Cơ Chế Phản Ứng Tin Tức <span>CPI, NFP & FOMC</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s5-desc">
+                        <div class="card-title">📰 1. Bẫy Tin Tức (News Spike Trap)</div>
+                        <p>Khi các tin tức quan trọng như Bảng lương phi nông nghiệp (NFP) hay Chỉ số giá tiêu dùng (CPI) công bố, spread giãn rộng đột ngột. Các thuật toán tần suất cao (HFT) của Market Maker sẽ chạy lệnh cực nhanh để **quét sạch thanh khoản dừng lỗ hai đầu** trước khi di chuyển theo hướng thực tế.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">⚠️ Quy Tắc Bảo Vệ Vốn Thời Gian Tin Ra</div>
+                        <p>Tránh tuyệt đối việc đặt lệnh giới hạn (Limit) ngay sát giá chạy trước giờ tin công bố. Hầu hết các pha giật tin ban đầu là **bẫy quét thanh khoản**.</p>
+                        <div class="highlight-box" style="margin-top:0.4rem; border-left-color: var(--accent-red); background: rgba(255, 59, 48, 0.02);">
+                            🔥 <strong>Quy tắc 15 phút:</strong> Hãy chờ 15 phút sau khi tin ra để cấu trúc thị trường tự sắp xếp lại, lúc đó giao dịch theo xu hướng thực tế sẽ có lợi thế vượt trội.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: M3 - DIAGRAM: NEWS REACTION -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài 3: Sơ Đồ Phản Ứng Tin">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 3: Đọc Vị Tin Tức Vĩ Mô</span>
+                    <span class="slide-number-tag">Trang 6/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s6-title">Bài 3: Sơ Đồ Quét 2 Đầu <span>Khi Công Bố Tin Tức</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s6-desc">
+                        <div class="card-title accent-mint">⚡ Giải Mã Sơ Đồ Quét Tin</div>
+                        <p>Tại thời điểm ra tin (News Release):</p>
+                        <ol style="display:flex; flex-direction:column; gap:0.4rem; padding-left:1.2rem;">
+                            <li>Giá giật mạnh lên trên quét sạch phe đặt cược bán khống sớm.</li>
+                            <li>Ngay lập tức giá đổ sập sâu quét sạch phe mua đuổi theo đà tin tốt.</li>
+                            <li>Khi lực quét 2 đầu hoàn tất, xu hướng thực sự của dòng tiền thông minh mới được hình thành bền vững.</li>
+                        </ol>
+                    </div>
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Consolidated line path -->
+                            <!-- Pre-news -->
+                            <path d="M 20 100 L 80 100" fill="none" stroke="var(--text-secondary)" stroke-width="2" />
+                            <text x="45" y="88" class="text-chart">Pre-News</text>
+
+                            <!-- News Spike UP -->
+                            <path d="M 80 100 L 110 30" fill="none" stroke="var(--accent-green)" stroke-width="2.5" class="draw-line" />
+                            <circle cx="110" cy="30" r="5" fill="none" stroke="var(--accent-green)" stroke-width="1.5" />
+                            <text x="115" y="25" class="text-chart" fill="var(--accent-green)">1. Quét đỉnh</text>
+
+                            <!-- News Spike DOWN -->
+                            <path d="M 110 30 L 140 170" fill="none" stroke="var(--accent-red)" stroke-width="2.5" class="draw-line" />
+                            <circle cx="140" cy="170" r="5" fill="none" stroke="var(--accent-red)" stroke-width="1.5" class="pulse-mint-effect" />
+                            <text x="145" y="180" class="text-chart" fill="var(--accent-red)">2. Quét đáy</text>
+
+                            <!-- Final Trend Setup -->
+                            <path d="M 140 170 L 170 120 L 280 120" fill="none" stroke="var(--accent-cyan)" stroke-width="2.5" class="draw-line" />
+                            <text x="225" y="110" class="text-chart" fill="var(--accent-cyan)">3. Xu hướng Thực</text>
+                            
+                            <!-- Timeline label -->
+                            <line x1="80" y1="180" x2="80" y2="10" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="2,2" />
+                            <text x="83" y="15" class="text-chart" fill="var(--accent-yellow)">Giờ Ra Tin</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 4 ==================== -->
+        <!-- SLIDE 7: M4 - BÀI 4: KẾ HOẠCH DAILY ROUTINE -->
+        <section class="slide" data-module="Module 4" data-lesson="Bài 4: Kế Hoạch Day Trading Hàng Ngày">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 4: Kế Hoạch Day Trading Hàng Ngày</span>
+                    <span class="slide-number-tag">Trang 7/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s7-title">Bài 4: Quy Trình Lên Kế Hoạch <span>Giao Dịch Hàng Ngày (Routine)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s7-desc">
+                        <div class="card-title">🗓️ 1. Buổi Sáng (Pre-market Preparation)</div>
+                        <p>Kiểm tra lịch kinh tế trong ngày (ForexFactory). Xác định các cặp tiền có tin đỏ. Vẽ các vùng cản khung lớn H4/H1 của EURUSD, GBPUSD, Gold.</p>
+                        
+                        <div class="card-title accent-mint" style="margin-top:0.4rem;">🎯 2. Trong Phiên (Execution & Time Windows)</div>
+                        <p>Chỉ tập trung giao dịch vào các khung giờ vàng thanh khoản: **14:00 - 17:00** (phiên Âu mở cửa) và **19:30 - 22:30** (phiên Mỹ mở cửa). Ngoài các khung giờ này, tốt nhất là đứng ngoài quan sát để tránh phí spread và cạn kiệt năng lượng.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">⚙️ 3. Buổi Tối (Post-market Review)</div>
+                        <p>Chụp ảnh toàn bộ lệnh đã vào và ghi nhật ký giao dịch. Phân tích xem lệnh thua là do sai bối cảnh hay do thị trường quét ngẫu nhiên. **Tắt máy tính trước 23:00** để bảo toàn tâm trí thép.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 8: M4 - DIAGRAM: MARKET MAKER BLOCK -->
+        <section class="slide" data-module="Module 4" data-lesson="Bài 4: Cấu Trúc Order Block MM">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 4: Kế Hoạch Day Trading Hàng Ngày</span>
+                    <span class="slide-number-tag">Trang 8/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s8-title">Bài 4: Khai Thác Vùng Thanh Khoản <span>Market Maker Order Block</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s8-desc">
+                        <div class="card-title accent-yellow">📦 Order Block là gì?</div>
+                        <p>Là cây nến giảm cuối cùng trước khi có đà tăng mạnh mẽ vượt bậc (Bullish OB), hoặc cây nến tăng cuối cùng trước đợt sập giá (Bearish OB). Đây là nơi **Market Maker kích hoạt các khối lệnh lớn** của họ.</p>
+                    </div>
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Bearish Order Block Zone -->
+                            <rect x="50" y="40" width="120" height="30" fill="rgba(255, 59, 48, 0.08)" stroke="var(--accent-red)" stroke-width="1.2" stroke-dasharray="3,3" />
+                            <text x="110" y="58" class="text-chart" text-anchor="middle" fill="var(--accent-red)">Bearish Order Block (Cản lớn)</text>
+
+                            <!-- Price Path test and drop -->
+                            <!-- Price creates OB -->
+                            <path d="M 20 140 L 50 55 L 75 110" fill="none" stroke="var(--text-secondary)" stroke-width="1.5" />
+                            <!-- Price rallies back to OB -->
+                            <path d="M 75 110 L 120 52" fill="none" stroke="var(--accent-yellow)" stroke-width="2" />
+                            <!-- Price drops from OB -->
+                            <path d="M 120 52 L 150 160 L 260 160" fill="none" stroke="var(--accent-mint)" stroke-width="2.5" class="draw-line" />
+
+                            <!-- Touch point trigger -->
+                            <circle cx="120" cy="52" r="5" fill="none" stroke="var(--accent-mint)" stroke-width="1.5" class="pulse-mint-effect" />
+                            <text x="120" y="38" class="text-chart" text-anchor="middle" fill="var(--accent-mint)">Chạm OB & Giảm mạnh</text>
+
+                            <text x="210" y="148" class="text-chart" fill="var(--accent-cyan)">TP Target</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== ADDITIONAL SLIDES ==================== -->
+        <!-- SLIDE 9: M1 - ORDER FLOW & LỆNH CHỜ -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 1: Sổ Lệnh Liên Ngân Hàng">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Cấu Trúc Vi Mô Thị Trường</span>
+                    <span class="slide-number-tag">Trang 9/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s9-title">Bài 1: Đọc Vị Sổ Lệnh <span>& Dòng Lệnh Khớp Thực Tế</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s9-desc">
+                        <div class="card-title accent-cyan">📑 Cơ Chế Đi Khớp Lệnh Của Thuật Toán</div>
+                        <p>Các ngân hàng lớn sử dụng các thuật toán TWAP hoặc VWAP để chia nhỏ các đơn hàng triệu USD tránh gây biến động giá đột ngột:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.3rem;">
+                            <li>Lệnh lớn luôn tìm kiếm các vùng tập trung dừng lỗ để khớp lệnh đối ứng nhanh nhất.</li>
+                            <li>Do đó, các vùng giá tích lũy thanh khoản luôn bị quét qua trước khi có sóng lớn.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-orange">🔍 Nhận Biết Vùng Tích Lũy Dòng Lệnh</div>
+                        <p>Khi thị trường đi ngang biên độ hẹp lâu, số lượng dừng lỗ tích lũy càng lớn. Hãy kiên nhẫn đứng ngoài và chỉ tham gia khi có cây nến quét thanh khoản rõ rệt phá vỡ vùng đi ngang đó.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 10: M2 - LONDON BREAKOUT SETUP -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 2: Chiến Lược London Breakout">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Giao Dịch Theo Chu Kỳ Phiên</span>
+                    <span class="slide-number-tag">Trang 10/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s10-title">Bài 2: Thiết Lập Setup <span>London Open Breakout</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s10-desc">
+                        <div class="card-title accent-yellow">⚙️ Quy Trình Giao Dịch Vào Lúc 14:00 - 15:00</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem;">
+                            <li>**Bước 1:** Vẽ biên đỉnh/đáy phiên Á (từ 06:00 đến 13:30 giờ VN).</li>
+                            <li>**Bước 2:** Chờ đợi nến H1 phiên Âu mở cửa quét giật nhanh qua biên để gom thanh khoản.</li>
+                            <li>**Bước 3:** Vào lệnh theo hướng đảo chiều của pha quét nếu nến H1 rút chân mạnh, hoặc đi theo hướng breakout thực tế nếu Vol cực đại đồng thuận.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-green">🛡️ Kiểm Soát Rủi Ro Setup</div>
+                        <p>Luôn đặt dừng lỗ ngay bên ngoài râu nến quét. Nếu giá quay đầu chui ngược lại vào biên Á và đóng cửa bên trong hộp, hãy cắt lỗ ngay lập tức để bảo vệ tài khoản.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 11: M3 - TIN ĐỎ TRONG NGÀY -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài 3: Tránh Bão Tin Đỏ">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 3: Đọc Vị Tin Tức Vĩ Mô</span>
+                    <span class="slide-number-tag">Trang 11/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s11-title">Bài 3: Quản Trị Rủi Ro <span>& Tránh Bão Tin Đỏ Vĩ Mô</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s11-desc">
+                        <div class="card-title accent-red">🚫 Luật 5 Phút Trước & Sau Tin</div>
+                        <p>Tuyệt đối không có lệnh mở hoặc lệnh chờ hoạt động trong vòng 5 phút trước và sau các tin đỏ mạnh (NFP, CPI, Quyết định lãi suất FOMC):</p>
+                        <p style="margin-top:0.3rem;">Hành vi giãn spread của sàn giao dịch trong thời điểm này có thể quét trúng điểm dừng lỗ của bạn ngay cả khi giá chưa thực sự chạy tới điểm đó.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">💡 Cách Giao Dịch Sau Tin Nửa Tiếng</div>
+                        <p>Sau khi cơn bão biến động qua đi, hãy tìm kiếm cấu trúc Market Structure mới hình thành để giao dịch pullback. Đây là phương pháp của các trader chuyên nghiệp bảo vệ tài khoản dài hạn.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 12: TỔNG KẾT KHÓA HỌC -->
+        <section class="slide" data-module="Kỷ Luật Day Trader" data-lesson="Tổng Kết Giao Dịch">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Kỷ Luật Day Trader Thực Chiến</span>
+                    <span class="slide-number-tag">Trang 12/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s12-title">Hệ Thống Quản Lý Lệnh <span>Kỷ Luật Day Trading</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s12-desc">
+                        <div class="card-title">📜 Quy Tắc Quản Lý Lệnh Trong Ngày</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem;">
+                            <li>**Không gồng lệnh qua đêm:** Đóng toàn bộ trạng thái trước 23:00 đêm để tránh phí swap và biến động bất ngờ phiên Mỹ muộn.</li>
+                            <li>**Giới hạn số lệnh:** Tối đa 2-3 lệnh chất lượng mỗi ngày.</li>
+                            <li>**Quy tắc cắt lỗ ngày:** Dừng giao dịch ngay lập tức nếu lỗ quá 2% tài khoản trong một ngày.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-mint">🛡️ Giữ Vững Tâm Lý Thép</div>
+                        <p>Day Trading là cuộc chạy đua marathon, không phải chạy nước rút. Việc giữ cho bộ não tỉnh táo và tránh giao dịch trả thù (Overtrading) sau mỗi lệnh thua là chìa khóa sống còn.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 13: BÀI TẬP THỰC HÀNH -->
+        <section class="slide" data-module="Thực Hành" data-lesson="Bài Tập Luyện Tập">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Thực Hành & Luyện Tập</span>
+                    <span class="slide-number-tag">Trang 13/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s13-title">Bài Tập Rèn Luyện <span>Kỹ Năng Đọc Vị Phiên</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s13-desc">
+                        <div class="card-title accent-yellow">📝 Bài Tập 1: Vẽ Hộp Phiên Á (10 ngày)</div>
+                        <p>Hàng ngày trước phiên Âu mở cửa, hãy chụp lại biểu đồ và xác định chính xác biên độ đỉnh/đáy phiên Á của cặp GBPUSD hoặc XAUUSD.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">📝 Bài Tập 2: Ghi Nhận Điểm Quét Judas Swing</div>
+                        <p>Theo dõi xem có bao nhiêu ngày trong chuỗi thử nghiệm giá thực hiện quét biên Á trước khi chạy theo xu hướng chính. Ghi chú lại thời gian xuất hiện pha quét.</p>
+                        <div class="highlight-box" style="margin-top:0.4rem;">
+                            💡 Phân tích các thông số này để tối ưu hóa điểm vào lệnh cá nhân của bạn.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Navigation Overlay -->
+    <div class="slide-nav">
+        <button class="nav-btn" id="prevBtn" aria-label="Previous Slide">←</button>
+        <div class="nav-dots" id="navDots"></div>
+        <button class="nav-btn" id="nextBtn" aria-label="Next Slide">→</button>
+    </div>
+
+    <!-- =========================================================================
+         JAVASCRIPT CONTROLLERS
+         ========================================================================= -->
+    <script>
+        // --- 1. CORE PRESENTATION ENGINE ---
+        class SlidePresentation {
+            constructor() {
+                this.container = document.getElementById('slideContainer');
+                this.slides = Array.from(document.querySelectorAll('.slide'));
+                this.currentSlide = 0;
+                
+                this.init();
+            }
+
+            init() {
+                this.setupIntersectionObserver();
+                this.setupKeyboardNav();
+                this.setupTouchNav();
+                this.setupNavDots();
+                this.updateDynamicPageNumbers();
+                
+                let scrollTimeout;
+                window.addEventListener('wheel', (e) => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(() => {
+                        if (e.deltaY > 30) {
+                            this.setActiveSlide(this.currentSlide + 1);
+                        } else if (e.deltaY < -30) {
+                            this.setActiveSlide(this.currentSlide - 1);
+                        }
+                    }, 50);
+                }, { passive: true });
+            }
+
+            setupIntersectionObserver() {
+                const observerOptions = {
+                    root: null,
+                    threshold: 0.5
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const index = this.slides.indexOf(entry.target);
+                            this.currentSlide = index;
+                            this.updateActiveState();
+                        }
+                    });
+                }, observerOptions);
+
+                this.slides.forEach(slide => observer.observe(slide));
+            }
+
+            updateDynamicPageNumbers() {
+                const total = this.slides.length;
+                this.slides.forEach((slide, idx) => {
+                    const pageTag = slide.querySelector('.slide-number-tag');
+                    if (pageTag) {
+                        pageTag.textContent = `Trang ${idx + 1}/${total}`;
+                    }
+                });
+            }
+
+            setActiveSlide(index) {
+                if (index < 0 || index >= this.slides.length) return;
+                this.currentSlide = index;
+                this.slides[index].scrollIntoView({ behavior: 'smooth' });
+                this.updateActiveState();
+            }
+
+            updateActiveState() {
+                this.slides.forEach((slide, idx) => {
+                    if (idx === this.currentSlide) {
+                        slide.classList.add('visible');
+                    } else {
+                        slide.classList.remove('visible');
+                    }
+                });
+
+                const percent = (this.currentSlide / (this.slides.length - 1)) * 100;
+                document.getElementById('progressBar').style.width = `${percent}%`;
+
+                const dots = document.querySelectorAll('.nav-dot');
+                dots.forEach((dot, idx) => {
+                    if (idx === this.currentSlide) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+
+                const sidebarItems = document.querySelectorAll('.sidebar-item');
+                sidebarItems.forEach(item => item.classList.remove('active'));
+                
+                const currentSlideEl = this.slides[this.currentSlide];
+                const moduleName = currentSlideEl.getAttribute('data-module');
+                const lessonName = currentSlideEl.getAttribute('data-lesson');
+                
+                if (moduleName && lessonName) {
+                    sidebarItems.forEach(item => {
+                        if (item.getAttribute('data-slide-index') == this.currentSlide) {
+                            item.classList.add('active');
+                        }
+                    });
+                }
+            }
+
+            setupKeyboardNav() {
+                document.addEventListener('keydown', (e) => {
+                    if (e.target.getAttribute('contenteditable') === 'true') return;
+
+                    if (e.key === 'ArrowDown' || e.key === 'Space') {
+                        e.preventDefault();
+                        this.setActiveSlide(this.currentSlide + 1);
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        this.setActiveSlide(this.currentSlide - 1);
+                    }
+                });
+            }
+
+            setupTouchNav() {
+                let startY = 0;
+                document.addEventListener('touchstart', (e) => {
+                    startY = e.touches[0].clientY;
+                }, { passive: true });
+
+                document.addEventListener('touchend', (e) => {
+                    const endY = e.changedTouches[0].clientY;
+                    const diff = startY - endY;
+
+                    if (Math.abs(diff) > 50) { 
+                        if (diff > 0) {
+                            this.setActiveSlide(this.currentSlide + 1);
+                        } else {
+                            this.setActiveSlide(this.currentSlide - 1);
+                        }
+                    }
+                }, { passive: true });
+            }
+
+            setupNavDots() {
+                const navDotsContainer = document.getElementById('navDots');
+                navDotsContainer.innerHTML = '';
+                
+                this.slides.forEach((slide, idx) => {
+                    const dot = document.createElement('button');
+                    dot.className = `nav-dot ${idx === 0 ? 'active' : ''}`;
+                    dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
+                    dot.addEventListener('click', () => {
+                        this.setActiveSlide(idx);
+                    });
+                    navDotsContainer.appendChild(dot);
+                });
+            }
+        }
+
+        // --- 2. CYBER SIDEBAR CONTROLLER ---
+        class SidebarController {
+            constructor(presentation) {
+                this.presentation = presentation;
+                this.toggleBtn = document.getElementById('sidebarToggle');
+                this.sidebar = document.getElementById('sidebar');
+                this.backdrop = document.getElementById('sidebarBackdrop');
+                this.menu = document.getElementById('sidebarMenu');
+                
+                this.init();
+            }
+
+            init() {
+                this.buildMenu();
+                
+                this.toggleBtn.addEventListener('click', () => this.toggleSidebar());
+                this.backdrop.addEventListener('click', () => this.closeSidebar());
+                
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') this.closeSidebar();
+                });
+            }
+
+            toggleSidebar() {
+                this.sidebar.classList.toggle('open');
+                this.backdrop.classList.toggle('show');
+            }
+
+            closeSidebar() {
+                this.sidebar.classList.remove('open');
+                this.backdrop.classList.remove('show');
+            }
+
+            buildMenu() {
+                this.menu.innerHTML = '';
+                
+                const homeLi = document.createElement('li');
+                homeLi.className = 'sidebar-item active';
+                homeLi.setAttribute('data-slide-index', '0');
+                homeLi.innerHTML = `
+                    <span class="sidebar-module-tag">MASTERCLASS</span>
+                    <span>Màn Hình Chào & Hướng Dẫn</span>
+                `;
+                homeLi.addEventListener('click', () => {
+                    this.presentation.setActiveSlide(0);
+                    this.closeSidebar();
+                });
+                this.menu.appendChild(homeLi);
+
+                this.presentation.slides.forEach((slide, idx) => {
+                    if (idx === 0) return;
+                    
+                    const moduleName = slide.getAttribute('data-module');
+                    const lessonName = slide.getAttribute('data-lesson');
+                    
+                    if (moduleName && lessonName) {
+                        const li = document.createElement('li');
+                        li.className = 'sidebar-item';
+                        li.setAttribute('data-slide-index', idx);
+                        li.innerHTML = `
+                            <span class="sidebar-module-tag">${moduleName}</span>
+                            <span>${lessonName}</span>
+                        `;
+                        li.addEventListener('click', () => {
+                            this.presentation.setActiveSlide(idx);
+                            this.closeSidebar();
+                        });
+                        this.menu.appendChild(li);
+                    }
+                });
+            }
+        }
+
+        // --- 3. INLINE EDITING CONTROLLER WITH LOCALSTORAGE PERSISTENCE ---
+        class LessonEditor {
+            constructor() {
+                this.isActive = false;
+                this.editToggle = document.getElementById('editToggle');
+                this.hotzone = document.getElementById('editHotzone');
+                this.saveIndicator = document.getElementById('saveIndicator');
+                this.hideTimeout = null;
+                
+                this.setupEditingTrigger();
+                this.loadSavedContent();
+            }
+
+            setupEditingTrigger() {
+                this.hotzone.addEventListener('mouseenter', () => {
+                    clearTimeout(this.hideTimeout);
+                    this.editToggle.classList.add('show');
+                });
+                
+                this.hotzone.addEventListener('mouseleave', () => {
+                    this.hideTimeout = setTimeout(() => {
+                        if (!this.isActive) this.editToggle.classList.remove('show');
+                    }, 400);
+                });
+
+                this.editToggle.addEventListener('mouseenter', () => {
+                    clearTimeout(this.hideTimeout);
+                });
+
+                this.editToggle.addEventListener('mouseleave', () => {
+                    this.hideTimeout = setTimeout(() => {
+                        if (!this.isActive) this.editToggle.classList.remove('show');
+                    }, 400);
+                });
+
+                this.editToggle.addEventListener('click', () => this.toggleEditMode());
+
+                document.addEventListener('keydown', (e) => {
+                    if ((e.key === 'e' || e.key === 'E') && e.target.getAttribute('contenteditable') !== 'true') {
+                        e.preventDefault();
+                        this.toggleEditMode();
+                    }
+                });
+            }
+
+            getEditableIds() {
+                return [
+                    'editable-s1-title', 'editable-s1-desc',
+                    'editable-s2-title', 'editable-s2-desc',
+                    'editable-s3-title', 'editable-s3-desc',
+                    'editable-s4-title', 'editable-s4-desc',
+                    'editable-s5-title', 'editable-s5-desc',
+                    'editable-s6-title', 'editable-s6-desc',
+                    'editable-s7-title', 'editable-s7-desc',
+                    'editable-s8-title', 'editable-s8-desc',
+                    'editable-s9-title', 'editable-s9-desc',
+                    'editable-s10-title', 'editable-s10-desc',
+                    'editable-s11-title', 'editable-s11-desc',
+                    'editable-s12-title', 'editable-s12-desc',
+                    'editable-s13-title', 'editable-s13-desc'
+                ];
+            }
+
+            toggleEditMode() {
+                this.isActive = !this.isActive;
+                
+                if (this.isActive) {
+                    this.editToggle.classList.add('active');
+                    this.editToggle.textContent = '💾 LƯU BÀI GIẢNG';
+                    this.enableEditableElements();
+                } else {
+                    this.editToggle.classList.remove('active');
+                    this.editToggle.textContent = '✏️ EDIT MODE (E)';
+                    this.disableEditableElements();
+                    this.saveContent();
+                }
+            }
+
+            enableEditableElements() {
+                this.getEditableIds().forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.setAttribute('contenteditable', 'true');
+                });
+            }
+
+            disableEditableElements() {
+                this.getEditableIds().forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.removeAttribute('contenteditable');
+                });
+            }
+
+            saveContent() {
+                const contentData = {};
+                this.getEditableIds().forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) contentData[id] = el.innerHTML;
+                });
+
+                localStorage.setItem('forex_trading_data', JSON.stringify(contentData));
+                
+                this.saveIndicator.classList.add('show');
+                setTimeout(() => {
+                    this.saveIndicator.classList.remove('show');
+                }, 2000);
+            }
+
+            loadSavedContent() {
+                const saved = localStorage.getItem('forex_trading_data');
+                if (saved) {
+                    try {
+                        const contentData = JSON.parse(saved);
+                        Object.keys(contentData).forEach(id => {
+                            const el = document.getElementById(id);
+                            if (el) el.innerHTML = contentData[id];
+                        });
+                    } catch (e) {
+                        console.error("Lỗi khi tải dữ liệu bài giảng cũ:", e);
+                    }
+                }
+            }
+        }
+
+        // Initialize all controllers
+        window.addEventListener('DOMContentLoaded', () => {
+            const presentation = new SlidePresentation();
+            window.presentation = presentation;
+            window.sidebar = new SidebarController(presentation);
+            window.editor = new LessonEditor();
+
+            document.getElementById('prevBtn').addEventListener('click', () => {
+                presentation.setActiveSlide(presentation.currentSlide - 1);
+            });
+            document.getElementById('nextBtn').addEventListener('click', () => {
+                presentation.setActiveSlide(presentation.currentSlide + 1);
+            });
+        });
+    </script>
+</body>
+</html>

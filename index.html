@@ -99,32 +99,32 @@
       <div class="portal-header">
         <div class="eyebrow">Trading Academy Portal</div>
         <h1>Học Viện Giao Dịch Thực Chiến</h1>
-        <p class="lead">Hệ thống bài giảng Price Action chuyên nghiệp, Toán học rủi ro & Kế hoạch tâm lý thép.</p>
+        <p class="lead">Hệ thống bài giảng Masterclass chuyên sâu: Quy luật Cung - Cầu Wyckoff, Động lượng RSI, Vi mô dòng tiền Forex và Đầu cơ xu hướng Livermore.</p>
       </div>
       
       <section class="courses-grid">
         <!-- Khóa 1 -->
-        <div class="panel card course-card" onclick="window.location.hash = 'course-1'">
+        <div class="panel card course-card" onclick="window.location.hash = 'wyckoff_volume_masterclass.html'">
           <div class="card-body">
             <span class="meta">Khóa Học 01</span>
-            <h3>Price Action Foundation</h3>
-            <p>12 Module bài giảng nền tảng đọc bối cảnh, nến tín hiệu vi mô, cấu trúc sóng hồi và thiết lập điểm vào lệnh có lợi thế.</p>
+            <h3>Wyckoff & Volume Profile</h3>
+            <p>Lý thuyết hộp Wyckoff, chu kỳ tích lũy/phân phối, phân tích khối lượng chênh lệch VSA và lập bản đồ thanh khoản Volume Profile chuyên sâu.</p>
           </div>
           <div class="card-footer">
-            <span>📚 12 Modules (Nền tảng)</span>
+            <span>📊 Wyckoff & VSA (6 Modules)</span>
             <span>Bắt đầu học →</span>
           </div>
         </div>
 
         <!-- Khóa 2 -->
-        <div class="panel card course-card" onclick="window.location.hash = 'masterclass_presentation.html'">
+        <div class="panel card course-card" onclick="window.location.hash = 'advanced_rsi_correlation.html'">
           <div class="card-body">
             <span class="meta">Khóa Học 02</span>
-            <h3>Price Action Masterclass</h3>
-            <p>Khóa học nâng cao hợp nhất tinh hoa của Al Brooks, Bob Volman và Thomas Bulkowski. Bao gồm 12 Module (32 Bài học thực chiến).</p>
+            <h3>Advanced RSI & MTF Correlation</h3>
+            <p>Vượt qua tư duy quá mua/quá bán truyền thống, làm chủ kỹ thuật dịch chuyển biên Range Shift và đồng bộ tín hiệu đa khung thời gian.</p>
           </div>
           <div class="card-footer">
-            <span>⚡ 12 Modules (32 bài học)</span>
+            <span>⚡ Momentum (4 Modules)</span>
             <span>Bắt đầu học →</span>
           </div>
         </div>
@@ -134,23 +134,36 @@
           <div class="card-body">
             <span class="meta">Khóa Học 03</span>
             <h3>The Mental Game & Risk Math</h3>
-            <p>Khóa học làm chủ tâm lý giao dịch qua phương pháp Mental Hand History và toán học quản trị rủi ro, định cỡ vị thế co giãn.</p>
+            <p>Làm chủ tâm lý giao dịch qua phương pháp Mental Hand History và quản lý vốn toán học, định cỡ vị thế co giãn chuyên nghiệp.</p>
           </div>
           <div class="card-footer">
-            <span>🛡️ 6 Modules (45 Slides)</span>
+            <span>🛡️ Tâm Lý & Quản Lý Vốn</span>
             <span>Bắt đầu học →</span>
           </div>
         </div>
 
         <!-- Khóa 4 -->
-        <div class="panel card course-card" onclick="window.location.hash = 'wyckoff_volume_masterclass.html'">
+        <div class="panel card course-card" onclick="window.location.hash = 'forex_microstructure_day_trading.html'">
           <div class="card-body">
             <span class="meta">Khóa Học 04</span>
-            <h3>Wyckoff & Volume Masterclass</h3>
-            <p>Lý thuyết hộp Wyckoff, tích lũy/phân phối, phân tích khối lượng chênh lệch VSA và chu kỳ cung cầu chuyên sâu.</p>
+            <h3>Forex Microstructure & Day Trading</h3>
+            <p>Giải mã cấu trúc vi mô thị trường liên ngân hàng, quy luật quét thanh khoản chu kỳ phiên Á - Âu - Mỹ và thiết lập routine hàng ngày.</p>
           </div>
           <div class="card-footer">
-            <span>📊 Wyckoff & VSA</span>
+            <span>🏦 Day Trading (4 Modules)</span>
+            <span>Bắt đầu học →</span>
+          </div>
+        </div>
+
+        <!-- Khóa 5 -->
+        <div class="panel card course-card" onclick="window.location.hash = 'livermore_trend_following.html'">
+          <div class="card-body">
+            <span class="meta">Khóa Học 05</span>
+            <h3>Livermore Trend Following</h3>
+            <p>Nương theo xu hướng lớn của cổ phiếu theo triết lý Jesse Livermore, khai thác điểm Pivot Point và nhồi lệnh thắng Pyramiding.</p>
+          </div>
+          <div class="card-footer">
+            <span>👑 Đầu Cơ Cổ Điển (4 Modules)</span>
             <span>Bắt đầu học →</span>
           </div>
         </div>
@@ -158,7 +171,7 @@
     </div>
   </main>
 
-  <!-- 2. Giao diện Danh sách Module của Khóa 1 -->
+  <!-- 2. Giao diện Danh sách Module của Khóa 1 (Price Action Foundation cũ - Ẩn nhưng giữ route phụ) -->
   <main class="deck" id="course1View" style="display: none;">
     <div class="course-detail">
       <div class="back-nav">
@@ -217,43 +230,51 @@
         portalHomeView.style.display = 'block';
         moduleFrame.src = 'about:blank';
       } else if (hash === '#course-1') {
-        // Danh sách bài học Khóa 1
+        // Danh sách bài học Khóa Price Action cũ
         course1View.style.display = 'block';
         moduleFrame.src = 'about:blank';
       } else if (hash.startsWith('#module-')) {
-        // Xem slide bài học Khóa 1
+        // Xem slide bài học Khóa Price Action cũ
         const url = hash.slice(1);
         moduleViewer.style.display = 'flex';
         moduleFrame.src = url;
         
-        // Tìm tiêu đề
         const card = document.querySelector(`.modules a[href="${url}"]`);
         if (card) {
           const title = card.querySelector('h3').textContent;
           const meta = card.querySelector('.meta').textContent;
-          moduleTitle.textContent = `Khóa 1 · ${meta}: ${title}`;
+          moduleTitle.textContent = `Nền tảng · ${meta}: ${title}`;
         } else {
-          moduleTitle.textContent = "Khóa 1: Price Action Foundation";
+          moduleTitle.textContent = "Price Action Foundation";
         }
       } else if (hash === '#masterclass_presentation.html') {
-        // Xem slide Khóa 2 (Price Action Masterclass nâng cao)
         moduleViewer.style.display = 'flex';
         moduleFrame.src = 'masterclass_presentation.html';
-        moduleTitle.textContent = "Khóa 2: Price Action Masterclass (Nâng cao)";
+        moduleTitle.textContent = "Price Action Masterclass";
+      } else if (hash === '#wyckoff_volume_masterclass.html') {
+        moduleViewer.style.display = 'flex';
+        moduleFrame.src = 'wyckoff_volume_masterclass.html';
+        moduleTitle.textContent = "Khóa 1: Wyckoff Method & Volume Profile Masterclass";
+      } else if (hash === '#advanced_rsi_correlation.html') {
+        moduleViewer.style.display = 'flex';
+        moduleFrame.src = 'advanced_rsi_correlation.html';
+        moduleTitle.textContent = "Khóa 2: Advanced RSI & Multi-Timeframe Correlation";
       } else if (hash === '#mental_game_risk_math.html') {
-        // Xem slide Khóa 3
         moduleViewer.style.display = 'flex';
         moduleFrame.src = 'mental_game_risk_math.html';
         moduleTitle.textContent = "Khóa 3: The Mental Game & Risk Math";
-      } else if (hash === '#wyckoff_volume_masterclass.html') {
-        // Xem slide Khóa 4
+      } else if (hash === '#forex_microstructure_day_trading.html') {
         moduleViewer.style.display = 'flex';
-        moduleFrame.src = 'wyckoff_volume_masterclass.html';
-        moduleTitle.textContent = "Khóa 4: Wyckoff & Volume Masterclass";
+        moduleFrame.src = 'forex_microstructure_day_trading.html';
+        moduleTitle.textContent = "Khóa 4: Forex Market Microstructure & Day Trading";
+      } else if (hash === '#livermore_trend_following.html') {
+        moduleViewer.style.display = 'flex';
+        moduleFrame.src = 'livermore_trend_following.html';
+        moduleTitle.textContent = "Khóa 5: Livermore Trend Following & Classic Speculation";
       }
     }
 
-    // Xử lý click cho bài học Khóa 1
+    // Xử lý click cho bài học Khóa 1 cũ
     document.querySelectorAll('.modules a.card').forEach(card => {
       card.addEventListener('click', function(e) {
         e.preventDefault();
@@ -262,14 +283,12 @@
       });
     });
 
-    // Nút back thông minh trên Iframe Viewer
+    // Nút back trên Iframe Viewer
     document.getElementById('backBtn').addEventListener('click', function() {
       const hash = window.location.hash;
       if (hash.startsWith('#module-')) {
-        // Nếu đang xem bài học Khóa 1, quay lại danh sách bài học Khóa 1
         window.location.hash = 'course-1';
       } else {
-        // Nếu là Khóa 2, 3 hoặc 4, quay lại trang chủ Portal chính
         window.location.hash = '';
       }
     });

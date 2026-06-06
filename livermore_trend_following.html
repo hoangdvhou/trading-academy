@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livermore Trend Following & Classic Speculation - Masterclass</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===========================================
+           CSS CUSTOM PROPERTIES (THEME: GOLD & CHARCOAL)
+           =========================================== */
+        :root {
+            --bg-primary: #08080a;
+            --bg-secondary: #121216;
+            --bg-card: rgba(22, 22, 28, 0.8);
+            --border-color: rgba(212, 175, 55, 0.2);
+            
+            --text-primary: #ffffff;
+            --text-secondary: #999cb0;
+            
+            --accent-gold: #ffd700;
+            --accent-bronze: #c5a059;
+            --accent-cyan: #00e5ff;
+            --accent-red: #ff3b30;
+            --accent-green: #00e676;
+            --accent-yellow: #e6c300;
+            
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-title: 'Archivo Black', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+            
+            --title-size: clamp(1.8rem, 4.2vw, 3.4rem);
+            --h2-size: clamp(1.3rem, 3vw, 2.1rem);
+            --h3-size: clamp(1rem, 2.2vw, 1.4rem);
+            --body-size: clamp(0.8rem, 1.2vw, 1.02rem);
+            --small-size: clamp(0.68rem, 0.9vw, 0.82rem);
+            
+            --slide-padding: clamp(1rem, 3.5vw, 3rem);
+            --content-gap: clamp(0.5rem, 1.8vw, 1.4rem);
+            --element-gap: clamp(0.3rem, 1.1vw, 0.8rem);
+            
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-neon: 0 0 20px rgba(212, 175, 55, 0.25);
+            --shadow-gold: 0 0 20px rgba(255, 215, 0, 0.2);
+        }
+
+        /* ===========================================
+           BASE RESET & SCROLL SNAP
+           =========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-display);
+            line-height: 1.45;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Cyber grid background */
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(rgba(212, 175, 55, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 175, 55, 0.015) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Gold ambient glow shapes */
+        .slide::after {
+            content: '';
+            position: absolute;
+            width: 40vw;
+            height: 40vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+            bottom: -10vw;
+            right: -10vw;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .slide:nth-child(even)::after {
+            background: radial-gradient(circle, rgba(197, 160, 89, 0.03) 0%, transparent 70%);
+            top: -10vw;
+            left: -10vw;
+            bottom: auto;
+            right: auto;
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-height: 100%;
+            overflow: hidden;
+            padding: var(--slide-padding);
+            z-index: 2;
+            gap: var(--content-gap);
+        }
+
+        /* Header structure */
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.1rem;
+        }
+
+        .slide-module-tag {
+            font-size: var(--small-size);
+            color: var(--accent-gold);
+            font-family: var(--font-mono);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .slide-number-tag {
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+        }
+
+        .slide-title {
+            font-family: var(--font-title);
+            font-size: var(--h2-size);
+            color: var(--text-primary);
+            line-height: 1.15;
+            letter-spacing: -0.5px;
+        }
+
+        .slide-title span {
+            color: var(--accent-gold);
+        }
+
+        /* Layout styles */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--content-gap);
+            align-items: center;
+            max-height: min(72vh, 490px);
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--element-gap);
+        }
+
+        .grid-3-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--element-gap);
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: clamp(0.7rem, 1.6vw, 1.6rem);
+            transition: all 0.3s ease;
+            max-height: min(68vh, 450px);
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.08);
+        }
+
+        .card-title {
+            font-size: var(--h3-size);
+            font-weight: 700;
+            color: var(--accent-gold);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .card-title.accent-green { color: var(--accent-green); }
+        .card-title.accent-red { color: var(--accent-red); }
+        .card-title.accent-cyan { color: var(--accent-cyan); }
+        .card-title.accent-yellow { color: var(--accent-yellow); }
+
+        .card p, .card li {
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .card ul {
+            padding-left: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        /* Typography Helpers */
+        .highlight-box {
+            border-left: 3px solid var(--accent-gold);
+            padding: 0.5rem 0.8rem;
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+            background: rgba(212, 175, 55, 0.02);
+            border-radius: 0 6px 6px 0;
+        }
+
+        .highlight-box strong {
+            color: var(--text-primary);
+        }
+
+        /* Diagram Viewport fit */
+        .diagram-container {
+            width: 100%;
+            height: 100%;
+            max-height: min(50vh, 320px);
+            background-color: #050507;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0.5rem;
+        }
+
+        /* Interactive controls for slides */
+        .slide-nav {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 100;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            box-shadow: var(--shadow-neon);
+        }
+
+        .nav-dots {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-dot.active {
+            background-color: var(--accent-gold);
+            box-shadow: var(--shadow-neon);
+            width: 16px;
+            border-radius: 4px;
+        }
+
+        /* Progress Bar */
+        .progress-bar-container {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background-color: rgba(255, 255, 255, 0.05);
+            z-index: 100;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-bronze));
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* ===========================================
+           CYBER SIDEBAR NAVIGATION
+           =========================================== */
+        .sidebar-toggle {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 101;
+            background-color: rgba(18, 18, 24, 0.85);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: var(--small-size);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .sidebar-toggle:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            box-shadow: var(--shadow-neon);
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0; left: -320px;
+            width: 300px;
+            height: 100%;
+            background-color: rgba(8, 8, 10, 0.97);
+            border-right: 1px solid var(--border-color);
+            z-index: 200;
+            backdrop-filter: blur(12px);
+            padding: 5rem 1.5rem 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            transition: left 0.4s var(--ease-out-expo);
+            overflow-y: auto;
+        }
+
+        .sidebar.open {
+            left: 0;
+            box-shadow: 10px 0 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .sidebar-title {
+            font-family: var(--font-title);
+            font-size: 1rem;
+            color: var(--accent-gold);
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .sidebar-item {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.35rem 0.5rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+
+        .sidebar-item:hover {
+            background-color: rgba(212, 175, 55, 0.05);
+            color: var(--accent-gold);
+        }
+
+        .sidebar-item.active {
+            background: linear-gradient(90deg, rgba(212, 175, 55, 0.1) 0%, transparent 100%);
+            border-left: 2px solid var(--accent-gold);
+            color: var(--accent-gold);
+            font-weight: 500;
+        }
+
+        .sidebar-module-tag {
+            font-size: 0.6rem;
+            font-family: var(--font-mono);
+            color: var(--accent-yellow);
+            text-transform: uppercase;
+        }
+
+        .sidebar-backdrop {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 199;
+            backdrop-filter: blur(2px);
+            display: none;
+        }
+
+        .sidebar-backdrop.show {
+            display: block;
+        }
+
+        /* ===========================================
+           INLINE EDITING SYSTEM
+           =========================================== */
+        .edit-hotzone {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            width: 160px;
+            height: 40px;
+            z-index: 100;
+        }
+
+        .edit-toggle {
+            position: absolute;
+            left: 0; bottom: 0;
+            background-color: rgba(18, 18, 24, 0.85);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: var(--small-size);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            white-space: nowrap;
+        }
+
+        .edit-hotzone:hover .edit-toggle,
+        .edit-toggle.show,
+        .edit-toggle.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .edit-toggle.active {
+            background-color: var(--accent-gold);
+            color: var(--bg-primary);
+            border-color: var(--accent-gold);
+            box-shadow: var(--shadow-neon);
+        }
+
+        [contenteditable="true"] {
+            border: 1px dashed var(--accent-gold) !important;
+            padding: 4px;
+            border-radius: 4px;
+            outline: none;
+            background-color: rgba(212, 175, 55, 0.03);
+        }
+
+        .save-indicator {
+            position: fixed;
+            bottom: 5rem;
+            left: 1.5rem;
+            background-color: #2b2307;
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: var(--small-size);
+            font-family: var(--font-mono);
+            z-index: 100;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s var(--ease-out-expo);
+            pointer-events: none;
+        }
+
+        .save-indicator.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* SVG CHART STYLES */
+        .text-chart {
+            font-family: var(--font-mono);
+            fill: var(--text-secondary);
+            font-size: 9px;
+        }
+        @keyframes pulseGold {
+            0% { filter: drop-shadow(0 0 2px var(--accent-gold)); }
+            50% { filter: drop-shadow(0 0 8px var(--accent-gold)); }
+            100% { filter: drop-shadow(0 0 2px var(--accent-gold)); }
+        }
+        @keyframes dash {
+            to { stroke-dashoffset: 0; }
+        }
+        .pulse-gold-effect {
+            animation: pulseGold 2s infinite ease-in-out;
+        }
+        .draw-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 3s forwards ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Sidebar Trigger Button -->
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle Lesson Index">
+        <span>☰</span> BẢN ĐỒ KHÓA HỌC
+    </button>
+
+    <!-- Slide-out Sidebar Navigation -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-title">LIVERMORE SPECULATION</div>
+        <ul class="sidebar-menu" id="sidebarMenu">
+            <!-- Dynamically populated via JS -->
+        </ul>
+    </div>
+
+    <!-- Floating Editor Button -->
+    <div class="edit-hotzone" id="editHotzone">
+        <button class="edit-toggle" id="editToggle">✏️ EDIT MODE (E)</button>
+    </div>
+    <div class="save-indicator" id="saveIndicator">💾 ĐÃ LƯU BÀI GIẢNG!</div>
+
+    <!-- =========================================================================
+         SLIDES LIST (LIVERMORE SPECULATION: SLIDE 1 - 13)
+         ========================================================================= -->
+    <main id="slideContainer">
+
+        <!-- ==================== SLIDE 1: HOME ==================== -->
+        <section class="slide">
+            <div class="slide-content" style="align-items: center; text-align: center; justify-content: center; gap: 1.5rem;">
+                <div class="slide-module-tag" style="font-size: 1rem; color: var(--accent-gold);">ĐẦU CƠ CỔ ĐIỂN & THEO DÕI XU HƯỚNG</div>
+                <h1 class="slide-title" id="editable-s1-title" style="font-size: var(--title-size); line-height: 1.1;">
+                    LIVERMORE TREND FOLLOWING<br><span style="color: var(--accent-gold);">& CLASSIC SPECULATION</span>
+                </h1>
+                <p id="editable-s1-desc" style="font-size: 1.15rem; color: var(--text-secondary); max-width: 800px; font-family: var(--font-display);">
+                    Học hỏi từ huyền thoại Jesse Livermore: Làm chủ thời điểm giao dịch, khai thác điểm xoay chiều Pivot Points, kỹ thuật nhồi lệnh thắng Pyramiding và quy tắc 10% bảo toàn vốn tuyệt đối.
+                </p>
+                <div class="highlight-box" style="border: 1px solid var(--border-color); border-left: 3px solid var(--accent-gold); max-width: 600px; text-align: left; margin-top: 1rem;">
+                    💡 <strong>Hướng dẫn:</strong> Dùng phím <strong>Space / Mũi tên xuống</strong> để sang trang tiếp theo. Click nút <strong>BẢN ĐỒ KHÓA HỌC</strong> ở góc trái để mở menu chọn nhanh bài giảng. Nhấn phím <strong>E</strong> để tự do chỉnh sửa nội dung.
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 1 ==================== -->
+        <!-- SLIDE 2: M1 - BÀI 1: TRIẾT LÝ LIVERMORE -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 1: Triết Lý Jesse Livermore">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Triết Lý Đầu Cơ Cổ Điển</span>
+                    <span class="slide-number-tag">Trang 2/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s2-title">Bài 1: Đầu Cơ vs Đầu Tư <span>& Yếu Tố Thời Điểm</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s2-desc">
+                        <div class="card-title">🕰️ 1. Thời Điểm Là Tất Cả (Timing)</div>
+                        <p>Jesse Livermore tin rằng giá chuyển động luôn có quy luật riêng của nó. Một nhà đầu cơ giỏi phải **kiên nhẫn chờ đợi** cho đến khi thị trường tự xác lập xu hướng rõ ràng thay vì cố gắng đoán trước đỉnh đáy.</p>
+                        <div class="card-title accent-gold" style="margin-top:0.4rem;">🔑 2. Nghệ Thuật Đứng Ngoài Quan Sát</div>
+                        <p>"Tiền được tạo ra bằng cách ngồi chờ, không phải bằng giao dịch." Nhịp điệu giao dịch liên tục chỉ mang lại lợi nhuận cho sàn môi giới. Nhà đầu cơ vĩ đại dành phần lớn thời gian quan sát để **chờ đúng mồi**.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">⚙️ Quy Luật Bất Biến Của Tâm Lý Loài Người</div>
+                        <p> Livermore nhận định: "Thị trường chứng khoán không bao giờ thay đổi, vì bản chất con người không bao giờ thay đổi. Nỗi sợ hãi, lòng tham và hy vọng luôn hoạt động giống hệt nhau qua hàng thế kỷ."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 2 ==================== -->
+        <!-- SLIDE 3: M2 - BÀI 2: PIVOT POINTS -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 2: Điểm Xoay Chiều Pivot Points">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Điểm Xoay Chiều Kỹ Thuật</span>
+                    <span class="slide-number-tag">Trang 3/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s3-title">Bài 2: Điểm Xoay Chiều <span>Pivot Points & Điểm Tiếp Diễn</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s3-desc">
+                        <div class="card-title">🎯 1. Điểm Xoay Chiều Cốt Lõi (Pivot Point)</div>
+                        <p>Là mức giá nơi **xu hướng thay đổi trạng thái mạnh mẽ**. Khi giá vượt qua Pivot Point với động lượng lớn, đó chính là điểm bắt đầu của một con sóng tăng trưởng thực sự dài hạn.</p>
+                        
+                        <div class="card-title accent-gold" style="margin-top:0.4rem;">🔄 2. Điểm Tiếp Diễn (Continuation Point)</div>
+                        <p>Sau nhịp bứt phá ban đầu, giá thường đi ngang tích lũy lại tạo các mô hình nền giá ngắn hạn. Khi giá vượt qua đỉnh của vùng tích lũy này, đó là **Continuation Point** xác nhận xu hướng tiếp diễn.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">💡 Ứng Dụng Đọc Vị Lực Đẩy</div>
+                        <p>Giao dịch tại các điểm Pivot giúp nhà đầu cơ giảm thiểu tối đa thời gian chờ đợi chôn vốn trong vùng tích lũy. Giá sẽ chạy ngay lập tức sau khi bứt phá.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: M2 - DIAGRAM: PIVOT POINTS -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 2: Sơ Đồ Pivot Points">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Điểm Xoay Chiều Kỹ Thuật</span>
+                    <span class="slide-number-tag">Trang 4/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s4-title">Bài 2: Sơ Đồ Xác Định <span>Pivot & Continuation Points</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s4-desc">
+                        <div class="card-title accent-gold">📊 Giải Mã Sơ Đồ Pivot</div>
+                        <p>Sơ đồ bên cạnh biểu diễn hành vi của giá cổ phiếu tại điểm bứt phá:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem;">
+                            <li>**Pivot Point (Kháng cự cũ):** Giá bứt phá vượt qua kèm khối lượng lớn ➔ Điểm vào lệnh gốc.</li>
+                            <li>**Continuation Point:** Giá hồi nhẹ (pullback) đi ngang tích lũy rồi bứt phá tiếp ➔ Điểm nhồi lệnh.</li>
+                        </ul>
+                    </div>
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Pivot line (Resistance) -->
+                            <line x1="20" y1="120" x2="280" y2="120" stroke="var(--accent-red)" stroke-width="1.5" stroke-dasharray="4,2" />
+                            <text x="30" y="110" class="text-chart" fill="var(--accent-red)">Pivot Level (Kháng cự cũ)</text>
+
+                            <!-- Price Path -->
+                            <!-- Accumulation below pivot -->
+                            <path d="M 20 160 L 50 140 L 80 155 L 110 120" fill="none" stroke="var(--text-secondary)" stroke-width="1.5" />
+                            <!-- Breakout through pivot -->
+                            <path d="M 110 120 L 130 90 L 160 80" fill="none" stroke="var(--accent-green)" stroke-width="2" />
+                            <circle cx="110" cy="120" r="5" fill="none" stroke="var(--accent-gold)" stroke-width="1.5" class="pulse-gold-effect" />
+                            <text x="110" y="137" class="text-chart" text-anchor="middle" fill="var(--accent-gold)">Breakout Pivot</text>
+
+                            <!-- Consolidation and continuation -->
+                            <path d="M 160 80 L 190 85 L 210 75 L 240 40 L 280 20" fill="none" stroke="var(--accent-cyan)" stroke-width="2.5" class="draw-line" />
+                            <circle cx="210" cy="75" r="5" fill="none" stroke="var(--accent-cyan)" stroke-width="1.5" />
+                            <text x="220" y="88" class="text-chart" fill="var(--accent-cyan)">Continuation Point</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 3 ==================== -->
+        <!-- SLIDE 5: M3 - BÀI 3: PYRAMIDING ART -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài 3: Nghệ Thuật Nhồi Lệnh Pyramiding">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 3: Nghệ Thuật Nhồi Lệnh Thắng</span>
+                    <span class="slide-number-tag">Trang 5/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s5-title">Bài 3: Quy Tắc Nhồi Lệnh <span>Pyramiding Của Livermore</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s5-desc">
+                        <div class="card-title">🪜 1. Kim Tự Tháp Vốn (Pyramiding)</div>
+                        <p>Quy tắc sống còn: **Chỉ mua thêm khi vị thế cũ đã có lãi**. Tuyệt đối không bao giờ bình quân giá xuống (nhồi thêm lệnh khi đang thua lỗ - Martingale).</p>
+                        
+                        <div class="card-title accent-gold" style="margin-top:0.4rem;">⚙️ 2. Quy Mô Giảm Dần</div>
+                        <p>Mỗi lượt nhồi lệnh tiếp theo phải có **khối lượng nhỏ hơn** lệnh trước đó. Điều này giúp giữ giá vốn trung bình (Average Entry Price) của toàn bộ vị thế luôn nằm dưới mức giá thị trường hiện tại.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">💡 Cách Livermore Giải Ngân Vốn</div>
+                        <p>Ví dụ kế hoạch giải ngân 10,000 cổ phiếu:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem;">
+                            <li>**Lượt 1 (Pivot):** Mua 5,000 cổ phiếu (50% quy mô).</li>
+                            <li>**Lượt 2 (+2% giá):** Mua tiếp 3,000 cổ phiếu (30%).</li>
+                            <li>**Lượt 3 (Continuation):** Mua nốt 2,000 cổ phiếu (20%).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: M3 - DIAGRAM: PYRAMIDING STRUCTURE -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài 3: Sơ Đồ Pyramiding">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 3: Nghệ Thuật Nhồi Lệnh Thắng</span>
+                    <span class="slide-number-tag">Trang 6/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s6-title">Bài 3: Sơ Đồ Quy Mô <span>Vốn Nhồi Lệnh Pyramiding</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s6-desc">
+                        <div class="card-title accent-gold">📐 Phân Tích Cấu Trúc Khối Lượng</div>
+                        <p>Sơ đồ hình tháp thể hiện sự an toàn tối đa của vốn:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem;">
+                            <li>Đáy tháp rộng lớn đại diện cho vị thế thế thủ ban đầu vững chắc nhất.</li>
+                            <li>Đỉnh tháp nhỏ hẹp hạn chế rủi ro đu đỉnh giá cao khi xu hướng đi vào giai đoạn suy thoái (climax).</li>
+                        </ul>
+                    </div>
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Triangle Pyramiding base -->
+                            <!-- Layer 1 (Base - 50%) -->
+                            <polygon points="50,150 250,150 210,105 90,105" fill="rgba(212, 175, 55, 0.15)" stroke="var(--accent-gold)" stroke-width="1.5" />
+                            <text x="150" y="132" class="text-chart" text-anchor="middle" fill="var(--accent-gold)" font-weight="bold">Vị thế gốc: 50% quy mô</text>
+                            <text x="150" y="145" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="7">Giao dịch tại điểm Pivot Point ban đầu</text>
+
+                            <!-- Layer 2 (Middle - 30%) -->
+                            <polygon points="90,105 210,105 180,60 120,60" fill="rgba(197, 160, 89, 0.15)" stroke="var(--accent-bronze)" stroke-width="1.2" />
+                            <text x="150" y="87" class="text-chart" text-anchor="middle" fill="var(--accent-bronze)" font-weight="bold">Nhồi 1: 30% quy mô</text>
+                            <text x="150" y="98" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="7">Khi vị thế 1 đã tạo đệm lợi nhuận</text>
+
+                            <!-- Layer 3 (Top - 20%) -->
+                            <polygon points="120,60 180,60 150,20" fill="rgba(0, 229, 255, 0.1)" stroke="var(--accent-cyan)" stroke-width="1" />
+                            <text x="150" y="44" class="text-chart" text-anchor="middle" fill="var(--accent-cyan)" font-weight="bold">Nhồi 2: 20%</text>
+                            <text x="150" y="53" class="text-chart" text-anchor="middle" fill="var(--text-secondary)" font-size="7">Khóa vị thế</text>
+
+                            <!-- Trend indicator arrow -->
+                            <path d="M 270 150 L 270 30" fill="none" stroke="var(--accent-green)" stroke-width="2" stroke-dasharray="3,3" class="draw-line" />
+                            <polygon points="270,30 266,37 274,37" fill="var(--accent-green)" />
+                            <text x="262" y="90" class="text-chart" text-anchor="middle" fill="var(--accent-green)" transform="rotate(-90 262 90)" font-size="8">GIÁ TĂNG TRƯỞNG</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 4 ==================== -->
+        <!-- SLIDE 7: M4 - BÀI 4: QUY TẮC CẮT LỖ 10% -->
+        <section class="slide" data-module="Module 4" data-lesson="Bài 4: Quản Lý Vốn & Cắt Lỗ 10%">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 4: Quản Lý Vốn & Bảo Toàn Tài Sản</span>
+                    <span class="slide-number-tag">Trang 7/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s7-title">Bài 4: Quy Tắc Cắt Lỗ 10% Tuyệt Đối <span>& Bảo Vệ Vốn</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s7-desc">
+                        <div class="card-title">🛡️ 1. Quy Tắc Giới Hạn Lỗ Tối Đa 10%</div>
+                        <p>Jesse Livermore áp đặt một quy tắc sắt đá: **Không bao giờ cho phép bất kỳ lệnh giao dịch nào bị lỗ quá 10%** giá mua ban đầu. Ông coi 10% là điểm báo động đỏ chứng tỏ thiết lập bối cảnh hoàn toàn sai lầm.</p>
+                        
+                        <div class="card-title accent-gold" style="margin-top:0.4rem;">🔑 2. Sự Hủy Diệt Của Drawdown Lớn</div>
+                        <p>Toán học Drawdown phi tuyến tính chứng minh: Nếu bạn mất 10% vốn, bạn cần 11% để hòa vốn. Nhưng nếu bạn mất 50% vốn, bạn phải nhân đôi tài khoản (thắng 100%) mới quay lại vạch xuất phát.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">⚙️ Rút 50% Lợi Nhuận Ra Khỏi Thị Trường</div>
+                        <p>Livermore khuyên: "Sau mỗi thương vụ thắng lớn thành công, hãy rút 50% lợi nhuận và gửi vào ngân hàng dưới dạng tiền mặt thực tế."</p>
+                        <div class="highlight-box" style="margin-top:0.4rem;">
+                            📌 <strong>Giá trị tâm lý:</strong> Tiền mặt thực tế trong ví mang lại cảm giác an tâm và kiểm soát lòng tham vượt trội so với những con số trên biểu đồ.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 8: M4 - DIAGRAM: DRAWDOWN GRAPH -->
+        <section class="slide" data-module="Module 4" data-lesson="Bài 4: Đồ Thị Drawdown 10%">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 4: Quản Lý Vốn & Bảo Toàn Tài Sản</span>
+                    <span class="slide-number-tag">Trang 8/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s8-title">Bài 4: Sức Mạnh Toán Học <span>Bảo Vệ Vốn Của Livermore</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s8-desc">
+                        <div class="card-title accent-gold">📉 Phân Tích Đồ Thị Drawdown</div>
+                        <p>Đồ thị bên cạnh minh họa tốc độ sụt giảm của tài khoản:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem;">
+                            <li>**Ngưỡng an toàn (Lưới 10%):** Chỉ cần một lệnh thắng nhỏ tiếp theo để bù đắp.</li>
+                            <li>**Ngưỡng tử thần (Drawdown vượt quá 30%):** Đường cong chuyển hóa dốc đứng phi tuyến tính, cơ hội sống sót về bờ của tài khoản giảm dần về 0.</li>
+                        </ul>
+                    </div>
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Axes -->
+                            <line x1="40" y1="20" x2="40" y2="160" stroke="#fff" stroke-width="1.2" />
+                            <text x="35" y="18" class="text-chart" text-anchor="end">% Cần Phục Hồi</text>
+                            
+                            <line x1="40" y1="160" x2="280" y2="160" stroke="#fff" stroke-width="1.2" />
+                            <text x="280" y="175" class="text-chart" text-anchor="end">% Thua Lỗ (Drawdown)</text>
+
+                            <!-- Grid reference lines -->
+                            <line x1="40" y1="145" x2="260" y2="145" stroke="rgba(255,255,255,0.06)" stroke-width="0.8" />
+                            <text x="30" y="148" class="text-chart" text-anchor="end">11%</text>
+
+                            <line x1="40" y1="60" x2="260" y2="60" stroke="rgba(255,255,255,0.06)" stroke-width="0.8" stroke-dasharray="3,3" />
+                            <text x="30" y="63" class="text-chart" text-anchor="end">100%</text>
+
+                            <!-- Curve representing required recovery % -->
+                            <!-- (10%, 11%), (20%, 25%), (30%, 43%), (50%, 100%), (70%, 233%) -->
+                            <path d="M 40 160 Q 140 150, 190 120 T 240 60" fill="none" stroke="var(--accent-red)" stroke-width="2" class="draw-line" />
+
+                            <!-- Safe zone dot (10% drawdown) -->
+                            <circle cx="90" cy="148" r="4" fill="var(--accent-green)" class="pulse-gold-effect" />
+                            <text x="95" y="142" class="text-chart" fill="var(--accent-green)">Lỗ 10% -> Cần hồi 11%</text>
+
+                            <!-- Danger zone dot (50% drawdown) -->
+                            <circle cx="240" cy="60" r="4" fill="var(--accent-red)" />
+                            <text x="235" y="50" class="text-chart" text-anchor="end" fill="var(--accent-red)">Lỗ 50% -> Cần hồi 100%!</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== ADDITIONAL SLIDES ==================== -->
+        <!-- SLIDE 9: M1 - BẢN CHẤT HÀNH VI GIÁ -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 1: Bản Chất Thị Trường Cổ Điển">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Triết Lý Đầu Cơ Cổ Điển</span>
+                    <span class="slide-number-tag">Trang 9/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s9-title">Bài 1: Đầu Cơ Theo <span>Hành Vi Giá (Price Action Speculation)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s9-desc">
+                        <div class="card-title accent-cyan">🕵️ Đừng Cố Giải Thích Lý Do Của Giá</div>
+                        <p>Jesse Livermore cho rằng việc cố gắng tìm kiếm lý do tại sao giá di chuyển là vô nghĩa trong khi giao dịch đang diễn ra:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.3rem;">
+                            <li>"Lý do thực sự thường chỉ lộ diện sau khi xu hướng đã chạy xong rất lâu."</li>
+                            <li>Nhiệm vụ duy nhất của bạn là thừa nhận xu hướng hiện tại và phản ứng theo nó.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-orange">🔍 Chấp Nhận Sự Thật Khách Quan</div>
+                        <p>Nếu thị trường tăng giá, bạn phải là người mua. Nếu thị trường giảm giá, bạn phải bán. Đừng bao giờ tranh cãi với bảng điện tử (Tape Reading) vì nó luôn luôn đúng.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 10: M2 -continuation points -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 2: Giao Dịch Điểm Continuation">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Điểm Xoay Chiều Kỹ Thuật</span>
+                    <span class="slide-number-tag">Trang 10/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s10-title">Bài 2: Cách Khai Thác <span>Điểm Tiếp Diễn (Continuation)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s10-desc">
+                        <div class="card-title accent-yellow">⚙️ Quy Trình 3 Bước Theo Dõi Nền Giá</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem;">
+                            <li>**Bước 1:** Xác định xu hướng tăng mạnh ban đầu sau điểm Pivot Point.</li>
+                            <li>**Bước 2:** Chờ đợi nhịp điều chỉnh đi ngang tối thiểu 5-7 phiên tạo nền giá phẳng.</li>
+                            <li>**Bước 3:** Đặt lệnh mua ngay khi giá bứt phá vượt qua đỉnh của nền giá tích lũy đó.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-green">🛡️ Quản Lý Điểm Dừng Lỗ</div>
+                        <p>Đặt dừng lỗ ngay dưới đáy của nền tích lũy ngắn hạn vừa hình thành. Điểm dừng này giúp bạn bảo vệ vốn tốt nhất khi thị trường đảo chiều bất ngờ.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 11: M3 - QUY TẮC NHỒI LỆNH LIVERMORE -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài 3: Quản Trị Rủi Ro Pyramiding">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 3: Nghệ Thuật Nhồi Lệnh Thắng</span>
+                    <span class="slide-number-tag">Trang 11/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s11-title">Bài 3: Tránh Bẫy Giá Vốn <span>Khi Nhồi Lệnh Pyramiding</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s11-desc">
+                        <div class="card-title accent-red">🚫 Bẫy Giá Vốn Quá Cao (Average Entry Squeeze)</div>
+                        <p>Hầu hết các nhà đầu cơ thất bại do nhồi lệnh quá muộn hoặc quy mô nhồi quá lớn ở vùng giá cao:</p>
+                        <p style="margin-top:0.3rem;">Khi giá chỉ cần điều chỉnh nhẹ, giá vốn trung bình cao sẽ lập tức biến toàn bộ vị thế thành khoản lỗ khổng lồ, kích hoạt tâm lý hoảng loạn.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">💡 Quy Tắc Lọc Lệnh Lượt Nhồi Cuối</div>
+                        <p>Tuyệt đối không nhồi thêm khi giá đã chạy quá xa điểm Pivot ban đầu (>15%). Hãy hài lòng với quy mô vị thế hiện tại và chuyển sang chế độ gồng lãi chốt lời.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 12: TỔNG KẾT KHÓA HỌC -->
+        <section class="slide" data-module="Triết Lý Đầu Cơ" data-lesson="Tổng Kết Livermore">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Triết Lý Đầu Cơ Livermore</span>
+                    <span class="slide-number-tag">Trang 12/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s12-title">Quy Tắc Đầu Cơ Sắt Đá <span>Của Jesse Livermore</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s12-desc">
+                        <div class="card-title">📜 Bản Tuyên Ngôn Đầu Cơ</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem;">
+                            <li>**Chỉ mua** trong thị trường tăng và **Chỉ bán** trong thị trường giảm.</li>
+                            <li>**Chấp nhận** cắt lỗ nhanh chóng và dứt khoát không do dự.</li>
+                            <li>**Bảo vệ** lợi nhuận bằng tiền mặt rút ra khỏi tài khoản giao dịch.</li>
+                            <li>**Kiên nhẫn** chờ đợi cơ hội thực sự xuất hiện tại các điểm Pivot.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-gold">🛡️ Tầm Nhìn Dài Hạn</div>
+                        <p>Đầu cơ là một nghề nghiệp đòi hỏi sự nghiên cứu nghiêm túc và tính kỷ luật thép suốt cuộc đời. Hãy tôn trọng luật chơi của thị trường để bảo tồn vốn của bạn mãi mãi.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 13: BÀI TẬP THỰC HÀNH -->
+        <section class="slide" data-module="Thực Hành" data-lesson="Bài Tập Luyện Tập">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Thực Hành & Luyện Tập</span>
+                    <span class="slide-number-tag">Trang 13/13</span>
+                </div>
+                <h2 class="slide-title" id="editable-s13-title">Bài Tập Thực Hành <span>Đầu Cơ Theo Xu Hướng</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s13-desc">
+                        <div class="card-title accent-yellow">📝 Bài Tập 1: Nhật Ký Theo Dõi Pivot Point (3 mã)</div>
+                        <p>Chọn 3 mã cổ phiếu hoặc tài sản có khối lượng lớn. Vẽ mốc Pivot Point (đỉnh kháng cự trung hạn gần nhất) và ghi chú lại phản ứng của giá khi vượt qua mốc này.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">📝 Bài Tập 2: Lập Kế Hoạch Pyramiding</div>
+                        <p>Xây dựng bảng kế hoạch giải ngân vốn 3 bước chi tiết cho một vị thế giả lập. Tính toán chính xác giá vốn trung bình sau mỗi lần nhồi để đảm bảo an toàn tuyệt đối.</p>
+                        <div class="highlight-box" style="margin-top:0.4rem;">
+                            💡 Ghi chú lại cách bạn sẽ cắt lỗ nếu giá đảo chiều bất ngờ tại lượt nhồi thứ 2.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Navigation Overlay -->
+    <div class="slide-nav">
+        <button class="nav-btn" id="prevBtn" aria-label="Previous Slide">←</button>
+        <div class="nav-dots" id="navDots"></div>
+        <button class="nav-btn" id="nextBtn" aria-label="Next Slide">→</button>
+    </div>
+
+    <!-- =========================================================================
+         JAVASCRIPT CONTROLLERS
+         ========================================================================= -->
+    <script>
+        // --- 1. CORE PRESENTATION ENGINE ---
+        class SlidePresentation {
+            constructor() {
+                this.container = document.getElementById('slideContainer');
+                this.slides = Array.from(document.querySelectorAll('.slide'));
+                this.currentSlide = 0;
+                
+                this.init();
+            }
+
+            init() {
+                this.setupIntersectionObserver();
+                this.setupKeyboardNav();
+                this.setupTouchNav();
+                this.setupNavDots();
+                this.updateDynamicPageNumbers();
+                
+                let scrollTimeout;
+                window.addEventListener('wheel', (e) => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(() => {
+                        if (e.deltaY > 30) {
+                            this.setActiveSlide(this.currentSlide + 1);
+                        } else if (e.deltaY < -30) {
+                            this.setActiveSlide(this.currentSlide - 1);
+                        }
+                    }, 50);
+                }, { passive: true });
+            }
+
+            setupIntersectionObserver() {
+                const observerOptions = {
+                    root: null,
+                    threshold: 0.5
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const index = this.slides.indexOf(entry.target);
+                            this.currentSlide = index;
+                            this.updateActiveState();
+                        }
+                    });
+                }, observerOptions);
+
+                this.slides.forEach(slide => observer.observe(slide));
+            }
+
+            updateDynamicPageNumbers() {
+                const total = this.slides.length;
+                this.slides.forEach((slide, idx) => {
+                    const pageTag = slide.querySelector('.slide-number-tag');
+                    if (pageTag) {
+                        pageTag.textContent = `Trang ${idx + 1}/${total}`;
+                    }
+                });
+            }
+
+            setActiveSlide(index) {
+                if (index < 0 || index >= this.slides.length) return;
+                this.currentSlide = index;
+                this.slides[index].scrollIntoView({ behavior: 'smooth' });
+                this.updateActiveState();
+            }
+
+            updateActiveState() {
+                this.slides.forEach((slide, idx) => {
+                    if (idx === this.currentSlide) {
+                        slide.classList.add('visible');
+                    } else {
+                        slide.classList.remove('visible');
+                    }
+                });
+
+                const percent = (this.currentSlide / (this.slides.length - 1)) * 100;
+                document.getElementById('progressBar').style.width = `${percent}%`;
+
+                const dots = document.querySelectorAll('.nav-dot');
+                dots.forEach((dot, idx) => {
+                    if (idx === this.currentSlide) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+
+                const sidebarItems = document.querySelectorAll('.sidebar-item');
+                sidebarItems.forEach(item => item.classList.remove('active'));
+                
+                const currentSlideEl = this.slides[this.currentSlide];
+                const moduleName = currentSlideEl.getAttribute('data-module');
+                const lessonName = currentSlideEl.getAttribute('data-lesson');
+                
+                if (moduleName && lessonName) {
+                    sidebarItems.forEach(item => {
+                        if (item.getAttribute('data-slide-index') == this.currentSlide) {
+                            item.classList.add('active');
+                        }
+                    });
+                }
+            }
+
+            setupKeyboardNav() {
+                document.addEventListener('keydown', (e) => {
+                    if (e.target.getAttribute('contenteditable') === 'true') return;
+
+                    if (e.key === 'ArrowDown' || e.key === 'Space') {
+                        e.preventDefault();
+                        this.setActiveSlide(this.currentSlide + 1);
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        this.setActiveSlide(this.currentSlide - 1);
+                    }
+                });
+            }
+
+            setupTouchNav() {
+                let startY = 0;
+                document.addEventListener('touchstart', (e) => {
+                    startY = e.touches[0].clientY;
+                }, { passive: true });
+
+                document.addEventListener('touchend', (e) => {
+                    const endY = e.changedTouches[0].clientY;
+                    const diff = startY - endY;
+
+                    if (Math.abs(diff) > 50) { 
+                        if (diff > 0) {
+                            this.setActiveSlide(this.currentSlide + 1);
+                        } else {
+                            this.setActiveSlide(this.currentSlide - 1);
+                        }
+                    }
+                }, { passive: true });
+            }
+
+            setupNavDots() {
+                const navDotsContainer = document.getElementById('navDots');
+                navDotsContainer.innerHTML = '';
+                
+                this.slides.forEach((slide, idx) => {
+                    const dot = document.createElement('button');
+                    dot.className = `nav-dot ${idx === 0 ? 'active' : ''}`;
+                    dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
+                    dot.addEventListener('click', () => {
+                        this.setActiveSlide(idx);
+                    });
+                    navDotsContainer.appendChild(dot);
+                });
+            }
+        }
+
+        // --- 2. CYBER SIDEBAR CONTROLLER ---
+        class SidebarController {
+            constructor(presentation) {
+                this.presentation = presentation;
+                this.toggleBtn = document.getElementById('sidebarToggle');
+                this.sidebar = document.getElementById('sidebar');
+                this.backdrop = document.getElementById('sidebarBackdrop');
+                this.menu = document.getElementById('sidebarMenu');
+                
+                this.init();
+            }
+
+            init() {
+                this.buildMenu();
+                
+                this.toggleBtn.addEventListener('click', () => this.toggleSidebar());
+                this.backdrop.addEventListener('click', () => this.closeSidebar());
+                
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') this.closeSidebar();
+                });
+            }
+
+            toggleSidebar() {
+                this.sidebar.classList.toggle('open');
+                this.backdrop.classList.toggle('show');
+            }
+
+            closeSidebar() {
+                this.sidebar.classList.remove('open');
+                this.backdrop.classList.remove('show');
+            }
+
+            buildMenu() {
+                this.menu.innerHTML = '';
+                
+                const homeLi = document.createElement('li');
+                homeLi.className = 'sidebar-item active';
+                homeLi.setAttribute('data-slide-index', '0');
+                homeLi.innerHTML = `
+                    <span class="sidebar-module-tag">MASTERCLASS</span>
+                    <span>Màn Hình Chào & Hướng Dẫn</span>
+                `;
+                homeLi.addEventListener('click', () => {
+                    this.presentation.setActiveSlide(0);
+                    this.closeSidebar();
+                });
+                this.menu.appendChild(homeLi);
+
+                this.presentation.slides.forEach((slide, idx) => {
+                    if (idx === 0) return;
+                    
+                    const moduleName = slide.getAttribute('data-module');
+                    const lessonName = slide.getAttribute('data-lesson');
+                    
+                    if (moduleName && lessonName) {
+                        const li = document.createElement('li');
+                        li.className = 'sidebar-item';
+                        li.setAttribute('data-slide-index', idx);
+                        li.innerHTML = `
+                            <span class="sidebar-module-tag">${moduleName}</span>
+                            <span>${lessonName}</span>
+                        `;
+                        li.addEventListener('click', () => {
+                            this.presentation.setActiveSlide(idx);
+                            this.closeSidebar();
+                        });
+                        this.menu.appendChild(li);
+                    }
+                });
+            }
+        }
+
+        // --- 3. INLINE EDITING CONTROLLER WITH LOCALSTORAGE PERSISTENCE ---
+        class LessonEditor {
+            constructor() {
+                this.isActive = false;
+                this.editToggle = document.getElementById('editToggle');
+                this.hotzone = document.getElementById('editHotzone');
+                this.saveIndicator = document.getElementById('saveIndicator');
+                this.hideTimeout = null;
+                
+                this.setupEditingTrigger();
+                this.loadSavedContent();
+            }
+
+            setupEditingTrigger() {
+                this.hotzone.addEventListener('mouseenter', () => {
+                    clearTimeout(this.hideTimeout);
+                    this.editToggle.classList.add('show');
+                });
+                
+                this.hotzone.addEventListener('mouseleave', () => {
+                    this.hideTimeout = setTimeout(() => {
+                        if (!this.isActive) this.editToggle.classList.remove('show');
+                    }, 400);
+                });
+
+                this.editToggle.addEventListener('mouseenter', () => {
+                    clearTimeout(this.hideTimeout);
+                });
+
+                this.editToggle.addEventListener('mouseleave', () => {
+                    this.hideTimeout = setTimeout(() => {
+                        if (!this.isActive) this.editToggle.classList.remove('show');
+                    }, 400);
+                });
+
+                this.editToggle.addEventListener('click', () => this.toggleEditMode());
+
+                document.addEventListener('keydown', (e) => {
+                    if ((e.key === 'e' || e.key === 'E') && e.target.getAttribute('contenteditable') !== 'true') {
+                        e.preventDefault();
+                        this.toggleEditMode();
+                    }
+                });
+            }
+
+            getEditableIds() {
+                return [
+                    'editable-s1-title', 'editable-s1-desc',
+                    'editable-s2-title', 'editable-s2-desc',
+                    'editable-s3-title', 'editable-s3-desc',
+                    'editable-s4-title', 'editable-s4-desc',
+                    'editable-s5-title', 'editable-s5-desc',
+                    'editable-s6-title', 'editable-s6-desc',
+                    'editable-s7-title', 'editable-s7-desc',
+                    'editable-s8-title', 'editable-s8-desc',
+                    'editable-s9-title', 'editable-s9-desc',
+                    'editable-s10-title', 'editable-s10-desc',
+                    'editable-s11-title', 'editable-s11-desc',
+                    'editable-s12-title', 'editable-s12-desc',
+                    'editable-s13-title', 'editable-s13-desc'
+                ];
+            }
+
+            toggleEditMode() {
+                this.isActive = !this.isActive;
+                
+                if (this.isActive) {
+                    this.editToggle.classList.add('active');
+                    this.editToggle.textContent = '💾 LƯU BÀI GIẢNG';
+                    this.enableEditableElements();
+                } else {
+                    this.editToggle.classList.remove('active');
+                    this.editToggle.textContent = '✏️ EDIT MODE (E)';
+                    this.disableEditableElements();
+                    this.saveContent();
+                }
+            }
+
+            enableEditableElements() {
+                this.getEditableIds().forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.setAttribute('contenteditable', 'true');
+                });
+            }
+
+            disableEditableElements() {
+                this.getEditableIds().forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.removeAttribute('contenteditable');
+                });
+            }
+
+            saveContent() {
+                const contentData = {};
+                this.getEditableIds().forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) contentData[id] = el.innerHTML;
+                });
+
+                localStorage.setItem('livermore_speculation_data', JSON.stringify(contentData));
+                
+                this.saveIndicator.classList.add('show');
+                setTimeout(() => {
+                    this.saveIndicator.classList.remove('show');
+                }, 2000);
+            }
+
+            loadSavedContent() {
+                const saved = localStorage.getItem('livermore_speculation_data');
+                if (saved) {
+                    try {
+                        const contentData = JSON.parse(saved);
+                        Object.keys(contentData).forEach(id => {
+                            const el = document.getElementById(id);
+                            if (el) el.innerHTML = contentData[id];
+                        });
+                    } catch (e) {
+                        console.error("Lỗi khi tải dữ liệu bài giảng cũ:", e);
+                    }
+                }
+            }
+        }
+
+        // Initialize all controllers
+        window.addEventListener('DOMContentLoaded', () => {
+            const presentation = new SlidePresentation();
+            window.presentation = presentation;
+            window.sidebar = new SidebarController(presentation);
+            window.editor = new LessonEditor();
+
+            document.getElementById('prevBtn').addEventListener('click', () => {
+                presentation.setActiveSlide(presentation.currentSlide - 1);
+            });
+            document.getElementById('nextBtn').addEventListener('click', () => {
+                presentation.setActiveSlide(presentation.currentSlide + 1);
+            });
+        });
+    </script>
+</body>
+</html>
