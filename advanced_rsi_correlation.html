@@ -588,7 +588,7 @@
     <div class="save-indicator" id="saveIndicator">💾 ĐÃ LƯU BÀI GIẢNG!</div>
 
     <!-- =========================================================================
-         SLIDES LIST (ADVANCED RSI & CORRELATION: SLIDE 1 - 13)
+         SLIDES LIST (ADVANCED RSI & CORRELATION: SLIDE 1 - 23)
          ========================================================================= -->
     <main id="slideContainer">
 
@@ -608,48 +608,133 @@
             </div>
         </section>
 
-        <!-- ==================== MODULE 1 ==================== -->
+        <!-- ==================== MODULE 1: BẢN CHẤT TOÁN HỌC & ĐỘNG LƯỢNG ==================== -->
         <!-- SLIDE 2: M1 - BÀI 1: BẢN CHẤT TOÁN HỌC -->
         <section class="slide" data-module="Module 1" data-lesson="Bài 1: Công Thức Toán Học RSI">
             <div class="slide-content">
                 <div class="slide-header">
-                    <span class="slide-module-tag">Module 1: Bản Chất Toán Học Của RSI</span>
-                    <span class="slide-number-tag">Trang 2/13</span>
+                     <span class="slide-module-tag">Module 1: Bản Chất Toán Học & Giải Mã Động Lượng</span>
+                     <span class="slide-number-tag">Trang 2/23</span>
                 </div>
-                <h2 class="slide-title" id="editable-s2-title">Bài 1: Giải Mã Công Thức <span>& Ý Nghĩa Momentum Thực Tế</span></h2>
+                <h2 class="slide-title" id="editable-s2-title">Bài 1: Giải Mã Công Thức <span>& Ý Nghĩa Toán Học RSI</span></h2>
                 <div class="grid-2">
                     <div class="card" id="editable-s2-desc">
                         <div class="card-title">🧮 1. Bản Chất Toán Học Của RSI</div>
-                        <p>RSI (Relative Strength Index) do J. Welles Wilder phát minh, được tính dựa trên tỷ lệ giữa trung bình số phiên tăng điểm và trung bình số phiên giảm điểm (RS):</p>
-                        <p style="font-family: var(--font-mono); color: var(--accent-yellow); font-size: 13px; padding: 4px; background: rgba(0,0,0,0.3); border-radius: 4px; margin: 4px 0;">
+                        <p>RSI (Relative Strength Index) do J. Welles Wilder phát minh, được tính dựa trên tỷ lệ giữa trung bình số phiên tăng điểm và trung bình số phiên giảm điểm (RS) trong chu kỳ 14 phiên:</p>
+                        <p style="font-family: var(--font-mono); color: var(--accent-yellow); font-size: 13px; padding: 6px; background: rgba(0,0,0,0.3); border-radius: 4px; margin: 4px 0;">
                             RSI = 100 - [100 / (1 + RS)]<br>
                             RS = Avg(Gain) / Avg(Loss)
                         </p>
-                        <div class="card-title accent-orange" style="margin-top:0.4rem;">🔑 2. Tư Duy Lối Mòn Cần Tránh</div>
-                        <p> Wilder khuyên dùng mốc 70 (Quá mua) và 30 (Quá bán). Tuy nhiên, trong xu hướng mạnh, RSI có thể duy trì ở vùng quá mua/quá bán rất lâu. **Bán khống chỉ vì RSI > 70 là hành vi tự sát**.</p>
+                        <p style="margin-top: 0.3rem;">Wilder sử dụng kỹ thuật làm mượt động (Wilder's Smoothing) thay vì trung bình đơn giản (SMA), giúp giảm thiểu nhiễu và làm mượt đồ thị động lượng hiệu quả.</p>
                     </div>
                     <div class="card">
-                        <div class="card-title accent-yellow">⚙️ Nguyên Lý Hoạt Động Của RS</div>
-                        <p>RSI đo lường **tốc độ thay đổi giá**. Nó là một chỉ báo dao động giới hạn từ 0 đến 100. Khi RSI nằm ở vùng cao, điều đó chứng tỏ lực tăng đang có **gia tốc cực đại**, chứ không có nghĩa là giá sắp đảo chiều giảm ngay lập tức.</p>
-                        <div class="highlight-box" style="margin-top:0.4rem;">
-                            📌 <strong>Key-takeaway:</strong> RSI là thước đo gia tốc. Gia tốc mạnh nhất xuất hiện ở giai đoạn đầu và giữa của một xu hướng lớn.
-                        </div>
+                         <div class="card-title accent-yellow">⚙️ Nguyên Lý Hoạt Động Của RS</div>
+                         <p>Mỗi khi giá trị trung bình phiên tăng (Avg Gain) vượt trội so với trung bình phiên giảm (Avg Loss), giá trị RS sẽ tăng vọt, đẩy đường RSI tiệm cận mốc 100. RSI chỉ có thể chạm 100 khi và chỉ khi thị trường liên tục tăng mà không có phiên giảm nào trong chu kỳ, điều này cực kỳ hiếm xảy ra trên thực tế.</p>
+                         <div class="highlight-box" style="margin-top: 0.4rem;">
+                             📌 <strong>Quy tắc tính:</strong> AvgGain = (AvgGain_yesterday * 13 + Gain_today) / 14. Công thức này tạo ra sự phụ thuộc của giá trị hiện tại vào toàn bộ lịch sử giá trước đó.
+                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ==================== MODULE 2 ==================== -->
-        <!-- SLIDE 3: M2 - BÀI 2: RANGE SHIFT CONCEPT -->
+        <!-- SLIDE 3: M1 - BÀI 1: ĐỘNG LƯỢNG VS GIA TỐC -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 1: Động Lượng vs Gia Tốc">
+            <div class="slide-content">
+                <div class="slide-header">
+                     <span class="slide-module-tag">Module 1: Bản Chất Toán Học & Giải Mã Động Lượng</span>
+                     <span class="slide-number-tag">Trang 3/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s3-title">Bài 1: Động Lượng (Velocity) <span>vs Gia Tốc (Acceleration)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s3-desc">
+                        <div class="card-title accent-orange">🏎️ 1. Khái Niệm Tốc Độ & Gia Tốc</div>
+                        <p>Biểu đồ Giá hiển thị <strong>quãng đường</strong> di chuyển, trong khi RSI đóng vai trò là một **máy đo tốc độ** (Speedometer). Nó đo lường độ dốc của bước giá trên đơn vị thời gian.</p>
+                        <p style="margin-top: 0.3rem;">Khi giá tiếp tục tăng nhưng tốc độ tăng bắt đầu giảm đi (xe vẫn chạy nhưng tài xế đã nhả chân ga), RSI sẽ giảm xuống. Đây là sự sụt giảm **gia tốc** trước khi **quãng đường** thực sự dừng lại.</p>
+                    </div>
+                    <div class="card">
+                         <div class="card-title accent-yellow">💡 Ứng Dụng Thực Chiến Đọc Lực Đi</div>
+                         <p>RSI là một chỉ báo dẫn dắt (Leading Index) theo nghĩa: Nó báo hiệu sự suy giảm về động lượng (Momentum Decay) của xu hướng hiện tại trước khi biểu đồ giá xuất hiện các mẫu hình đảo chiều hoặc phá vỡ cấu trúc.</p>
+                         <div class="highlight-box" style="margin-top: 0.4rem;">
+                             📌 <strong>Mẹo nhỏ:</strong> Hãy quan sát độ dốc của RSI. Khi RSI đạt độ dốc đứng, lực đẩy cực mạnh. Khi RSI đi ngang, xu hướng đang chuẩn bị bước vào giai đoạn tích lũy hoặc đảo chiều.
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: M1 - BÀI 1: SỰ SỤP ĐỔ CỦA TƯ DUY QUÁ MUA QUÁ BÁN -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 1: Bẫy Quá Mua / Quá Bán">
+            <div class="slide-content">
+                <div class="slide-header">
+                     <span class="slide-module-tag">Module 1: Bản Chất Toán Học & Giải Mã Động Lượng</span>
+                     <span class="slide-number-tag">Trang 4/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s4-title">Bài 1: Sự Sụp Đổ Của Tư Duy <span>Quá Mua & Quá Bán Truyền Thống</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s4-desc">
+                        <div class="card-title accent-red">⚠️ 1. Bẫy Chết Người Của Mốc 30/70</div>
+                        <p>Các tài liệu cơ bản khuyên học viên: *Mua khi RSI dưới 30 (quá bán) và Bán khi RSI trên 70 (quá mua)*. Đây là lý do khiến phần lớn trader nhỏ lẻ cháy tài khoản.</p>
+                        <p style="margin-top: 0.3rem; font-weight: bold; color: var(--accent-red);">Trong xu hướng tăng mạnh (Strong Bull Run), RSI có thể duy trì trên mốc 70 trong suốt nhiều tuần liên tiếp khi dòng tiền thông minh tiếp tục nhồi lệnh.</p>
+                    </div>
+                    <div class="card">
+                         <div class="card-title accent-green">🔑 2. Tư Duy Độc Quyền Của Smart Money</div>
+                         <p>Vùng quá mua (>70) thực chất báo hiệu **Động lượng tăng cực đại**. Đây không phải là tín hiệu đảo chiều giảm, mà là sự xác nhận lực mua đang làm chủ cuộc chơi. Tương tự, vùng quá bán (<30) báo hiệu lực bán hoảng loạn đang chiếm ưu thế tuyệt đối.</p>
+                         <div class="highlight-box" style="margin-top: 0.4rem;">
+                             💡 <strong>Tư duy đúng:</strong> Không bao giờ bán khống chỉ vì RSI quá mua. Hãy dùng quá mua như bộ lọc xác nhận xu hướng đang rất mạnh để tìm điểm Buy thuận chiều.
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: M1 - BÀI 1: FAILURE SWING -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 1: Nguyên Lý Failure Swing">
+            <div class="slide-content">
+                <div class="slide-header">
+                     <span class="slide-module-tag">Module 1: Bản Chất Toán Học & Giải Mã Động Lượng</span>
+                     <span class="slide-number-tag">Trang 5/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s5-title">Bài 1: Thiết Lập <span>Failure Swing Nguyên Bản Của Wilder</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s5-desc">
+                        <div class="card-title">📉 1. Top Failure Swing (Đảo Chiều Giảm)</div>
+                        <p>Xảy ra tại vùng đỉnh cao:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.2rem; padding-left:1.2rem;">
+                            <li>**Bước A:** RSI vượt mốc 70.</li>
+                            <li>**Bước B:** RSI giảm ngược lại dưới 70 (tạo đáy kiểm định H).</li>
+                            <li>**Bước C:** RSI hồi phục tăng lên nhưng **không vượt được đỉnh cũ**.</li>
+                            <li>**Bước D:** RSI quay đầu giảm thủng mốc đáy H ➔ Kích hoạt lệnh Bán khống.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                         <div class="card-title accent-yellow">📈 2. Bottom Failure Swing (Đảo Chiều Tăng)</div>
+                         <p>Xảy ra tại vùng đáy sâu:</p>
+                         <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.2rem; padding-left:1.2rem;">
+                            <li>**Bước A:** RSI rơi xuống dưới mốc 30.</li>
+                            <li>**Bước B:** RSI hồi phục vượt lên trên mốc 30 (tạo đỉnh kiểm định L).</li>
+                            <li>**Bước C:** RSI giảm ngược lại nhưng **tạo đáy cao hơn đáy trước**.</li>
+                            <li>**Bước D:** RSI quay đầu tăng phá vỡ đỉnh kiểm định L ➔ Kích hoạt lệnh Mua.</li>
+                         </ul>
+                         <div class="highlight-box" style="margin-top:0.3rem;">
+                             📌 <strong>Ưu điểm:</strong> Failure Swing hoàn toàn độc lập với biểu đồ giá, chỉ dựa trên động lượng thuần túy.
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 2: DỊCH CHUYỂN BIÊN ĐỘ RANGE SHIFT ==================== -->
+        <!-- SLIDE 6: M2 - BÀI 2: RANGE SHIFT CONCEPT -->
         <section class="slide" data-module="Module 2" data-lesson="Bài 2: Range Shift Concept">
             <div class="slide-content">
                 <div class="slide-header">
                     <span class="slide-module-tag">Module 2: Kỹ Thuật Dịch Chuyển Biên Độ Range Shift</span>
-                    <span class="slide-number-tag">Trang 3/13</span>
+                    <span class="slide-number-tag">Trang 6/23</span>
                 </div>
-                <h2 class="slide-title" id="editable-s3-title">Bài 2: Cơ Chế Dịch Chuyển Biên Độ <span>RSI Range Shift</span></h2>
+                <h2 class="slide-title" id="editable-s6-title">Bài 2: Cơ Chế Dịch Chuyển Biên Độ <span>RSI Range Shift</span></h2>
                 <div class="grid-2">
-                    <div class="card" id="editable-s3-desc">
+                    <div class="card" id="editable-s6-desc">
                         <div class="card-title">📈 1. Xu Hướng Tăng (Bullish Range: 40 - 80)</div>
                         <p>Trong một thị trường tăng giá mạnh mẽ (Bull Market), biên độ hoạt động của RSI dịch chuyển lên trên. RSI dao động chủ yếu trong vùng **40 - 80**.</p>
                         <p style="margin-top:0.3rem;">Khi giá điều chỉnh giảm (pullback), lực cầu bắt đáy mạnh mẽ của tổ chức sẽ đẩy giá lên trước khi RSI chạm vùng quá bán truyền thống. Vùng **40 trở thành Hỗ Trợ Động** cực kỳ quan trọng.</p>
@@ -663,16 +748,16 @@
             </div>
         </section>
 
-        <!-- SLIDE 4: M2 - DIAGRAM: RANGE SHIFT VISUALIZATION -->
+        <!-- SLIDE 7: M2 - DIAGRAM: RANGE SHIFT VISUALIZATION -->
         <section class="slide" data-module="Module 2" data-lesson="Bài 2: Sơ Đồ Range Shift">
             <div class="slide-content">
                 <div class="slide-header">
                     <span class="slide-module-tag">Module 2: Kỹ Thuật Dịch Chuyển Biên Độ Range Shift</span>
-                    <span class="slide-number-tag">Trang 4/13</span>
+                    <span class="slide-number-tag">Trang 7/23</span>
                 </div>
-                <h2 class="slide-title" id="editable-s4-title">Bài 2: Trực Quan Hóa Cơ Chế <span>RSI Range Shift</span></h2>
+                <h2 class="slide-title" id="editable-s7-title">Bài 2: Trực Quan Hóa Cơ Chế <span>RSI Range Shift</span></h2>
                 <div class="grid-2">
-                    <div class="card" id="editable-s4-desc">
+                    <div class="card" id="editable-s7-desc">
                         <div class="card-title accent-orange">📊 Giải Mã Sơ Đồ Range Shift</div>
                         <p>Sơ đồ bên cạnh biểu diễn hành vi dao động thực tế của RSI:</p>
                         <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem;">
@@ -715,17 +800,69 @@
             </div>
         </section>
 
-        <!-- ==================== MODULE 3 ==================== -->
-        <!-- SLIDE 5: M3 - BÀI 3: PHÂN KỲ RSI NÂNG CAO -->
+        <!-- SLIDE 8: M2 - BÀI 2: XU HƯỚNG DỊCH CHUYỂN BIÊN (TRANSITION) -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 2: Vùng Chuyển Đổi Xu Hướng">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Kỹ Thuật Dịch Chuyển Biên Độ Range Shift</span>
+                    <span class="slide-number-tag">Trang 8/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s8-title">Bài 2: Nhận Diện <span>Vùng Chuyển Đổi Xu Hướng (Transition)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s8-desc">
+                        <div class="card-title accent-yellow">🔄 1. Từ Tăng Sang Giảm (Bullish to Bearish)</div>
+                        <p>Xảy ra khi xu hướng suy yếu:</p>
+                        <p style="margin-top:0.3rem;">Một pha điều chỉnh sâu làm cho RSI xuyên thủng mốc **40** và cắm về vùng **30 hoặc thấp hơn**. Khi giá phục hồi kỹ thuật, RSI quay ngược lên nhưng **bị chặn đứng hoàn toàn ở mốc 55 - 60** ➔ Xác nhận dịch chuyển sang Bearish Range thành công.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-green">🔄 2. Từ Giảm Sang Tăng (Bearish to Bullish)</div>
+                        <p>Xảy ra khi xu hướng đảo chiều tăng:</p>
+                        <p style="margin-top:0.3rem;">Phe mua bứt phá mạnh đẩy RSI vượt qua mức cản **60** và tiến sát vùng **70 - 80**. Nhịp điều chỉnh sau đó của giá được đỡ ở mốc **40 - 45** thay vì cắm sâu xuống mốc 20 ➔ Xác nhận dịch chuyển sang Bullish Range.</p>
+                        <div class="highlight-box" style="margin-top:0.4rem;">
+                            💡 <strong>Giao dịch thông minh:</strong> Đọc vị sự dịch chuyển biên này giúp bạn không bị kẹt lệnh ngược xu hướng trung hạn.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 9: M2 - RANGE SHIFT EXAMPLES -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 2: Ví Dụ Thực Chiến Range Shift">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Kỹ Thuật Dịch Chuyển Biên Độ Range Shift</span>
+                    <span class="slide-number-tag">Trang 9/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s9-title">Bài 2: Thực Chiến Range Shift <span>& Bẫy Phá Vỡ Giả</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s9-desc">
+                        <div class="card-title accent-yellow">⚠️ Lưu Ý Đặc Biệt Về Mốc Cân Bằng 50</div>
+                        <p>Mốc 50 là ranh giới phân định lực mua/bán trung hạn:</p>
+                        <p style="margin-top:0.3rem;">Khi thị trường thay đổi trạng thái xu hướng, RSI sẽ có hành vi vượt qua mốc 50 và kiểm định lại mốc này. Nếu RSI chui hẳn xuống dưới 40 và không thể vượt lại lên trên 50 trong các nhịp hồi, xu hướng đã chính thức xoay chuyển sang **Bearish**.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-orange">🔍 Cách Phát Hiện Sự Thay Đổi Xu Hướng</div>
+                        <p>Một tín hiệu đảo chiều sớm đáng tin cậy là sự thất bại của RSI khi quay lại vùng biên cũ:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.3rem;">
+                            <li>Trong xu hướng tăng, nếu RSI điều chỉnh xuyên thủng mốc 40 và cắm sâu về dưới 30, lực mua lớn đã rút lui.</li>
+                            <li>Sự chuyển dịch này báo hiệu cấu trúc tích lũy cũ bị phá vỡ hoàn toàn.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 3: PHÂN KỲ RSI NÂN CAO & TÍN HIỆU DÒNG TIỀN ==================== -->
+        <!-- SLIDE 10: M3 - BÀI 3: PHÂN KỲ RSI NÂNG CAO -->
         <section class="slide" data-module="Module 3" data-lesson="Bài 3: Phân Kỳ RSI Nâng Cao">
             <div class="slide-content">
                 <div class="slide-header">
                     <span class="slide-module-tag">Module 3: Kỹ Thuật Giao Dịch Phân Kỳ Nâng Cao</span>
-                    <span class="slide-number-tag">Trang 5/13</span>
+                    <span class="slide-number-tag">Trang 10/23</span>
                 </div>
-                <h2 class="slide-title" id="editable-s5-title">Bài 3: Phân Biệt Phân Kỳ Thường <span>& Phân Kỳ Ẩn (Hidden)</span></h2>
+                <h2 class="slide-title" id="editable-s10-title">Bài 3: Phân Biệt Phân Kỳ Thường <span>& Phân Kỳ Ẩn (Hidden)</span></h2>
                 <div class="grid-2">
-                    <div class="card" id="editable-s5-desc">
+                    <div class="card" id="editable-s10-desc">
                         <div class="card-title">🔄 1. Phân Kỳ Thường (Regular Divergence)</div>
                         <p>Xảy ra khi Giá tạo đỉnh cao mới nhưng RSI tạo đỉnh thấp hơn (Phân kỳ giảm - Bearish), hoặc Giá tạo đáy thấp mới nhưng RSI tạo đáy cao hơn (Phân kỳ tăng - Bullish).</p>
                         <p style="margin-top:0.2rem; font-weight:bold; color:#fff;">⚠️ Chỉ báo tín hiệu đảo chiều tiềm năng.</p>
@@ -745,16 +882,62 @@
             </div>
         </section>
 
-        <!-- SLIDE 6: M3 - DIAGRAM: HIDDEN DIVERGENCE -->
+        <!-- SLIDE 11: M3 - DIAGRAM: REGULAR DIVERGENCE -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài 3: Sơ Đồ Phân Kỳ Thường">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 3: Kỹ Thuật Giao Dịch Phân Kỳ Nâng Cao</span>
+                    <span class="slide-number-tag">Trang 11/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s11-title">Bài 3: Trực Quan Hóa <span>Phân Kỳ Thường (Regular Divergence)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s11-desc">
+                        <div class="card-title accent-orange">📊 Giải Mã Sơ Đồ Phân Kỳ Thường</div>
+                        <p>Đặc tính kỹ thuật đảo chiều xu hướng:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.2rem; padding-left:1.2rem;">
+                            <li>**Phân kỳ Tăng (Trái):** Giá tạo đáy thấp mới (LL) nhưng RSI tạo đáy cao hơn (HL) ➔ Lực bán suy yếu, chuẩn bị đảo chiều tăng.</li>
+                            <li>**Phân kỳ Giảm (Phải):** Giá tạo đỉnh cao mới (HH) nhưng RSI tạo đỉnh thấp hơn (LH) ➔ Lực mua cạn kiệt, chuẩn bị đảo chiều giảm.</li>
+                        </ul>
+                    </div>
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="150" y1="10" x2="150" y2="190" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="3,3" />
+                            
+                            <!-- LEFT PANEL: BULLISH REGULAR -->
+                            <text x="75" y="20" class="text-chart" fill="var(--accent-green)" text-anchor="middle" font-weight="bold">PHÂN KỲ TĂNG</text>
+                            <path d="M 20 60 L 45 40 L 70 80 L 95 30 L 120 90" fill="none" stroke="var(--accent-cyan)" stroke-width="1.8" />
+                            <line x1="20" y1="60" x2="120" y2="90" stroke="var(--accent-yellow)" stroke-width="1.2" stroke-dasharray="3,2" />
+                            <text x="70" y="103" class="text-chart" fill="var(--accent-yellow)" text-anchor="middle" font-size="8">Giá: Đáy Thấp Hơn (LL)</text>
+                            
+                            <path d="M 20 150 L 45 135 L 70 160 L 95 125 L 120 145" fill="none" stroke="var(--accent-orange)" stroke-width="1.8" />
+                            <line x1="20" y1="150" x2="120" y2="145" stroke="var(--accent-green)" stroke-width="1.2" stroke-dasharray="3,2" />
+                            <text x="70" y="175" class="text-chart" fill="var(--accent-green)" text-anchor="middle" font-size="8">RSI: Đáy Cao Hơn (HL)</text>
+
+                            <!-- RIGHT PANEL: BEARISH REGULAR -->
+                            <text x="225" y="20" class="text-chart" fill="var(--accent-red)" text-anchor="middle" font-weight="bold">PHÂN KỲ GIẢM</text>
+                            <path d="M 170 80 L 195 50 L 220 70 L 245 40 L 270 60" fill="none" stroke="var(--accent-cyan)" stroke-width="1.8" />
+                            <line x1="195" y1="50" x2="245" y2="40" stroke="var(--accent-yellow)" stroke-width="1.2" stroke-dasharray="3,2" />
+                            <text x="220" y="103" class="text-chart" fill="var(--accent-yellow)" text-anchor="middle" font-size="8">Giá: Đỉnh Cao Hơn (HH)</text>
+                            
+                            <path d="M 170 140 L 195 130 L 220 155 L 245 142 L 270 165" fill="none" stroke="var(--accent-orange)" stroke-width="1.8" />
+                            <line x1="195" y1="130" x2="245" y2="142" stroke="var(--accent-red)" stroke-width="1.2" stroke-dasharray="3,2" />
+                            <text x="220" y="175" class="text-chart" fill="var(--accent-red)" text-anchor="middle" font-size="8">RSI: Đỉnh Thấp Hơn (LH)</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 12: M3 - DIAGRAM: HIDDEN BULLISH -->
         <section class="slide" data-module="Module 3" data-lesson="Bài 3: Sơ Đồ Phân Kỳ Ẩn">
             <div class="slide-content">
                 <div class="slide-header">
                     <span class="slide-module-tag">Module 3: Kỹ Thuật Giao Dịch Phân Kỳ Nâng Cao</span>
-                    <span class="slide-number-tag">Trang 6/13</span>
+                    <span class="slide-number-tag">Trang 12/23</span>
                 </div>
-                <h2 class="slide-title" id="editable-s6-title">Bài 3: Sơ Đồ Phân Kỳ Ẩn <span>Bullish Hidden Divergence</span></h2>
+                <h2 class="slide-title" id="editable-s12-title">Bài 3: Sơ Đồ Phân Kỳ Ẩn <span>Bullish Hidden Divergence</span></h2>
                 <div class="grid-2">
-                    <div class="card" id="editable-s6-desc">
+                    <div class="card" id="editable-s12-desc">
                         <div class="card-title accent-yellow">📈 Phân Tích Cấu Trúc Đáy</div>
                         <p>Hãy chú ý sự lệch pha giữa Đồ thị Giá và Chỉ báo RSI:</p>
                         <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem;">
@@ -768,9 +951,7 @@
                             <text x="20" y="25" class="text-chart" fill="#fff" font-weight="bold">BIỂU ĐỒ GIÁ</text>
                             <path d="M 20 80 L 60 40 L 110 70 L 160 20 L 210 50 L 260 10" fill="none" stroke="var(--accent-cyan)" stroke-width="2" class="draw-line" />
                             
-                            <!-- Price lows line (connecting 80 and 70/50) -->
                             <line x1="60" y1="40" x2="210" y2="50" stroke="none" /> <!-- Anchor ref -->
-                            <!-- Connect bottom lows of price -->
                             <line x1="20" y1="80" x2="110" y2="70" stroke="var(--accent-yellow)" stroke-width="1.5" stroke-dasharray="4,2" />
                             <text x="65" y="90" class="text-chart" fill="var(--accent-yellow)">Đáy sau Cao hơn (HL)</text>
 
@@ -781,11 +962,9 @@
                             <text x="20" y="125" class="text-chart" fill="var(--accent-orange)" font-weight="bold">RSI (14)</text>
                             <path d="M 20 150 L 60 130 L 110 170 L 160 125 L 210 180" fill="none" stroke="var(--accent-orange)" stroke-width="2" />
                             
-                            <!-- Connect bottom lows of RSI -->
                             <line x1="20" y1="150" x2="110" y2="170" stroke="var(--accent-red)" stroke-width="1.5" stroke-dasharray="4,2" />
                             <text x="65" y="180" class="text-chart" fill="var(--accent-red)">Đáy sau Thấp hơn (LL)</text>
 
-                            <!-- Actionable trigger circles -->
                             <circle cx="110" cy="70" r="5" fill="none" stroke="var(--accent-yellow)" stroke-width="1.5" class="pulse-orange-effect" />
                             <circle cx="110" cy="170" r="5" fill="none" stroke="var(--accent-red)" stroke-width="1.5" />
                         </svg>
@@ -794,17 +973,85 @@
             </div>
         </section>
 
-        <!-- ==================== MODULE 4 ==================== -->
-        <!-- SLIDE 7: M4 - BÀI 4: ĐỒNG BỘ ĐA KHUNG (MTF) -->
+        <!-- SLIDE 13: M3 - BEARISH HIDDEN DIVERGENCE -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài 3: Phân Kỳ Ẩn Giảm Giá">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 3: Kỹ Thuật Giao Dịch Phân Kỳ Nâng Cao</span>
+                    <span class="slide-number-tag">Trang 13/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s13-title">Bài 3: Phân Kỳ Ẩn Giảm Giá <span>Bearish Hidden Divergence</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s13-desc">
+                        <div class="card-title accent-red">📉 Kịch Bản Đè Giá Của Phe Bán</div>
+                        <p>Bearish Hidden Divergence xuất hiện trong xu hướng giảm:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem;">
+                            <li><strong>Giá:</strong> Tạo đỉnh sau thấp hơn đỉnh trước (LH) - giữ nguyên cấu trúc giảm.</li>
+                            <li><strong>RSI:</strong> Tạo đỉnh sau cao hơn đỉnh trước (HH) - thể hiện nỗ lực hồi phục cực đại nhưng thất bại hoàn toàn trong việc đẩy giá đi lên.</li>
+                        </ul>
+                        <p style="margin-top:0.3rem;">Đây là điểm vào lệnh Short cực đẹp thuận xu hướng giảm chủ đạo.</p>
+                    </div>
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <text x="20" y="25" class="text-chart" fill="#fff" font-weight="bold">BIỂU ĐỒ GIÁ (Xu hướng Giảm)</text>
+                            <path d="M 20 30 L 60 70 L 110 40 L 160 90 L 210 60 L 260 110" fill="none" stroke="var(--accent-cyan)" stroke-width="2" class="draw-line" />
+                            
+                            <line x1="110" y1="40" x2="210" y2="60" stroke="var(--accent-red)" stroke-width="1.5" stroke-dasharray="4,2" />
+                            <text x="160" y="32" class="text-chart" fill="var(--accent-red)" text-anchor="middle">Đỉnh sau Thấp hơn (LH)</text>
+
+                            <line x1="20" y1="110" x2="280" y2="110" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+
+                            <text x="20" y="125" class="text-chart" fill="var(--accent-orange)" font-weight="bold">RSI (14)</text>
+                            <path d="M 20 130 L 60 160 L 110 135 L 160 170 L 210 125" fill="none" stroke="var(--accent-orange)" stroke-width="2" />
+                            
+                            <line x1="110" y1="135" x2="210" y2="125" stroke="var(--accent-yellow)" stroke-width="1.5" stroke-dasharray="4,2" />
+                            <text x="160" y="150" class="text-chart" fill="var(--accent-yellow)" text-anchor="middle">Đỉnh sau Cao hơn (HH)</text>
+
+                            <circle cx="210" cy="60" r="5" fill="none" stroke="var(--accent-red)" stroke-width="1.5" class="pulse-orange-effect" />
+                            <circle cx="210" cy="125" r="5" fill="none" stroke="var(--accent-yellow)" stroke-width="1.5" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 14: M3 - BÀI 3: QUY TẮC LỌC NHIỄU PHÂN KỲ -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài 3: Lọc Nhiễu Phân Kỳ">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 3: Kỹ Thuật Giao Dịch Phân Kỳ Nâng Cao</span>
+                    <span class="slide-number-tag">Trang 14/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s14-title">Bài 3: Quy Tắc Vàng <span>Lọc Nhiễu Phân Kỳ Thực Chiến</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s14-desc">
+                        <div class="card-title accent-yellow">⚠️ 1. Đừng Giao Dịch Phân Kỳ Đơn Độc</div>
+                        <p>Phân kỳ thường xuất hiện liên tục trong xu hướng mạnh (giá tạo 3-4 đỉnh cao hơn nhưng RSI cứ giảm dần). Việc chặn tàu bắt đỉnh bắt đáy chỉ dựa vào phân kỳ đơn độc là hành vi tự sát.</p>
+                        <p style="margin-top:0.3rem;">**Quy tắc:** Chỉ kích hoạt lệnh khi phân kỳ xuất hiện tại vùng **Kháng cự/Hỗ trợ ngang** hoặc **Order Block** cứng của khung thời gian lớn.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">⚙️ 2. Lọc Theo Volume & Nến Tín Hiệu</div>
+                        <p>Xác nhận dòng tiền thực tế:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem;">
+                            <li>Chờ đợi sự bất tương xứng của Volume (VPA): Nhịp tạo đỉnh/đáy thứ 2 phải đi kèm volume cực thấp báo hiệu lực mua/bán đã kiệt quệ.</li>
+                            <li>Kích hoạt lệnh bằng một nến đảo chiều rõ ràng (Pinbar, Engulfing) thay vì lệnh Limit treo sẵn.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 4: ĐỒNG BỘ ĐA KHUNG (MTF) ==================== -->
+        <!-- SLIDE 15: M4 - BÀI 4: ĐỒNG BỘ ĐA KHUNG (MTF) -->
         <section class="slide" data-module="Module 4" data-lesson="Bài 4: Đa Khung Thời Gian Correlation">
             <div class="slide-content">
                 <div class="slide-header">
                     <span class="slide-module-tag">Module 4: Đồng Bộ Hóa Đa Khung Thời Gian Correlation</span>
-                    <span class="slide-number-tag">Trang 7/13</span>
+                    <span class="slide-number-tag">Trang 15/23</span>
                 </div>
-                <h2 class="slide-title" id="editable-s7-title">Bài 4: Tư Duy Đồng Bộ Hóa <span>Đa Khung H4 - H1 - M15</span></h2>
+                <h2 class="slide-title" id="editable-s15-title">Bài 4: Tư Duy Đồng Bộ Hóa <span>Đa Khung H4 - H1 - M15</span></h2>
                 <div class="grid-2">
-                    <div class="card" id="editable-s7-desc">
+                    <div class="card" id="editable-s15-desc">
                         <div class="card-title">🕒 1. Khung Lớn H4 (Trend Filter - Định Hướng)</div>
                         <p>Xác định bối cảnh tổng quan. RSI trên H4 phải nằm trong **Bullish Range (>50)**. Nếu RSI H4 < 40, tuyệt đối không tìm kiếm lệnh Buy dài hạn.</p>
                         
@@ -822,16 +1069,16 @@
             </div>
         </section>
 
-        <!-- SLIDE 8: M4 - DIAGRAM: MTF CORRELATION -->
+        <!-- SLIDE 16: M4 - DIAGRAM: MTF CORRELATION -->
         <section class="slide" data-module="Module 4" data-lesson="Bài 4: Sơ Đồ MTF Correlation">
             <div class="slide-content">
                 <div class="slide-header">
                     <span class="slide-module-tag">Module 4: Đồng Bộ Hóa Đa Khung Thời Gian Correlation</span>
-                    <span class="slide-number-tag">Trang 8/13</span>
+                    <span class="slide-number-tag">Trang 16/23</span>
                 </div>
-                <h2 class="slide-title" id="editable-s8-title">Bài 4: Sơ Đồ Đồng Bộ <span>Quy Trình Vào Lệnh Đa Khung</span></h2>
+                <h2 class="slide-title" id="editable-s16-title">Bài 4: Sơ Đồ Đồng Bộ <span>Quy Trình Vào Lệnh Đa Khung</span></h2>
                 <div class="grid-2">
-                    <div class="card" id="editable-s8-desc">
+                    <div class="card" id="editable-s16-desc">
                         <div class="card-title accent-yellow">⚙️ Quy Trình 3 Bước Nghiêm Ngặt</div>
                         <ol style="display:flex; flex-direction:column; gap:0.4rem; padding-left:1rem;">
                             <li>**Bước 1:** Kiểm tra H4 xem RSI có duy trì trên 50 để xác nhận cấu trúc tăng bền vững.</li>
@@ -879,72 +1126,42 @@
             </div>
         </section>
 
-        <!-- ==================== ADDITIONAL SLIDES ==================== -->
-        <!-- SLIDE 9: M2 - RANGE SHIFT EXAMPLES -->
-        <section class="slide" data-module="Module 2" data-lesson="Bài 2: Ví Dụ Thực Chiến Range Shift">
+        <!-- SLIDE 17: M4 - GIẢI QUYẾT XUNG ĐỘT ĐA KHUNG -->
+        <section class="slide" data-module="Module 4" data-lesson="Bài 4: Giải Quyết Xung Đột Đa Khung">
             <div class="slide-content">
                 <div class="slide-header">
-                    <span class="slide-module-tag">Module 2: Kỹ Thuật Dịch Chuyển Biên Độ Range Shift</span>
-                    <span class="slide-number-tag">Trang 9/13</span>
+                    <span class="slide-module-tag">Module 4: Đồng Bộ Hóa Đa Khung Thời Gian Correlation</span>
+                    <span class="slide-number-tag">Trang 17/23</span>
                 </div>
-                <h2 class="slide-title" id="editable-s9-title">Bài 2: Thực Chiến Range Shift <span>& Bẫy Phá Vỡ Giả</span></h2>
+                <h2 class="slide-title" id="editable-s17-title">Bài 4: Giải Quyết Xung Đột Động Lượng <span>Đa Khung H4 & H1/M15</span></h2>
                 <div class="grid-2">
-                    <div class="card" id="editable-s9-desc">
-                        <div class="card-title accent-yellow">⚠️ Lưu Ý Đặc Biệt Về Mốc Cân Bằng 50</div>
-                        <p>Mốc 50 là ranh giới phân định lực mua/bán trung hạn:</p>
-                        <p style="margin-top:0.3rem;">Khi thị trường thay đổi trạng thái xu hướng, RSI sẽ có hành vi vượt qua mốc 50 và kiểm định lại mốc này. Nếu RSI chui hẳn xuống dưới 40 và không thể vượt lại lên trên 50 trong các nhịp hồi, xu hướng đã chính thức xoay chuyển sang **Bearish**.</p>
+                    <div class="card" id="editable-s17-desc">
+                        <div class="card-title accent-red">💥 1. Kịch Bản Xung Đột Phổ Biến</div>
+                        <p>H4 đang tăng mạnh (RSI H4 = 65) nhưng tin tức bất ngờ khiến H1 giảm sâu cắm thẳng xuống mốc quá bán dưới 30.</p>
+                        <p style="margin-top:0.3rem;">**Sai lầm nhỏ lẻ:** Hoảng loạn bán khống theo H1 hoặc bắt đáy Limit bừa bãi khi H1 đang lao dốc.</p>
                     </div>
                     <div class="card">
-                        <div class="card-title accent-orange">🔍 Cách Phát Hiện Sự Thay Đổi Xu Hướng</div>
-                        <p>Một tín hiệu đảo chiều sớm đáng tin cậy là sự thất bại của RSI khi quay lại vùng biên cũ:</p>
-                        <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.3rem;">
-                            <li>Trong xu hướng tăng, nếu RSI điều chỉnh xuyên thủng mốc 40 và cắm sâu về dưới 30, lực mua lớn đã rút lui.</li>
-                            <li>Sự chuyển dịch này báo hiệu cấu trúc tích lũy cũ bị phá vỡ hoàn toàn.</li>
+                        <div class="card-title accent-green">⚙️ 2. Quy Tắc Hành Xử Của Nhà Giao Dịch Lớn</div>
+                        <p>Quy tắc thứ bậc: Khung thời gian lớn luôn nắm quyền kiểm soát.</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; padding-left:1.2rem;">
+                            <li>Coi nhịp cắm sâu của H1 là **Nhịp chiết khấu giá rẻ (Deep Discount)** của xu hướng H4 tăng.</li>
+                            <li>Tuyệt đối không mua ngay khi H1 đang lao dốc. Chờ đợi H1 đi ngang tích lũy lại đáy và RSI H1 bò lên trên 40 trước khi tìm điểm kích hoạt lệnh ở M15.</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 10: M3 - BEARISH HIDDEN DIVERGENCE -->
-        <section class="slide" data-module="Module 3" data-lesson="Bài 3: Phân Kỳ Ẩn Giảm Giá">
-            <div class="slide-content">
-                <div class="slide-header">
-                    <span class="slide-module-tag">Module 3: Kỹ Thuật Giao Dịch Phân Kỳ Nâng Cao</span>
-                    <span class="slide-number-tag">Trang 10/13</span>
-                </div>
-                <h2 class="slide-title" id="editable-s10-title">Bài 3: Phân Kỳ Ẩn Giảm Giá <span>Bearish Hidden Divergence</span></h2>
-                <div class="grid-2">
-                    <div class="card" id="editable-s10-desc">
-                        <div class="card-title accent-red">📉 Kịch Bản Đè Giá Của Phe Bán</div>
-                        <p>Bearish Hidden Divergence xuất hiện trong xu hướng giảm:</p>
-                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem;">
-                            <li><strong>Giá:</strong> Tạo đỉnh sau thấp hơn đỉnh trước (LH) - giữ nguyên cấu trúc giảm.</li>
-                            <li><strong>RSI:</strong> Tạo đỉnh sau cao hơn đỉnh trước (HH) - thể hiện nỗ lực hồi phục cực đại nhưng thất bại hoàn toàn trong việc đẩy giá đi lên.</li>
-                        </ul>
-                        <p style="margin-top:0.3rem;">Đây là điểm vào lệnh Short cực đẹp thuận xu hướng giảm chủ đạo.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-title accent-yellow">⚙️ Quy Tắc Thực Chiến</div>
-                        <p>Không bao giờ giao dịch phân kỳ ẩn khi giá đã chạm cản cứng của khung thời gian lớn. Luôn kiểm tra cấu trúc sóng giảm trước khi kích hoạt lệnh bán.</p>
-                        <div class="highlight-box" style="margin-top:0.4rem; border-left-color: var(--accent-red); background: rgba(255,56,96,0.02);">
-                            ⚠️ Cắt lỗ tuyệt đối trên đỉnh gần nhất của nến tín hiệu để bảo vệ tài khoản khỏi những cây nến quét thanh khoản (Squeeze).
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SLIDE 11: M4 - QUY TẮC PHỐI HỢP EMA -->
+        <!-- SLIDE 18: M4 - QUY TẮC PHỐI HỢP EMA -->
         <section class="slide" data-module="Module 4" data-lesson="Bài 4: Kết Hợp RSI & Đường EMA">
             <div class="slide-content">
                 <div class="slide-header">
                     <span class="slide-module-tag">Module 4: Đồng Bộ Hóa Đa Khung Thời Gian Correlation</span>
-                    <span class="slide-number-tag">Trang 11/13</span>
+                    <span class="slide-number-tag">Trang 18/23</span>
                 </div>
-                <h2 class="slide-title" id="editable-s11-title">Bài 4: Nghệ Thuật Phối Hợp <span>RSI & Đường Trung Bình EMA 20/50</span></h2>
+                <h2 class="slide-title" id="editable-s18-title">Bài 4: Nghệ Thuật Phối Hợp <span>RSI & Đường Trung Bình EMA 20/50</span></h2>
                 <div class="grid-2">
-                    <div class="card" id="editable-s11-desc">
+                    <div class="card" id="editable-s18-desc">
                         <div class="card-title accent-cyan">⚡ Sự Hợp Nhất Động Lượng & Xu Hướng</div>
                         <p>RSI là chỉ báo động lượng, còn EMA là chỉ báo xu hướng. Sự kết hợp giữa chúng tạo nên bộ lọc lệnh hoàn hảo:</p>
                         <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.3rem;">
@@ -954,22 +1171,115 @@
                     </div>
                     <div class="card">
                         <div class="card-title accent-orange">🔑 Kỹ Thuật Đọc Vị Lực Đẩy (Momentum)</div>
-                        <p>Nếu giá vượt xa đường EMA nhưng RSI bắt đầu tạo phân kỳ thường giảm, đây là dấu hiệu xu hướng đang bị kéo căng quá mức (Overextended). Hãy tiến hành thu hẹp chốt lời từng phần thay vì tiếp tục nhồi thêm lệnh.</p>
+                        <p>If giá vượt xa đường EMA nhưng RSI bắt đầu tạo phân kỳ thường giảm, đây là dấu hiệu xu hướng đang bị kéo căng quá mức (Overextended). Hãy tiến hành thu hẹp chốt lời từng phần thay vì tiếp tục nhồi thêm lệnh.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SLIDE 12: TỔNG KẾT KHÓA HỌC -->
+        <!-- ==================== MODULE 5: THIẾT LẬP CHIẾN LƯỢC GIAO DỊCH THỰC CHIẾN ==================== -->
+        <!-- SLIDE 19: M5 - BÀI 5: CHIẾN LƯỢC ĐẢO CHIỀU (RSI REVERSAL SETUP) -->
+        <section class="slide" data-module="Module 5" data-lesson="Bài 5: Chiến Lược Đảo Chiều">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 5: Thiết Lập Chiến Lược Giao Dịch Thực Chiến</span>
+                    <span class="slide-number-tag">Trang 19/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s19-title">Bài 5: Chiến Lược Đảo Chiều <span>RSI Reversal Setup</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s19-desc">
+                        <div class="card-title accent-orange">🔄 Thiết Lập Giao Dịch Đảo Chiều Đỉnh/Đáy</div>
+                        <p>Áp dụng tại vùng kết thúc của một con sóng kéo căng dài hạn:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; padding-left:1.2rem;">
+                            <li>**Bối cảnh:** Giá chạm kháng cự ngang cứng trên H4.</li>
+                            <li>**Tín hiệu:** Phân kỳ thường giảm (Regular Bearish Divergence) xuất hiện rõ nét trên H1.</li>
+                            <li>**Kích hoạt:** Chờ cấu trúc Failure Swing trên RSI H1 gãy đáy kiểm định.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">🛡️ Quy Tắc Quản Lý Lệnh Reversal</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; padding-left:1.2rem;">
+                            <li>**Điểm vào (Entry):** Ngay khi nến H1 đóng cửa xác nhận RSI phá vỡ điểm Failure Swing.</li>
+                            <li>**Dừng lỗ (Stop Loss):** Đặt cách đỉnh nến cao nhất của nhịp phân kỳ 5-10 pips.</li>
+                            <li>**Chốt lời (Take Profit):** Đặt tại vùng hỗ trợ gần nhất trên H1 (thường tương ứng lúc RSI chạm mốc 30).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 20: M5 - BÀI 5: CHIẾN LƯỢC TIẾP DIỄN (RSI CONTINUATION SETUP) -->
+        <section class="slide" data-module="Module 5" data-lesson="Bài 5: Chiến Lược Tiếp Diễn">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 5: Thiết Lập Chiến Lược Giao Dịch Thực Chiến</span>
+                    <span class="slide-number-tag">Trang 20/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s20-title">Bài 5: Chiến Lược Tiếp Diễn <span>RSI Continuation Setup</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s20-desc">
+                        <div class="card-title accent-green">🔥 Điểm Mua Pullback Thuận Xu Hướng</div>
+                        <p>Có xác suất thắng cao nhất vì giao dịch thuận xu hướng chính:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; padding-left:1.2rem;">
+                            <li>**Bối cảnh:** Xu hướng H4 tăng mạnh (RSI H4 nằm vững chãi trong vùng 55 - 75).</li>
+                            <li>**Điều chỉnh:** Giá pullback chạm đường hỗ trợ động EMA 20 trên H1.</li>
+                            <li>**Đồng thuận:** RSI H1 giảm về vùng hỗ trợ **40 - 45** và xuất hiện **Phân kỳ ẩn tăng (Bullish Hidden Divergence)**.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">⚙️ Quy Tắc Kích Hoạt Lệnh Continuation</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; padding-left:1.2rem;">
+                            <li>**Điểm vào:** Mở lệnh Mua ngay khi xuất hiện nến đảo chiều tăng (Pinbar hoặc nến nhấn chìm) rút chân trên EMA 20.</li>
+                            <li>**Dừng lỗ:** Đặt dưới đáy gần nhất của nhịp điều chỉnh.</li>
+                            <li>**Chốt lời:** Đặt tối thiểu tại đỉnh cũ hoặc mục tiêu Fibo Extension 1.272.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 21: M5 - BÀI 5: NHẬT KÝ VÀO LỆNH (CHECKLIST) -->
+        <section class="slide" data-module="Module 5" data-lesson="Bài 5: Nhật Ký Vào Lệnh">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 5: Thiết Lập Chiến Lược Giao Dịch Thực Chiến</span>
+                    <span class="slide-number-tag">Trang 21/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s21-title">Bài 5: Bảng Kiểm Vào Lệnh <span>Kỷ Luật Trước Khi Giao Dịch</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s21-desc">
+                        <div class="card-title accent-yellow">📝 Checklist 5 Câu Hỏi Bắt Buộc</div>
+                        <p>Hãy nghiêm túc trả lời trước khi bấm chuột đặt lệnh thực tế:</p>
+                        <ol style="display:flex; flex-direction:column; gap:0.4rem; padding-left:1.2rem;">
+                            <li>1. RSI H4 đang ở trong biên độ nào? (Định hướng xu hướng chính).</li>
+                            <li>2. RSI H1 đã chạm vùng biên hỗ trợ/kháng cự Range Shift chưa?</li>
+                            <li>3. Cấu trúc nến và Volume có đồng thuận với tín hiệu RSI không?</li>
+                            <li>4. Có tín hiệu Phân kỳ ẩn/thường hay Failure Swing xác nhận không?</li>
+                            <li>5. Điểm dừng lỗ (SL) đã được đặt sẵn và rủi ro lệnh nằm trong mức quy định chưa?</li>
+                        </ol>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-orange">🔥 Quy Tắc "Ngừng Bấm Chuột"</div>
+                        <p>Nếu bất kỳ câu hỏi nào trong 5 câu trên có câu trả lời **Không hoặc chưa rõ ràng**, tuyệt đối không được vào lệnh.</p>
+                        <div class="highlight-box" style="margin-top:0.4rem; border-left-color: var(--accent-red); background: rgba(255,107,0,0.02);">
+                            ⚠️ Một nhà giao dịch chuyên nghiệp kiếm tiền bằng sự kiên nhẫn bỏ qua lệnh xấu, chứ không phải bằng số lượng giao dịch.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 6: TỔNG KẾT & THỰC HÀNH ==================== -->
+        <!-- SLIDE 22: TỔNG KẾT KHÓA HỌC -->
         <section class="slide" data-module="Hệ Thống Lọc Lệnh" data-lesson="Tổng Kết RSI">
             <div class="slide-content">
                 <div class="slide-header">
                     <span class="slide-module-tag">Hệ Thống Lọc Lệnh Thực Chiến</span>
-                    <span class="slide-number-tag">Trang 12/13</span>
+                    <span class="slide-number-tag">Trang 22/23</span>
                 </div>
-                <h2 class="slide-title" id="editable-s12-title">Hệ Thống Lọc Lệnh <span>RSI Kỷ Luật & Chuyên Nghiệp</span></h2>
+                <h2 class="slide-title" id="editable-s22-title">Hệ Thống Lọc Lệnh <span>RSI Kỷ Luật & Chuyên Nghiệp</span></h2>
                 <div class="grid-2">
-                    <div class="card" id="editable-s12-desc">
+                    <div class="card" id="editable-s22-desc">
                         <div class="card-title">📜 Quy Tắc Kỷ Luật 4 Không</div>
                         <ul style="display:flex; flex-direction:column; gap:0.3rem;">
                             <li>**Không** mua khống khi RSI H4 dưới 40.</li>
@@ -986,16 +1296,16 @@
             </div>
         </section>
 
-        <!-- SLIDE 13: BÀI TẬP THỰC HÀNH -->
+        <!-- SLIDE 23: BÀI TẬP THỰC HÀNH -->
         <section class="slide" data-module="Thực Hành" data-lesson="Bài Tập Luyện Tập">
             <div class="slide-content">
                 <div class="slide-header">
                     <span class="slide-module-tag">Thực Hành & Luyện Tập</span>
-                    <span class="slide-number-tag">Trang 13/13</span>
+                    <span class="slide-number-tag">Trang 23/23</span>
                 </div>
-                <h2 class="slide-title" id="editable-s13-title">Bài Tập Rèn Luyện <span>Khai Thác Chỉ Báo RSI</span></h2>
+                <h2 class="slide-title" id="editable-s23-title">Bài Tập Rèn Luyện <span>Khai Thác Chỉ Báo RSI</span></h2>
                 <div class="grid-2">
-                    <div class="card" id="editable-s13-desc">
+                    <div class="card" id="editable-s23-desc">
                         <div class="card-title accent-yellow">📝 Bài Tập 1: Nhật Ký Range Shift (15 ngày)</div>
                         <p>Chọn 3 cặp tiền tệ hoặc tài sản yêu thích. Hàng ngày ghi chép lại biên độ hoạt động của RSI trên khung H1. Xác định thị trường đang nằm trong Bullish Range hay Bearish Range.</p>
                     </div>
@@ -1312,7 +1622,17 @@
                     'editable-s10-title', 'editable-s10-desc',
                     'editable-s11-title', 'editable-s11-desc',
                     'editable-s12-title', 'editable-s12-desc',
-                    'editable-s13-title', 'editable-s13-desc'
+                    'editable-s13-title', 'editable-s13-desc',
+                    'editable-s14-title', 'editable-s14-desc',
+                    'editable-s15-title', 'editable-s15-desc',
+                    'editable-s16-title', 'editable-s16-desc',
+                    'editable-s17-title', 'editable-s17-desc',
+                    'editable-s18-title', 'editable-s18-desc',
+                    'editable-s19-title', 'editable-s19-desc',
+                    'editable-s20-title', 'editable-s20-desc',
+                    'editable-s21-title', 'editable-s21-desc',
+                    'editable-s22-title', 'editable-s22-desc',
+                    'editable-s23-title', 'editable-s23-desc'
                 ];
             }
 
