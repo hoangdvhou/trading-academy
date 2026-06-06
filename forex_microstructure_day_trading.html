@@ -600,7 +600,7 @@
                     FX MICROSTRUCTURE<br><span style="color: var(--accent-mint);">& DAY TRADING</span>
                 </h1>
                 <p id="editable-s1-desc" style="font-size: 1.15rem; color: var(--text-secondary); max-width: 800px; font-family: var(--font-display);">
-                    Làm chủ cấu trúc vi mô thị trường liên ngân hàng: Giải mã chu kỳ hoạt động của các phiên giao dịch, cơ chế hấp thụ thanh khoản vĩ mô và thiết lập kế hoạch Day Trading kỷ luật.
+                    Làm chủ cấu trúc vi mô thị trường liên ngân hàng: Giải mã chu kỳ hoạt động của các phiên giao dịch, cơ chế hấp thụ thanh khoản vĩ mô, các mô hình khối lệnh (Order Blocks) nâng cao và thiết lập kế hoạch Day Trading kỷ luật.
                 </p>
                 <div class="highlight-box" style="border: 1px solid var(--border-color); border-left: 3px solid var(--accent-yellow); max-width: 600px; text-align: left; margin-top: 1rem;">
                     💡 <strong>Hướng dẫn:</strong> Dùng phím <strong>Space / Mũi tên xuống</strong> để sang trang tiếp theo. Click nút <strong>BẢN ĐỒ KHÓA HỌC</strong> ở góc trái để mở menu chọn nhanh bài giảng. Nhấn phím <strong>E</strong> để tự do chỉnh sửa nội dung.
@@ -608,13 +608,14 @@
             </div>
         </section>
 
-        <!-- ==================== MODULE 1 ==================== -->
+        <!-- ==================== MODULE 1: CẤU TRÚC VI MÔ THỊ TRƯỜNG & THANH KHOẢN ==================== -->
+        
         <!-- SLIDE 2: M1 - BÀI 1: LIÊN NGÂN HÀNG -->
         <section class="slide" data-module="Module 1" data-lesson="Bài 1: Thị Trường Liên Ngân Hàng">
             <div class="slide-content">
                 <div class="slide-header">
                     <span class="slide-module-tag">Module 1: Cấu Trúc Vi Mô Thị Trường</span>
-                    <span class="slide-number-tag">Trang 2/13</span>
+                    <span class="slide-number-tag">Trang 2/23</span>
                 </div>
                 <h2 class="slide-title" id="editable-s2-title">Bài 1: Cấu Trúc Thị Trường <span>Liên Ngân Hàng (Interbank Market)</span></h2>
                 <div class="grid-2">
@@ -627,7 +628,7 @@
                     <div class="card">
                         <div class="card-title accent-yellow">🔑 Cơ Chế Phân Cấp Thanh Khoản</div>
                         <p>Dòng chảy khớp lệnh di chuyển từ cấp cao nhất xuống thấp nhất:</p>
-                        <ul style="display:flex; flex-direction:column; gap:0.4rem;">
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; padding-left:1.2rem;">
                             <li>**Cấp 1:** Mạng lưới liên ngân hàng (Khối lượng lớn nhất, Spread = 0).</li>
                             <li>**Cấp 2:** Prime Brokers & Nhà tạo lập thị trường phi ngân hàng (Citadel, XTX).</li>
                             <li>**Cấp 3:** Retail Brokers (Sàn giao dịch nhỏ lẻ khớp lệnh ECN/STP).</li>
@@ -637,20 +638,106 @@
             </div>
         </section>
 
-        <!-- ==================== MODULE 2 ==================== -->
-        <!-- SLIDE 3: M2 - BÀI 2: CHU KỲ PHIÊN -->
+        <!-- SLIDE 3: M1 - BÀI 1: SỔ LỆNH HẠN MỨC -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 1: Sổ Lệnh Hạn Mức">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Cấu Trúc Vi Mô Thị Trường</span>
+                    <span class="slide-number-tag">Trang 3/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s3-title">Bài 1: Sổ Lệnh Hạn Mức <span>& Khớp Lệnh ECN</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s3-desc">
+                        <div class="card-title accent-cyan">📑 Cơ Chế Đi Khớp Lệnh Của Thuật Toán</div>
+                        <p>Các ngân hàng lớn sử dụng các thuật toán TWAP hoặc VWAP để chia nhỏ các đơn hàng triệu USD tránh gây biến động giá đột ngột:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.3rem; padding-left:1.2rem;">
+                            <li>Lệnh giới hạn (Limit Orders) đại diện cho tính thanh khoản thụ động trên sổ lệnh (Order Book).</li>
+                            <li>Lệnh thị trường (Market Orders) đại diện cho tính chủ động ăn khớp trực tiếp vào thanh khoản có sẵn.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-orange">🔍 Nhận Biết Vùng Tích Lũy Dòng Lệnh</div>
+                        <p>Khi thị trường đi ngang biên độ hẹp lâu, số lượng dừng lỗ tích lũy càng lớn. Hãy kiên nhẫn đứng ngoài và chỉ tham gia khi có cây nến quét thanh khoản rõ rệt phá vỡ vùng đi ngang đó.</p>
+                        <div class="highlight-box" style="margin-top:0.4rem;">
+                            💡 **Độ Trượt Giá (Slippage):** Khi thị trường biến động quá mạnh hoặc thiếu thanh khoản đối ứng, lệnh thị trường sẽ bị khớp ở mức giá tệ hơn dự kiến.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: M1 - BÀI 1: BẢN ĐỒ THANH KHOẢN -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 1: Bản Đồ Thanh Khoản">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Cấu Trúc Vi Mô Thị Trường</span>
+                    <span class="slide-number-tag">Trang 4/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s4-title">Bài 1: Bản Đồ Thanh Khoản <span>& Các Vùng Đọng Vị Thế</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s4-desc">
+                        <div class="card-title accent-yellow">💧 Vùng Đọng Vị Thế (Liquidity Pools)</div>
+                        <p>Thanh khoản trong thị trường FX thực chất là tập hợp các điểm dừng lỗ (Stop Loss) của trader nhỏ lẻ:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; padding-left:1.2rem;">
+                            <li>**Buy Stops (Thanh khoản mua):** Nằm tập trung ở phía trên các đỉnh cũ quan trọng, đỉnh ngày hôm trước (PDH), hoặc đỉnh phiên Á.</li>
+                            <li>**Sell Stops (Thanh khoản bán):** Nằm tập trung ở phía dưới các đáy cũ quan trọng, đáy ngày hôm trước (PDL), hoặc đáy phiên Á.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-mint">🏛️ Góc Nhìn Của Smart Money</div>
+                        <p>Để khớp một vị thế mua cực lớn, các tổ chức lớn cần tìm các vùng đọng vị thế bán (Sell Stops) để làm đối ứng mua vào giá rẻ. Do đó, giá luôn có xu hướng bị hút về các vùng thanh khoản này trước khi đi xa.</p>
+                        <div class="highlight-box" style="margin-top:0.4rem;">
+                            ⚠️ **Equal Highs / Equal Lows (EQH / EQL):** Vùng có hai hoặc nhiều đỉnh/đáy bằng nhau là mỏ vàng thanh khoản lý tưởng nhất vì đám đông tin rằng đó là kháng cự/hỗ trợ vững chắc.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: M1 - BÀI 1: CƠ CHẾ QUÉT THANH KHOẢN -->
+        <section class="slide" data-module="Module 1" data-lesson="Bài 1: Cơ Chế Quét Thanh Khoản">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 1: Cấu Trúc Vi Mô Thị Trường</span>
+                    <span class="slide-number-tag">Trang 5/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s5-title">Bài 1: Cơ Chế Quét Thanh Khoản <span>(Liquidity Sweep)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s5-desc">
+                        <div class="card-title accent-red">🎯 Bản Chất Cú Quét Stop Hunt</div>
+                        <p>Cú quét thanh khoản xảy ra khi giá đẩy nhanh qua một đỉnh/đáy cũ, kích hoạt toàn bộ lệnh dừng lỗ của phe đang giao dịch ngược chiều, sau đó nhanh chóng đảo chiều rút chân tạo râu nến dài.</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.3rem; padding-left:1.2rem;">
+                            <li>**Bẫy Breakout:** Kích hoạt lệnh Breakout Entry của các breakout traders và giam chân họ ở đỉnh/đáy.</li>
+                            <li>**Khớp lệnh đối ứng:** Thu thập thanh khoản từ Stop Loss để kích hoạt dòng lệnh lớn thực tế của ngân hàng.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">💡 Quy Tắc Thực Chiến Nhận Biết</div>
+                        <p>Một cú quét thanh khoản hợp lệ phải thể hiện:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; padding-left:1.2rem;">
+                            <li>Giá vượt cản tạm thời nhưng không đóng cửa được bên ngoài cản (để lại râu nến dài).</li>
+                            <li>Khối lượng giao dịch (Volume) tăng vọt đột biến tại điểm quét.</li>
+                            <li>Nến tiếp theo quay đầu đóng cửa xác nhận xu hướng đảo chiều nhanh chóng.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 2: ĐỘNG HỌC CHU KỲ PHIÊN GIAO DỊCH ==================== -->
+
+        <!-- SLIDE 6: M2 - BÀI 2: CHU KỲ PHIÊN -->
         <section class="slide" data-module="Module 2" data-lesson="Bài 2: Chu Kỳ Phiên Giao Dịch">
             <div class="slide-content">
                 <div class="slide-header">
                     <span class="slide-module-tag">Module 2: Giao Dịch Theo Chu Kỳ Phiên</span>
-                    <span class="slide-number-tag">Trang 3/13</span>
+                    <span class="slide-number-tag">Trang 6/23</span>
                 </div>
-                <h2 class="slide-title" id="editable-s3-title">Bài 2: Chu Kỳ Phiên Giao Dịch <span>& Quét Thanh Khoản</span></h2>
+                <h2 class="slide-title" id="editable-s6-title">Bài 2: Chu Kỳ Phiên Giao Dịch <span>& Quét Thanh Khoản</span></h2>
                 <div class="grid-2">
-                    <div class="card" id="editable-s3-desc">
+                    <div class="card" id="editable-s6-desc">
                         <div class="card-title">🌏 1. Phiên Á (Asian Range - Tích Lũy)</div>
                         <p>Khối lượng giao dịch thấp nhất. Giá thường di chuyển trong biên độ hẹp (Range-bound). Mức đỉnh và đáy của phiên Á tạo ra **hai vùng tích lũy thanh khoản dừng lỗ lớn** (Buy/Sell Stops).</p>
-                        
                         <div class="card-title accent-mint" style="margin-top:0.4rem;">🇪🇺 2. Phiên Âu (London Open Sweep & Breakout)</div>
                         <p>Khối lượng tăng vọt. London Open thường thực hiện một pha **quét thanh khoản giả (Judas Swing)**: quét qua đỉnh/đáy phiên Á trước khi đảo chiều đi theo hướng đi thực sự trong ngày.</p>
                     </div>
@@ -665,61 +752,121 @@
             </div>
         </section>
 
-        <!-- SLIDE 4: M2 - DIAGRAM: SESSION CYCLE -->
+        <!-- SLIDE 7: M2 - DIAGRAM: SESSION CYCLE -->
         <section class="slide" data-module="Module 2" data-lesson="Bài 2: Sơ Đồ Chu Kỳ Phiên">
             <div class="slide-content">
                 <div class="slide-header">
                     <span class="slide-module-tag">Module 2: Giao Dịch Theo Chu Kỳ Phiên</span>
-                    <span class="slide-number-tag">Trang 4/13</span>
+                    <span class="slide-number-tag">Trang 7/23</span>
                 </div>
-                <h2 class="slide-title" id="editable-s4-title">Bài 2: Sơ Đồ Quy Luật <span>Vòng Đời Phiên Intraday</span></h2>
+                <h2 class="slide-title" id="editable-s7-title">Bài 2: Sơ Đồ Quy Luật <span>Vòng Đời Phiên Intraday</span></h2>
                 <div class="grid-2">
-                    <div class="card" id="editable-s4-desc">
+                    <div class="card" id="editable-s7-desc">
                         <div class="card-title accent-mint">📊 Đọc Vị Quy Luật Quét Cản</div>
-                        <p>Sơ đồ bên cạnh mô tả hành vi tiêu biểu của giá vàng (XAU) hoặc bảng Anh (GBP):</p>
-                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem;">
-                            <li>**Phiên Á:** Đi ngang tạo hộp thanh khoản.</li>
-                            <li>**Phiên Âu:** Đạp xuống quét râu nến qua đáy Á rồi kéo giật ngược lên tạo xu hướng tăng mạnh.</li>
-                            <li>**Phiên Mỹ:** Tạo đỉnh ngày rồi đảo chiều giảm chốt lời.</li>
+                        <p>Sơ đồ bên cạnh mô tả hành vi tiêu biểu của các cặp tiền Forex chính (GBPUSD, EURUSD):</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem; padding-left:1.2rem;">
+                            <li>**Phiên Á:** Đi ngang tạo hộp thanh khoản tích lũy (Asian Range).</li>
+                            <li>**Phiên Âu (Mở cửa):** Đạp xuống mạnh quét râu nến qua đáy Á (Judas Swing) để gom thanh khoản mua lên.</li>
+                            <li>**Phiên Mỹ (Overlap):** Đẩy giá tăng cực đại rồi chốt lời tạo nhịp đảo chiều cuối ngày (NY Reversal).</li>
                         </ul>
                     </div>
                     <div class="diagram-container">
                         <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
                             <!-- Box Asia Range -->
-                            <rect x="20" y="70" width="70" height="40" fill="none" stroke="var(--accent-yellow)" stroke-width="1.5" stroke-dasharray="3,2" />
-                            <text x="55" y="60" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)">1. Asia Range</text>
+                            <rect x="20" y="80" width="70" height="40" fill="none" stroke="var(--accent-yellow)" stroke-width="1.5" stroke-dasharray="3,2" rx="4" />
+                            <text x="55" y="70" class="text-chart" text-anchor="middle" fill="var(--accent-yellow)" font-size="9" font-family="var(--font-mono)">1. Asia Range</text>
                             
                             <!-- Path Price -->
                             <!-- Asia -->
-                            <path d="M 20 90 L 35 80 L 50 100 L 70 85 L 90 90" fill="none" stroke="var(--text-secondary)" stroke-width="1.5" />
+                            <path d="M 20 100 L 35 90 L 50 110 L 70 95 L 90 100" fill="none" stroke="var(--text-secondary)" stroke-width="1.5" />
                             
                             <!-- London Judas Swing Down to Sweep and Pump -->
-                            <path d="M 90 90 L 110 125 L 120 120 L 150 50 L 180 30" fill="none" stroke="var(--accent-green)" stroke-width="2.5" class="draw-line" />
-                            <circle cx="110" cy="125" r="5" fill="none" stroke="var(--accent-red)" stroke-width="1.5" class="pulse-mint-effect" />
-                            <text x="110" y="142" class="text-chart" text-anchor="middle" fill="var(--accent-red)">2. Judas Sweep</text>
-                            <text x="180" y="22" class="text-chart" text-anchor="middle" fill="var(--accent-green)">London Pump</text>
+                            <path d="M 90 100 L 110 135 L 120 130 L 160 50 L 180 40" fill="none" stroke="var(--accent-mint)" stroke-width="2.5" class="draw-line" />
+                            <circle cx="110" cy="135" r="5" fill="none" stroke="var(--accent-red)" stroke-width="1.5" class="pulse-mint-effect" />
+                            <text x="110" y="152" class="text-chart" text-anchor="middle" fill="var(--accent-red)" font-size="9" font-family="var(--font-mono)">2. Judas Sweep</text>
+                            <text x="180" y="32" class="text-chart" text-anchor="middle" fill="var(--accent-mint)" font-size="9" font-family="var(--font-mono)">London Pump</text>
 
                             <!-- NY Reversal Down -->
-                            <path d="M 180 30 L 210 25 L 230 60 L 280 110" fill="none" stroke="var(--accent-cyan)" stroke-width="2.5" class="draw-line" />
-                            <circle cx="210" cy="25" r="5" fill="none" stroke="var(--accent-yellow)" stroke-width="1.5" />
-                            <text x="235" y="20" class="text-chart" fill="var(--accent-cyan)">3. NY Reversal</text>
+                            <path d="M 180 40 L 210 35 L 230 70 L 280 120" fill="none" stroke="var(--accent-cyan)" stroke-width="2.5" class="draw-line" />
+                            <circle cx="210" cy="35" r="5" fill="none" stroke="var(--accent-yellow)" stroke-width="1.5" />
+                            <text x="245" y="30" class="text-chart" fill="var(--accent-cyan)" font-size="9" font-family="var(--font-mono)">3. NY Reversal</text>
                         </svg>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ==================== MODULE 3 ==================== -->
-        <!-- SLIDE 5: M3 - BÀI 3: TIN TỨC VĨ MÔ -->
+        <!-- SLIDE 8: M2 - BÀI 2: CHIẾN THUẬT BIÊN ĐỘ Á -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 2: Biên Độ Á">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Giao Dịch Theo Chu Kỳ Phiên</span>
+                    <span class="slide-number-tag">Trang 8/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s8-title">Bài 2: Chiến Thuật <span>Biên Độ Á (Asian Range)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s8-desc">
+                        <div class="card-title accent-yellow">📏 Xác Định Biên Độ Chuẩn</div>
+                        <p>Quy ước thời gian vẽ hộp phiên Á:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; padding-left:1.2rem;">
+                            <li>**Thời gian:** Lấy từ **06:00 đến 13:30 (giờ Việt Nam)**.</li>
+                            <li>**Cách vẽ:** Xác định đỉnh cao nhất (Asia High) và đáy thấp nhất (Asia Low) trong khoảng thời gian này.</li>
+                            <li>**Bộ lọc biên độ:** Nếu hộp phiên Á quá rộng (trên 40 pips đối với GBPUSD), khả năng cao ngày hôm đó sẽ tiếp tục đi ngang khó có phá vỡ mạnh. Biên độ lý tưởng là từ 15 - 30 pips.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">🎯 Quy Tắc Khai Thác Biên Độ Á</div>
+                        <p>Biên độ Á đóng vai trò là nam châm hút thanh khoản cho phiên tiếp theo. 80% số ngày giao dịch sẽ có ít nhất một biên của hộp bị quét râu nến trước khi giá dịch chuyển bền vững vào phiên Âu.</p>
+                        <div class="highlight-box" style="margin-top:0.4rem;">
+                            💡 **Lời khuyên:** Đặt báo thức lúc 13:45 VN để sẵn sàng quan sát phản ứng giá khi phiên Âu rục rịch mở cửa.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 9: M2 - BÀI 2: HIỆN TƯỢNG JUDAS SWING -->
+        <section class="slide" data-module="Module 2" data-lesson="Bài 2: Judas Swing">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 2: Giao Dịch Theo Chu Kỳ Phiên</span>
+                    <span class="slide-number-tag">Trang 9/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s9-title">Bài 2: Hiện Tượng Bẫy Phiên Luân Đôn <span>(Judas Swing)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s9-desc">
+                        <div class="card-title accent-red">⚡ Judas Swing là gì?</div>
+                        <p>Là nhịp di chuyển giả lập đầu phiên giao dịch (thường là London Open từ **14:00 - 15:30 VN**) nhằm dụ dỗ phe breakout nhảy vào lệnh sớm, đồng thời quét sạch lệnh dừng lỗ của các trader giữ lệnh từ phiên Á.</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.3rem; padding-left:1.2rem;">
+                            <li>Nếu xu hướng chính của ngày là Tăng, Judas Swing sẽ đạp giá xuống dưới đáy phiên Á để gom hàng.</li>
+                            <li>Nếu xu hướng chính của ngày là Giảm, Judas Swing sẽ kéo giá lên trên đỉnh phiên Á để gom hàng bán khống.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-green">🔑 Dấu Hiệu Xác Nhận Để Giao Dịch</div>
+                        <p>Cách phân biệt Judas Swing với một cú phá vỡ thật (Breakout):</p>
+                        <ol style="display:flex; flex-direction:column; gap:0.3rem; padding-left:1.2rem;">
+                            <li>Giá quét qua biên Á khoảng 5 - 15 pips rồi chững lại.</li>
+                            <li>Xuất hiện nến rút chân pinbar hoặc cặp nến đảo chiều (Engulfing) đóng cửa ngược lại bên trong biên.</li>
+                            <li>Có sự bất tương đồng (Divergence) giữa hai cặp tiền tương quan mật thiết (Ví dụ: GBPUSD quét đáy nhưng EURUSD giữ nguyên đáy).</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 3: ĐỌC VỊ TIN TỨC VĨ MÔ & KHỦNG HOẢNG ĐỘNG LỰC ==================== -->
+
+        <!-- SLIDE 10: M3 - BÀI 3: TIN TỨC VĨ MÔ -->
         <section class="slide" data-module="Module 3" data-lesson="Bài 3: Đọc Vị Tin Tức Vĩ Mô">
             <div class="slide-content">
                 <div class="slide-header">
                     <span class="slide-module-tag">Module 3: Đọc Vị Tin Tức Vĩ Mô</span>
-                    <span class="slide-number-tag">Trang 5/13</span>
+                    <span class="slide-number-tag">Trang 10/23</span>
                 </div>
-                <h2 class="slide-title" id="editable-s5-title">Bài 3: Cơ Chế Phản Ứng Tin Tức <span>CPI, NFP & FOMC</span></h2>
+                <h2 class="slide-title" id="editable-s10-title">Bài 3: Cơ Chế Phản Ứng Tin Tức <span>CPI, NFP & FOMC</span></h2>
                 <div class="grid-2">
-                    <div class="card" id="editable-s5-desc">
+                    <div class="card" id="editable-s10-desc">
                         <div class="card-title">📰 1. Bẫy Tin Tức (News Spike Trap)</div>
                         <p>Khi các tin tức quan trọng như Bảng lương phi nông nghiệp (NFP) hay Chỉ số giá tiêu dùng (CPI) công bố, spread giãn rộng đột ngột. Các thuật toán tần suất cao (HFT) của Market Maker sẽ chạy lệnh cực nhanh để **quét sạch thanh khoản dừng lỗ hai đầu** trước khi di chuyển theo hướng thực tế.</p>
                     </div>
@@ -734,21 +881,21 @@
             </div>
         </section>
 
-        <!-- SLIDE 6: M3 - DIAGRAM: NEWS REACTION -->
+        <!-- SLIDE 11: M3 - DIAGRAM: NEWS REACTION -->
         <section class="slide" data-module="Module 3" data-lesson="Bài 3: Sơ Đồ Phản Ứng Tin">
             <div class="slide-content">
                 <div class="slide-header">
                     <span class="slide-module-tag">Module 3: Đọc Vị Tin Tức Vĩ Mô</span>
-                    <span class="slide-number-tag">Trang 6/13</span>
+                    <span class="slide-number-tag">Trang 11/23</span>
                 </div>
-                <h2 class="slide-title" id="editable-s6-title">Bài 3: Sơ Đồ Quét 2 Đầu <span>Khi Công Bố Tin Tức</span></h2>
+                <h2 class="slide-title" id="editable-s11-title">Bài 3: Sơ Đồ Quét 2 Đầu <span>Khi Công Bố Tin Tức</span></h2>
                 <div class="grid-2">
-                    <div class="card" id="editable-s6-desc">
+                    <div class="card" id="editable-s11-desc">
                         <div class="card-title accent-mint">⚡ Giải Mã Sơ Đồ Quét Tin</div>
                         <p>Tại thời điểm ra tin (News Release):</p>
                         <ol style="display:flex; flex-direction:column; gap:0.4rem; padding-left:1.2rem;">
-                            <li>Giá giật mạnh lên trên quét sạch phe đặt cược bán khống sớm.</li>
-                            <li>Ngay lập tức giá đổ sập sâu quét sạch phe mua đuổi theo đà tin tốt.</li>
+                            <li>Giá giật mạnh lên trên quét sạch phe đặt cược bán khống sớm (Buy Stops).</li>
+                            <li>Ngay lập tức giá đổ sập sâu xuống dưới quét sạch phe mua đuổi theo đà tin tốt (Sell Stops).</li>
                             <li>Khi lực quét 2 đầu hoàn tất, xu hướng thực sự của dòng tiền thông minh mới được hình thành bền vững.</li>
                         </ol>
                     </div>
@@ -756,46 +903,289 @@
                         <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
                             <!-- Consolidated line path -->
                             <!-- Pre-news -->
-                            <path d="M 20 100 L 80 100" fill="none" stroke="var(--text-secondary)" stroke-width="2" />
-                            <text x="45" y="88" class="text-chart">Pre-News</text>
-
+                            <path d="M 20 100 L 80 100" fill="none" stroke="var(--text-secondary)" stroke-width="2" stroke-dasharray="3,3" />
+                            <text x="45" y="88" class="text-chart" fill="var(--text-secondary)" font-size="9" font-family="var(--font-mono)">Pre-News</text>
+        
                             <!-- News Spike UP -->
-                            <path d="M 80 100 L 110 30" fill="none" stroke="var(--accent-green)" stroke-width="2.5" class="draw-line" />
-                            <circle cx="110" cy="30" r="5" fill="none" stroke="var(--accent-green)" stroke-width="1.5" />
-                            <text x="115" y="25" class="text-chart" fill="var(--accent-green)">1. Quét đỉnh</text>
-
+                            <path d="M 80 100 L 120 30" fill="none" stroke="var(--accent-green)" stroke-width="2.5" class="draw-line" />
+                            <circle cx="120" cy="30" r="5" fill="none" stroke="var(--accent-green)" stroke-width="1.5" />
+                            <text x="125" y="25" class="text-chart" fill="var(--accent-green)" font-size="9" font-family="var(--font-mono)">1. Quét đỉnh</text>
+        
                             <!-- News Spike DOWN -->
-                            <path d="M 110 30 L 140 170" fill="none" stroke="var(--accent-red)" stroke-width="2.5" class="draw-line" />
-                            <circle cx="140" cy="170" r="5" fill="none" stroke="var(--accent-red)" stroke-width="1.5" class="pulse-mint-effect" />
-                            <text x="145" y="180" class="text-chart" fill="var(--accent-red)">2. Quét đáy</text>
-
+                            <path d="M 120 30 L 160 170" fill="none" stroke="var(--accent-red)" stroke-width="2.5" class="draw-line" />
+                            <circle cx="160" cy="170" r="5" fill="none" stroke="var(--accent-red)" stroke-width="1.5" class="pulse-mint-effect" />
+                            <text x="165" y="178" class="text-chart" fill="var(--accent-red)" font-size="9" font-family="var(--font-mono)">2. Quét đáy</text>
+        
                             <!-- Final Trend Setup -->
-                            <path d="M 140 170 L 170 120 L 280 120" fill="none" stroke="var(--accent-cyan)" stroke-width="2.5" class="draw-line" />
-                            <text x="225" y="110" class="text-chart" fill="var(--accent-cyan)">3. Xu hướng Thực</text>
+                            <path d="M 160 170 L 190 120 L 280 120" fill="none" stroke="var(--accent-cyan)" stroke-width="2.5" class="draw-line" />
+                            <text x="225" y="110" class="text-chart" fill="var(--accent-cyan)" font-size="9" font-family="var(--font-mono)">3. Xu hướng Thực</text>
                             
                             <!-- Timeline label -->
-                            <line x1="80" y1="180" x2="80" y2="10" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="2,2" />
-                            <text x="83" y="15" class="text-chart" fill="var(--accent-yellow)">Giờ Ra Tin</text>
+                            <line x1="80" y1="180" x2="80" y2="10" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="2,2" />
+                            <text x="83" y="18" class="text-chart" fill="var(--accent-yellow)" font-size="8" font-family="var(--font-mono)">Giờ Ra Tin</text>
                         </svg>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ==================== MODULE 4 ==================== -->
-        <!-- SLIDE 7: M4 - BÀI 4: KẾ HOẠCH DAILY ROUTINE -->
-        <section class="slide" data-module="Module 4" data-lesson="Bài 4: Kế Hoạch Day Trading Hàng Ngày">
+        <!-- SLIDE 12: M3 - BÀI 3: QUY TẮC NEWS TRADING PROTOCOL -->
+        <section class="slide" data-module="Module 3" data-lesson="Bài 3: Giao Dịch Tin Tức">
             <div class="slide-content">
                 <div class="slide-header">
-                    <span class="slide-module-tag">Module 4: Kế Hoạch Day Trading Hàng Ngày</span>
-                    <span class="slide-number-tag">Trang 7/13</span>
+                    <span class="slide-module-tag">Module 3: Đọc Vị Tin Tức Vĩ Mô</span>
+                    <span class="slide-number-tag">Trang 12/23</span>
                 </div>
-                <h2 class="slide-title" id="editable-s7-title">Bài 4: Quy Trình Lên Kế Hoạch <span>Giao Dịch Hàng Ngày (Routine)</span></h2>
+                <h2 class="slide-title" id="editable-s12-title">Bài 3: Quy Tắc Giao Dịch Tin Tức <span>(News Trading Protocol)</span></h2>
                 <div class="grid-2">
-                    <div class="card" id="editable-s7-desc">
+                    <div class="card" id="editable-s12-desc">
+                        <div class="card-title accent-red">🚫 Luật 5 Phút Trước & Sau Tin</div>
+                        <p>Tuyệt đối không có lệnh mở hoặc lệnh chờ hoạt động trong vòng 5 phút trước và sau các tin đỏ mạnh (NFP, CPI, Quyết định lãi suất FOMC):</p>
+                        <p style="margin-top:0.3rem;">Hành vi giãn spread của sàn giao dịch trong thời điểm này có thể quét trúng điểm dừng lỗ của bạn ngay cả khi giá chưa thực sự chạy tới điểm đó.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">💡 Cách Giao Dịch Sau Tin Nửa Tiếng</div>
+                        <p>Sau khi cơn bão biến động qua đi, hãy tìm kiếm cấu trúc Market Structure mới hình thành để giao dịch pullback. Đây là phương pháp của các trader chuyên nghiệp bảo vệ tài khoản dài hạn.</p>
+                        <div class="highlight-box" style="margin-top:0.4rem;">
+                            📌 **Bộ lọc cấu trúc:** Chờ một nhịp phá vỡ cấu trúc H1/M15 (BOS) rõ rệt để xác nhận dòng tiền đã ổn định vị thế rồi mới tìm kiếm điểm vào lệnh.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 4: VÙNG THANH KHOẢN NÂNG CAO ==================== -->
+
+        <!-- SLIDE 13: M4 - BÀI 4: ORDER BLOCK -->
+        <section class="slide" data-module="Module 4" data-lesson="Bài 4: Khai Thác Order Block">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 4: Vùng Thanh Khoản Nâng Cao</span>
+                    <span class="slide-number-tag">Trang 13/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s13-title">Bài 4: Khai Thác Vùng Thanh Khoản <span>Market Maker Order Block</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s13-desc">
+                        <div class="card-title accent-yellow">📦 Order Block là gì?</div>
+                        <p>Là cây nến giảm cuối cùng trước khi có đà tăng mạnh mẽ vượt bậc (Bullish OB), hoặc cây nến tăng cuối cùng trước đợt sập giá (Bearish OB). Đây là nơi **Market Maker kích hoạt các khối lệnh lớn** của họ.</p>
+                        <div class="card-title accent-mint" style="margin-top:0.4rem;">🔑 Điều Kiện Xác Nhận OB Hợp Lệ</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; padding-left:1.2rem;">
+                            <li>**BOS (Break of Structure):** Nhịp đẩy đi từ OB phải phá vỡ đỉnh/đáy gần nhất tạo xu hướng mới.</li>
+                            <li>**FVG (Fair Value Gap):** Nhịp đẩy phải tạo ra khoảng trống mất cân bằng giá ngay cạnh cây nến OB.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-cyan">🛡️ Cách Vẽ Và Giao Dịch OB</div>
+                        <p>Vẽ hộp bao quanh toàn bộ thân nến (hoặc cả râu nến tùy bối cảnh) của cây nến OB. Khi giá quay đầu kiểm tra lại vùng này (Retest), đây là cơ hội có tỷ lệ Risk:Reward cực kỳ tối ưu.</p>
+                        <div class="highlight-box" style="margin-top:0.4rem;">
+                            ⚠️ **Lưu ý:** Chỉ giao dịch với các OB chưa được kiểm thử (Mitigated). Nếu giá đã chạm OB đó một lần trước đó, sức mạnh của nó sẽ bị suy yếu.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 14: M4 - DIAGRAM: ORDER BLOCK -->
+        <section class="slide" data-module="Module 4" data-lesson="Bài 4: Sơ Đồ Order Block">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 4: Vùng Thanh Khoản Nâng Cao</span>
+                    <span class="slide-number-tag">Trang 14/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s14-title">Bài 4: Sơ Đồ Trực Quan <span>Bản Chất Order Block (OB)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s14-desc">
+                        <div class="card-title accent-mint">📊 Minh Họa Bullish Order Block</div>
+                        <p>Sơ đồ nến bên cạnh mô tả cây nến giảm cuối cùng trước đà bứt phá mạnh mẽ phá vỡ cấu trúc:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem; padding-left:1.2rem;">
+                            <li>**Cây nến 1 (OB):** Cây nến giảm (thân nến đen/đỏ).</li>
+                            <li>**Cây nến 2 & 3:** Các nến tăng mạnh vượt qua đỉnh của nến 1.</li>
+                            <li>**Vùng Mua:** Đặt lệnh giới hạn mua (Limit Buy) tại mép trên của thân nến 1.</li>
+                        </ul>
+                    </div>
+                    <div class="diagram-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Candlesticks drawing Bullish OB -->
+                            <!-- Red candle (the OB) -->
+                            <line x1="80" y1="60" x2="80" y2="150" stroke="var(--accent-red)" stroke-width="2" /> <!-- wick -->
+                            <rect x="65" y="80" width="30" height="50" fill="var(--bg-secondary)" stroke="var(--accent-red)" stroke-width="2" rx="2" /> <!-- body -->
+                            <text x="80" y="165" class="text-chart" text-anchor="middle" fill="var(--accent-red)" font-size="9" font-family="var(--font-mono)">1. Nến Giảm OB</text>
+                        
+                            <!-- Green candles breaking structure -->
+                            <!-- Green candle 1 -->
+                            <line x1="130" y1="50" x2="130" y2="130" stroke="var(--accent-green)" stroke-width="2" />
+                            <rect x="115" y="60" width="30" height="55" fill="var(--accent-green)" stroke="var(--accent-green)" stroke-width="1" rx="2" />
+                            
+                            <!-- Green candle 2 -->
+                            <line x1="180" y1="20" x2="180" y2="100" stroke="var(--accent-green)" stroke-width="2" />
+                            <rect x="165" y="30" width="30" height="50" fill="var(--accent-green)" stroke="var(--accent-green)" stroke-width="1" rx="2" />
+                            
+                            <!-- OB marked zone -->
+                            <rect x="60" y="78" width="160" height="54" fill="rgba(0, 255, 179, 0.04)" stroke="var(--accent-mint)" stroke-width="1" stroke-dasharray="3,3" />
+                            <text x="145" y="145" class="text-chart" fill="var(--accent-mint)" font-size="8" font-family="var(--font-mono)">VÙNG MUA TRỰC TIẾP</text>
+                            <path d="M 220 105 L 245 105 L 245 70" fill="none" stroke="var(--accent-mint)" stroke-width="1.5" stroke-dasharray="2,2" />
+                            <circle cx="245" cy="70" r="3" fill="var(--accent-mint)" />
+                            <text x="252" y="73" class="text-chart" fill="var(--accent-mint)" font-size="8" font-family="var(--font-mono)">Entry</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 15: M4 - BÀI 4: BREAKER BLOCK & MITIGATION BLOCK -->
+        <section class="slide" data-module="Module 4" data-lesson="Bài 4: Breaker & Mitigation Blocks">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 4: Vùng Thanh Khoản Nâng Cao</span>
+                    <span class="slide-number-tag">Trang 15/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s15-title">Bài 4: Phân Biệt <span>Breaker Block & Mitigation Block</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s15-desc">
+                        <div class="card-title accent-orange">⚡ 1. Breaker Block (OB bị phá vỡ kèm quét SL)</div>
+                        <p>Là một khối lệnh cũ đã từng thực hiện cú **quét thanh khoản (Stop Hunt)** của đỉnh/đáy trước đó, nhưng sau đó bị phá vỡ hoàn toàn do lực thị trường đảo chiều mạnh. Khi giá quay lại kiểm thử, vùng này chuyển trạng thái từ Kháng cự sang Hỗ trợ (hoặc ngược lại) với độ uy tín cực kỳ cao.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">⚙️ 2. Mitigation Block (OB bị phá vỡ không kèm quét SL)</div>
+                        <p>Tương tự như Breaker Block, nhưng khối lệnh cũ **không** thực hiện cú quét thanh khoản đỉnh/đáy trước đó (thường xảy ra khi thị trường tạo đỉnh/đáy thấp hơn). Thể hiện sự suy yếu và cần giảm thiểu rủi ro của các tổ chức lớn.</p>
+                        <div class="highlight-box" style="margin-top:0.4rem;">
+                            💡 **Mẹo phân biệt:** Breaker Block luôn đi kèm với cú quét râu nến qua đỉnh/đáy cũ (Stop Hunt) rõ rệt trước khi sập/tăng mạnh.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 16: M4 - BÀI 4: FAIR VALUE GAP -->
+        <section class="slide" data-module="Module 4" data-lesson="Bài 4: Fair Value Gap">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 4: Vùng Thanh Khoản Nâng Cao</span>
+                    <span class="slide-number-tag">Trang 16/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s16-title">Bài 4: Khoảng Trống Giá Trị Hợp Lý <span>(Fair Value Gap - FVG)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s16-desc">
+                        <div class="card-title accent-yellow">⚖️ Bản Chất Mất Cân Bằng (Imbalance)</div>
+                        <p>FVG được tạo ra bởi mô hình 3 nến liên tiếp khi nến thứ hai chuyển động cực nhanh và mạnh, để lại khoảng trống giữa râu nến thứ nhất và râu nến thứ ba.</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; padding-left:1.2rem;">
+                            <li>**Ý nghĩa:** Thể hiện sự mất cân bằng một chiều hoàn toàn của bên mua hoặc bên bán.</li>
+                            <li>**Nam châm hút giá:** Các thuật toán giao dịch có xu hướng đẩy giá quay trở lại lấp đầy khoảng trống này (Rebalance) trước khi đi tiếp.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-mint">🛡️ Cách Khai Thác FVG Thực Chiến</div>
+                        <p>Kẻ hộp nối liền từ đáy nến 1 sang đỉnh nến 3 của mô hình FVG. Vùng FVG này thường hoạt động như một ngưỡng hỗ trợ/kháng cự động cực kỳ nhạy cảm.</p>
+                        <div class="highlight-box" style="margin-top:0.4rem;">
+                            📌 **Mẹo kết hợp:** Vùng FVG nằm đè lên một cây nến Order Block được gọi là thiết lập "High Probability OB" (OB có xác suất thắng rất cao).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODULE 5: THIẾT LẬP CHIẾN LƯỢC INTRADAY THỰC CHIẾN ==================== -->
+
+        <!-- SLIDE 17: M5 - BÀI 5: SETUP LONDON OPEN BREAKOUT -->
+        <section class="slide" data-module="Module 5" data-lesson="Bài 5: Setup London Open">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 5: Thiết Lập Chiến Lược Intraday</span>
+                    <span class="slide-number-tag">Trang 17/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s17-title">Bài 5: Setup Chiến Lược <span>London Open / Judas Swing</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s17-desc">
+                        <div class="card-title accent-yellow">⚙️ Quy Trình Giao Dịch Vào Lúc 14:00 - 15:00</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem; padding-left:1.2rem;">
+                            <li>**Bước 1:** Vẽ biên đỉnh/đáy phiên Á (từ 06:00 đến 13:30 giờ VN).</li>
+                            <li>**Bước 2:** Chờ đợi nến H1 phiên Âu mở cửa quét giật nhanh qua biên để gom thanh khoản.</li>
+                            <li>**Bước 3:** Vào lệnh theo hướng đảo chiều của pha quét nếu nến H1 rút chân mạnh, hoặc đi theo hướng breakout thực tế nếu Vol cực đại đồng thuận.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-green">🛡️ Quản Lý Lệnh Setup</div>
+                        <p>Luôn đặt dừng lỗ ngay bên ngoài râu nến quét. Nếu giá quay đầu chui ngược lại vào biên Á và đóng cửa bên trong hộp, hãy cắt lỗ ngay lập tức để bảo vệ tài khoản.</p>
+                        <div class="highlight-box" style="margin-top:0.4rem;">
+                            💡 **Mục tiêu chốt lời (TP):** Đặt tại biên đối diện của hộp phiên Á hoặc mốc Fibo Extension 1.272.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 18: M5 - BÀI 5: SETUP NY CONTINUATION -->
+        <section class="slide" data-module="Module 5" data-lesson="Bài 5: Setup New York Session">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 5: Thiết Lập Chiến Lược Intraday</span>
+                    <span class="slide-number-tag">Trang 18/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s18-title">Bài 5: Setup Tiếp Diễn Xu Hướng <span>New York Continuation</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s18-desc">
+                        <div class="card-title accent-cyan">🔥 Động Lực Học Phiên Mỹ</div>
+                        <p>Phiên Mỹ thường tận dụng xu hướng đã được hình thành trong phiên Âu để đẩy tiếp giá đi xa sau một nhịp quét thanh khoản cục bộ lúc mở cửa phiên (19:30 - 20:30 VN):</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.3rem; padding-left:1.2rem;">
+                            <li>**Điều kiện:** Phiên Âu có một xu hướng rõ ràng (ví dụ: liên tục tạo đỉnh cao mới).</li>
+                            <li>**Hành vi:** Mở phiên Mỹ đẩy giá xuống quét đáy phiên Âu gần nhất (hoặc FVG phiên Âu).</li>
+                            <li>**Xác nhận:** Nến rút chân trên khung M15/M5 tại FVG/OB.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">⚙️ Kế Hoạch Kích Hoạt Vị Thế</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; padding-left:1.2rem;">
+                            <li>**Vào Lệnh:** Lệnh Mua (Buy Market) khi xuất hiện nến đảo chiều xác nhận tại FVG của phiên Âu.</li>
+                            <li>**Dừng Lỗ (SL):** Đặt dưới đáy râu nến quét phiên Mỹ.</li>
+                            <li>**Chốt Lời (TP):** Đặt tại đỉnh cao nhất của phiên Âu hoặc biên Fibonacci 1.618.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 19: M5 - BÀI 5: SETUP PDH/PDL SWEEP REVERSAL -->
+        <section class="slide" data-module="Module 5" data-lesson="Bài 5: Setup PDH/PDL Sweep">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 5: Thiết Lập Chiến Lược Intraday</span>
+                    <span class="slide-number-tag">Trang 19/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s19-title">Bài 5: Setup Đảo Chiều Ngày <span>PDH/PDL Sweep Reversal</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s19-desc">
+                        <div class="card-title accent-red">🎯 Điểm Xoay Đỉnh/Đáy Ngày Hôm Trước</div>
+                        <p>Các mốc Đỉnh ngày hôm trước (Previous Day High - PDH) và Đáy ngày hôm trước (Previous Day Low - PDL) tập hợp khối lượng dừng lỗ cực lớn:</p>
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.3rem; padding-left:1.2rem;">
+                            <li>Giá đẩy mạnh quét râu nến qua PDH/PDL.</li>
+                            <li>Khung thời gian nhỏ (M5/M15) xuất hiện **Phá vỡ cấu trúc giảm/tăng (CHoCH - Change of Character)**.</li>
+                            <li>Xuất hiện FVG/OB mới ở khung nhỏ hướng ngược chiều cú quét.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-yellow">⚙️ Quy Tắc Vào Lệnh Thực Chiến</div>
+                        <ul style="display:flex; flex-direction:column; gap:0.4rem; padding-left:1.2rem;">
+                            <li>**Entry:** Vào lệnh Bán ngay khi giá hồi kiểm về FVG khung M5 sau cú quét đỉnh PDH thành công.</li>
+                            <li>**Stop Loss:** Đặt ngay trên đỉnh râu nến quét PDH vừa tạo.</li>
+                            <li>**Take Profit:** Đặt mục tiêu tại các mốc FVG đối diện hoặc đáy ngày hôm đó.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 20: M5 - BÀI 5: DAILY ROUTINE -->
+        <section class="slide" data-module="Module 5" data-lesson="Bài 5: Quy Trình Lên Kế Hoạch Hàng Ngày">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 5: Thiết Lập Chiến Lược Intraday</span>
+                    <span class="slide-number-tag">Trang 20/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s20-title">Bài 5: Quy Trình Lên Kế Hoạch <span>Giao Dịch Hàng Ngày (Routine)</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s20-desc">
                         <div class="card-title">🗓️ 1. Buổi Sáng (Pre-market Preparation)</div>
                         <p>Kiểm tra lịch kinh tế trong ngày (ForexFactory). Xác định các cặp tiền có tin đỏ. Vẽ các vùng cản khung lớn H4/H1 của EURUSD, GBPUSD, Gold.</p>
-                        
                         <div class="card-title accent-mint" style="margin-top:0.4rem;">🎯 2. Trong Phiên (Execution & Time Windows)</div>
                         <p>Chỉ tập trung giao dịch vào các khung giờ vàng thanh khoản: **14:00 - 17:00** (phiên Âu mở cửa) và **19:30 - 22:30** (phiên Mỹ mở cửa). Ngoài các khung giờ này, tốt nhất là đứng ngoài quan sát để tránh phí spread và cạn kiệt năng lượng.</p>
                     </div>
@@ -807,129 +1197,20 @@
             </div>
         </section>
 
-        <!-- SLIDE 8: M4 - DIAGRAM: MARKET MAKER BLOCK -->
-        <section class="slide" data-module="Module 4" data-lesson="Bài 4: Cấu Trúc Order Block MM">
+        <!-- ==================== MODULE 6: QUẢN TRỊ RỦI RO & TỔNG KẾT ==================== -->
+
+        <!-- SLIDE 21: M6 - KỶ LUẬT DAY TRADING -->
+        <section class="slide" data-module="Module 6" data-lesson="Kỷ Luật Day Trading">
             <div class="slide-content">
                 <div class="slide-header">
-                    <span class="slide-module-tag">Module 4: Kế Hoạch Day Trading Hàng Ngày</span>
-                    <span class="slide-number-tag">Trang 8/13</span>
+                    <span class="slide-module-tag">Module 6: Quản Trị Rủi Ro & Tổng Kết</span>
+                    <span class="slide-number-tag">Trang 21/23</span>
                 </div>
-                <h2 class="slide-title" id="editable-s8-title">Bài 4: Khai Thác Vùng Thanh Khoản <span>Market Maker Order Block</span></h2>
+                <h2 class="slide-title" id="editable-s21-title">Hệ Thống Quản Lý Lệnh <span>Kỷ Luật Day Trading</span></h2>
                 <div class="grid-2">
-                    <div class="card" id="editable-s8-desc">
-                        <div class="card-title accent-yellow">📦 Order Block là gì?</div>
-                        <p>Là cây nến giảm cuối cùng trước khi có đà tăng mạnh mẽ vượt bậc (Bullish OB), hoặc cây nến tăng cuối cùng trước đợt sập giá (Bearish OB). Đây là nơi **Market Maker kích hoạt các khối lệnh lớn** của họ.</p>
-                    </div>
-                    <div class="diagram-container">
-                        <svg width="100%" height="100%" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Bearish Order Block Zone -->
-                            <rect x="50" y="40" width="120" height="30" fill="rgba(255, 59, 48, 0.08)" stroke="var(--accent-red)" stroke-width="1.2" stroke-dasharray="3,3" />
-                            <text x="110" y="58" class="text-chart" text-anchor="middle" fill="var(--accent-red)">Bearish Order Block (Cản lớn)</text>
-
-                            <!-- Price Path test and drop -->
-                            <!-- Price creates OB -->
-                            <path d="M 20 140 L 50 55 L 75 110" fill="none" stroke="var(--text-secondary)" stroke-width="1.5" />
-                            <!-- Price rallies back to OB -->
-                            <path d="M 75 110 L 120 52" fill="none" stroke="var(--accent-yellow)" stroke-width="2" />
-                            <!-- Price drops from OB -->
-                            <path d="M 120 52 L 150 160 L 260 160" fill="none" stroke="var(--accent-mint)" stroke-width="2.5" class="draw-line" />
-
-                            <!-- Touch point trigger -->
-                            <circle cx="120" cy="52" r="5" fill="none" stroke="var(--accent-mint)" stroke-width="1.5" class="pulse-mint-effect" />
-                            <text x="120" y="38" class="text-chart" text-anchor="middle" fill="var(--accent-mint)">Chạm OB & Giảm mạnh</text>
-
-                            <text x="210" y="148" class="text-chart" fill="var(--accent-cyan)">TP Target</text>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== ADDITIONAL SLIDES ==================== -->
-        <!-- SLIDE 9: M1 - ORDER FLOW & LỆNH CHỜ -->
-        <section class="slide" data-module="Module 1" data-lesson="Bài 1: Sổ Lệnh Liên Ngân Hàng">
-            <div class="slide-content">
-                <div class="slide-header">
-                    <span class="slide-module-tag">Module 1: Cấu Trúc Vi Mô Thị Trường</span>
-                    <span class="slide-number-tag">Trang 9/13</span>
-                </div>
-                <h2 class="slide-title" id="editable-s9-title">Bài 1: Đọc Vị Sổ Lệnh <span>& Dòng Lệnh Khớp Thực Tế</span></h2>
-                <div class="grid-2">
-                    <div class="card" id="editable-s9-desc">
-                        <div class="card-title accent-cyan">📑 Cơ Chế Đi Khớp Lệnh Của Thuật Toán</div>
-                        <p>Các ngân hàng lớn sử dụng các thuật toán TWAP hoặc VWAP để chia nhỏ các đơn hàng triệu USD tránh gây biến động giá đột ngột:</p>
-                        <ul style="display:flex; flex-direction:column; gap:0.3rem; margin-top:0.3rem;">
-                            <li>Lệnh lớn luôn tìm kiếm các vùng tập trung dừng lỗ để khớp lệnh đối ứng nhanh nhất.</li>
-                            <li>Do đó, các vùng giá tích lũy thanh khoản luôn bị quét qua trước khi có sóng lớn.</li>
-                        </ul>
-                    </div>
-                    <div class="card">
-                        <div class="card-title accent-orange">🔍 Nhận Biết Vùng Tích Lũy Dòng Lệnh</div>
-                        <p>Khi thị trường đi ngang biên độ hẹp lâu, số lượng dừng lỗ tích lũy càng lớn. Hãy kiên nhẫn đứng ngoài và chỉ tham gia khi có cây nến quét thanh khoản rõ rệt phá vỡ vùng đi ngang đó.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SLIDE 10: M2 - LONDON BREAKOUT SETUP -->
-        <section class="slide" data-module="Module 2" data-lesson="Bài 2: Chiến Lược London Breakout">
-            <div class="slide-content">
-                <div class="slide-header">
-                    <span class="slide-module-tag">Module 2: Giao Dịch Theo Chu Kỳ Phiên</span>
-                    <span class="slide-number-tag">Trang 10/13</span>
-                </div>
-                <h2 class="slide-title" id="editable-s10-title">Bài 2: Thiết Lập Setup <span>London Open Breakout</span></h2>
-                <div class="grid-2">
-                    <div class="card" id="editable-s10-desc">
-                        <div class="card-title accent-yellow">⚙️ Quy Trình Giao Dịch Vào Lúc 14:00 - 15:00</div>
-                        <ul style="display:flex; flex-direction:column; gap:0.4rem; margin-top:0.3rem;">
-                            <li>**Bước 1:** Vẽ biên đỉnh/đáy phiên Á (từ 06:00 đến 13:30 giờ VN).</li>
-                            <li>**Bước 2:** Chờ đợi nến H1 phiên Âu mở cửa quét giật nhanh qua biên để gom thanh khoản.</li>
-                            <li>**Bước 3:** Vào lệnh theo hướng đảo chiều của pha quét nếu nến H1 rút chân mạnh, hoặc đi theo hướng breakout thực tế nếu Vol cực đại đồng thuận.</li>
-                        </ul>
-                    </div>
-                    <div class="card">
-                        <div class="card-title accent-green">🛡️ Kiểm Soát Rủi Ro Setup</div>
-                        <p>Luôn đặt dừng lỗ ngay bên ngoài râu nến quét. Nếu giá quay đầu chui ngược lại vào biên Á và đóng cửa bên trong hộp, hãy cắt lỗ ngay lập tức để bảo vệ tài khoản.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SLIDE 11: M3 - TIN ĐỎ TRONG NGÀY -->
-        <section class="slide" data-module="Module 3" data-lesson="Bài 3: Tránh Bão Tin Đỏ">
-            <div class="slide-content">
-                <div class="slide-header">
-                    <span class="slide-module-tag">Module 3: Đọc Vị Tin Tức Vĩ Mô</span>
-                    <span class="slide-number-tag">Trang 11/13</span>
-                </div>
-                <h2 class="slide-title" id="editable-s11-title">Bài 3: Quản Trị Rủi Ro <span>& Tránh Bão Tin Đỏ Vĩ Mô</span></h2>
-                <div class="grid-2">
-                    <div class="card" id="editable-s11-desc">
-                        <div class="card-title accent-red">🚫 Luật 5 Phút Trước & Sau Tin</div>
-                        <p>Tuyệt đối không có lệnh mở hoặc lệnh chờ hoạt động trong vòng 5 phút trước và sau các tin đỏ mạnh (NFP, CPI, Quyết định lãi suất FOMC):</p>
-                        <p style="margin-top:0.3rem;">Hành vi giãn spread của sàn giao dịch trong thời điểm này có thể quét trúng điểm dừng lỗ của bạn ngay cả khi giá chưa thực sự chạy tới điểm đó.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-title accent-yellow">💡 Cách Giao Dịch Sau Tin Nửa Tiếng</div>
-                        <p>Sau khi cơn bão biến động qua đi, hãy tìm kiếm cấu trúc Market Structure mới hình thành để giao dịch pullback. Đây là phương pháp của các trader chuyên nghiệp bảo vệ tài khoản dài hạn.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SLIDE 12: TỔNG KẾT KHÓA HỌC -->
-        <section class="slide" data-module="Kỷ Luật Day Trader" data-lesson="Tổng Kết Giao Dịch">
-            <div class="slide-content">
-                <div class="slide-header">
-                    <span class="slide-module-tag">Kỷ Luật Day Trader Thực Chiến</span>
-                    <span class="slide-number-tag">Trang 12/13</span>
-                </div>
-                <h2 class="slide-title" id="editable-s12-title">Hệ Thống Quản Lý Lệnh <span>Kỷ Luật Day Trading</span></h2>
-                <div class="grid-2">
-                    <div class="card" id="editable-s12-desc">
+                    <div class="card" id="editable-s21-desc">
                         <div class="card-title">📜 Quy Tắc Quản Lý Lệnh Trong Ngày</div>
-                        <ul style="display:flex; flex-direction:column; gap:0.3rem;">
+                        <ul style="display:flex; flex-direction:column; gap:0.3rem; padding-left:1.2rem;">
                             <li>**Không gồng lệnh qua đêm:** Đóng toàn bộ trạng thái trước 23:00 đêm để tránh phí swap và biến động bất ngờ phiên Mỹ muộn.</li>
                             <li>**Giới hạn số lệnh:** Tối đa 2-3 lệnh chất lượng mỗi ngày.</li>
                             <li>**Quy tắc cắt lỗ ngày:** Dừng giao dịch ngay lập tức nếu lỗ quá 2% tài khoản trong một ngày.</li>
@@ -943,16 +1224,47 @@
             </div>
         </section>
 
-        <!-- SLIDE 13: BÀI TẬP THỰC HÀNH -->
-        <section class="slide" data-module="Thực Hành" data-lesson="Bài Tập Luyện Tập">
+        <!-- SLIDE 22: M6 - CHECKLIST VÀO LỆNH -->
+        <section class="slide" data-module="Module 6" data-lesson="Nhật Ký Vào Lệnh Thực Chiến">
             <div class="slide-content">
                 <div class="slide-header">
-                    <span class="slide-module-tag">Thực Hành & Luyện Tập</span>
-                    <span class="slide-number-tag">Trang 13/13</span>
+                    <span class="slide-module-tag">Module 6: Quản Trị Rủi Ro & Tổng Kết</span>
+                    <span class="slide-number-tag">Trang 22/23</span>
                 </div>
-                <h2 class="slide-title" id="editable-s13-title">Bài Tập Rèn Luyện <span>Kỹ Năng Đọc Vị Phiên</span></h2>
+                <h2 class="slide-title" id="editable-s22-title">Nhật Ký Vào Lệnh Thực Chiến <span>(Checklist 5 Bước)</span></h2>
                 <div class="grid-2">
-                    <div class="card" id="editable-s13-desc">
+                    <div class="card" id="editable-s22-desc">
+                        <div class="card-title accent-yellow">📝 Bảng Kiểm Duyệt Nghiêm Ngặt</div>
+                        <p>Trước khi đặt lệnh, hãy tự vấn bản thân 5 câu hỏi cốt lõi này:</p>
+                        <ol style="display:flex; flex-direction:column; gap:0.4rem; padding-left:1.2rem;">
+                            <li>1. Có tin tức kinh tế mạnh (tin đỏ) công bố trong vòng 30 phút tới không?</li>
+                            <li>2. Biên phiên Á đã được quét thanh khoản chưa?</li>
+                            <li>3. Cấu trúc thị trường khung nhỏ (M5/M15) có thay đổi (BOS/CHoCH) xác nhận không?</li>
+                            <li>4. Có FVG hoặc OB hợp lệ đóng vai trò hỗ trợ/kháng cự làm vùng tựa không?</li>
+                            <li>5. Tỷ lệ Risk:Reward của lệnh này có đạt tối thiểu 1:2 không?</li>
+                        </ol>
+                    </div>
+                    <div class="card">
+                        <div class="card-title accent-orange">🔥 Quy Tắc Bất Di Bất Dịch</div>
+                        <p>Nếu bất kỳ câu hỏi nào trong 5 câu trên có câu trả lời là **KHÔNG**, hãy buông chuột và đứng ngoài thị trường. Sự kiên nhẫn chính là bộ lọc lợi nhuận tốt nhất của bạn.</p>
+                        <div class="highlight-box" style="margin-top:0.4rem; border-left-color: var(--accent-red); background: rgba(255,107,0,0.02);">
+                            ⚠️ Tiền mất có thể kiếm lại, nhưng thói quen vô kỷ luật sẽ hủy hoại sự nghiệp giao dịch của bạn vĩnh viễn.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 23: M6 - BÀI TẬP THỰC HÀNH -->
+        <section class="slide" data-module="Module 6" data-lesson="Bài Tập Luyện Tập">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <span class="slide-module-tag">Module 6: Quản Trị Rủi Ro & Tổng Kết</span>
+                    <span class="slide-number-tag">Trang 23/23</span>
+                </div>
+                <h2 class="slide-title" id="editable-s23-title">Bài Tập Rèn Luyện <span>Kỹ Năng Đọc Vị Phiên</span></h2>
+                <div class="grid-2">
+                    <div class="card" id="editable-s23-desc">
                         <div class="card-title accent-yellow">📝 Bài Tập 1: Vẽ Hộp Phiên Á (10 ngày)</div>
                         <p>Hàng ngày trước phiên Âu mở cửa, hãy chụp lại biểu đồ và xác định chính xác biên độ đỉnh/đáy phiên Á của cặp GBPUSD hoặc XAUUSD.</p>
                     </div>
@@ -1265,7 +1577,17 @@
                     'editable-s10-title', 'editable-s10-desc',
                     'editable-s11-title', 'editable-s11-desc',
                     'editable-s12-title', 'editable-s12-desc',
-                    'editable-s13-title', 'editable-s13-desc'
+                    'editable-s13-title', 'editable-s13-desc',
+                    'editable-s14-title', 'editable-s14-desc',
+                    'editable-s15-title', 'editable-s15-desc',
+                    'editable-s16-title', 'editable-s16-desc',
+                    'editable-s17-title', 'editable-s17-desc',
+                    'editable-s18-title', 'editable-s18-desc',
+                    'editable-s19-title', 'editable-s19-desc',
+                    'editable-s20-title', 'editable-s20-desc',
+                    'editable-s21-title', 'editable-s21-desc',
+                    'editable-s22-title', 'editable-s22-desc',
+                    'editable-s23-title', 'editable-s23-desc'
                 ];
             }
 
@@ -1305,7 +1627,7 @@
                     if (el) contentData[id] = el.innerHTML;
                 });
 
-                localStorage.setItem('forex_trading_data', JSON.stringify(contentData));
+                localStorage.setItem('forex_masterclass_data', JSON.stringify(contentData));
                 
                 this.saveIndicator.classList.add('show');
                 setTimeout(() => {
@@ -1314,7 +1636,7 @@
             }
 
             loadSavedContent() {
-                const saved = localStorage.getItem('forex_trading_data');
+                const saved = localStorage.getItem('forex_masterclass_data');
                 if (saved) {
                     try {
                         const contentData = JSON.parse(saved);
